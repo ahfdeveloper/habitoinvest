@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "99408323711",
+    "project_id": "habito-invest-app",
+    "storage_bucket": "habito-invest-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99408323711:android:fc340e0d94f2811eed8b4a",
+        "android_client_info": {
+          "package_name": "com.example.habito_invest_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99408323711-begc2sc1gqaj63rj9trdugp29toch2ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.habito_invest_app",
+            "certificate_hash": "f739034988e9ec45a37d3d1538df658da0f3a91b"
+          }
+        },
+        {
+          "client_id": "99408323711-0qf101sd265gngff2i6tu5rubodjk70f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8_NucNJScUp_Ix6ubXtiNxAJHi6WpGg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99408323711-0qf101sd265gngff2i6tu5rubodjk70f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
