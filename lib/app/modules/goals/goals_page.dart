@@ -20,7 +20,6 @@ class GoalsPage extends StatelessWidget {
                 Card(
                   elevation: 3.0,
                   child: InkWell(
-                    //splashColor: Colors.deepPurple.withOpacity(0.3),
                     onTap: () {
                       Get.toNamed(Routes.DEFINITION_GOALS);
                     },

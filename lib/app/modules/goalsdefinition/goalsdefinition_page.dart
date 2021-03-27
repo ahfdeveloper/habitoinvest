@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_controller.dart';
+import 'package:habito_invest_app/app/theme/app_theme.dart';
 
 class GoalsDefinitionPage extends StatelessWidget{
 final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionController();
@@ -11,7 +12,9 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
     const dialogPadding = 8.0;
 
     return Scaffold(
-      appBar: AppBar(title: Text('XXX')),
+      appBar: AppBar(
+        title: Text('XXX'),
+      ),
       body: Container(
         height: 500.0,
         child: Obx(
@@ -22,15 +25,14 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide.none,
+                        side: BorderSide(color: _goalsDefinitionController.buttonColorPercentage),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                        backgroundColor: _goalsDefinitionController.buttonBackgroundPercentage.value,
                       ),
                       child: Text(
                         'Porcentagem',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: _goalsDefinitionController.buttonTextPercentage.value,
+                          color: _goalsDefinitionController.buttonColorPercentage,
                         )
                       ),
 
@@ -43,20 +45,18 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide.none,
+                        side: BorderSide(color: _goalsDefinitionController.buttonColorFixedValue),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                        backgroundColor: _goalsDefinitionController.buttonBackgroundFixedValue.value,
                       ),
                       child: Text(
                         'Valor Fixo',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: _goalsDefinitionController.buttonTextFixedValue.value,
+                          color: _goalsDefinitionController.buttonColorFixedValue,
                         )
                       ),
 
                       onPressed: () {  
-                        //https://coflutter.com/flutter-how-to-show-dismiss-keyboard/  ---------para quando clicar abrir o teclado
                       _goalsDefinitionController.fixedValueButtonSelect();
                       }
                     ),
@@ -69,41 +69,38 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                   padding: EdgeInsets.all(dialogPadding),
                   child: Center(
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            _goalsDefinitionController.inicioValor.value,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _goalsDefinitionController.inicioValor,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+
+                        Text(
+                            _goalsDefinitionController.valor,
                             style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold
+                              fontSize: 80,
+                              color: Colors.black
                             ),
                           ),
-    
-                          TextButton(
-                            autofocus: true, 
-                            child: Text(
-                              _goalsDefinitionController.valor.value,
-                              style: TextStyle(
-                                fontSize: 80,
-                                color: Colors.black
-                              ),
-                            ),
-                            onPressed: () { },
+  
+                        Text(
+                          _goalsDefinitionController.fimValor,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold
                           ),
-    
-                          Text(
-                            _goalsDefinitionController.fimValor.value,
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+              ),
 
+              
               Padding(
                 padding: EdgeInsets.all(dialogPadding),
                 child: Row(
@@ -111,18 +108,10 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(2.0),
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.all(dialogPadding),
-                            backgroundColor: Get.theme.primaryColor,
-                          ),
+                        child: ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text(
-                            "Cancelar",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
+                          style: appThemeData.elevatedButtonTheme.style,
+                          child: Text("Cancelar"),
                         ),
                       ),
                     ),
@@ -130,18 +119,10 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                     Expanded( 
                       child: Padding(
                         padding: EdgeInsets.all(2.0),
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.all(dialogPadding),
-                            backgroundColor: Get.theme.primaryColor
-                          ),
+                        child: ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text(
-                            "Salvar",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
+                          style: appThemeData.elevatedButtonTheme.style,
+                          child: Text("Salvar"),
                         ),
                       ),
                     )

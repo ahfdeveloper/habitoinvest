@@ -7,14 +7,15 @@ final ThemeData appThemeData = ThemeData(
   primaryColor: Colors.blue,
   brightness: Brightness.light,
   accentColor: Colors.cyan[200],
-  appBarTheme: AppBarTheme(color: Colors.white),
+  appBarTheme: AppBarTheme(color: Colors.blue),
 
 
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      backgroundColor: Colors.blue[50],
+      backgroundColor: Colors.white,
       textStyle: TextStyle(
-        color: Colors.blue,
+        color: Colors.white,
+        fontWeight: FontWeight.bold
       )
     )
   ),

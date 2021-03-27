@@ -9,11 +9,11 @@ class HomePage extends StatelessWidget{
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[200],
         shadowColor: Colors.transparent,
         title: Text('Hábito Invest', style: TextStyle(color: Colors.black),),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       drawer: DrawerHome(),
     );
 
