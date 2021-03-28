@@ -1,12 +1,24 @@
+import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:habito_invest_app/app/data/model/user_model.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class InitialController extends GetxController {
   final box = GetStorage('habito_invest_app');
 
+  @override
+  void onReady() {
+    Timer(
+      Duration(seconds: 3),
+      () => isLogged()
+    );
+    super.onReady();
+  }
+
 
   // Verifica se já existe usuário logado
-  /* dynamic isLogged(){
+   void isLogged(){     
     if(box.hasData('auth')){
       UserModel user = UserModel(
         id: box.read('auth')['id'],
@@ -14,9 +26,9 @@ class InitialController extends GetxController {
         name: box.read('auth')['name'],
         urlimage: box.read('auth')['urlimage']
       );
-      return Get.offAllNamed(Routes.HOME, arguments: user);
+      Get.offAllNamed(Routes.HOME, arguments: user);
     } else {
-      return Routes.LOGIN;
+      Get.offAllNamed(Routes.LOGIN);
     }
-  } */
+  }
 }

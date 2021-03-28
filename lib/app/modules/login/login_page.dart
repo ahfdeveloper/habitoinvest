@@ -5,8 +5,8 @@ import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 
-class LoginPage extends StatelessWidget {
-  final LoginController _loginController = Get.find<LoginController>();
+class LoginPage extends GetView<LoginController> {
+  //final LoginController controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 48.0),
 
               TextFormField(
-                controller: _loginController.emailTextController,
+                controller: controller.emailTextController,
                 // Validação dos dados digitados no campo e-mail
                 validator: (value) {
                   if(value.isEmpty){
@@ -58,7 +58,7 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 15.0),
 
               TextFormField(
-                controller: _loginController.passwordTextController,
+                controller: controller.passwordTextController,
                 // Validação dos dados digitados no campo
                 validator: (value){
                   if(value.isEmpty){
@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
                   style: OutlinedButton.styleFrom(backgroundColor: Get.theme.primaryColor),
                   onPressed: (){
                     if(_formKey.currentState.validate()){
-                      _loginController.login();
+                      controller.login();
                     }
                   }, 
                   child: Text(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../home_controller.dart';
+import 'package:habito_invest_app/app/modules/login/login_controller.dart';
+import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class DrawerHome extends StatelessWidget {
   final HomeController _homeController = HomeController();
+
 
   @override
   Widget build(Object context) {
@@ -13,8 +15,6 @@ class DrawerHome extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [   
           UserAccountsDrawerHeader(
-            accountName: Text('${_homeController.user.name}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0),),
-            accountEmail: Text('${_homeController.user.email}', style: TextStyle(color: Colors.white70),),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.blue[300],
               child: ClipOval(
@@ -26,10 +26,13 @@ class DrawerHome extends StatelessWidget {
                 ),
               ),
             ),
+            accountName: Text('${_homeController.user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
+            accountEmail: Text('${_homeController.user.email}'),
             decoration: BoxDecoration(
-              color: Colors.blue
+              color: Colors.blue,
             ),
           ),
+          
 
           ListTile(
             leading: Icon(Icons.track_changes),
@@ -70,6 +73,14 @@ class DrawerHome extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('Sobre'),
             onTap: (){},
+          ),
+
+          Divider(color: Colors.blueGrey[200],),
+
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Sair'),
+            onTap: () {LoginController().logout();},
           ),
           
         ],

@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_controller.dart';
 import 'package:habito_invest_app/app/theme/app_theme.dart';
 
-class GoalsDefinitionPage extends StatelessWidget{
-final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionController();
+class GoalsDefinitionPage extends GetView<GoalsDefinitionController>{
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +24,19 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: _goalsDefinitionController.buttonColorPercentage),
+                        side: BorderSide(color: controller.buttonColorPercentage),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                       ),
                       child: Text(
                         'Porcentagem',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: _goalsDefinitionController.buttonColorPercentage,
+                          color: controller.buttonColorPercentage,
                         )
                       ),
 
                       onPressed: () {  
-                        _goalsDefinitionController.percentageButtonSelect();
+                        controller.percentageButtonSelect();
                       }
                     ),
                   ),
@@ -45,19 +44,19 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: _goalsDefinitionController.buttonColorFixedValue),
+                        side: BorderSide(color: controller.buttonColorFixedValue),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                       ),
                       child: Text(
                         'Valor Fixo',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: _goalsDefinitionController.buttonColorFixedValue,
+                          color: controller.buttonColorFixedValue,
                         )
                       ),
 
                       onPressed: () {  
-                      _goalsDefinitionController.fixedValueButtonSelect();
+                      controller.fixedValueButtonSelect();
                       }
                     ),
                   ),
@@ -72,7 +71,7 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          _goalsDefinitionController.inicioValor,
+                          controller.inicioValor,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold
@@ -80,7 +79,7 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                         ),
 
                         Text(
-                            _goalsDefinitionController.valor,
+                            controller.valor,
                             style: TextStyle(
                               fontSize: 80,
                               color: Colors.black
@@ -88,7 +87,7 @@ final GoalsDefinitionController _goalsDefinitionController = GoalsDefinitionCont
                           ),
   
                         Text(
-                          _goalsDefinitionController.fimValor,
+                          controller.fimValor,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold
