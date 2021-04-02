@@ -27,17 +27,17 @@ class NavigationBar extends StatelessWidget{
           BubbleBottomBarItem(
             backgroundColor: Colors.purple,
             icon: Icon(Icons.credit_card, color: Colors.black),
-            activeIcon: Icon(Icons.dashboard, color: Colors.purple),
+            activeIcon: Icon(Icons.credit_card, color: Colors.purple),
             title: Text('Ver aqui')
           ),
 
           BubbleBottomBarItem(
             backgroundColor: Colors.red,
             icon: Icon(Icons.view_list, color: Colors.black),
-            activeIcon: Icon(Icons.dashboard, color: Colors.red),
-            title: Text('Metas')
+            activeIcon: Icon(Icons.view_list, color: Colors.red),
+            title: Text('Metas'),
           ),
-          
+
         ],
       )
     );

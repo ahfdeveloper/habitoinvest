@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
-class InitialController extends GetxController {
+class SplashScreenController extends GetxController {
   final box = GetStorage('habito_invest_app');
 
   @override

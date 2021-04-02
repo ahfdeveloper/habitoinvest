@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'components/drawer.dart';
@@ -44,45 +45,45 @@ class HomePage extends StatelessWidget{
               childAspectRatio: 1.8,
               children: [
                 GestureDetector(
-                  onTap: (){Get.toNamed(Routes.INCOME_LIST);},
+                  onTap: () => Get.toNamed(Routes.INCOME_LIST),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: INCOMECOLOR,
                       borderRadius: BorderRadius.circular(15)
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Receita')
+                        Text('Receita', style: TextStyle(color: Colors.white),),
                       ],
                     ),
                   ),
                 ),
 
                 GestureDetector(
-                  onTap: (){},
+                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: EXPENSECOLOR,
                       borderRadius: BorderRadius.circular(15)
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Despesa')
+                        Text('Despesa', style: TextStyle(color: Colors.white),)
                       ],
                     ),
                   ),
                 ),
 
                 GestureDetector(
-                  onTap: (){},
+                  onTap: () => Get.toNamed(Routes.INVEST_LIST),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.yellow,
+                      color: INVESTCOLOR,
                       borderRadius: BorderRadius.circular(15)
                     ),
                     child: Stack(

@@ -9,7 +9,6 @@ final ThemeData appThemeData = ThemeData(
   accentColor: Colors.blue,
   appBarTheme: AppBarTheme(color: Colors.blue),
 
-
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       backgroundColor: Colors.white,

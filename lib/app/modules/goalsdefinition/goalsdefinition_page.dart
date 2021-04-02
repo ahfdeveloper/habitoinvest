@@ -3,19 +3,18 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_controller.dart';
 import 'package:habito_invest_app/app/theme/app_theme.dart';
 
-class GoalsDefinitionPage extends GetView<GoalsDefinitionController>{
+class GoalsDefinitionPage extends StatelessWidget{
+  final GoalsDefinitionController controller = GoalsDefinitionController();
 
   @override
   Widget build(BuildContext context) {
-    
     const dialogPadding = 8.0;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('XXX'),
+        title: Text(controller.title),
       ),
       body: Container(
-        height: 500.0,
         child: Obx(
           () =>  Column(
             children:[

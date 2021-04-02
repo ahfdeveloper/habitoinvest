@@ -22,7 +22,7 @@ class LoginController extends GetxController {
 
 
   // Verifica se já existe usuário logado
-  void isLogged(){
+  void isLogged() {
     if(box.hasData('auth')){
       UserModel user = UserModel(
         id: box.read('auth')['id'],

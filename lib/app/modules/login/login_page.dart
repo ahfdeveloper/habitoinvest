@@ -5,8 +5,8 @@ import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 
-class LoginPage extends GetView<LoginController> {
-  //final LoginController controller = Get.find<LoginController>();
+class LoginPage extends StatelessWidget {
+  final LoginController controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class LoginPage extends GetView<LoginController> {
                 padding: EdgeInsets.zero,
                 child: OutlinedButton(
                   onPressed: (){
-                    Get.offAndToNamed(Routes.REGISTER);
+                    Get.offAndToNamed(Routes.REGISTER_USER);
                   }, 
                   style: OutlinedButton.styleFrom(backgroundColor: Colors.white),
                   child: Text('CADASTRE-SE', style: TextStyle(fontSize: 14.0))

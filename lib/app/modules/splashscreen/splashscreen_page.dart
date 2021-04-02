@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/modules/initial/initial_controller.dart';
+import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_controller.dart';
 
 // Implementação do SplashScreen do app
-class InitialPage extends GetView<InitialController> {
+class SplashScreenPage extends GetView<SplashScreenController> {
   
   @override
   Widget build(BuildContext context) {

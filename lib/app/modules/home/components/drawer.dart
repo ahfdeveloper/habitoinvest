@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class DrawerHome extends StatelessWidget {
-  final HomeController _homeController = HomeController();
-
-
+  final HomeController _controller = Get.find<HomeController>();
+  
   @override
   Widget build(Object context) {
     return Drawer(
@@ -18,16 +17,16 @@ class DrawerHome extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.blue[300],
               child: ClipOval(
-                child: Image.asset(
-                  _homeController.user.urlimage != null ? _homeController.user.urlimage : 'assets/user.png',
+                /* child: Image.asset(
+                  controller.user.urlimage != null ? controller.user.urlimage : 'assets/user.png',
                   width: 90, 
                   height: 90,
                   fit: BoxFit.cover
-                ),
+                ), */
               ),
             ),
-            accountName: Text('${_homeController.user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-            accountEmail: Text('${_homeController.user.email}'),
+            accountName: Text('${_controller.user.name}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
+            accountEmail: Text('${_controller.user.email}'),
             decoration: BoxDecoration(
               color: Colors.blue,
             ),

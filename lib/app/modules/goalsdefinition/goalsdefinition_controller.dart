@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GoalsDefinitionController extends GetxController {
+  final String _title = Get.arguments;
+
+  get title => this._title;
 
   static const MaterialColor grey = const MaterialColor(
     0xBDBDBDBD,
     const <int, Color>{}
   );
 
+  // controller do TextEditing do valor da meta a ser definida
   final TextEditingController valueTextController = TextEditingController();
-  
 
   // Cores dos botões Porcentagem e Valor Fixo
   Rx<Color> _buttonColorPercentage = Colors.blue.obs;

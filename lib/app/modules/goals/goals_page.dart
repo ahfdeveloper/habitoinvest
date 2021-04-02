@@ -21,14 +21,15 @@ class GoalsPage extends StatelessWidget {
                   elevation: 3.0,
                   child: InkWell(
                     onTap: () {
-                      Get.toNamed(Routes.DEFINITION_GOALS);
+                      Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Investimentos');
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(9.0),
                       child: Row(
                         children: [
                           Expanded(
-                              flex: 1, child: Icon(Icons.ac_unit_outlined)),
+                            flex: 1, child: Icon(Icons.monetization_on),
+                          ),
                           Expanded(
                             flex: 4,
                             child: Column(
@@ -38,16 +39,17 @@ class GoalsPage extends StatelessWidget {
                                   'Investimentos',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700]),
+                                    fontSize: 16,
+                                    color: Colors.grey[700],
+                                  ),
                                 ),
                                 
                                 Text(
                                   '30%',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
                                 ),
 
                                 Text(
@@ -69,7 +71,7 @@ class GoalsPage extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.deepPurple.withOpacity(0.3),
                     onTap: () {
-                      Get.toNamed(Routes.DEFINITION_GOALS);
+                      Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Gastos não essenciais');
                     },
                     
                     child: Padding(
@@ -77,20 +79,21 @@ class GoalsPage extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                              flex: 1,
-                              child: Icon(Icons.ac_unit_outlined)),
+                            flex: 1,
+                            child: Icon(Icons.ac_unit_outlined),
+                          ),
                           Expanded(
                             flex: 4,
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Gastos não essenciais',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[700]),
+                                    fontSize: 16,
+                                    color: Colors.grey[700],
+                                  ),
                                 ),
                                 Text(
                                   'R\$1.500,00',
@@ -103,9 +106,8 @@ class GoalsPage extends StatelessWidget {
                                 Text(
                                   'por período',
                                   textAlign: TextAlign.left,
-                                  style:
-                                      TextStyle(color: Colors.grey[600]),
-                                )
+                                  style: TextStyle(color: Colors.grey[600]),
+                                ),
                               ],
                             ),
                           ),
