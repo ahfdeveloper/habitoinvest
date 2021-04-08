@@ -4,7 +4,7 @@ import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_co
 import 'package:habito_invest_app/app/theme/app_theme.dart';
 
 class GoalsDefinitionPage extends StatelessWidget{
-  final GoalsDefinitionController controller = GoalsDefinitionController();
+  final GoalsDefinitionController _controller = GoalsDefinitionController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class GoalsDefinitionPage extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.title),
+        title: Text(_controller.title),
       ),
       body: Container(
         child: Obx(
@@ -23,19 +23,19 @@ class GoalsDefinitionPage extends StatelessWidget{
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: controller.buttonColorPercentage),
+                        side: BorderSide(color: _controller.buttonColorPercentage),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                       ),
                       child: Text(
                         'Porcentagem',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: controller.buttonColorPercentage,
+                          color: _controller.buttonColorPercentage,
                         )
                       ),
 
                       onPressed: () {  
-                        controller.percentageButtonSelect();
+                        _controller.percentageButtonSelect();
                       }
                     ),
                   ),
@@ -43,19 +43,19 @@ class GoalsDefinitionPage extends StatelessWidget{
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: controller.buttonColorFixedValue),
+                        side: BorderSide(color: _controller.buttonColorFixedValue),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                       ),
                       child: Text(
                         'Valor Fixo',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: controller.buttonColorFixedValue,
+                          color: _controller.buttonColorFixedValue,
                         )
                       ),
 
                       onPressed: () {  
-                      controller.fixedValueButtonSelect();
+                      _controller.fixedValueButtonSelect();
                       }
                     ),
                   ),
@@ -70,7 +70,7 @@ class GoalsDefinitionPage extends StatelessWidget{
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          controller.inicioValor,
+                          _controller.inicioValor,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold
@@ -78,7 +78,7 @@ class GoalsDefinitionPage extends StatelessWidget{
                         ),
 
                         Text(
-                            controller.valor,
+                            _controller.valor,
                             style: TextStyle(
                               fontSize: 80,
                               color: Colors.black
@@ -86,7 +86,7 @@ class GoalsDefinitionPage extends StatelessWidget{
                           ),
   
                         Text(
-                          controller.fimValor,
+                          _controller.fimValor,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold

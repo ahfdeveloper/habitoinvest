@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
+import 'package:intl/intl.dart';
 
-class IncomeAddUpdatePage extends StatelessWidget{
-  final IncomeAddUpdateController _controller = IncomeAddUpdateController();
 
+class ExpenseAddUpdate extends StatelessWidget{
+  
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: INCOMECOLOR,
-        title: Text('Cadastrar Receita'),
+        backgroundColor: EXPENSECOLOR,
+        title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () { Get.back(); },
+            onPressed: () {  },
             icon: Icon(Icons.cancel, color: TEXTCOLORLIGHT),
           ),
 
@@ -33,18 +32,37 @@ class IncomeAddUpdatePage extends StatelessWidget{
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _controller.dateTextFormFieldController,
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(labelText: 'Data'),
-              focusNode: AlwaysDisabledFocusNode(),
-              onTap: () => _controller.selectDate(context),
+              decoration: InputDecoration(
+                labelText: 'Data',
+              ),
+              onTap: () async {
+                FocusScope.of(context).requestFocus(FocusNode());
+                Future <DateTime> selectDate = showDatePicker(
+                  context: context, 
+                  initialDate: DateTime.now(), 
+                  firstDate: DateTime(2021), 
+                  lastDate: DateTime(2050),
+                  builder: (BuildContext context, Widget child){
+                    return Theme(data: ThemeData.light().copyWith(
+                      primaryColor: EXPENSECOLOR,
+                      accentColor: EXPENSECOLOR,
+                    ), 
+                    child: child);
+                  }
+                );
+                if(selectDate != null){
+                  
+                }
+              },
+              initialValue: DateFormat('dd/MM/yyyy').format(DateTime.now()),
             ),
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
-                labelText: 'Nome',                
+                labelText: 'Nome',
               ),
             ),
             SizedBox(height: 5.0),
@@ -71,7 +89,7 @@ class IncomeAddUpdatePage extends StatelessWidget{
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 labelText: 'Observações',
-                alignLabelWithHint: true
+                alignLabelWithHint: true,
               ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
@@ -79,14 +97,8 @@ class IncomeAddUpdatePage extends StatelessWidget{
           ],
 
         ),
-        
-
       ),
     );
   }
-}
 
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

@@ -24,7 +24,7 @@ class AppPages{
     GetPage(name: Routes.GOALS, page: () => GoalsPage()),
     GetPage(name: Routes.DEFINITION_GOALS, page: () => GoalsDefinitionPage()),
     GetPage(name: Routes.INCOME_LIST, page: () => IncomeList()),
-    GetPage(name: Routes.INCOME_ADD, page: () => IncomeAddUpdate()),
+    GetPage(name: Routes.INCOME_ADD, page: () => IncomeAddUpdatePage()),
     GetPage(name: Routes.EXPENSE_LIST, page: () => ExpenseList()),
     GetPage(name: Routes.INVEST_LIST, page: () => InvestList())
   ];
