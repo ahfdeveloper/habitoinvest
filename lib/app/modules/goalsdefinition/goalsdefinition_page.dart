@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_controller.dart';
 import 'package:habito_invest_app/app/theme/app_theme.dart';
 
@@ -12,7 +13,8 @@ class GoalsDefinitionPage extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_controller.title),
+        title: Text(_controller.title, style: TextStyle(color: TEXTCOLORLIGHT)),
+        backgroundColor: THEMECOLOR,
       ),
       body: Container(
         child: Obx(

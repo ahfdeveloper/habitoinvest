@@ -16,7 +16,7 @@ class ExpenseList extends StatelessWidget{
         
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(null),
+        onPressed: () => Get.toNamed(Routes.EXPENSE_ADDUPDATE),
         backgroundColor: EXPENSECOLOR,
         tooltip: 'Nova Despesa',
         child: Icon(Icons.add),

@@ -8,9 +8,9 @@ class HomeController extends GetxController {
   // Setter e Getter para variável currentIndex, para que a responsabilidade pela
   // alteração dos estados fique sob responsabilidade do controller
   get currentIndex => this._currentIndex.value;
-  set currentIndex(value) => this._currentIndex.value = value; 
+  set currentIndex(value) => this._currentIndex.value = value;
 
-  void changePage(int index){
+  void changePage(int index) async{
     currentIndex = index;
   }
 

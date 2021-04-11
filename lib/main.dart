@@ -20,7 +20,6 @@ void main() async {
     DeviceOrientation.portraitUp
   ]);
   
-  
   runApp(
     GetMaterialApp(
       title: 'Hábito Invest',
@@ -35,7 +34,7 @@ void main() async {
       
       //Setando as rotas
       getPages: AppPages.routes,
-      initialRoute: Routes.INITIAL,
+      initialRoute: Routes.SPLASH,
     )
   );
 }

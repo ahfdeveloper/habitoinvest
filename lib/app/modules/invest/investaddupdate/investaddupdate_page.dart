@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
+import 'package:habito_invest_app/app/modules/invest/investaddupdate/investaddupdate_controller.dart';
 
-class IncomeAddUpdatePage extends StatelessWidget{
-  final IncomeAddUpdateController _controller = IncomeAddUpdateController();
+class InvestAddUpdatePage extends StatelessWidget{
+  final InvestAddUpdateController _controller = InvestAddUpdateController();
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: INCOMECOLOR,
-        title: Text('Cadastrar Receita'),
+        backgroundColor: INVESTCOLOR,
+        title: Text('Cadastrar Investimento', style: TextStyle(fontSize: 17.0)),
+        iconTheme: IconThemeData(color: TEXTCOLORLIGHT),
         actions: [
           IconButton(
             onPressed: () { Get.back(); },
@@ -38,24 +39,6 @@ class IncomeAddUpdatePage extends StatelessWidget{
               decoration: InputDecoration(labelText: 'Data'),
               focusNode: AlwaysDisabledFocusNode(),
               onTap: () => _controller.selectDate(context),
-            ),
-            SizedBox(height: SPACEFORMS),
-
-            TextFormField(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Nome',                
-              ),
-            ),
-            SizedBox(height: 5.0),
-
-            DropdownButtonFormField(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              items: [],
-              decoration: InputDecoration(
-                labelText: 'Categoria',
-                labelStyle: TextStyle(fontWeight: FontWeight.bold),
-              ),
             ),
             SizedBox(height: SPACEFORMS),
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:intl/intl.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
+import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 
+class ExpenseAddUpdatePage extends StatelessWidget{
+  final ExpenseAddUpdateController _controller = ExpenseAddUpdateController();
 
-class ExpenseAddUpdate extends StatelessWidget{
-  
   @override
   Widget build(BuildContext context) {
     
@@ -15,12 +17,12 @@ class ExpenseAddUpdate extends StatelessWidget{
         title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () {  },
+            onPressed: () { Get.back(); },
             icon: Icon(Icons.cancel, color: TEXTCOLORLIGHT),
           ),
 
           IconButton(
-            onPressed: () { },
+            onPressed: () { /*Código para salvar*/ },
             icon: Icon(Icons.save, color: TEXTCOLORLIGHT),
           ),
         ],
@@ -32,37 +34,18 @@ class ExpenseAddUpdate extends StatelessWidget{
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
+              controller: _controller.dateTextFormFieldController,
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Data',
-              ),
-              onTap: () async {
-                FocusScope.of(context).requestFocus(FocusNode());
-                Future <DateTime> selectDate = showDatePicker(
-                  context: context, 
-                  initialDate: DateTime.now(), 
-                  firstDate: DateTime(2021), 
-                  lastDate: DateTime(2050),
-                  builder: (BuildContext context, Widget child){
-                    return Theme(data: ThemeData.light().copyWith(
-                      primaryColor: EXPENSECOLOR,
-                      accentColor: EXPENSECOLOR,
-                    ), 
-                    child: child);
-                  }
-                );
-                if(selectDate != null){
-                  
-                }
-              },
-              initialValue: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+              decoration: InputDecoration(labelText: 'Data'),
+              focusNode: AlwaysDisabledFocusNode(),
+              onTap: () => _controller.selectDate(context),
             ),
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
-                labelText: 'Nome',
+                labelText: 'Nome',                
               ),
             ),
             SizedBox(height: 5.0),
@@ -89,7 +72,7 @@ class ExpenseAddUpdate extends StatelessWidget{
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 labelText: 'Observações',
-                alignLabelWithHint: true,
+                alignLabelWithHint: true
               ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
@@ -97,8 +80,14 @@ class ExpenseAddUpdate extends StatelessWidget{
           ],
 
         ),
+        
+
       ),
     );
   }
+}
 
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 
 class NavigationBar extends StatelessWidget{
@@ -18,24 +19,24 @@ class NavigationBar extends StatelessWidget{
 
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: Colors.blue[700],
-            icon: Icon(Icons.dashboard, color: Colors.black),
-            activeIcon: Icon(Icons.dashboard, color: Colors.blue[700]),
+            backgroundColor: THEMECOLOR,
+            icon: Icon(Icons.dashboard, color: GENERALLYDEFAULTCOLOR),
+            activeIcon: Icon(Icons.dashboard, color: THEMECOLOR),
             title: Text('Início')
           ),
 
           BubbleBottomBarItem(
-            backgroundColor: Colors.purple,
-            icon: Icon(Icons.credit_card, color: Colors.black),
-            activeIcon: Icon(Icons.credit_card, color: Colors.purple),
-            title: Text('Ver aqui')
+            backgroundColor: EXPENSECOLOR,
+            icon: Icon(Icons.credit_card, color: GENERALLYDEFAULTCOLOR),
+            activeIcon: Icon(Icons.credit_card, color: EXPENSECOLOR),
+            title: Text('Projeção Gastos'),
           ),
 
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.view_list, color: Colors.black),
-            activeIcon: Icon(Icons.view_list, color: Colors.red),
-            title: Text('Metas'),
+            backgroundColor: INVESTCOLOR,
+            icon: Image.asset('assets/pig_safe.png', color: GENERALLYDEFAULTCOLOR,),
+            activeIcon: Image.asset('assets/pig_safe.png', color: INVESTCOLOR),
+            title: Text('Projeção metas'),
           ),
 
         ],

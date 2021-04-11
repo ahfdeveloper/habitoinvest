@@ -16,7 +16,7 @@ class IncomeList extends StatelessWidget{
         
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => Get.toNamed(Routes.INCOME_ADD),
+        onPressed: () async => Get.toNamed(Routes.INCOME_ADDUPDATE),
         backgroundColor: INCOMECOLOR,
         tooltip: 'Nova Receita',
         child: Icon(Icons.add),

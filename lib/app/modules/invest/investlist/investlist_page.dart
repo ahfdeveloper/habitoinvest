@@ -9,18 +9,20 @@ class InvestList extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Investimentos', style: TextStyle(color: TEXTCOLORDARK)),
+        title: Text('Investimentos'),
         backgroundColor: INVESTCOLOR,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: TEXTCOLORLIGHT),
       ),
+      
       body: Center(
         
       ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.INCOME_ADD),
+        onPressed: () => Get.toNamed(Routes.INVEST_ADDUPDATE),
         backgroundColor: INVESTCOLOR,
         tooltip: 'Novo Investimento',
-        child: Icon(Icons.add, color: Colors.black),
+        child: Icon(Icons.add, color: TEXTCOLORLIGHT),
       ),
     );
   }

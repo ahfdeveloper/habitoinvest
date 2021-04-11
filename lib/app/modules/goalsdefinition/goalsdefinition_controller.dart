@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 
 class GoalsDefinitionController extends GetxController {
   final String _title = Get.arguments;
@@ -15,8 +16,8 @@ class GoalsDefinitionController extends GetxController {
   final TextEditingController valueTextController = TextEditingController();
 
   // Cores dos botões Porcentagem e Valor Fixo
-  Rx<Color> _buttonColorPercentage = Colors.blue.obs;
-  Rx<Color> _buttonColorFixedValue = Colors.blue.obs;
+  Rx<Color> _buttonColorPercentage = THEMECOLOR.obs;
+  Rx<Color> _buttonColorFixedValue = THEMECOLOR.obs;
   
   /* Variáveis a serem alteradas dependendo se usuário escolher definir um valor em
     porcentagem ou valor fixo */

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class GoalsPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text('Definir Metas'),
+        backgroundColor: THEMECOLOR,
       ),
       body: Column(
         children: [
@@ -28,7 +31,7 @@ class GoalsPage extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 1, child: Icon(Icons.monetization_on),
+                            flex: 1, child: Icon(Icons.monetization_on, color: Colors.grey[700]),
                           ),
                           Expanded(
                             flex: 4,
@@ -38,10 +41,7 @@ class GoalsPage extends StatelessWidget {
                                 Text(
                                   'Investimentos',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[700],
-                                  ),
+                                  style: TextStyle(fontSize: 16, color: GENERALLYDEFAULTCOLOR),
                                 ),
                                 
                                 Text(
@@ -49,13 +49,14 @@ class GoalsPage extends StatelessWidget {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontSize: 25,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800]),
                                 ),
 
                                 Text(
                                   'do total das receitas',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.grey[600]),
+                                  style: TextStyle(color: GENERALLYDEFAULTCOLOR),
                                 )
                               ],
                             ),
@@ -80,7 +81,7 @@ class GoalsPage extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: Icon(Icons.ac_unit_outlined),
+                            child: Icon(Icons.payments, color: Colors.grey[700]),
                           ),
                           Expanded(
                             flex: 4,
@@ -90,10 +91,7 @@ class GoalsPage extends StatelessWidget {
                                 Text(
                                   'Gastos não essenciais',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[700],
-                                  ),
+                                  style: TextStyle(fontSize: 16, color: GENERALLYDEFAULTCOLOR),
                                 ),
                                 Text(
                                   'R\$1.500,00',
@@ -101,12 +99,13 @@ class GoalsPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800],
                                   ),
                                 ),
                                 Text(
                                   'por período',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.grey[600]),
+                                  style: TextStyle(color: GENERALLYDEFAULTCOLOR),
                                 ),
                               ],
                             ),

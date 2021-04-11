@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:habito_invest_app/app/global/widgets/colors.dart';
 
 
 final ThemeData appThemeData = ThemeData(
-  primarySwatch: Colors.blue,
-  primaryColor: Colors.blue,
-  brightness: Brightness.light,
-  accentColor: Colors.blue,
-  appBarTheme: AppBarTheme(color: Colors.blue),
 
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
@@ -21,7 +17,7 @@ final ThemeData appThemeData = ThemeData(
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(Colors.blue),
+      backgroundColor: MaterialStateProperty.all(THEMECOLOR),
       textStyle: MaterialStateProperty.all(
         TextStyle(
           color: Colors.white,

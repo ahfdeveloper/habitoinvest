@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
@@ -7,27 +8,38 @@ import 'components/drawer.dart';
 
 
 class HomePage extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        centerTitle: true,
-        backgroundColor: Colors.grey[200],
-        shadowColor: Colors.transparent,
-        title: Column(
-          children: [
-            Text('Meu saldo', style: TextStyle(color: Colors.black, fontSize: 10.0),),
-            Text('R\$2.000,00', style: TextStyle(color: Colors.black),)
-          ],
-        ),
-      ),
-      backgroundColor: Colors.grey[200],
-      drawer: DrawerHome(),
-      bottomNavigationBar: NavigationBar(),
 
-      body: Column(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+      ), 
+    
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
+          shadowColor: Colors.transparent,
+          backgroundColor: BACKGROUNDCOLOR,
+          title: Column(
+            children: [
+              Text('Meu saldo', style: TextStyle(fontSize: 11.0, color: TEXTCOLORDARK)),
+              Text('R\$2.000,00', style: TextStyle(color: TEXTCOLORDARK, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+
+        backgroundColor: BACKGROUNDCOLOR,
+        drawer: DrawerHome(),
+        bottomNavigationBar: NavigationBar(),
+
+        body: Column(
           children: [
+
             Expanded(
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey[200]),
@@ -55,7 +67,10 @@ class HomePage extends StatelessWidget{
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Receita', style: TextStyle(color: Colors.white),),
+                        Text(
+                          'Receitas', 
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),
@@ -72,7 +87,10 @@ class HomePage extends StatelessWidget{
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Despesa', style: TextStyle(color: Colors.white),)
+                        Text(
+                          'Despesas', 
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),
@@ -84,12 +102,15 @@ class HomePage extends StatelessWidget{
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: INVESTCOLOR,
-                      borderRadius: BorderRadius.circular(15)
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Investir')
+                        Text(
+                          'Investir', 
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                   ),
@@ -101,12 +122,15 @@ class HomePage extends StatelessWidget{
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.red[100],
-                      borderRadius: BorderRadius.circular(15)
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Simular Despesa')
+                        Text(
+                          'Simular Despesa', 
+                          style: TextStyle(fontWeight: FontWeight.bold)
+                        ),
                       ],
                     ),
                   ),
@@ -115,10 +139,7 @@ class HomePage extends StatelessWidget{
             ),
           ],
         ),
-      );
-      
-
-    
-
+      ),
+    );
   }
 }

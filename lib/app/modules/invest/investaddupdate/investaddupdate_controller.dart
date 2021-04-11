@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:intl/intl.dart';
 
-class IncomeAddUpdateController extends GetxController {
-  final TextEditingController dateTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+class InvestAddUpdateController extends GetxController {
+
+final TextEditingController dateTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
   // Pegar data selecionada no Date Picker e setar textformfield
   selectDate(BuildContext context) async {
@@ -15,7 +16,12 @@ class IncomeAddUpdateController extends GetxController {
       lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child){
         return Theme(
-          data: ThemeData.from(colorScheme: ColorScheme.light(primary: INCOMECOLOR)),     
+          data: ThemeData.from(
+            colorScheme: ColorScheme.light(
+              primary: INVESTCOLOR, 
+              onPrimary: TEXTCOLORLIGHT
+            )
+          ),     
           child: child
         );
       }    
@@ -28,5 +34,5 @@ class IncomeAddUpdateController extends GetxController {
             offset: dateTextFormFieldController.text.length,
             affinity: TextAffinity.upstream));
     }
-  } 
+  }
 }
