@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget{
@@ -35,7 +36,7 @@ class IncomeAddUpdatePage extends StatelessWidget{
             TextFormField(
               controller: _controller.dateTextFormFieldController,
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(labelText: 'Data'),
+              decoration: textFormFieldDecoration1('Data', null, false),
               focusNode: AlwaysDisabledFocusNode(),
               onTap: () => _controller.selectDate(context),
             ),
@@ -43,36 +44,26 @@ class IncomeAddUpdatePage extends StatelessWidget{
 
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Nome',                
-              ),
+              decoration: textFormFieldDecoration1('Nome', null, false)
             ),
             SizedBox(height: 5.0),
 
             DropdownButtonFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
               items: [],
-              decoration: InputDecoration(
-                labelText: 'Categoria',
-                labelStyle: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              decoration: textFormFieldDecoration1('Categoria', null, false)
             ),
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Valor',
-              ),
+              decoration: textFormFieldDecoration1('Valor', null, false)
             ),
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Observações',
-                alignLabelWithHint: true
-              ),
+              decoration: textFormFieldDecoration1('Observações', null, true),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),

@@ -36,23 +36,26 @@ class DrawerHome extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.track_changes, color: GENERALLYDEFAULTCOLOR),
             title: Text('Definir metas', style: TextStyle(color: GENERALLYDEFAULTCOLOR)),
-            onTap: (){
-              Get.offAndToNamed(Routes.GOALS);
-            },
+            onTap: () => Get.offAndToNamed(Routes.GOALS),
           ),
           ListTile(
             leading: Icon(Icons.calculate, color: GENERALLYDEFAULTCOLOR),
             title: Text('Simular Investimento', style: TextStyle(color: GENERALLYDEFAULTCOLOR)),
-            onTap: (){},
+            onTap: () => Get.offAndToNamed(Routes.SIMULATOR),
           ),
           ListTile(
             leading: Icon(Icons.category, color: GENERALLYDEFAULTCOLOR,),
             title: Text('Categorias', style: TextStyle(color: GENERALLYDEFAULTCOLOR)),
-            onTap: (){},
+            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST),
           ),
           ListTile(
             leading: Icon(Icons.view_list, color: GENERALLYDEFAULTCOLOR),
             title: Text('Relatórios', style: TextStyle(color: GENERALLYDEFAULTCOLOR)),
+            onTap: (){},
+          ),
+          ListTile(
+            leading: Icon(Icons.settings, color: GENERALLYDEFAULTCOLOR),
+            title: Text('Parâmetros', style: TextStyle(color: GENERALLYDEFAULTCOLOR)),
             onTap: (){},
           ),
 

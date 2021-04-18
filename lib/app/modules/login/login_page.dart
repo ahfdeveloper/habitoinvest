@@ -11,7 +11,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -51,7 +50,7 @@ class LoginPage extends StatelessWidget {
                   contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0)
-                  )
+                  ),
                 ),
               ),
 

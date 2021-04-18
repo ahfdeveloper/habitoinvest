@@ -1,4 +1,6 @@
 import 'package:get/route_manager.dart';
+import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_page.dart';
+import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_page.dart';
 import 'package:habito_invest_app/app/modules/home/home_binding.dart';
@@ -7,6 +9,7 @@ import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_page.
 import 'package:habito_invest_app/app/modules/invest/investaddupdate/investaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/invest/investlist/investlist_page.dart';
 import 'package:habito_invest_app/app/modules/login/login_binding.dart';
+import 'package:habito_invest_app/app/modules/simulator/simulator_page.dart';
 import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_binding.dart';
 import 'package:habito_invest_app/app/modules/userregister/register_page.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
@@ -30,6 +33,9 @@ class AppPages{
     GetPage(name: Routes.EXPENSE_LIST, page: () => ExpenseList()),
     GetPage(name: Routes.EXPENSE_ADDUPDATE, page: () => ExpenseAddUpdatePage()),
     GetPage(name: Routes.INVEST_LIST, page: () => InvestList()),
-    GetPage(name: Routes.INVEST_ADDUPDATE, page: () => InvestAddUpdatePage())
+    GetPage(name: Routes.INVEST_ADDUPDATE, page: () => InvestAddUpdatePage()),
+    GetPage(name: Routes.CATEGORIES_LIST, page: () => CategoriesList()),
+    GetPage(name: Routes.CATEGORIES_ADDUPDATE, page: () => CategoriesAddUpdatePage()),
+    GetPage(name: Routes.SIMULATOR, page: () => SimulatorPage())
   ];
 }

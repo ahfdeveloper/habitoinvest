@@ -39,7 +39,6 @@ class HomePage extends StatelessWidget{
 
         body: Column(
           children: [
-
             Expanded(
               child: Container(
                 decoration: BoxDecoration(color: Colors.grey[200]),

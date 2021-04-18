@@ -23,6 +23,7 @@ class GoalsPage extends StatelessWidget {
                 Card(
                   elevation: 3.0,
                   child: InkWell(
+                    splashColor: Colors.blue.withOpacity(0.3),
                     onTap: () {
                       Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Investimentos');
                     },
@@ -70,7 +71,7 @@ class GoalsPage extends StatelessWidget {
                 Card(
                   elevation: 3.0,
                   child: InkWell(
-                    splashColor: Colors.deepPurple.withOpacity(0.3),
+                    splashColor: Colors.blue.withOpacity(0.3),
                     onTap: () {
                       Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Gastos não essenciais');
                     },

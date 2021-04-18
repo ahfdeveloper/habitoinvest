@@ -9,7 +9,7 @@ class GoalsDefinitionPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    const dialogPadding = 8.0;
+    const dialogPadding = 5.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -20,48 +20,57 @@ class GoalsDefinitionPage extends StatelessWidget{
         child: Obx(
           () =>  Column(
             children:[
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: _controller.buttonColorPercentage),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                      ),
-                      child: Text(
-                        'Porcentagem',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: _controller.buttonColorPercentage,
-                        )
-                      ),
+              Padding(
+                padding: EdgeInsets.all(3.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: _controller.buttonColorPercentage),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                          ),
+                          child: Text(
+                            'Porcentagem',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: _controller.buttonColorPercentage,
+                            )
+                          ),
 
-                      onPressed: () {  
-                        _controller.percentageButtonSelect();
-                      }
+                          onPressed: () {  
+                            _controller.percentageButtonSelect();
+                          }
+                        ),
+                      ),
                     ),
-                  ),
 
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: _controller.buttonColorFixedValue),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                      ),
-                      child: Text(
-                        'Valor Fixo',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: _controller.buttonColorFixedValue,
-                        )
-                      ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: _controller.buttonColorFixedValue),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                          ),
+                          child: Text(
+                            'Valor Fixo',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: _controller.buttonColorFixedValue,
+                            )
+                          ),
 
-                      onPressed: () {  
-                      _controller.fixedValueButtonSelect();
-                      }
+                          onPressed: () {  
+                          _controller.fixedValueButtonSelect();
+                          }
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               Expanded(

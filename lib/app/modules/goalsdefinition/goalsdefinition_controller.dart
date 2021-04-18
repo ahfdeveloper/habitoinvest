@@ -16,7 +16,7 @@ class GoalsDefinitionController extends GetxController {
   final TextEditingController valueTextController = TextEditingController();
 
   // Cores dos botões Porcentagem e Valor Fixo
-  Rx<Color> _buttonColorPercentage = THEMECOLOR.obs;
+  Rx<Color> _buttonColorPercentage = INCOMECOLOR.obs;
   Rx<Color> _buttonColorFixedValue = THEMECOLOR.obs;
   
   /* Variáveis a serem alteradas dependendo se usuário escolher definir um valor em
