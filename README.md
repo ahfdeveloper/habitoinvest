@@ -1,6 +1,6 @@
-# habito_invest_app
+# Hábito Invest
 
-A new Flutter project.
+App de controle financeiro focado em metas de investimento de gastos não essenciais. O objetivo do app é criar o hábito nas pessoas de investir, pensando em objetivos de médio e longo prazo.
 
 ## Getting Started
 
