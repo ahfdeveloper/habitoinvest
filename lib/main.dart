@@ -5,7 +5,6 @@ import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:habito_invest_app/app/routes/app_pages.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import 'package:habito_invest_app/app/theme/app_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 
@@ -24,7 +23,6 @@ void main() async {
     GetMaterialApp(
       title: 'Hábito Invest',
       debugShowCheckedModeBanner: false,
-      theme: appThemeData,
 
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -34,6 +32,7 @@ void main() async {
       
       //Setando as rotas
       getPages: AppPages.routes,
+      // Chamando a rota inicial
       initialRoute: Routes.SPLASH,
     )
   );

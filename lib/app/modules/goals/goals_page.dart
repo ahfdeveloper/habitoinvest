@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
+import 'package:habito_invest_app/app/modules/goals/components/card_widget.dart';
 
 class GoalsPage extends StatelessWidget {
   
@@ -9,10 +9,12 @@ class GoalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: BACKGROUNDCOLOR,
       appBar: AppBar(
-        title: Text('Definir Metas'),
-        backgroundColor: THEMECOLOR,
+        brightness: Brightness.dark,
+        title: Text('Definir Metas', style: AppTextStyles.appBarTextLight),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: AppColors.black,
       ),
       body: Column(
         children: [
@@ -20,102 +22,13 @@ class GoalsPage extends StatelessWidget {
             padding: EdgeInsets.all(10.0),
             child: Column(
               children: [
-                Card(
-                  elevation: 3.0,
-                  child: InkWell(
-                    splashColor: Colors.blue.withOpacity(0.3),
-                    onTap: () {
-                      Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Investimentos');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1, child: Icon(Icons.monetization_on, color: Colors.grey[700]),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Investimentos',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(fontSize: 16, color: GENERALLYDEFAULTCOLOR),
-                                ),
-                                
-                                Text(
-                                  '30%',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey[800]),
-                                ),
-
-                                Text(
-                                  'do total das receitas',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(color: GENERALLYDEFAULTCOLOR),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ),
-                  ),
-                ),
-
-                Card(
-                  elevation: 3.0,
-                  child: InkWell(
-                    splashColor: Colors.blue.withOpacity(0.3),
-                    onTap: () {
-                      Get.toNamed(Routes.DEFINITION_GOALS, arguments: 'Gastos não essenciais');
-                    },
-                    
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Icon(Icons.payments, color: Colors.grey[700]),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Gastos não essenciais',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(fontSize: 16, color: GENERALLYDEFAULTCOLOR),
-                                ),
-                                Text(
-                                  'R\$1.500,00',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
-                                Text(
-                                  'por período',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(color: GENERALLYDEFAULTCOLOR),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ),
-                  )
-                ),
+                CardWidget(goalName: 'Investimentos', goalValue: '30%', goalUniverse: 'do total das receitas'),
+                SizedBox(height: 5.0),
+                CardWidget(goalName: 'Gastos não essenciais', goalValue: 'R\$1.500,00', goalUniverse: 'por período'),
+                SizedBox(height: 5.0),
+                CardWidget(goalName: 'Gastos não essenciais', goalValue: 'R\$1.500,00', goalUniverse: 'por período'),
+                SizedBox(height: 5.0),
+                CardWidget(goalName: 'Gastos não essenciais', goalValue: 'R\$1.500,00', goalUniverse: 'por período'),
               ],
             )
           ),

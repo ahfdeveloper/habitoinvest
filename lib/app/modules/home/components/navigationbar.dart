@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 
 class NavigationBar extends StatelessWidget{
@@ -19,29 +19,28 @@ class NavigationBar extends StatelessWidget{
 
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: THEMECOLOR,
-            icon: Icon(Icons.dashboard, color: GENERALLYDEFAULTCOLOR),
-            activeIcon: Icon(Icons.dashboard, color: THEMECOLOR),
+            backgroundColor: Colors.black,
+            icon: Icon(Icons.dashboard, color: AppColors.bodyTextPagesColor),
+            activeIcon: Icon(Icons.dashboard, color: Colors.black),
             title: Text('Início')
           ),
 
           BubbleBottomBarItem(
             backgroundColor: EXPENSECOLOR,
-            icon: Icon(Icons.credit_card, color: GENERALLYDEFAULTCOLOR),
+            icon: Icon(Icons.credit_card, color: AppColors.bodyTextPagesColor),
             activeIcon: Icon(Icons.credit_card, color: EXPENSECOLOR),
             title: Text('Projeção Gastos'),
           ),
 
           BubbleBottomBarItem(
             backgroundColor: INVESTCOLOR,
-            icon: Image.asset('assets/pig_safe.png', color: GENERALLYDEFAULTCOLOR,),
+            icon: Image.asset('assets/pig_safe.png', color: AppColors.bodyTextPagesColor,),
             activeIcon: Image.asset('assets/pig_safe.png', color: INVESTCOLOR),
             title: Text('Projeção metas'),
           ),
 
         ],
-      )
+      ),
     );
   }
-
 }

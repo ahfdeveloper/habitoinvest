@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 
 InputDecoration textFormFieldDecoration1(String label, String hint, bool multilines){
@@ -19,7 +19,7 @@ InputDecoration textFormFieldDecoration2(String label, Color borderFocus, bool m
     fillColor: Colors.white,
     labelText: label,
     hintText: 'p.ex. 0.00',
-    labelStyle: TextStyle(fontWeight: FontWeight.bold, color: GENERALLYDEFAULTCOLOR, fontSize: 18),
+    labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.bodyTextPagesColor, fontSize: 18),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5.0), 
       borderSide: BorderSide(color: Colors.grey[100]),

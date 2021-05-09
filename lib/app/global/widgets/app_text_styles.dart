@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+
+class AppTextStyles {
+
+  // Estilo da expressão "Meu saldo" na appBar na HomePage
+  static final TextStyle appBarTextSaldo = GoogleFonts.notoSans(
+    color: AppColors.black,
+    fontSize: 11,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo do valor do saldo que aparece na appBar da HomePage
+  static final TextStyle appBarNumberSaldo = GoogleFonts.notoSans(
+    color: AppColors.black,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor clara
+  static final TextStyle appBarTextDark = GoogleFonts.notoSans(
+    color: AppColors.black,
+    fontSize: 17.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor escura
+  static final TextStyle appBarTextLight = GoogleFonts.notoSans(
+    color: AppColors.white,
+    fontSize: 17.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo padrão usado no corpo das páginas quando o background é claro
+  static final TextStyle generallyTextDarkBody = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    fontSize: 15.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo padrão usado no corpo das páginas quando o background é escuro
+  static final TextStyle generallyTextLightBody = GoogleFonts.notoSans(
+    color: AppColors.white,
+    fontSize: 15.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  //Estilo do cabeçalho presente no card de objetivos
+  static final TextStyle cardHeadTextGoal = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor, 
+    fontSize: 16.0,
+  );
+
+  // Estilo do valor presente no card de objetivos
+  static final TextStyle cardValueTextGoal = GoogleFonts.notoSans(
+    color: AppColors.grey800, 
+    fontSize: 25.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo do rodapé presente no card de objetivos
+  static final TextStyle cardFeatTextGoal = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor, 
+    fontSize: 13.0,
+  );
+
+
+
+}

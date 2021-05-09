@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
@@ -19,12 +19,12 @@ class ExpenseAddUpdatePage extends StatelessWidget{
         actions: [
           IconButton(
             onPressed: () { Get.back(); },
-            icon: Icon(Icons.cancel, color: TEXTCOLORLIGHT),
+            icon: Icon(Icons.cancel, color: AppColors.black),
           ),
 
           IconButton(
             onPressed: () { /*Código para salvar*/ },
-            icon: Icon(Icons.save, color: TEXTCOLORLIGHT),
+            icon: Icon(Icons.save, color: AppColors.black),
           ),
         ],
       ),
@@ -59,7 +59,7 @@ class ExpenseAddUpdatePage extends StatelessWidget{
             Obx(() => 
               DropdownButtonFormField<String>(
                 decoration: textFormFieldDecoration1('Qualidade da despesa', null, false),
-                style: TextStyle(fontWeight: FontWeight.bold, color: TEXTCOLORDARK, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.black, fontSize: 16),
                 value: _controller.selectedExpenseQuality,
                 onChanged: (newValue) {
                   _controller.selectedExpenseQuality(newValue);

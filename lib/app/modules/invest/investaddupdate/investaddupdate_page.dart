@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/modules/invest/investaddupdate/investaddupdate_controller.dart';
@@ -14,16 +14,16 @@ class InvestAddUpdatePage extends StatelessWidget{
       appBar: AppBar(
         backgroundColor: INVESTCOLOR,
         title: Text('Cadastrar Investimento', style: TextStyle(fontSize: 17.0)),
-        iconTheme: IconThemeData(color: TEXTCOLORLIGHT),
+        iconTheme: IconThemeData(color: AppColors.black),
         actions: [
           IconButton(
             onPressed: () { Get.back(); },
-            icon: Icon(Icons.cancel, color: TEXTCOLORLIGHT),
+            icon: Icon(Icons.cancel, color: AppColors.black),
           ),
 
           IconButton(
             onPressed: () { /*Código para salvar*/ },
-            icon: Icon(Icons.save, color: TEXTCOLORLIGHT),
+            icon: Icon(Icons.save, color: AppColors.black),
           ),
         ],
       ),

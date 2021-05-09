@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'components/drawer.dart';
@@ -14,7 +15,6 @@ class HomePage extends StatelessWidget{
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.light,
       ), 
@@ -27,8 +27,8 @@ class HomePage extends StatelessWidget{
           backgroundColor: BACKGROUNDCOLOR,
           title: Column(
             children: [
-              Text('Meu saldo', style: TextStyle(fontSize: 11.0, color: TEXTCOLORDARK)),
-              Text('R\$2.000,00', style: TextStyle(color: TEXTCOLORDARK, fontWeight: FontWeight.bold)),
+              Text('Meu saldo', style: AppTextStyles.appBarTextSaldo),
+              Text('R\$2.000,00', style: AppTextStyles.appBarNumberSaldo),
             ],
           ),
         ),
