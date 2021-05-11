@@ -1,44 +1,40 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 
-class NavigationBar extends StatelessWidget{
+class NavigationBar extends StatelessWidget {
   final HomeController _controller = HomeController();
-  
+
   @override
   Widget build(Object context) {
     return Obx(
-      () => BubbleBottomBar(
-        hasNotch: true,
-        opacity: .1 ,
-        currentIndex: _controller.currentIndex,
-        onTap: _controller.changePage,
-        elevation: 8,
-
-        items: <BubbleBottomBarItem>[
-          BubbleBottomBarItem(
-            backgroundColor: Colors.black,
-            icon: Icon(Icons.dashboard, color: AppColors.bodyTextPagesColor),
-            activeIcon: Icon(Icons.dashboard, color: Colors.black),
-            title: Text('Início')
+      () => BottomNavyBar(
+        selectedIndex: _controller.currentIndex,
+        showElevation: true,
+        itemCornerRadius: 20.0,
+        curve: Curves.easeIn,
+        onItemSelected: _controller.changePage,
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.dashboard),
+            title: Text('Início'),
+            activeColor: AppColors.black,
+            textAlign: TextAlign.center,
           ),
-
-          BubbleBottomBarItem(
-            backgroundColor: EXPENSECOLOR,
-            icon: Icon(Icons.credit_card, color: AppColors.bodyTextPagesColor),
-            activeIcon: Icon(Icons.credit_card, color: EXPENSECOLOR),
+          BottomNavyBarItem(
+            icon: Icon(Icons.people),
             title: Text('Projeção Gastos'),
+            activeColor: AppColors.expenseColor,
+            textAlign: TextAlign.center,
           ),
-
-          BubbleBottomBarItem(
-            backgroundColor: INVESTCOLOR,
-            icon: Image.asset('assets/pig_safe.png', color: AppColors.bodyTextPagesColor,),
-            activeIcon: Image.asset('assets/pig_safe.png', color: INVESTCOLOR),
-            title: Text('Projeção metas'),
+          BottomNavyBarItem(
+            icon: Icon(Icons.message),
+            title: Text('Projeção Metas'),
+            activeColor: AppColors.investcolor,
+            textAlign: TextAlign.center,
           ),
-
         ],
       ),
     );

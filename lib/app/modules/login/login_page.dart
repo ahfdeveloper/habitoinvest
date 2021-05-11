@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
                 controller: controller.emailTextController,
                 // Validação dos dados digitados no campo e-mail
                 validator: (value) {
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return 'Campo obrigatório';
                   } else if(!GetUtils.isEmail(value)){
                     return 'Informe um e-mail válido';
@@ -60,7 +60,7 @@ class LoginPage extends StatelessWidget {
                 controller: controller.passwordTextController,
                 // Validação dos dados digitados no campo
                 validator: (value){
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return 'Campo obrigatório';
                   } else if(value.length < 6){
                     return 'Senha deve possuir no mínimo seis caracteres';
@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(backgroundColor: Get.theme.primaryColor),
                   onPressed: (){
-                    if(_formKey.currentState.validate()){
+                    if(_formKey.currentState!.validate()){
                       controller.login();
                     }
                   }, 

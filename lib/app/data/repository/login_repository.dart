@@ -7,12 +7,12 @@ class LoginRepository {
 final LoginProvider loginProvider = LoginProvider();
 
 
-  Future<UserModel> createUserWithEmailAndPassword(String email, String password, String name){
+  Future<UserModel?> createUserWithEmailAndPassword(String email, String password, String name){
     return loginProvider.createUserWithEmailAndPassword(email, password, name);
   }
 
 
-  Future<UserModel> signInWithEmailAndPassword(String email, String password){
+  Future<UserModel?> signInWithEmailAndPassword(String email, String password){
     return loginProvider.signInWithEmailAndPassword(email, password);
   }
 

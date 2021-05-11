@@ -3,22 +3,20 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 class GoalsDefinitionController extends GetxController {
-  final String _title = Get.arguments;
+  final String? _title = Get.arguments;
 
   get title => this._title;
 
-  static const MaterialColor grey = const MaterialColor(
-    0xBDBDBDBD,
-    const <int, Color>{}
-  );
+  static const MaterialColor grey =
+      const MaterialColor(0xBDBDBDBD, const <int, Color>{});
 
   // controller do TextEditing do valor da meta a ser definida
   final TextEditingController valueTextController = TextEditingController();
 
   // Cores dos botões Porcentagem e Valor Fixo
-  Rx<Color> _buttonColorPercentage = INCOMECOLOR.obs;
+  Rx<Color> _buttonColorPercentage = AppColors.incomeColor.obs;
   Rx<Color> _buttonColorFixedValue = AppColors.themeColor.obs;
-  
+
   /* Variáveis a serem alteradas dependendo se usuário escolher definir um valor em
     porcentagem ou valor fixo */
   RxString _inicioValor = ''.obs;
@@ -35,8 +33,8 @@ class GoalsDefinitionController extends GetxController {
   set fimValor(value) => this._fimValor.value = value;
   get valor => this._valor.value;
   set valor(value) => this._valor.value = value;
-  
-  void percentageButtonSelect(){
+
+  void percentageButtonSelect() {
     this.buttonColorPercentage = Colors.orange;
     this.buttonColorFixedValue = grey;
     this.inicioValor = '';
@@ -44,13 +42,11 @@ class GoalsDefinitionController extends GetxController {
     this.fimValor = '%';
   }
 
-
-  void fixedValueButtonSelect(){
+  void fixedValueButtonSelect() {
     this.buttonColorFixedValue = Colors.orange;
     this.buttonColorPercentage = grey;
     this.inicioValor = 'R\$';
     this.valor = '0';
     this.fimValor = '00';
   }
-
 }

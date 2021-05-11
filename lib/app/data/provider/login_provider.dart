@@ -10,16 +10,16 @@ class LoginProvider{
 
   // Retorna usuário logado
   Stream<UserModel> get authStateChanged => _firebaseAuth.authStateChanges().map(
-    (User currentUser) => UserModel.fromFirebaseUser(currentUser)
+    (User? currentUser) => UserModel.fromFirebaseUser(currentUser!)
   );
 
 
   // Cria usuário
-  Future<UserModel> createUserWithEmailAndPassword(String email, String password, String name) async { 
+  Future<UserModel?> createUserWithEmailAndPassword(String email, String password, String name) async { 
     try { 
-      final currentUser = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user;
+      final currentUser = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password)).user!;
       // Atualizando o nome do usuário
-      await FirebaseAuth.instance.currentUser.updateProfile(displayName: name);
+      await FirebaseAuth.instance.currentUser!.updateProfile(displayName: name);
       return UserModel.fromFirebaseUser(currentUser);
     } catch (e) {
       callError(e);
@@ -29,9 +29,9 @@ class LoginProvider{
 
 
   // Login do usuário
-  Future<UserModel> signInWithEmailAndPassword(String email, String password) async { 
+  Future<UserModel?> signInWithEmailAndPassword(String email, String password) async { 
     try { 
-      final currentUser = (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user; 
+      final currentUser = (await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)).user!; 
       return UserModel.fromFirebaseUser(currentUser);
     } catch (e){
       callError(e);

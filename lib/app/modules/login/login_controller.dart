@@ -37,7 +37,7 @@ class LoginController extends GetxController {
 
   register() async{
     Get.dialog(Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    UserModel user = await loginRepository.createUserWithEmailAndPassword(
+    UserModel? user = await loginRepository.createUserWithEmailAndPassword(
       emailTextController.text, 
       passwordTextController.text, 
       nameTextController.text
@@ -52,7 +52,7 @@ class LoginController extends GetxController {
 
   void login() async{
     Get.dialog(Center(child: CircularProgressIndicator()), barrierDismissible: false);
-    UserModel user = await loginRepository.signInWithEmailAndPassword(
+    UserModel? user = await loginRepository.signInWithEmailAndPassword(
       emailTextController.text, 
       passwordTextController.text
     );

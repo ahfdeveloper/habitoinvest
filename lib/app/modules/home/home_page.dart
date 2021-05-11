@@ -7,24 +7,20 @@ import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'components/drawer.dart';
 
-
-class HomePage extends StatelessWidget{
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.light,
-      ), 
-    
+      ),
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
           shadowColor: Colors.transparent,
-          backgroundColor: BACKGROUNDCOLOR,
+          backgroundColor: AppColors.backgroundColor,
           title: Column(
             children: [
               Text('Meu saldo', style: AppTextStyles.appBarTextSaldo),
@@ -32,20 +28,16 @@ class HomePage extends StatelessWidget{
             ],
           ),
         ),
-
-        backgroundColor: BACKGROUNDCOLOR,
+        backgroundColor: AppColors.backgroundColor,
         drawer: DrawerHome(),
         bottomNavigationBar: NavigationBar(),
-
         body: Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(color: Colors.grey[200]),
-                child: Center(child: Text('Aqui vão os gráficos')),
-              )
-            ),
-
+                child: Container(
+              decoration: BoxDecoration(color: Colors.grey[200]),
+              child: Center(child: Text('Aqui vão os gráficos')),
+            )),
             GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
@@ -60,63 +52,61 @@ class HomePage extends StatelessWidget{
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: INCOMECOLOR,
-                      borderRadius: BorderRadius.circular(15)
-                    ),
+                        color: AppColors.incomeColor,
+                        borderRadius: BorderRadius.circular(15)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Text(
-                          'Receitas', 
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          'Receitas',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 ),
-
                 GestureDetector(
                   onTap: () => Get.toNamed(Routes.EXPENSE_LIST),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: EXPENSECOLOR,
-                      borderRadius: BorderRadius.circular(15)
-                    ),
+                        color: AppColors.expenseColor,
+                        borderRadius: BorderRadius.circular(15)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Text(
-                          'Despesas', 
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          'Despesas',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 ),
-
                 GestureDetector(
                   onTap: () => Get.toNamed(Routes.INVEST_LIST),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: INVESTCOLOR,
+                      color: AppColors.investcolor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Text(
-                          'Investir', 
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          'Investir',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
                 ),
-
                 GestureDetector(
-                  onTap: (){},
+                  onTap: () {},
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -126,15 +116,13 @@ class HomePage extends StatelessWidget{
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text(
-                          'Simular Despesa', 
-                          style: TextStyle(fontWeight: FontWeight.bold)
-                        ),
+                        Text('Simular Despesa',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
                 ),
-              ],    
+              ],
             ),
           ],
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 
-InputDecoration textFormFieldDecoration1(String label, String hint, bool multilines){
+InputDecoration textFormFieldDecoration1(String label, String? hint, bool multilines){
   return InputDecoration(
     labelText: label,
     hintText: hint,
@@ -22,7 +22,7 @@ InputDecoration textFormFieldDecoration2(String label, Color borderFocus, bool m
     labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.bodyTextPagesColor, fontSize: 18),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5.0), 
-      borderSide: BorderSide(color: Colors.grey[100]),
+      borderSide: BorderSide(color: Colors.grey[100]!),
     ),
     focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: borderFocus)),
     alignLabelWithHint: multilines,

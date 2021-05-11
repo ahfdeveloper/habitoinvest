@@ -3,20 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 class ButtonWidget extends StatelessWidget {
-  final String label;
+  final String? label;
   final Color backgroundColor;
   final Color fontColor;
   final Color borderColor;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
-  ButtonWidget.black({String label, VoidCallback onTap}):
+  ButtonWidget.black({String? label, VoidCallback? onTap}):
     this.backgroundColor = AppColors.black,
     this.fontColor = AppColors.white,
     this.borderColor = AppColors.black,
     this.onTap = onTap,
     this.label = label;
     
-  ButtonWidget.transparent({String label, VoidCallback onTap}):
+  ButtonWidget.transparent({String? label, VoidCallback? onTap}):
     this.backgroundColor = AppColors.transparent,
     this.fontColor = AppColors.black,
     this.borderColor = AppColors.black,
@@ -37,7 +37,7 @@ class ButtonWidget extends StatelessWidget {
         ),
         onPressed: onTap,
         child: Text(
-          label,
+          label!,
           style: GoogleFonts.notoSans(
             fontWeight: FontWeight.w600,
             fontSize: 15.0,

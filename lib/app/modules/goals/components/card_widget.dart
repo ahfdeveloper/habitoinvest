@@ -5,9 +5,9 @@ import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class CardWidget extends StatelessWidget{
-  final String goalName;
-  final String goalValue;
-  final String goalUniverse;
+  final String? goalName;
+  final String? goalValue;
+  final String? goalUniverse;
   
   const CardWidget({this.goalName, this.goalValue, this.goalUniverse});
 
@@ -31,9 +31,9 @@ class CardWidget extends StatelessWidget{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(goalName, textAlign: TextAlign.left, style: AppTextStyles.cardHeadTextGoal),
-                    Text(goalValue, textAlign: TextAlign.left, style: AppTextStyles.cardValueTextGoal),
-                    Text(goalUniverse, textAlign: TextAlign.left, style: AppTextStyles.cardFeatTextGoal),
+                    Text(goalName!, textAlign: TextAlign.left, style: AppTextStyles.cardHeadTextGoal),
+                    Text(goalValue!, textAlign: TextAlign.left, style: AppTextStyles.cardValueTextGoal),
+                    Text(goalUniverse!, textAlign: TextAlign.left, style: AppTextStyles.cardFeatTextGoal),
                   ],
                 ),
               ),

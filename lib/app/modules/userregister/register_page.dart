@@ -38,7 +38,7 @@ class RegisterPage extends StatelessWidget {
                 controller: _loginController.nameTextController,
                 // Validação dos dados digitados no campo
                 validator: (value){
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return 'Campo obrigatório';
                   } 
                   else return null;
@@ -59,7 +59,7 @@ class RegisterPage extends StatelessWidget {
                 controller: _loginController.emailTextController,
                 // Validação dos dados digitados no campo e-mail
                 validator: (value){
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return 'Campo obrigatório';
                   } else if(!GetUtils.isEmail(value)){
                     return 'Informe um e-mail válido';
@@ -83,7 +83,7 @@ class RegisterPage extends StatelessWidget {
                 controller: _loginController.passwordTextController,
                 // Validação dos dados digitados no campo senha
                 validator: (value){
-                  if(value.isEmpty){
+                  if(value!.isEmpty){
                     return 'Campo obrigatório';
                   } else if(value.length < 6){
                     return 'Senha deve possuir no mínimo seis caracteres';
@@ -105,7 +105,7 @@ class RegisterPage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 25.0),
                 child: OutlinedButton(
                   onPressed: (){
-                    if(_formkey.currentState.validate()){
+                    if(_formkey.currentState!.validate()){
                       _loginController.register();
                     }
                   }, 

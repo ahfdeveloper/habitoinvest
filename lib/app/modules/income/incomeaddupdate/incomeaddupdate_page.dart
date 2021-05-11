@@ -5,29 +5,28 @@ import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 
-class IncomeAddUpdatePage extends StatelessWidget{
+class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _controller = IncomeAddUpdateController();
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: INCOMECOLOR,
+        backgroundColor: AppColors.incomeColor,
         title: Text('Cadastrar Receita'),
         actions: [
           IconButton(
-            onPressed: () { Get.back(); },
+            onPressed: () {
+              Get.back();
+            },
             icon: Icon(Icons.cancel, color: AppColors.black),
           ),
-
           IconButton(
-            onPressed: () { /*Código para salvar*/ },
+            onPressed: () {/*Código para salvar*/},
             icon: Icon(Icons.save, color: AppColors.black),
           ),
         ],
       ),
-
       body: Form(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
@@ -41,26 +40,19 @@ class IncomeAddUpdatePage extends StatelessWidget{
               onTap: () => _controller.selectDate(context),
             ),
             SizedBox(height: SPACEFORMS),
-
             TextFormField(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Nome', null, false)
-            ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                decoration: textFormFieldDecoration1('Nome', null, false)),
             SizedBox(height: 5.0),
-
             DropdownButtonFormField(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              items: [],
-              decoration: textFormFieldDecoration1('Categoria', null, false)
-            ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                items: [],
+                decoration: textFormFieldDecoration1('Categoria', null, false)),
             SizedBox(height: SPACEFORMS),
-
             TextFormField(
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Valor', null, false)
-            ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                decoration: textFormFieldDecoration1('Valor', null, false)),
             SizedBox(height: SPACEFORMS),
-
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: textFormFieldDecoration1('Observações', null, true),
@@ -68,10 +60,7 @@ class IncomeAddUpdatePage extends StatelessWidget{
               maxLines: 5,
             ),
           ],
-
         ),
-        
-
       ),
     );
   }
