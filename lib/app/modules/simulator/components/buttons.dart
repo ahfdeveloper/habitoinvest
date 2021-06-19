@@ -10,16 +10,16 @@ class ButtonWidget extends StatelessWidget {
   final VoidCallback? onTap;
 
   ButtonWidget.black({String? label, VoidCallback? onTap}):
-    this.backgroundColor = AppColors.black,
+    this.backgroundColor = AppColors.themeColor,
     this.fontColor = AppColors.white,
-    this.borderColor = AppColors.black,
+    this.borderColor = AppColors.themeColor,
     this.onTap = onTap,
     this.label = label;
     
   ButtonWidget.transparent({String? label, VoidCallback? onTap}):
     this.backgroundColor = AppColors.transparent,
-    this.fontColor = AppColors.black,
-    this.borderColor = AppColors.black,
+    this.fontColor = AppColors.themeColor,
+    this.borderColor = AppColors.themeColor,
     this.onTap = onTap,
     this.label = label;
 

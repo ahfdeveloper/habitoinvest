@@ -7,6 +7,7 @@ class IncomeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: Text('Receitas'),
         backgroundColor: AppColors.incomeColor,

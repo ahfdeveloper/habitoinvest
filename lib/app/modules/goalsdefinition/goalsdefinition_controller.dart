@@ -7,15 +7,14 @@ class GoalsDefinitionController extends GetxController {
 
   get title => this._title;
 
-  static const MaterialColor grey =
-      const MaterialColor(0xBDBDBDBD, const <int, Color>{});
-
   // controller do TextEditing do valor da meta a ser definida
   final TextEditingController valueTextController = TextEditingController();
 
   // Cores dos botões Porcentagem e Valor Fixo
-  Rx<Color> _buttonColorPercentage = AppColors.incomeColor.obs;
+  Rx<Color> _buttonColorPercentage = AppColors.themeColor.obs;
+  Rx<Color> _buttonBackgroundColorPercentage = AppColors.transparent.obs;
   Rx<Color> _buttonColorFixedValue = AppColors.themeColor.obs;
+  Rx<Color> _buttonBackgroundColorFixedValue = AppColors.transparent.obs;
 
   /* Variáveis a serem alteradas dependendo se usuário escolher definir um valor em
     porcentagem ou valor fixo */
@@ -25,8 +24,12 @@ class GoalsDefinitionController extends GetxController {
 
   get buttonColorPercentage => this._buttonColorPercentage.value;
   set buttonColorPercentage(value) => this._buttonColorPercentage.value = value;
+  get buttonBackgroundColorPercentage => this._buttonBackgroundColorPercentage.value;
+  set buttonBackgroundColorPercentage(value) => this._buttonBackgroundColorPercentage.value = value;
   get buttonColorFixedValue => this._buttonColorFixedValue.value;
   set buttonColorFixedValue(value) => this._buttonColorFixedValue.value = value;
+  get buttonBackgroundColorFixedValue => this._buttonBackgroundColorFixedValue.value;
+  set buttonBackgroundColorFixedValue(value) => this._buttonBackgroundColorFixedValue.value = value;
   get inicioValor => this._inicioValor.value;
   set inicioValor(value) => this._inicioValor.value = value;
   get fimValor => this._fimValor.value;
@@ -35,18 +38,22 @@ class GoalsDefinitionController extends GetxController {
   set valor(value) => this._valor.value = value;
 
   void percentageButtonSelect() {
-    this.buttonColorPercentage = Colors.orange;
-    this.buttonColorFixedValue = grey;
+    this.buttonColorPercentage = AppColors.white;
+    this.buttonBackgroundColorPercentage = AppColors.themeColor;
+    this.buttonColorFixedValue = AppColors.grey300;
+    this.buttonBackgroundColorFixedValue = AppColors.transparent;
     this.inicioValor = '';
     this.valor = '0';
     this.fimValor = '%';
   }
 
   void fixedValueButtonSelect() {
-    this.buttonColorFixedValue = Colors.orange;
-    this.buttonColorPercentage = grey;
+    this.buttonColorFixedValue = AppColors.white;
+    this.buttonBackgroundColorFixedValue = AppColors.themeColor;
+    this.buttonColorPercentage = AppColors.grey300;
+    this.buttonBackgroundColorPercentage = AppColors.transparent;
     this.inicioValor = 'R\$';
     this.valor = '0';
-    this.fimValor = '00';
+    this.fimValor = ',00';
   }
 }

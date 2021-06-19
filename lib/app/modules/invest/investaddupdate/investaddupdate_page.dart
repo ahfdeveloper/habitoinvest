@@ -11,20 +11,19 @@ class InvestAddUpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.investcolor,
         title: Text('Cadastrar Investimento', style: TextStyle(fontSize: 17.0)),
-        iconTheme: IconThemeData(color: AppColors.black),
+        iconTheme: IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.cancel, color: AppColors.black),
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
             onPressed: () {/*Código para salvar*/},
-            icon: Icon(Icons.save, color: AppColors.black),
+            icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),

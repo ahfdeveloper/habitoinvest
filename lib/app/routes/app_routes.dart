@@ -29,4 +29,6 @@ abstract class Routes{
   static const CATEGORIES_ADDUPDATE = '/categories_addupdate';
   // Simulador de Investimentos
   static const SIMULATOR = '/simulator';
+  // Cadastro de Parâmetros
+  static const PARAMETERS = '/parameters';
 }

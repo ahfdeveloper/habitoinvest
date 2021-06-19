@@ -6,21 +6,21 @@ class AppTextStyles {
 
   // Estilo da expressão "Meu saldo" na appBar na HomePage
   static final TextStyle appBarTextSaldo = GoogleFonts.notoSans(
-    color: AppColors.black,
+    color: AppColors.themeColor,
     fontSize: 11,
     fontWeight: FontWeight.w700,
   );
 
   // Estilo do valor do saldo que aparece na appBar da HomePage
   static final TextStyle appBarNumberSaldo = GoogleFonts.notoSans(
-    color: AppColors.black,
+    color: AppColors.themeColor,
     fontSize: 18,
     fontWeight: FontWeight.w700,
   );
 
   // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor clara
   static final TextStyle appBarTextDark = GoogleFonts.notoSans(
-    color: AppColors.black,
+    color: AppColors.themeColor,
     fontSize: 17.0,
     fontWeight: FontWeight.w700,
   );

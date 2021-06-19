@@ -11,19 +11,18 @@ class IncomeAddUpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.incomeColor,
         title: Text('Cadastrar Receita'),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.cancel, color: AppColors.black),
+            onPressed: () =>  Get.back(),
+            icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
             onPressed: () {/*Código para salvar*/},
-            icon: Icon(Icons.save, color: AppColors.black),
+            icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
@@ -50,8 +49,10 @@ class IncomeAddUpdatePage extends StatelessWidget {
                 decoration: textFormFieldDecoration1('Categoria', null, false)),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-                style: TextStyle(fontWeight: FontWeight.bold),
-                decoration: textFormFieldDecoration1('Valor', null, false)),
+              style: TextStyle(fontWeight: FontWeight.bold),
+              decoration: textFormFieldDecoration1('Valor', null, false),
+              keyboardType: TextInputType.number,
+            ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),

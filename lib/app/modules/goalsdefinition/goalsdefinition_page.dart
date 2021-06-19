@@ -11,9 +11,21 @@ class GoalsDefinitionPage extends StatelessWidget{
     const dialogPadding = 5.0;
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: Text(_controller.title, style: TextStyle(color: AppColors.black)),
+        brightness: Brightness.dark,
+        title: Text(_controller.title, style: TextStyle(color: AppColors.white)),
         backgroundColor: AppColors.themeColor,
+        actions: [
+          IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.cancel, color: AppColors.white),
+          ),
+          IconButton(
+            onPressed: () {/*Código para salvar*/},
+            icon: Icon(Icons.save, color: AppColors.white),
+          ),
+        ],
       ),
       body: Container(
         child: Obx(
@@ -30,6 +42,7 @@ class GoalsDefinitionPage extends StatelessWidget{
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: _controller.buttonColorPercentage),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                            backgroundColor: _controller.buttonBackgroundColorPercentage,
                           ),
                           child: Text(
                             'Porcentagem',
@@ -53,6 +66,7 @@ class GoalsDefinitionPage extends StatelessWidget{
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: _controller.buttonColorFixedValue),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                            backgroundColor: _controller.buttonBackgroundColorFixedValue,
                           ),
                           child: Text(
                             'Valor Fixo',
@@ -108,35 +122,6 @@ class GoalsDefinitionPage extends StatelessWidget{
                 ),
               ),
 
-              
-              Padding(
-                padding: EdgeInsets.all(dialogPadding),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          //style: appThemeData.elevatedButtonTheme.style,
-                          child: Text("Cancelar"),
-                        ),
-                      ),
-                    ),
-
-                    Expanded( 
-                      child: Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          //style: appThemeData.elevatedButtonTheme.style,
-                          child: Text("Salvar"),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ),
             ],
           ),
         ),

@@ -4,20 +4,13 @@ import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseAddUpdateController extends GetxController {
-  final TextEditingController dateTextFormFieldController =
-      TextEditingController(
-          text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
-  final FocusNode _myFocusNode = FocusNode();
-  final List expenseQualityList = [
-    'Essencial',
-    'Não essencial, mas importante',
-    'Não essencial'
-  ];
+  final TextEditingController dateTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+  //final FocusNode _myFocusNode = FocusNode();
+  final List expenseQualityList = ['Essencial', 'Não essencial, mas importante', 'Não essencial'];
   final _selectedExpenseQuality = 'Essencial'.obs;
 
   get selectedExpenseQuality => this._selectedExpenseQuality.value;
-  set setSelectedExpenseQuality(value) =>
-      this._selectedExpenseQuality.value = value;
+  set setSelectedExpenseQuality(value) => this._selectedExpenseQuality.value = value;
 
   // Pegar data selecionada no Date Picker e setar textformfield
   selectDate(BuildContext context) async {
@@ -43,11 +36,11 @@ class ExpenseAddUpdateController extends GetxController {
     }
   }
 
-  dynamic focusBox() {
-    if (_myFocusNode.hasFocus) {
-      return AppColors.expenseColor;
-    }
-  }
+  // dynamic focusBox() {
+  //   if (_myFocusNode.hasFocus) {
+  //     return AppColors.expenseColor;
+  //   }
+  // }
 }
 
 class ItemExpenseQuality {

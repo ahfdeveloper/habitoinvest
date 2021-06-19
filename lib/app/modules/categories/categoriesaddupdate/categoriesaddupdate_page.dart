@@ -4,24 +4,24 @@ import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
 
 class CategoriesAddUpdatePage extends StatelessWidget {
-  //final CategoriesAddUpdateController _controller = CategoriesAddUpdateController();
-
   @override
   Widget build(BuildContext context) {
+    final Color interfaceColor = AppColors.themeColor;
+
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.themeColor,
+        brightness: Brightness.dark,
+        backgroundColor: interfaceColor,
         title: Text('Categorias'),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.cancel, color: AppColors.black),
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
             onPressed: () {/*Código para salvar*/},
-            icon: Icon(Icons.save, color: AppColors.black),
+            icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
@@ -32,15 +32,16 @@ class CategoriesAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Nome',
-              ),
+              decoration: InputDecoration(labelText: 'Nome'),
             ),
+            
             SizedBox(height: 5.0),
+
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
-                  labelText: 'Observações', alignLabelWithHint: true),
+                labelText: 'Observações', alignLabelWithHint: true,
+              ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),
