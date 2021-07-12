@@ -1,4 +1,4 @@
-abstract class Routes{
+abstract class Routes {
   // Splashscreen
   static const SPLASH = '/';
   // Login de Usuário
@@ -31,4 +31,6 @@ abstract class Routes{
   static const SIMULATOR = '/simulator';
   // Cadastro de Parâmetros
   static const PARAMETERS = '/parameters';
+  // Página de Boas vindas ao app com opções para Login
+  static const WELCOME = '/welcome';
 }

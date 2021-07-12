@@ -10,25 +10,24 @@ class SplashScreenController extends GetxController {
   @override
   void onReady() {
     Timer(
-      Duration(seconds: 3),
-      () => isLogged()
+      Duration(seconds: 2),
+      () => isLogged(),
     );
     super.onReady();
   }
 
-
-  // Verifica se já existe usuário logado
-   void isLogged(){     
-    if(box.hasData('auth')){
+  // Verifica se já existe usuário logado, se sim navega para a Home senão navega
+  // para a página de login.
+  void isLogged() {
+    if (box.hasData('auth')) {
       UserModel user = UserModel(
-        id: box.read('auth')['id'],
-        email: box.read('auth')['email'],
-        name: box.read('auth')['name'],
-        urlimage: box.read('auth')['urlimage']
-      );
+          id: box.read('auth')['id'],
+          email: box.read('auth')['email'],
+          name: box.read('auth')['name'],
+          urlimage: box.read('auth')['urlimage']);
       Get.offAllNamed(Routes.HOME, arguments: user);
     } else {
-      Get.offAllNamed(Routes.LOGIN);
+      Get.offAllNamed(Routes.WELCOME);
     }
   }
 }

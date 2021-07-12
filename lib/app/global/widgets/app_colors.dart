@@ -11,4 +11,7 @@ class AppColors {
   static final Color backgroundColor = Color(0XFFEEEEEE);
   static final Color incomeColor = Color(0XFF388E3C);
   static final Color expenseColor = Color(0XFFE53935);
+  static final Color shape = Color(0xFFFAFAFC);
+  static final Color stroke = Color(0xFFE3E3E6);
+  static final Color grey = Color(0xFF585666);
 }

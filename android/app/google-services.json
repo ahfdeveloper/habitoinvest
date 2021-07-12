@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "99408323711-eecpnvbi2ed17bqcmh5k1gl7i5g1q6g0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.habito_invest_app",
+            "certificate_hash": "597a50a27685f982cbe4fe74811c12ac13db217e"
+          }
+        },
+        {
           "client_id": "99408323711-0qf101sd265gngff2i6tu5rubodjk70f.apps.googleusercontent.com",
           "client_type": 3
         }

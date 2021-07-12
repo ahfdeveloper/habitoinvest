@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 class AppTextStyles {
-
   // Estilo da expressão "Meu saldo" na appBar na HomePage
   static final TextStyle appBarTextSaldo = GoogleFonts.notoSans(
     color: AppColors.themeColor,
@@ -35,7 +34,7 @@ class AppTextStyles {
   // Estilo padrão usado no corpo das páginas quando o background é claro
   static final TextStyle generallyTextDarkBody = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 15.0,
+    fontSize: 14.0,
     fontWeight: FontWeight.w700,
   );
 
@@ -48,23 +47,47 @@ class AppTextStyles {
 
   //Estilo do cabeçalho presente no card de objetivos
   static final TextStyle cardHeadTextGoal = GoogleFonts.notoSans(
-    color: AppColors.bodyTextPagesColor, 
+    color: AppColors.bodyTextPagesColor,
     fontSize: 16.0,
   );
 
   // Estilo do valor presente no card de objetivos
   static final TextStyle cardValueTextGoal = GoogleFonts.notoSans(
-    color: AppColors.grey800, 
+    color: AppColors.grey800,
     fontSize: 25.0,
     fontWeight: FontWeight.w700,
   );
 
   // Estilo do rodapé presente no card de objetivos
   static final TextStyle cardFeatTextGoal = GoogleFonts.notoSans(
-    color: AppColors.bodyTextPagesColor, 
+    color: AppColors.bodyTextPagesColor,
     fontSize: 13.0,
   );
 
+  // Estilo do testo na página de boas vindas
+  static final TextStyle titleHome = GoogleFonts.lexendDeca(
+    fontSize: 32,
+    fontWeight: FontWeight.w600,
+    color: AppColors.themeColor,
+  );
 
+  // Estilo no botão de login social
+  static final buttonGray = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.grey,
+  );
 
+  // Estilo no botão de login social
+  static final buttonWhite = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.white,
+  );
+
+  static final textBlack = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.themeColor,
+  );
 }
