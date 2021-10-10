@@ -5,16 +5,44 @@ class LoginRepository {
   final LoginProvider loginProvider = LoginProvider();
 
   Future<UserModel?> createUserWithEmailAndPassword(
-      String email, String password, String name) {
-    return loginProvider.createUserWithEmailAndPassword(email, password, name);
+      {required String email, required String password, required String name}) {
+    return loginProvider.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+      name: name,
+    );
   }
 
-  Future<UserModel?> signInWithEmailAndPassword(String email, String password) {
-    return loginProvider.signInWithEmailAndPassword(email, password);
+  Future addUserFirestore(
+      {required String userUid,
+      required String name,
+      required String email}) async {
+    return loginProvider.addUserFirestore(
+      userUid: userUid,
+      name: name,
+      email: email,
+    );
+  }
+
+  Future<UserModel?> signInWithEmailAndPassword(
+      {required String email, required String password}) {
+    return loginProvider.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   Future<UserModel?> signInWithGoogle() {
     return loginProvider.signInWithGoogle();
+  }
+
+  verifyUserInBD(
+      {required String userUid, required String name, required String email}) {
+    return loginProvider.verifyUserInBD(
+      userUid: userUid,
+      name: name,
+      email: email,
+    );
   }
 
   signOut() {

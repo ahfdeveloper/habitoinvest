@@ -65,28 +65,35 @@ class LoginPage extends StatelessWidget {
                 autofocus: false,
                 obscureText: true,
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.vpn_key),
-                    labelText: 'Senha',
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
+                  prefixIcon: Icon(Icons.vpn_key),
+                  labelText: 'Senha',
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 25.0),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: Get.theme.primaryColor),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.login();
-                        }
-                      },
-                      child: Text('ENTRAR',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)))),
+                padding: EdgeInsets.only(top: 25.0),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      backgroundColor: Get.theme.primaryColor),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      controller.login();
+                    }
+                  },
+                  child: Text(
+                    'ENTRAR',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
               TextButton(
                 onPressed: () {},
                 child: Text(

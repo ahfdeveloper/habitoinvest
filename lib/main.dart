@@ -36,6 +36,7 @@ void main() {
             title: 'Hábito Invest',
             debugShowCheckedModeBanner: false,
 
+            // Setando a localização
             localizationsDelegates: [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate

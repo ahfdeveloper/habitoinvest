@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
                         }
                       },
                       style: OutlinedButton.styleFrom(
-                          backgroundColor: Get.theme.buttonColor),
+                          backgroundColor: Colors.black),
                       child: Text('CADASTRAR',
                           style: TextStyle(
                               fontSize: 16.0,

@@ -16,8 +16,8 @@ class SplashScreenController extends GetxController {
     super.onReady();
   }
 
-  // Verifica se já existe usuário logado, se sim navega para a Home senão navega
-  // para a página de login.
+  /* Verifica se já existe usuário logado, se sim navega para a Home senão navega
+  para a página de login. */
   void isLogged() {
     if (box.hasData('auth')) {
       UserModel user = UserModel(

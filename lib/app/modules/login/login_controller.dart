@@ -13,13 +13,13 @@ class LoginController extends GetxController {
   final TextEditingController nameTextController = TextEditingController();
   final box = GetStorage('habito_invest_app');
 
-  // Função que efetua login do usuário no app
+  // Função que efetua login do usuário através de e-mail e senha no app
   void login() async {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     UserModel? user = await loginRepository.signInWithEmailAndPassword(
-      emailTextController.text,
-      passwordTextController.text,
+      email: emailTextController.text,
+      password: passwordTextController.text,
     );
     if (user != null) {
       box.write('auth', user);
@@ -32,13 +32,19 @@ class LoginController extends GetxController {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     UserModel? user = await loginRepository.signInWithGoogle();
+
     if (user != null) {
+      loginRepository.verifyUserInBD(
+        userUid: user.id,
+        name: user.name,
+        email: user.email,
+      );
       box.write('auth', user);
       Get.offAllNamed(Routes.HOME, arguments: user);
     }
   }
 
-  // Função que faz logou do usuário do app
+  // Função que faz logout do usuário do app
   void logout() {
     loginRepository.signOut();
     Get.offAllNamed(Routes.WELCOME);

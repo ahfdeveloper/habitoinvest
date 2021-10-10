@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_controller.dart';
 
-class GoalsDefinitionPage extends StatelessWidget{
+class GoalsDefinitionPage extends StatelessWidget {
   final GoalsDefinitionController _controller = GoalsDefinitionController();
 
   @override
@@ -13,8 +14,9 @@ class GoalsDefinitionPage extends StatelessWidget{
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        brightness: Brightness.dark,
-        title: Text(_controller.title, style: TextStyle(color: AppColors.white)),
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        title:
+            Text(_controller.title, style: TextStyle(color: AppColors.white)),
         backgroundColor: AppColors.themeColor,
         actions: [
           IconButton(
@@ -29,8 +31,8 @@ class GoalsDefinitionPage extends StatelessWidget{
       ),
       body: Container(
         child: Obx(
-          () =>  Column(
-            children:[
+          () => Column(
+            children: [
               Padding(
                 padding: EdgeInsets.all(3.0),
                 child: Row(
@@ -39,53 +41,49 @@ class GoalsDefinitionPage extends StatelessWidget{
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: _controller.buttonColorPercentage),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            backgroundColor: _controller.buttonBackgroundColorPercentage,
-                          ),
-                          child: Text(
-                            'Porcentagem',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: _controller.buttonColorPercentage,
-                            )
-                          ),
-
-                          onPressed: () {  
-                            _controller.percentageButtonSelect();
-                          }
-                        ),
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                  color: _controller.buttonColorPercentage),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              backgroundColor:
+                                  _controller.buttonBackgroundColorPercentage,
+                            ),
+                            child: Text('Porcentagem',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: _controller.buttonColorPercentage,
+                                )),
+                            onPressed: () {
+                              _controller.percentageButtonSelect();
+                            }),
                       ),
                     ),
-
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: _controller.buttonColorFixedValue),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            backgroundColor: _controller.buttonBackgroundColorFixedValue,
-                          ),
-                          child: Text(
-                            'Valor Fixo',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: _controller.buttonColorFixedValue,
-                            )
-                          ),
-
-                          onPressed: () {  
-                          _controller.fixedValueButtonSelect();
-                          }
-                        ),
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                                  color: _controller.buttonColorFixedValue),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              backgroundColor:
+                                  _controller.buttonBackgroundColorFixedValue,
+                            ),
+                            child: Text('Valor Fixo',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: _controller.buttonColorFixedValue,
+                                )),
+                            onPressed: () {
+                              _controller.fixedValueButtonSelect();
+                            }),
                       ),
                     ),
                   ],
                 ),
               ),
-
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.all(dialogPadding),
@@ -96,38 +94,26 @@ class GoalsDefinitionPage extends StatelessWidget{
                         Text(
                           _controller.inicioValor,
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 22, fontWeight: FontWeight.bold),
                         ),
-
                         Text(
-                            _controller.valor,
-                            style: TextStyle(
-                              fontSize: 80,
-                              color: Colors.black
-                            ),
-                          ),
-  
+                          _controller.valor,
+                          style: TextStyle(fontSize: 80, color: Colors.black),
+                        ),
                         Text(
                           _controller.fimValor,
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold
-                          ),
+                              fontSize: 22, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-
             ],
           ),
         ),
       ),
     );
-
   }
 }
-    

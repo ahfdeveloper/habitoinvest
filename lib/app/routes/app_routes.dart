@@ -1,3 +1,5 @@
+// Classe com as rotas do app
+
 abstract class Routes {
   // Splashscreen
   static const SPLASH = '/';
@@ -33,4 +35,7 @@ abstract class Routes {
   static const PARAMETERS = '/parameters';
   // Página de Boas vindas ao app com opções para Login
   static const WELCOME = '/welcome';
+
+  //---------------------
+  static const CATEGORIES_UPDATE = '/categories_update';
 }

@@ -21,7 +21,7 @@ class DrawerHome extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Image.asset(_homeController.user!.urlimage != null
-                  ? '${_homeController.user!.urlimage!}'
+                  ? 'assets/user.png' //'${_homeController.user!.urlimage!}'
                   : 'assets/user.png'),
             ),
             accountName: Text(
@@ -54,7 +54,8 @@ class DrawerHome extends StatelessWidget {
             leading: Icon(Icons.category, color: AppColors.bodyTextPagesColor),
             title:
                 Text('Categorias', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST),
+            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST,
+                arguments: _homeController.user),
           ),
           ListTile(
             leading: Icon(Icons.view_list, color: AppColors.bodyTextPagesColor),

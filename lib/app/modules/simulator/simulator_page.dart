@@ -10,15 +10,16 @@ import 'package:habito_invest_app/app/modules/simulator/simulator_controller.dar
 
 class SimulatorPage extends StatelessWidget {
   final SimulatorController _controller = SimulatorController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        brightness: Brightness.dark,
-        backgroundColor: AppColors.themeColor,
-        title: Text('Simulador de Investimento', style: AppTextStyles.appBarTextLight)),
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          backgroundColor: AppColors.themeColor,
+          title: Text('Simulador de Investimento',
+              style: AppTextStyles.appBarTextLight)),
       body: Form(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -27,49 +28,55 @@ class SimulatorPage extends StatelessWidget {
             TextFormField(
               keyboardType: TextInputType.number,
               controller: _controller.contributionValueController,
-              decoration: textFormFieldDecoration1('Valor a ser aplicado mensalmente', '', false),
+              decoration: textFormFieldDecoration1(
+                  'Valor a ser aplicado mensalmente', '', false),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
               controller: _controller.interestRateController,
-              decoration: textFormFieldDecoration1('Taxa de juros mensal', 'p.ex. 00.00', false),
+              decoration: textFormFieldDecoration1(
+                  'Taxa de juros mensal', 'p.ex. 00.00', false),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               controller: _controller.aplicationDeadlineController,
-              decoration: textFormFieldDecoration1('Prazo em meses', 'p.ex. 60', false),
+              decoration:
+                  textFormFieldDecoration1('Prazo em meses', 'p.ex. 60', false),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: 30.0),
-            
             Container(
               child: Obx(() => Column(
-                children: [
-                  Row(
                     children: [
-                      Text(_controller.resultSimulation1, style: AppTextStyles.appBarTextDark),
-                      Text(_controller.resultSimulation2, style: AppTextStyles.appBarNumberSaldo),  
+                      Row(
+                        children: [
+                          Text(_controller.resultSimulation1,
+                              style: AppTextStyles.appBarTextDark),
+                          Text(_controller.resultSimulation2,
+                              style: AppTextStyles.appBarNumberSaldo),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(_controller.resultSimulation3,
+                              style: AppTextStyles.appBarTextDark),
+                          Text(_controller.resultSimulation4,
+                              style: AppTextStyles.appBarNumberSaldo),
+                        ],
+                      ),
                     ],
-                  ),
-                  Row(
-                    children: [
-                      Text(_controller.resultSimulation3, style: AppTextStyles.appBarTextDark),
-                      Text(_controller.resultSimulation4, style: AppTextStyles.appBarNumberSaldo),  
-                    ],
-                  ),
-                  
-                ],
-              )),
-            ),      
+                  )),
+            ),
           ],
         ),
       ),
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

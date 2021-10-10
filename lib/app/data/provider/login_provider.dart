@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,31 +10,36 @@ class LoginProvider {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   GetStorage box = GetStorage('habito_invest_app');
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Retorna usuário logado
   Stream<UserModel> get authStateChanged => _firebaseAuth
       .authStateChanges()
       .map((User? currentUser) => UserModel.fromFirebaseUser(currentUser!));
 
-  // Cria usuário
+  // Cria usuário com e-mail e senha
   Future<UserModel?> createUserWithEmailAndPassword(
-      String email, String password, String name) async {
+      {required String email,
+      required String password,
+      required String name}) async {
+    User user;
     try {
-      final currentUser = (await _firebaseAuth.createUserWithEmailAndPassword(
-              email: email, password: password))
-          .user!;
-      // Atualizando o nome do usuário
-      await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
-      return UserModel.fromFirebaseUser(currentUser);
+      final userCredential = (await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password));
+      user = userCredential.user!;
+      await user.updateDisplayName(name);
+      await user.reload();
+      user = _firebaseAuth.currentUser!;
+      return UserModel.fromFirebaseUser(user);
     } catch (e) {
       callError(e);
       return null;
     }
   }
 
-  // Login do usuário
+  // Login do usuário com e-mail e senha
   Future<UserModel?> signInWithEmailAndPassword(
-      String email, String password) async {
+      {required String email, required String password}) async {
     try {
       final currentUser = (await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -58,6 +64,39 @@ class LoginProvider {
         urlimage: response.photoUrl,
       );
       return currentUser;
+    } catch (e) {
+      callError(e);
+      return null;
+    }
+  }
+
+  // Adiciona o id do usuário como documento dentro da coleção 'users' do Firestore
+  Future addUserFirestore(
+      {required String userUid,
+      required String name,
+      required String email}) async {
+    try {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(userUid)
+          .set({'name': name, 'email': email});
+    } catch (e) {
+      callError(e);
+      return null;
+    }
+  }
+
+  /* Verifica a existência de usuário Google no BD. Caso o retorno seja negativo,
+  chama a função que efetua seu registro. */
+  Future verifyUserInBD(
+      {required String userUid,
+      required String name,
+      required String email}) async {
+    try {
+      _firebaseFirestore.collection('users').doc(userUid).get().then((value) =>
+          !value.exists
+              ? addUserFirestore(userUid: userUid, name: name, email: email)
+              : print('Usuário já cadastrado'));
     } catch (e) {
       callError(e);
       return null;
@@ -117,22 +156,4 @@ class LoginProvider {
         break;
     }
   }
-
-  // Funções de acesso ao banco, verificar posteriormente se irei aproveitar algo
-  /*  Future<void> addUserToDB( 
-      {String id, String name, String email, String urlimage}) async { 
-    userModel = UserModel( 
-        id: id, name: name, email: email, urlimage: urlimage); 
-  
-    await userRef.document(id).setData(userModel.toMap(userModel)); 
-  }  */
-
-  /* Future<UserModel> getUserFromDB({String id}) async { 
-    final DocumentSnapshot doc = await userRef.document(id).get(); 
-  
-    //print(doc.data()); 
-  
-    return UserModel.fromMap(doc.data()); 
-  }  */
-
 }

@@ -14,17 +14,24 @@ class RegisterController extends GetxController {
   final TextEditingController nameTextController = TextEditingController();
   final box = GetStorage('habito_invest_app');
 
-  // Função que registra um usuário no App
+  // Registra um usuário no App
   register() async {
     Get.dialog(Center(child: CircularProgressIndicator()),
         barrierDismissible: false);
     UserModel? user = await loginRepository.createUserWithEmailAndPassword(
-      emailTextController.text,
-      passwordTextController.text,
-      nameTextController.text,
+      email: emailTextController.text,
+      password: passwordTextController.text,
+      name: nameTextController.text,
     );
 
     if (user != null) {
+      // Cadastra o id do usuário como documento no Firestore
+      loginRepository.addUserFirestore(
+        userUid: user.id,
+        name: nameTextController.text,
+        email: emailTextController.text,
+      );
+
       Get.dialog(
         Center(child: CircularProgressIndicator()),
         barrierDismissible: false,
