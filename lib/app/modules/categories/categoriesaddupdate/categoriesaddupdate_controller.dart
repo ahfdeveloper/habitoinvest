@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/categories_repository.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
 
 class CategoriesAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -20,6 +21,10 @@ class CategoriesAddUpdateController extends GetxController {
   String _categoryId = '';
   String get categoryId => this._categoryId;
   set categoryId(String value) => this._categoryId = value;
+
+  String _categoryName = '';
+  String get categoryName => this._categoryName;
+  set categoryName(String value) => this._categoryName = value;
 
   String _addEditFlag = '';
   String get addEditFlag => this._addEditFlag;
@@ -64,24 +69,38 @@ class CategoriesAddUpdateController extends GetxController {
     if (addEditFlag == 'NEW') {
       if (nameTextController!.text != '' &&
           descriptionTextController!.text != '') {
-        _categoriesRepository.addCategory(
-          userUid: user!.id,
-          catName: nameTextController!.text,
-          catType: categoryType,
-          catDescription: descriptionTextController!.text,
-        );
+        categoryName = nameTextController!.text;
+        _categoriesRepository
+            .addCategory(
+              userUid: user!.id,
+              catName: nameTextController!.text,
+              catType: categoryType,
+              catDescription: descriptionTextController!.text,
+            )
+            .whenComplete(
+              () => AppSnackbar.snackarStyle(
+                  title: categoryName,
+                  message: 'Categoria cadastrada com sucesso'),
+            );
         clearEditingControllers();
         Get.back();
       }
     } else if (addEditFlag == 'UPDATE') {
       if (nameTextController!.text != '' &&
           descriptionTextController!.text != '') {
-        _categoriesRepository.updateCategory(
-            userUid: user!.id,
-            catName: nameTextController!.text,
-            catType: categoryType,
-            catDescription: descriptionTextController!.text,
-            catUid: categoryId);
+        categoryName = nameTextController!.text;
+        _categoriesRepository
+            .updateCategory(
+                userUid: user!.id,
+                catName: nameTextController!.text,
+                catType: categoryType,
+                catDescription: descriptionTextController!.text,
+                catUid: categoryId)
+            .whenComplete(
+              () => AppSnackbar.snackarStyle(
+                  title: categoryName,
+                  message: 'Categoria atualizada com sucesso'),
+            );
         clearEditingControllers();
         Get.back();
       }

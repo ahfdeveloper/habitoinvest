@@ -66,17 +66,6 @@ class CategoriesProvider {
     DocumentReference documentReference =
         _firebaseFirestore.doc(userUid).collection('category').doc(catUid);
 
-    await documentReference
-        .delete()
-        .whenComplete(
-          () => Get.snackbar(
-            catName,
-            'Categoria apagada com sucesso',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.grey[300],
-            icon: Icon(Icons.info_outline_rounded),
-          ),
-        )
-        .catchError((e) => print(e));
+    await documentReference.delete().catchError((e) => print(e));
   }
 }

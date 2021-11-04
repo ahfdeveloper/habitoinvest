@@ -61,11 +61,11 @@ class IncomeList extends StatelessWidget {
                   color: AppColors.expenseColor,
                   icon: Icons.delete,
                   onTap: () {
-                    // _categoriesListController.categoryId =
-                    //     _categoriesListController.categories[index].id!;
-                    // _categoriesListController.categoryName =
-                    //     _categoriesListController.categories[index].name!;
-                    // _categoriesListController.deleteCategory();
+                    _incomeListController.incomeId =
+                        _incomeListController.income[index].id!;
+                    _incomeListController.incomeName =
+                        _incomeListController.income[index].name!;
+                    _incomeListController.deleteIncome();
                   },
                 ),
               ],

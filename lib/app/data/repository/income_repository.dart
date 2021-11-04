@@ -44,4 +44,10 @@ class IncomeRepository {
         incObservation: incObservation,
         incUid: incUid);
   }
+
+  Future deleteIncome(
+      {required String userUid, required incUid, required incName}) async {
+    return _incomeProvider.deleteIncome(
+        userUid: userUid, incUid: incUid, incName: incName);
+  }
 }

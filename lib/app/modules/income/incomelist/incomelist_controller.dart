@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
 
 class IncomeListController extends GetxController {
+  final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final IncomeRepository _incomeRepository = IncomeRepository();
-  final UserModel? user = Get.arguments;
 
   String _incomeId = '';
   String get incomeId => this._incomeId;
@@ -26,28 +28,33 @@ class IncomeListController extends GetxController {
     super.onInit();
   }
 
-  // Apaga uma receita
-  // void deleteCategory() {
-  //   Get.defaultDialog(
-  //     title: 'Excluir Categoria',
-  //     content: Text(
-  //       'Deseja realmente excluir a categoria?',
-  //       textAlign: TextAlign.center,
-  //     ),
-  //     textCancel: 'Cancelar',
-  //     cancelTextColor: AppColors.themeColor,
-  //     textConfirm: 'OK',
-  //     confirmTextColor: AppColors.white,
-  //     onConfirm: () {
-  //       _categoriesRepository.deleteCategory(
-  //         userUid: user!.id,
-  //         catUid: categoryId,
-  //         catName: categoryName,
-  //       );
-  //       Get.back();
-  //     },
-  //     buttonColor: AppColors.themeColor,
-  //     radius: 5.0,
-  //   );
-  // }
+  //Apaga uma receita
+  void deleteIncome() {
+    Get.defaultDialog(
+      title: 'Excluir Receita',
+      content: Text(
+        'Deseja realmente excluir esta receita?',
+        textAlign: TextAlign.center,
+      ),
+      textCancel: 'Cancelar',
+      cancelTextColor: AppColors.themeColor,
+      textConfirm: 'OK',
+      confirmTextColor: AppColors.white,
+      onConfirm: () {
+        _incomeRepository
+            .deleteIncome(
+                userUid: user!.id, incUid: incomeId, incName: incomeName)
+            .whenComplete(
+              () => AppSnackbar.snackarStyle(
+                title: incomeName,
+                message: 'Receita apagada com sucesso',
+              ),
+            );
+
+        Get.back();
+      },
+      buttonColor: AppColors.themeColor,
+      radius: 5.0,
+    );
+  }
 }

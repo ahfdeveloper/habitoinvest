@@ -19,7 +19,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.incomeColor,
-        title: Text('Cadastrar Receita'),
+        title: Text('Nova Receita'),
         actions: [
           IconButton(
             onPressed: () => _incomeAddUpdateController.cancel(),
@@ -57,7 +57,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             Obx(
               () => DropdownButtonFormField(
-                validator: (value) => validator(value),
+                validator: (value) => validatorDropdown(value),
                 elevation: 16,
                 hint: Text(
                   '${_incomeAddUpdateController.selectedCategory.toString()}',
@@ -100,8 +100,17 @@ class IncomeAddUpdatePage extends StatelessWidget {
     );
   }
 
+  // Função de validação dos TextFormfields
   validator(value) {
     if (value!.isEmpty) {
+      return 'Campo obrigatório';
+    }
+    return null;
+  }
+
+  // Função de validação do Dropdownbutton
+  validatorDropdown(value) {
+    if (value == _incomeAddUpdateController.firstElementDrop) {
       return 'Campo obrigatório';
     }
     return null;

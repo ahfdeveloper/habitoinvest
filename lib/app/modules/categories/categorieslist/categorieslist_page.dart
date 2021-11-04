@@ -67,7 +67,9 @@ class CategoriesList extends StatelessWidget {
                         _categoriesListController.categories[index].id!;
                     _categoriesListController.categoryName =
                         _categoriesListController.categories[index].name!;
-                    _categoriesListController.deleteCategory();
+                    if (!_categoriesListController.verifyCategoryIncome()) {
+                      _categoriesListController.deleteCategory();
+                    }
                   },
                 ),
               ],

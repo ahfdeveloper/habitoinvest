@@ -66,7 +66,14 @@ class IncomeProvider {
       'incValue': incValue,
       'incObservation': incObservation
     };
-
     await documentReference.update(data).catchError((e) => print(e));
+  }
+
+  // Deleta uma categoria
+  Future deleteIncome(
+      {required String userUid, required incUid, required incName}) async {
+    DocumentReference documentReference =
+        _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
+    await documentReference.delete().catchError((e) => print(e));
   }
 }
