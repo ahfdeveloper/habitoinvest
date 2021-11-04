@@ -43,6 +43,7 @@ class UserModel {
     );
   }
 
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
+  factory UserModel.fromJson(String source) => UserModel.fromMap(
+        json.decode(source),
+      );
 }

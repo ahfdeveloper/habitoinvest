@@ -1,35 +1,56 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/categories_repository.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
 class CategoriesListController extends GetxController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  final CategoriesRepository _categoriesRepository = CategoriesRepository();
   final UserModel? user = Get.arguments;
-  QueryDocumentSnapshot? category;
-  RxList<CategoryModel> categoriesList = RxList<CategoryModel>([]);
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final CategoriesRepository _categoriesRepository = CategoriesRepository();
 
-  RxList<CategoryModel> get categories => categoriesList;
+  String _categoryId = '';
+  String get categoryId => this._categoryId;
+  set categoryId(String value) => this._categoryId = value;
+
+  String _categoryName = '';
+  String get categoryName => this._categoryName;
+  set categoryName(String value) => this._categoryName = value;
+
+  Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
+  List<CategoryModel> get categories => _categoriesList.value;
 
   @override
   void onInit() {
-    // Desabilitados são trechos para listagem através do Getx
-    // categoriesList
-    //     .bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
-
+    _categoriesList.bindStream(
+      _categoriesRepository.getAllCategories(userUid: user!.id),
+    );
     super.onInit();
   }
 
-  // ******* PROVISÓRIO USO DE STREAMBUILDER
-  categoriesSnapshotList() {
-    return _categoriesRepository.readAllCategories(userUid: user!.id);
-  }
-
-  readCategorie(String catId) {
-    return _categoriesRepository.readCategory(catId: catId, userUid: user!.id);
+  // Apaga uma categoria
+  void deleteCategory() {
+    Get.defaultDialog(
+      title: 'Excluir Categoria',
+      content: Text(
+        'Deseja realmente excluir a categoria?',
+        textAlign: TextAlign.center,
+      ),
+      textCancel: 'Cancelar',
+      cancelTextColor: AppColors.themeColor,
+      textConfirm: 'OK',
+      confirmTextColor: AppColors.white,
+      onConfirm: () {
+        _categoriesRepository.deleteCategory(
+          userUid: user!.id,
+          catUid: categoryId,
+          catName: categoryName,
+        );
+        Get.back();
+      },
+      buttonColor: AppColors.themeColor,
+      radius: 5.0,
+    );
   }
 }

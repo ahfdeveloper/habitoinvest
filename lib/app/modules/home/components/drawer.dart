@@ -21,7 +21,7 @@ class DrawerHome extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Image.asset(_homeController.user!.urlimage != null
-                  ? 'assets/user.png' //'${_homeController.user!.urlimage!}'
+                  ? 'assets/user.png' // '${_homeController.user!.urlimage!}'
                   : 'assets/user.png'),
             ),
             accountName: Text(

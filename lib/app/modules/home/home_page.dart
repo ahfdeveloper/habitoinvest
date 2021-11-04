@@ -4,10 +4,13 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
+import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'components/drawer.dart';
 
 class HomePage extends StatelessWidget {
+  final HomeController _homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -48,7 +51,10 @@ class HomePage extends StatelessWidget {
               childAspectRatio: 1.8,
               children: [
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.INCOME_LIST),
+                  onTap: () => Get.toNamed(
+                    Routes.INCOME_LIST,
+                    arguments: _homeController.user,
+                  ),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(

@@ -1,11 +1,8 @@
 import 'package:get/route_manager.dart';
-import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_binding.dart';
 import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_page.dart';
-import 'package:habito_invest_app/app/modules/categories/categoriesupdate/categoriesupdate_binding.dart';
-import 'package:habito_invest_app/app/modules/categories/categoriesupdate/categoriesupdate_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_binding.dart';
@@ -122,13 +119,6 @@ class AppPages {
     GetPage(
       name: Routes.WELCOME,
       page: () => WelcomePage(),
-    ),
-
-    //-------------------------
-    GetPage(
-      name: Routes.CATEGORIES_UPDATE,
-      page: () => CategoriesUpdatePage(),
-      binding: CategoriesUpdateBinding(),
     ),
   ];
 }

@@ -56,14 +56,40 @@ class LoginProvider {
   // Login social do usuário com a conta do Google
   Future<UserModel?> signInWithGoogle() async {
     try {
-      final response = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      UserCredential _authResult =
+          await _firebaseAuth.signInWithCredential(credential);
+
       final currentUser = UserModel(
-        id: response!.id,
-        name: response.displayName!,
-        email: response.email,
-        urlimage: response.photoUrl,
+        id: _authResult.user!.uid,
+        name: _authResult.user!.displayName!,
+        email: _authResult.user!.email!,
+        urlimage: _authResult.user!.photoURL,
       );
       return currentUser;
+    } catch (e) {
+      callError(e);
+      return null;
+    }
+  }
+
+  /* Verifica a existência de usuário Google no BD. Caso o retorno seja negativo,
+  chama a função que efetua seu registro no Firebase. */
+  Future verifyUserInBD(
+      {required String userUid,
+      required String name,
+      required String email}) async {
+    try {
+      _firebaseFirestore.collection('users').doc(userUid).get().then((value) =>
+          !value.exists
+              ? addUserFirestore(userUid: userUid, name: name, email: email)
+              : print('Usuário já cadastrado'));
     } catch (e) {
       callError(e);
       return null;
@@ -79,24 +105,7 @@ class LoginProvider {
       await _firebaseFirestore
           .collection('users')
           .doc(userUid)
-          .set({'name': name, 'email': email});
-    } catch (e) {
-      callError(e);
-      return null;
-    }
-  }
-
-  /* Verifica a existência de usuário Google no BD. Caso o retorno seja negativo,
-  chama a função que efetua seu registro. */
-  Future verifyUserInBD(
-      {required String userUid,
-      required String name,
-      required String email}) async {
-    try {
-      _firebaseFirestore.collection('users').doc(userUid).get().then((value) =>
-          !value.exists
-              ? addUserFirestore(userUid: userUid, name: name, email: email)
-              : print('Usuário já cadastrado'));
+          .set({'name': name, 'email': email, 'id': userUid});
     } catch (e) {
       callError(e);
       return null;
