@@ -23,7 +23,10 @@ class IncomeAddUpdateController extends GetxController {
   set selectedCategory(String select) => _selectedCategory.value = select;
 
   TextEditingController dateTextController = TextEditingController(
-      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+    text: DateFormat('dd/MM/yyyy').format(
+      DateTime.now(),
+    ),
+  );
 
   TextEditingController? nameTextController;
   TextEditingController? valueTextController;
