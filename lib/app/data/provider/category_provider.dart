@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 
 final CollectionReference _firebaseFirestore =

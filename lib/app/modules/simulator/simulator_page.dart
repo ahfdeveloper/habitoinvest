@@ -28,16 +28,21 @@ class SimulatorPage extends StatelessWidget {
             TextFormField(
               keyboardType: TextInputType.number,
               controller: _controller.contributionValueController,
-              decoration: textFormFieldDecoration1(
-                  'Valor a ser aplicado mensalmente', '', false),
+              decoration: textFormFieldForms(
+                  //fieldIcon: Icon(null),
+                  label: 'Valor a ser aplicado mensalmente',
+                  hint: ''),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
               controller: _controller.interestRateController,
-              decoration: textFormFieldDecoration1(
-                  'Taxa de juros mensal', 'p.ex. 00.00', false),
+              decoration: textFormFieldForms(
+                //fieldIcon: Icon(null),
+                label: 'Taxa de juros mensal',
+                hint: 'p.ex. 00.00',
+              ),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: SPACEFORMS),
@@ -47,8 +52,11 @@ class SimulatorPage extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly
               ],
               controller: _controller.aplicationDeadlineController,
-              decoration:
-                  textFormFieldDecoration1('Prazo em meses', 'p.ex. 60', false),
+              decoration: textFormFieldForms(
+                //fieldIcon: Icon(null),
+                label: 'Prazo em meses',
+                hint: 'p.ex. 60',
+              ),
               style: AppTextStyles.generallyTextDarkBody,
             ),
             SizedBox(height: 30.0),

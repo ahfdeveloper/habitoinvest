@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
+import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
+import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
 
 class ExpenseAddUpdatePage extends StatelessWidget {
@@ -28,6 +31,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
           ),
         ],
       ),
+      //
       body: Form(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -35,76 +39,120 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _expenseAddUpdateController
-                  .dateRegisterTextFormFieldController,
-              decoration: textFormFieldDecoration1('Data', null, false),
-              style: TextStyle(fontWeight: FontWeight.bold),
-              focusNode: AlwaysDisabledFocusNode(),
-              onTap: () => _expenseAddUpdateController.selectDate(
-                  context: context,
-                  textFormFieldController: _expenseAddUpdateController
-                      .dateRegisterTextFormFieldController),
+                  .expenseValueTextFormFieldController,
+              style: AppTextStyles.valueOperationStyle,
+              keyboardType: TextInputType.number,
+              decoration: textFormFieldValueOperation(),
             ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              decoration: textFormFieldDecoration1('Nome', null, false),
+              controller: _expenseAddUpdateController
+                  .dateRegisterTextFormFieldController,
+              focusNode: DisabledFocusNode(),
+              decoration: textFormFieldForms(
+                fieldIcon: Icons.date_range_outlined,
+                label: 'Data da despesa',
+                hint: null,
+              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
+              onTap: () => _expenseAddUpdateController.selectDate(
+                context: context,
+                textFormFieldController: _expenseAddUpdateController
+                    .dateRegisterTextFormFieldController,
+              ),
+            ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            //
+            TextFormField(
+              initialValue: 'Descrição',
+              decoration: textFormFieldForms(
+                  fieldIcon: Icons.description_outlined,
+                  label: 'Descrição',
+                  hint: null),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
+            //
             DropdownButtonFormField(
-              decoration: textFormFieldDecoration1('Categoria', null, false),
+              decoration: textFormFieldForms(
+                  fieldIcon: Icons.category_outlined,
+                  label: 'Categoria',
+                  hint: ''),
               style: TextStyle(fontWeight: FontWeight.bold),
               items: [],
             ),
+            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
-            Obx(() => DropdownButtonFormField<String>(
-                  decoration: textFormFieldDecoration1(
-                      'Qualidade da despesa', null, false),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.themeColor,
-                    fontSize: 16,
-                  ),
-                  value: _expenseAddUpdateController.selectedExpenseQuality,
-                  onChanged: (newValue) => _expenseAddUpdateController
-                      .selectedExpenseQuality(newValue),
-                  items: _expenseAddUpdateController.expenseQualityList
-                      .map((value) {
-                    return DropdownMenuItem<String>(
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            color: value == 'Não essencial'
-                                ? AppColors.expenseColor
-                                : value == 'Essencial'
-                                    ? AppColors.incomeColor
-                                    : AppColors.investcolor,
-                          ),
-                          Text('  '),
-                          Text(value),
-                        ],
-                      ),
-                      value: value,
-                    );
-                  }).toList(),
-                  isExpanded: true,
-                )),
-            SizedBox(height: SPACEFORMS),
-            SizedBox(height: SPACEFORMS),
-            Text(
-              'Parcelado?',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-                color: AppColors.grey,
+            //
+            Obx(
+              () => DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.zero,
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.themeColor,
+                  fontSize: 16,
+                ),
+                value: _expenseAddUpdateController.selectedExpenseQuality,
+                onChanged: (newValue) => _expenseAddUpdateController
+                    .selectedExpenseQuality(newValue),
+                items:
+                    _expenseAddUpdateController.expenseQualityList.map((value) {
+                  return DropdownMenuItem<String>(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          color: value == 'Não essencial'
+                              ? AppColors.expenseColor
+                              : value == 'Essencial'
+                                  ? AppColors.incomeColor
+                                  : AppColors.investcolor,
+                        ),
+                        Text('    '),
+                        Text(value),
+                      ],
+                    ),
+                    value: value,
+                  );
+                }).toList(),
+                isExpanded: true,
               ),
             ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS),
+            //
+            // Text(
+            //   'Parcelado?',
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 17,
+            //     color: AppColors.grey,
+            //   ),
+            // ),
             Obx(
               () => Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      Expanded(
+                        child: Text(
+                          'Parcelado?',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: AppColors.grey,
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
@@ -138,7 +186,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                                   'Sim',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 17.0,
+                                    fontSize: 15.0,
                                   ),
                                 ),
                               ),
@@ -179,7 +227,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                                   'Não',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 17.0,
+                                    fontSize: 15.0,
                                   ),
                                 ),
                               ),
@@ -211,41 +259,42 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                       ),
                       child: Column(
                         children: [
+                          SizedBox(height: SPACEFORMS),
                           TextFormField(
-                            decoration: textFormFieldDecoration1(
-                              'Quantidade de parcelas',
-                              null,
-                              false,
+                              controller: _expenseAddUpdateController
+                                  .dateInstallmentsTextFormFieldController,
+                              focusNode: DisabledFocusNode(),
+                              decoration: textFormFieldFormsLabel(
+                                fieldIcon: Icons.date_range_outlined,
+                                label: 'Data de pagamento da 1ª parcela',
+                                hint: null,
+                              ),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              keyboardType: TextInputType.number,
+                              onTap: () {
+                                _expenseAddUpdateController.selectDate(
+                                  context: context,
+                                  textFormFieldController:
+                                      _expenseAddUpdateController
+                                          .dateInstallmentsTextFormFieldController,
+                                );
+                              }),
+                          Divider(color: AppColors.grey800),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              labelText: 'Quantidade de parcelas',
+                              alignLabelWithHint: true,
                             ),
-                            style: TextStyle(fontWeight: FontWeight.bold),
                             keyboardType: TextInputType.number,
                           ),
+                          SizedBox(height: SPACEFORMS),
                           TextFormField(
-                            decoration: textFormFieldDecoration1(
-                                'Valor da parcela ', null, false),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            keyboardType: TextInputType.number,
-                          ),
-                          TextFormField(
-                            controller: _expenseAddUpdateController
-                                .dateInstallmentsTextFormFieldController,
-                            focusNode: AlwaysDisabledFocusNode(),
-                            decoration: textFormFieldDecoration1(
-                                'Data de pagamento da 1ª parcela', null, false),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            keyboardType: TextInputType.number,
-                            onTap: () => _expenseAddUpdateController.selectDate(
-                                context: context,
-                                textFormFieldController:
-                                    _expenseAddUpdateController
-                                        .dateInstallmentsTextFormFieldController),
-                          ),
-                          TextFormField(
-                            decoration: textFormFieldDecoration1(
-                                'Dia de pagamento das demais parcelas',
-                                null,
-                                false),
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              labelText: 'Dia de pagamento das demais parcelas',
+                              alignLabelWithHint: true,
+                            ),
                             keyboardType: TextInputType.number,
                           ),
                         ],
@@ -272,38 +321,36 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                           topLeft: Radius.circular(10.0),
                         ),
                       ),
-                      child: Row(
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: TextFormField(
-                              decoration: textFormFieldDecoration1(
-                                'Valor',
-                                null,
-                                false,
-                              ),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          SizedBox(width: SPACEFORMS),
-                          Expanded(
-                            child: TextFormField(
-                                controller: _expenseAddUpdateController
-                                    .dateNoInstallmentsFormFieldController,
-                                focusNode: AlwaysDisabledFocusNode(),
-                                decoration: textFormFieldDecoration1(
-                                  'Data do pagamento',
-                                  null,
-                                  false,
+                          SizedBox(height: SPACEFORMS),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _expenseAddUpdateController
+                                      .dateNoInstallmentsFormFieldController,
+                                  focusNode: DisabledFocusNode(),
+                                  decoration: textFormFieldFormsLabel(
+                                    fieldIcon: Icons.date_range_outlined,
+                                    label: 'Data efetiva do pagamento',
+                                    hint: null,
+                                  ),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  keyboardType: TextInputType.number,
+                                  onTap: () {
+                                    _expenseAddUpdateController.selectDate(
+                                      context: context,
+                                      textFormFieldController:
+                                          _expenseAddUpdateController
+                                              .dateNoInstallmentsFormFieldController,
+                                    );
+                                  },
                                 ),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                keyboardType: TextInputType.number,
-                                onTap: () => _expenseAddUpdateController.selectDate(
-                                    context: context,
-                                    textFormFieldController:
-                                        _expenseAddUpdateController
-                                            .dateNoInstallmentsFormFieldController)),
+                              ),
+                            ],
                           ),
+                          Divider(color: AppColors.grey800),
                         ],
                       ),
                     ),
@@ -311,20 +358,18 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: SPACEFORMS),
             TextFormField(
-              decoration: textFormFieldDecoration1('Observações', null, true),
+              decoration:
+                  textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),
+            SizedBox(height: SPACEFORMS),
           ],
         ),
       ),
     );
   }
-}
-
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

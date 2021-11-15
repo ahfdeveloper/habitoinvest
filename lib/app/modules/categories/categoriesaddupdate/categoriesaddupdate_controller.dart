@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/categories_repository.dart';
+import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
 
 class CategoriesAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final CategoriesRepository _categoriesRepository = CategoriesRepository();
+  final CategoryRepository _categoriesRepository = CategoryRepository();
   TextEditingController? nameTextController, descriptionTextController;
 
   RxString _categoryType = ''.obs;

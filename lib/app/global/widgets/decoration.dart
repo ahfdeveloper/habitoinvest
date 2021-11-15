@@ -1,30 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 
-
-InputDecoration textFormFieldDecoration1(String label, String? hint, bool multilines){
+// Estilo dos TextFormFields usados no app. Padrão material design
+InputDecoration textFormFieldForms({
+  IconData? fieldIcon,
+  String? label,
+  required String? hint,
+}) {
   return InputDecoration(
-    labelText: label,
-    hintText: hint,
-    labelStyle: TextStyle(fontWeight: FontWeight.bold),
-    alignLabelWithHint: multilines,
+    contentPadding: EdgeInsets.zero,
+    border: InputBorder.none,
+    icon: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(fieldIcon, color: AppColors.grey600),
+      ],
+    ),
   );
 }
 
+InputDecoration textFormFieldFormsLabel({
+  IconData? fieldIcon,
+  required String? label,
+  required String? hint,
+}) {
+  return InputDecoration(
+    labelText: label,
+    contentPadding: EdgeInsets.zero,
+    border: InputBorder.none,
+    icon: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(fieldIcon, color: AppColors.grey600),
+      ],
+    ),
+  );
+}
 
-// Decoration para TextFormFields alternativo
-InputDecoration textFormFieldDecoration2(String label, Color borderFocus, bool multilines){
+InputDecoration textFormFieldMultilines(String label) {
+  return InputDecoration(
+    labelText: label,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.0),
+    ),
+    alignLabelWithHint: true,
+  );
+}
+
+// Estilo do TextFormField para inserção do valor das operações
+InputDecoration textFormFieldValueOperation() {
+  return InputDecoration(
+    border: InputBorder.none,
+    focusedBorder: InputBorder.none,
+    labelStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 15.0,
+    ),
+  );
+}
+
+// Estilo dos TextFormFields usados no app. Padrão com bordas
+InputDecoration textFormFieldDecoration2(
+    String label, Color borderFocus, bool multilines) {
   return InputDecoration(
     filled: true,
     fillColor: Colors.white,
     labelText: label,
     hintText: 'p.ex. 0.00',
-    labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.bodyTextPagesColor, fontSize: 18),
+    labelStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: AppColors.bodyTextPagesColor,
+        fontSize: 18),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5.0), 
+      borderRadius: BorderRadius.circular(5.0),
       borderSide: BorderSide(color: Colors.grey[100]!),
     ),
-    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: borderFocus)),
+    focusedBorder:
+        OutlineInputBorder(borderSide: BorderSide(color: borderFocus)),
     alignLabelWithHint: multilines,
   );
 }

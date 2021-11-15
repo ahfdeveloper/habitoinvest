@@ -35,20 +35,32 @@ class InvestAddUpdatePage extends StatelessWidget {
             TextFormField(
               controller: _controller.dateTextFormFieldController,
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Data', null, false),
+              decoration: textFormFieldForms(
+                //fieldIcon: Icon(null),
+                label: 'Data',
+                hint: null,
+              ),
               focusNode: AlwaysDisabledFocusNode(),
               onTap: () => _controller.selectDate(context),
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('valor', null, false),
+              decoration: textFormFieldForms(
+                //fieldIcon: Icon(null),
+                label: 'valor',
+                hint: null,
+              ),
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Observações', null, true),
+              decoration: textFormFieldForms(
+                //fieldIcon: Icon(null),
+                label: 'Observações',
+                hint: null,
+              ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),

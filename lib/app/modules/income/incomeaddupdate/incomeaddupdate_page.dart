@@ -43,7 +43,8 @@ class IncomeAddUpdatePage extends StatelessWidget {
               controller: _incomeAddUpdateController.dateTextController,
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Data', null, false),
+              decoration: textFormFieldForms(
+                  fieldIcon: null, label: 'Data', hint: null),
               focusNode: AlwaysDisabledFocusNode(),
               onTap: () => _incomeAddUpdateController.selectDate(context),
             ),
@@ -52,7 +53,8 @@ class IncomeAddUpdatePage extends StatelessWidget {
               controller: _incomeAddUpdateController.nameTextController,
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Nome', null, false),
+              decoration: textFormFieldForms(
+                  fieldIcon: null, label: 'Nome', hint: null),
             ),
             SizedBox(height: SPACEFORMS),
             Obx(
@@ -82,7 +84,11 @@ class IncomeAddUpdatePage extends StatelessWidget {
               controller: _incomeAddUpdateController.valueTextController,
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Valor', null, false),
+              decoration: textFormFieldForms(
+                fieldIcon: null,
+                label: 'Valor',
+                hint: null,
+              ),
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: SPACEFORMS),
@@ -90,7 +96,11 @@ class IncomeAddUpdatePage extends StatelessWidget {
               controller: _incomeAddUpdateController.observationTextController,
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldDecoration1('Observações', null, true),
+              decoration: textFormFieldForms(
+                fieldIcon: null,
+                label: 'Observações',
+                hint: null,
+              ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),

@@ -1,7 +1,7 @@
 import 'package:habito_invest_app/app/data/model/category_model.dart';
-import 'package:habito_invest_app/app/data/provider/categories_provider.dart';
+import 'package:habito_invest_app/app/data/provider/category_provider.dart';
 
-class CategoriesRepository {
+class CategoryRepository {
   final CategoriesProvider _categoriesProvider = CategoriesProvider();
 
   // Lista todas as categorias

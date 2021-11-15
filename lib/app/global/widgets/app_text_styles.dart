@@ -85,9 +85,22 @@ class AppTextStyles {
     color: AppColors.white,
   );
 
+  static final input = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.input,
+  );
+
   static final textBlack = GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: AppColors.themeColor,
+  );
+
+  // Estilo usado na tela de inserção do valor da operação de despesa
+  static final valueOperationStyle = GoogleFonts.notoSans(
+    fontSize: 30.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.expenseColor,
   );
 }

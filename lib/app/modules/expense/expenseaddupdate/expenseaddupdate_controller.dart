@@ -1,6 +1,8 @@
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseAddUpdateController extends GetxController {
@@ -15,6 +17,11 @@ class ExpenseAddUpdateController extends GetxController {
   final TextEditingController dateNoInstallmentsFormFieldController =
       TextEditingController(
           text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+
+  TextEditingController? descriptionTextController;
+
+  final MoneyMaskedTextController expenseValueTextFormFieldController =
+      moneyValueController;
 
   final List expenseQualityList = [
     'Essencial',

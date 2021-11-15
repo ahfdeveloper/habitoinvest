@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/categories_repository.dart';
+import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 class IncomeAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final CategoriesRepository _categoriesRepository = CategoriesRepository();
+  final CategoryRepository _categoriesRepository = CategoryRepository();
   final IncomeRepository _incomeRepository = IncomeRepository();
 
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
