@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
@@ -14,31 +15,45 @@ class IncomeAddUpdateController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final IncomeRepository _incomeRepository = IncomeRepository();
 
+  // Máscara para digitação do valor da receita ------------------------------------
+  MoneyMaskedTextController incomeValueTextFormFieldController =
+      MoneyMaskedTextController(leftSymbol: 'R\$ ');
+
+  /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
+   de seleção da categoria de receita */
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
   List<CategoryModel> get categories => _categoriesList.value;
-
   String firstElementDrop = 'Selecione uma categoria...';
   var _selectedCategory = 'Selecione uma categoria...'.obs;
   String get selectedCategory => this._selectedCategory.value;
   set selectedCategory(String select) => _selectedCategory.value = select;
 
   TextEditingController dateTextController = TextEditingController(
-    text: DateFormat('dd/MM/yyyy').format(
-      DateTime.now(),
-    ),
-  );
+      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
-  TextEditingController? nameTextController;
+  TextEditingController? descriptionTextController;
   TextEditingController? valueTextController;
-  TextEditingController? observationTextController;
+  TextEditingController? addInformationTextController;
 
+  // Variável usada para definição se receita foi recebida ou não
+  RxBool _received = false.obs;
+  bool get received => this._received.value;
+  set received(bool value) => this._received.value = value;
+
+  // Variável que guarda a descrição da receita para exibição na snackbar
+  String _incomeDescription = '';
+  String get incomeDescription => this._incomeDescription;
+  set incomeDescription(String value) => this._incomeDescription = value;
+
+  // Guarda e recupera o Id da receita
   String _incomeId = '';
   String get incomeId => this._incomeId;
   set incomeId(String value) => this._incomeId = value;
 
-  String _incomeName = '';
-  String get incomeName => this._incomeName;
-  set incomeName(String value) => this._incomeName = value;
+  // Variável informativa que mostra dado a serr digitado no TextFormField
+  RxString _descriptionValue = 'Descrição'.obs;
+  String get descriptionValue => this._descriptionValue.value;
+  set descriptionValue(String value) => this._descriptionValue.value = value;
 
   String _addEditFlag = '';
   String get addEditFlag => this._addEditFlag;
@@ -53,9 +68,9 @@ class IncomeAddUpdateController extends GetxController {
     _categoriesList.bindStream(
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
-    nameTextController = TextEditingController();
+    descriptionTextController = TextEditingController();
     valueTextController = TextEditingController();
-    observationTextController = TextEditingController();
+    addInformationTextController = TextEditingController();
     super.onInit();
   }
 
@@ -96,29 +111,30 @@ class IncomeAddUpdateController extends GetxController {
     return listCategoryIncome;
   }
 
+  // Efetua o salvamento de uma nova receita ou de uma receita editada
   void saveUpdateIncome({required String addEditFlag}) {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
 
     if (addEditFlag == 'NEW') {
-      if (nameTextController!.text != '' &&
+      if (descriptionTextController!.text != '' &&
           selectedCategory != selectIncomeCategory().first &&
           valueTextController!.text != '' &&
-          observationTextController!.text != '') {
-        incomeName = nameTextController!.text;
+          addInformationTextController!.text != '') {
+        incomeDescription = descriptionTextController!.text;
         _incomeRepository
             .addIncome(
               userUid: user!.id,
               incDate: newSelectedDate,
-              incName: nameTextController!.text,
+              incName: descriptionTextController!.text,
               incCategory: selectedCategory,
               incValue: double.parse(valueTextController!.text),
-              incObservation: observationTextController!.text,
+              incObservation: addInformationTextController!.text,
             )
             .whenComplete(
               () => AppSnackbar.snackarStyle(
-                title: incomeName,
+                title: incomeDescription,
                 message: 'Receita cadastrada com sucesso',
               ),
             );
@@ -126,22 +142,22 @@ class IncomeAddUpdateController extends GetxController {
         Get.back();
       }
     } else if (addEditFlag == 'UPDATE') {
-      if (nameTextController!.text != '' &&
+      if (descriptionTextController!.text != '' &&
           selectedCategory != selectIncomeCategory().first &&
           valueTextController!.text != '' &&
-          observationTextController!.text != '') {
-        incomeName = nameTextController!.text;
+          addInformationTextController!.text != '') {
+        incomeDescription = descriptionTextController!.text;
         _incomeRepository.updateIncome(
             userUid: user!.id,
             incDate: newSelectedDate,
-            incName: nameTextController!.text,
+            incName: descriptionTextController!.text,
             incCategory: selectedCategory,
             incValue: double.parse(valueTextController!.text),
-            incObservation: observationTextController!.text,
+            incObservation: addInformationTextController!.text,
             incUid: incomeId)
           ..whenComplete(
             () => AppSnackbar.snackarStyle(
-              title: incomeName,
+              title: incomeDescription,
               message: 'Receita atualizada com sucesso',
             ),
           );
@@ -153,13 +169,13 @@ class IncomeAddUpdateController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
-    nameTextController!.clear();
+    descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
     valueTextController!.clear();
-    observationTextController!.clear();
+    addInformationTextController!.clear();
   }
 
-  // Cancela o cadastro ou edição de uma nova categoria
+  // Cancela o cadastro ou edição de uma nova receita
   void cancel() {
     clearEditingControllers();
     Get.back();

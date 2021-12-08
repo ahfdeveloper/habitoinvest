@@ -98,9 +98,16 @@ class AppTextStyles {
   );
 
   // Estilo usado na tela de inserção do valor da operação de despesa
-  static final valueOperationStyle = GoogleFonts.notoSans(
+  static final valueExpenseOperationStyle = GoogleFonts.notoSans(
     fontSize: 30.0,
     fontWeight: FontWeight.bold,
     color: AppColors.expenseColor,
+  );
+
+  // Estilo usado na tela de inserção do valor da operação de receita
+  static final valueIncomeOperationStyle = GoogleFonts.notoSans(
+    fontSize: 30.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.incomeColor,
   );
 }

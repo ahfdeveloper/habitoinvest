@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
+import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
+import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
@@ -40,27 +43,79 @@ class IncomeAddUpdatePage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
+              controller:
+                  _incomeAddUpdateController.incomeValueTextFormFieldController,
+              validator: (value) => validatorIncomeValue(value),
+              style: AppTextStyles.valueIncomeOperationStyle,
+              keyboardType: TextInputType.number,
+              decoration: textFormFieldValueOperation(),
+            ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            //
+            Row(
+              children: [
+                Obx(
+                  () => Checkbox(
+                    value: _incomeAddUpdateController.received,
+                    onChanged: (newValue) =>
+                        _incomeAddUpdateController.received = newValue as bool,
+                  ),
+                ),
+                Text('Recebido'),
+              ],
+            ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS),
+            //
+            TextFormField(
               controller: _incomeAddUpdateController.dateTextController,
-              validator: (value) => validator(value),
-              style: TextStyle(fontWeight: FontWeight.bold),
+              focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
-                  fieldIcon: null, label: 'Data', hint: null),
-              focusNode: AlwaysDisabledFocusNode(),
+                fieldIcon: Icons.date_range_outlined,
+                label: 'Data da receita',
+                hint: null,
+              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
               onTap: () => _incomeAddUpdateController.selectDate(context),
             ),
+            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
-            TextFormField(
-              controller: _incomeAddUpdateController.nameTextController,
-              validator: (value) => validator(value),
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldForms(
-                  fieldIcon: null, label: 'Nome', hint: null),
+            //
+            Obx(
+              () => TextFormField(
+                controller:
+                    _incomeAddUpdateController.descriptionTextController,
+                validator: (value) => validator(value),
+                decoration: textFormFieldForms(
+                  fieldIcon: Icons.description_outlined,
+                  hint: _incomeAddUpdateController.descriptionValue,
+                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                onTap: () {
+                  _incomeAddUpdateController.descriptionValue = '';
+                  _incomeAddUpdateController.descriptionTextController!.text =
+                      _incomeAddUpdateController.descriptionValue;
+                },
+              ),
             ),
+            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
+            //
             Obx(
               () => DropdownButtonFormField(
                 validator: (value) => validatorDropdown(value),
+                decoration: textFormFieldForms(
+                  fieldIcon: Icons.category_outlined,
+                  hint: '',
+                ),
                 elevation: 16,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.themeColor,
+                  fontSize: 16,
+                ),
                 hint: Text(
                   '${_incomeAddUpdateController.selectedCategory.toString()}',
                 ),
@@ -79,31 +134,20 @@ class IncomeAddUpdatePage extends StatelessWidget {
                 },
               ),
             ),
+            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
-            TextFormField(
-              controller: _incomeAddUpdateController.valueTextController,
-              validator: (value) => validator(value),
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldForms(
-                fieldIcon: null,
-                label: 'Valor',
-                hint: null,
-              ),
-              keyboardType: TextInputType.number,
-            ),
             SizedBox(height: SPACEFORMS),
+            //
             TextFormField(
-              controller: _incomeAddUpdateController.observationTextController,
-              validator: (value) => validator(value),
+              controller:
+                  _incomeAddUpdateController.addInformationTextController,
+              decoration:
+                  textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: textFormFieldForms(
-                fieldIcon: null,
-                label: 'Observações',
-                hint: null,
-              ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),
+            SizedBox(height: SPACEFORMS),
           ],
         ),
       ),
@@ -114,6 +158,14 @@ class IncomeAddUpdatePage extends StatelessWidget {
   validator(value) {
     if (value!.isEmpty) {
       return 'Campo obrigatório';
+    }
+    return null;
+  }
+
+  // Validação do TextFormField de valor da receita
+  validatorIncomeValue(value) {
+    if (value == 'R\$ 0,00') {
+      return 'Valor deve ser diferente de zero';
     }
     return null;
   }

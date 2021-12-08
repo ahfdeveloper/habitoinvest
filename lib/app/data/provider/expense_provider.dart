@@ -9,7 +9,7 @@ class ExpenseProvider {
     return _firebaseFirestore
         .doc(userUid)
         .collection('expense')
-        .orderBy('expDatepay')
+        .orderBy('expDatePayFirstPortion')
         .snapshots()
         .map(
       (query) {
@@ -22,5 +22,39 @@ class ExpenseProvider {
         return retExpense;
       },
     );
+  }
+
+  // Cadastra uma nova despesa
+  Future<void> addExpense(
+      {required String userUid,
+      required double expTotalValue,
+      required bool expPay,
+      required DateTime expDateShop,
+      required String expDescription,
+      required String expCategory,
+      required String expQuality,
+      required DateTime expDatePayFirstPortion,
+      required String expPortionNumber,
+      required String expTotalPortionNumber,
+      required double expPortionValue,
+      required String expAddInformation}) async {
+    DocumentReference documentReference =
+        _firebaseFirestore.doc(userUid).collection('expense').doc();
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'expTotalValue': expTotalValue,
+      'expPay': expPay,
+      'expDateShop': expDateShop,
+      'expDescription': expDescription,
+      'expCategory': expCategory,
+      'expQuality': expQuality,
+      'expDatePayFirstPortion': expDatePayFirstPortion,
+      'expPortionNumber': expPortionNumber,
+      'expTotalPortionNumber': expTotalPortionNumber,
+      'expPortionValue': expPortionValue,
+      'expAddInformation': expAddInformation,
+    };
+
+    await documentReference.set(data).catchError((e) => print(e));
   }
 }

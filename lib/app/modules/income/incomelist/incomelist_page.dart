@@ -42,13 +42,14 @@ class IncomeList extends StatelessWidget {
                     _incomeAddUpdateController.addEditFlag = 'UPDATE';
                     _incomeAddUpdateController.incomeId =
                         _incomeListController.income[index].id!;
-                    _incomeAddUpdateController.nameTextController?.text =
+                    _incomeAddUpdateController.descriptionTextController?.text =
                         _incomeListController.income[index].name!;
                     _incomeAddUpdateController.selectedCategory =
                         _incomeListController.income[index].category!;
                     _incomeAddUpdateController.valueTextController?.text =
                         _incomeListController.income[index].value.toString();
-                    _incomeAddUpdateController.observationTextController?.text =
+                    _incomeAddUpdateController
+                            .addInformationTextController?.text =
                         _incomeListController.income[index].observation!;
                     Get.toNamed(Routes.INCOME_ADDUPDATE,
                         arguments: _incomeListController.user);

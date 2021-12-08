@@ -14,6 +14,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _formkey = _expenseAddUpdateController.formkey;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -26,13 +27,16 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () {/*Código para salvar*/},
+            onPressed: () => _expenseAddUpdateController.saveUpdateExpense(
+              addEditFlag: _expenseAddUpdateController.addEditFlag,
+            ),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
       //
       body: Form(
+        key: _formkey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           children: [
@@ -40,16 +44,32 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             TextFormField(
               controller: _expenseAddUpdateController
                   .expenseValueTextFormFieldController,
-              style: AppTextStyles.valueOperationStyle,
+              validator: (value) => validatorExpenseValue(value),
+              style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
+            Row(
+              children: [
+                Obx(
+                  () => Checkbox(
+                    value: _expenseAddUpdateController.pay,
+                    onChanged: (newValue) =>
+                        _expenseAddUpdateController.pay = newValue as bool,
+                  ),
+                ),
+                Text('Pago'),
+              ],
+            ),
+
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _expenseAddUpdateController
-                  .dateRegisterTextFormFieldController,
+              controller:
+                  _expenseAddUpdateController.dateShopTextFormFieldController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -57,33 +77,64 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseAddUpdateController.selectDate(
-                context: context,
-                textFormFieldController: _expenseAddUpdateController
-                    .dateRegisterTextFormFieldController,
+              onTap: () => _expenseAddUpdateController.selectDateShop(
+                  context: context,
+                  textFormFieldController: _expenseAddUpdateController
+                      .dateShopTextFormFieldController),
+            ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            //
+            Obx(
+              () => TextFormField(
+                controller:
+                    _expenseAddUpdateController.descriptionTextController,
+                validator: (value) => validator(value),
+                decoration: textFormFieldForms(
+                  fieldIcon: Icons.description_outlined,
+                  hint: _expenseAddUpdateController.descriptionValue,
+                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                onTap: () {
+                  _expenseAddUpdateController.descriptionValue = '';
+                  _expenseAddUpdateController.descriptionTextController!.text =
+                      _expenseAddUpdateController.descriptionValue;
+                },
               ),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
-            TextFormField(
-              initialValue: 'Descrição',
-              decoration: textFormFieldForms(
-                  fieldIcon: Icons.description_outlined,
-                  label: 'Descrição',
-                  hint: null),
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            DividerHorizontal(),
-            SizedBox(height: SPACEFORMS),
-            //
-            DropdownButtonFormField(
-              decoration: textFormFieldForms(
+            Obx(
+              () => DropdownButtonFormField(
+                validator: (value) => validatorDropdown(value),
+                decoration: textFormFieldForms(
                   fieldIcon: Icons.category_outlined,
-                  label: 'Categoria',
-                  hint: ''),
-              style: TextStyle(fontWeight: FontWeight.bold),
-              items: [],
+                  hint: '',
+                ),
+                elevation: 16,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.themeColor,
+                  fontSize: 16,
+                ),
+                hint: Text(
+                  '${_expenseAddUpdateController.selectedCategory.toString()}',
+                ),
+                value: _expenseAddUpdateController.selectedCategory,
+                items: _expenseAddUpdateController.selectIncomeCategory().map(
+                  (String item) {
+                    return DropdownMenuItem(
+                      value: item,
+                      child: Text(item),
+                    );
+                  },
+                ).toList(),
+                onChanged: (newValue) {
+                  _expenseAddUpdateController.selectedCategory =
+                      newValue as String;
+                },
+              ),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
@@ -100,28 +151,31 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                   fontSize: 16,
                 ),
                 value: _expenseAddUpdateController.selectedExpenseQuality,
-                onChanged: (newValue) => _expenseAddUpdateController
-                    .selectedExpenseQuality(newValue),
-                items:
-                    _expenseAddUpdateController.expenseQualityList.map((value) {
-                  return DropdownMenuItem<String>(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          color: value == 'Não essencial'
-                              ? AppColors.expenseColor
-                              : value == 'Essencial'
-                                  ? AppColors.incomeColor
-                                  : AppColors.investcolor,
-                        ),
-                        Text('    '),
-                        Text(value),
-                      ],
-                    ),
-                    value: value,
-                  );
-                }).toList(),
+                items: _expenseAddUpdateController.expenseQualityList.map(
+                  (value) {
+                    return DropdownMenuItem<String>(
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: value == 'Não essencial'
+                                ? AppColors.expenseColor
+                                : value == 'Essencial'
+                                    ? AppColors.incomeColor
+                                    : AppColors.investcolor,
+                          ),
+                          Text('    '),
+                          Text(value),
+                        ],
+                      ),
+                      value: value,
+                    );
+                  },
+                ).toList(),
+                onChanged: (newValue) {
+                  _expenseAddUpdateController.selectedExpenseQuality =
+                      newValue as String;
+                },
                 isExpanded: true,
               ),
             ),
@@ -129,14 +183,6 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             //
-            // Text(
-            //   'Parcelado?',
-            //   style: TextStyle(
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 17,
-            //     color: AppColors.grey,
-            //   ),
-            // ),
             Obx(
               () => Column(
                 children: [
@@ -262,7 +308,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                           SizedBox(height: SPACEFORMS),
                           TextFormField(
                               controller: _expenseAddUpdateController
-                                  .dateInstallmentsTextFormFieldController,
+                                  .datePortionTextFormFieldController,
                               focusNode: DisabledFocusNode(),
                               decoration: textFormFieldFormsLabel(
                                 fieldIcon: Icons.date_range_outlined,
@@ -272,15 +318,17 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                               style: TextStyle(fontWeight: FontWeight.bold),
                               keyboardType: TextInputType.number,
                               onTap: () {
-                                _expenseAddUpdateController.selectDate(
+                                _expenseAddUpdateController.selectDatePortion(
                                   context: context,
                                   textFormFieldController:
                                       _expenseAddUpdateController
-                                          .dateInstallmentsTextFormFieldController,
+                                          .datePortionTextFormFieldController,
                                 );
                               }),
                           Divider(color: AppColors.grey800),
                           TextFormField(
+                            controller: _expenseAddUpdateController
+                                .dayPayPortionTextController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               labelText: 'Quantidade de parcelas',
@@ -329,7 +377,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                               Expanded(
                                 child: TextFormField(
                                   controller: _expenseAddUpdateController
-                                      .dateNoInstallmentsFormFieldController,
+                                      .dateNoPortionFormFieldController,
                                   focusNode: DisabledFocusNode(),
                                   decoration: textFormFieldFormsLabel(
                                     fieldIcon: Icons.date_range_outlined,
@@ -339,11 +387,12 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                   keyboardType: TextInputType.number,
                                   onTap: () {
-                                    _expenseAddUpdateController.selectDate(
+                                    _expenseAddUpdateController
+                                        .selectDatePortion(
                                       context: context,
                                       textFormFieldController:
                                           _expenseAddUpdateController
-                                              .dateNoInstallmentsFormFieldController,
+                                              .dateNoPortionFormFieldController,
                                     );
                                   },
                                 ),
@@ -360,6 +409,8 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
+              controller:
+                  _expenseAddUpdateController.addInformationTextController,
               decoration:
                   textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -371,5 +422,28 @@ class ExpenseAddUpdatePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  validatorExpenseValue(value) {
+    if (value == 'R\$ 0,00') {
+      return 'Valor deve ser diferente de zero';
+    }
+    return null;
+  }
+
+  // Função de validação dos TextFormfields
+  validator(value) {
+    if (value!.isEmpty) {
+      return 'Campo obrigatório';
+    }
+    return null;
+  }
+
+  // Função de validação do Dropdownbutton
+  validatorDropdown(value) {
+    if (value == _expenseAddUpdateController.firstElementDrop) {
+      return 'Selecione um item';
+    }
+    return null;
   }
 }

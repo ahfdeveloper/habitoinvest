@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,9 @@ import 'package:intl/intl.dart';
 class ExpenseList extends StatelessWidget {
   final ExpenseListController _expenseListController =
       Get.find<ExpenseListController>();
+
+  final ExpenseAddUpdateController _expenseAddUpdateController =
+      Get.put(ExpenseAddUpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +37,9 @@ class ExpenseList extends StatelessWidget {
                           .toStringAsFixed(2)),
                   title:
                       Text(_expenseListController.expense[index].description!),
-                  subtitle: Text(DateFormat('dd/MM/yyyy')
-                      .format(_expenseListController.expense[index].datepay!)),
+                  subtitle: Text(DateFormat('dd/MM/yyyy').format(
+                      _expenseListController
+                          .expense[index].datePayFirstPortion!)),
                   onTap: () {
                     // _incomeAddUpdateController.addEditFlag = 'UPDATE';
                     // _incomeAddUpdateController.incomeId =
@@ -71,7 +76,20 @@ class ExpenseList extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.EXPENSE_ADDUPDATE),
+        onPressed: () async {
+          _expenseAddUpdateController.addEditFlag = 'NEW';
+          _expenseAddUpdateController.visibilityInstallmentsYes = false;
+          _expenseAddUpdateController.visibilityInstallmentsNo = false;
+          _expenseAddUpdateController.containerRadioNaoColor = null;
+          _expenseAddUpdateController.containerRadioSimColor = null;
+          _expenseAddUpdateController.installmentsType = '';
+          _expenseAddUpdateController.descriptionValue = 'Descrição';
+
+          Get.toNamed(
+            Routes.EXPENSE_ADDUPDATE,
+            arguments: _expenseListController.user,
+          );
+        },
         backgroundColor: AppColors.expenseColor,
         tooltip: 'Nova Despesa',
         child: Icon(Icons.add),

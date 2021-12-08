@@ -16,6 +16,7 @@ InputDecoration textFormFieldForms({
         Icon(fieldIcon, color: AppColors.grey600),
       ],
     ),
+    hintText: hint,
   );
 }
 
@@ -42,6 +43,7 @@ InputDecoration textFormFieldMultilines(String label) {
     labelText: label,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5.0),
+      borderSide: BorderSide(color: AppColors.grey300),
     ),
     alignLabelWithHint: true,
   );
