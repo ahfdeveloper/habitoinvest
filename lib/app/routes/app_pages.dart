@@ -3,10 +3,12 @@ import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/cat
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_binding.dart';
 import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_page.dart';
-import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_binding.dart';
-import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_page.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseadd/expenseadd_binding.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseadd/expenseadd_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_binding.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_page.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_binding.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_page.dart';
 import 'package:habito_invest_app/app/modules/goals/goals_binding.dart';
 import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_binding.dart';
 import 'package:habito_invest_app/app/modules/home/home_binding.dart';
@@ -82,9 +84,14 @@ class AppPages {
       binding: ExpenseListBinding(),
     ),
     GetPage(
-      name: Routes.EXPENSE_ADDUPDATE,
-      page: () => ExpenseAddUpdatePage(),
-      binding: ExpenseAddUpdateBinding(),
+      name: Routes.EXPENSE_ADD,
+      page: () => ExpenseAddPage(),
+      binding: ExpenseAddBinding(),
+    ),
+    GetPage(
+      name: Routes.EXPENSE_UPDATE,
+      page: () => ExpenseUpdatePage(),
+      binding: ExpenseUpdateBinding(),
     ),
     GetPage(
       name: Routes.INVEST_LIST,

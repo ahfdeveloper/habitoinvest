@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/modules/simulator/components/buttons.dart';
 import 'package:habito_invest_app/app/modules/simulator/simulator_controller.dart';
 
@@ -16,7 +15,7 @@ class SimulatorPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           backgroundColor: AppColors.themeColor,
           title: Text('Simulador de Investimento',
               style: AppTextStyles.appBarTextLight)),
@@ -24,26 +23,32 @@ class SimulatorPage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           children: [
-            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS * 2),
             TextFormField(
-              keyboardType: TextInputType.number,
               controller: _controller.contributionValueController,
-              decoration: textFormFieldForms(
-                  //fieldIcon: Icon(null),
-                  label: 'Valor a ser aplicado mensalmente',
-                  hint: ''),
-              style: AppTextStyles.generallyTextDarkBody,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Valor a ser aplicado mensalmente',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(color: AppColors.grey300),
+                ),
+              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
               controller: _controller.interestRateController,
-              decoration: textFormFieldForms(
-                //fieldIcon: Icon(null),
-                label: 'Taxa de juros mensal',
-                hint: 'p.ex. 00.00',
+              decoration: InputDecoration(
+                labelText: 'Taxa de juros mensal',
+                hintText: 'p.ex. 00.00',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(color: AppColors.grey300),
+                ),
               ),
-              style: AppTextStyles.generallyTextDarkBody,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
@@ -52,12 +57,15 @@ class SimulatorPage extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly
               ],
               controller: _controller.aplicationDeadlineController,
-              decoration: textFormFieldForms(
-                //fieldIcon: Icon(null),
-                label: 'Prazo em meses',
-                hint: 'p.ex. 60',
+              decoration: InputDecoration(
+                labelText: 'Prazo em meses',
+                hintText: 'p.ex. 60',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide(color: AppColors.grey300),
+                ),
               ),
-              style: AppTextStyles.generallyTextDarkBody,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 30.0),
             Container(
@@ -65,18 +73,26 @@ class SimulatorPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(_controller.resultSimulation1,
-                              style: AppTextStyles.appBarTextDark),
-                          Text(_controller.resultSimulation2,
-                              style: AppTextStyles.appBarNumberSaldo),
+                          Text(
+                            _controller.resultSimulation1,
+                            style: AppTextStyles.appBarTextDark,
+                          ),
+                          Text(
+                            _controller.resultSimulation2,
+                            style: AppTextStyles.appBarNumberSaldo,
+                          ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text(_controller.resultSimulation3,
-                              style: AppTextStyles.appBarTextDark),
-                          Text(_controller.resultSimulation4,
-                              style: AppTextStyles.appBarNumberSaldo),
+                          Text(
+                            _controller.resultSimulation3,
+                            style: AppTextStyles.appBarTextDark,
+                          ),
+                          Text(
+                            _controller.resultSimulation4,
+                            style: AppTextStyles.appBarNumberSaldo,
+                          ),
                         ],
                       ),
                     ],

@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
-          shadowColor: Colors.transparent,
+          shadowColor: AppColors.backgroundColor,
           backgroundColor: AppColors.backgroundColor,
           title: Column(
             children: [
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: AppColors.backgroundColor,
         drawer: DrawerHome(),
-        bottomNavigationBar: NavigationBar(),
+        bottomNavigationBar: NavBar(),
         body: Column(
           children: [
             Expanded(

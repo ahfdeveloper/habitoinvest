@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration.dart';
+import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_controller.dart';
 
 class CategoriesAddUpdatePage extends StatelessWidget {
@@ -37,13 +40,25 @@ class CategoriesAddUpdatePage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
           children: [
-            TextFormField(
-              controller: _categoriesAddUpdateController.nameTextController,
-              validator: (value) => validator(value),
-              style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(labelText: 'Nome'),
+            SizedBox(height: SPACEFORMS * 2),
+            Obx(
+              () => TextFormField(
+                controller: _categoriesAddUpdateController.nameTextController,
+                validator: (value) => validator(value),
+                decoration: textFormFieldForms(
+                  fieldIcon: Icons.description_outlined,
+                  hint: _categoriesAddUpdateController.categoryName,
+                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                onTap: () {
+                  _categoriesAddUpdateController.categoryName = '';
+                  _categoriesAddUpdateController.nameTextController!.text =
+                      _categoriesAddUpdateController.categoryName;
+                },
+              ),
             ),
-            SizedBox(height: 20.0),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
             Obx(
               () => Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -119,15 +134,14 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS),
             TextFormField(
               controller:
                   _categoriesAddUpdateController.descriptionTextController,
+              decoration: textFormFieldMultilines('Descrição'),
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: 'Descrição',
-                alignLabelWithHint: true,
-              ),
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),

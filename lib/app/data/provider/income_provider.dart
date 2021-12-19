@@ -28,20 +28,22 @@ class IncomeProvider {
   // Cadastra uma nova receita
   Future<void> addIncome(
       {required String userUid,
-      required DateTime incDate,
-      required String incName,
-      required String incCategory,
       required double incValue,
-      required String incObservation}) async {
+      required bool incReceived,
+      required DateTime incDate,
+      required String incDescription,
+      required String incCategory,
+      required String incAddInformation}) async {
     DocumentReference documentReference =
         _firebaseFirestore.doc(userUid).collection('income').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
-      'incName': incName,
-      'incDate': incDate,
-      'incCategory': incCategory,
       'incValue': incValue,
-      'incObservation': incObservation,
+      'incReceived': incReceived,
+      'incDate': incDate,
+      'incDescription': incDescription,
+      'incCategory': incCategory,
+      'incAddInformation': incAddInformation,
     };
 
     await documentReference.set(data).catchError((e) => print(e));
@@ -50,28 +52,32 @@ class IncomeProvider {
   // Atualiza uma receita editada
   Future updateIncome(
       {required String userUid,
-      required DateTime incDate,
-      required String incName,
-      required String incCategory,
       required double incValue,
-      required String incObservation,
+      required bool incReceived,
+      required DateTime incDate,
+      required String incDescription,
+      required String incCategory,
+      required String incAddInformation,
       required String incUid}) async {
     DocumentReference documentReference =
         _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
 
     Map<String, dynamic> data = <String, dynamic>{
-      'incDate': incDate,
-      'incName': incName,
-      'incCategory': incCategory,
       'incValue': incValue,
-      'incObservation': incObservation
+      'incReceived': incReceived,
+      'incDate': incDate,
+      'incDescription': incDescription,
+      'incCategory': incCategory,
+      'incAddInformation': incAddInformation
     };
     await documentReference.update(data).catchError((e) => print(e));
   }
 
-  // Deleta uma categoria
+  // Deleta uma despesa
   Future deleteIncome(
-      {required String userUid, required incUid, required incName}) async {
+      {required String userUid,
+      required incUid,
+      required incDescription}) async {
     DocumentReference documentReference =
         _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
     await documentReference.delete().catchError((e) => print(e));

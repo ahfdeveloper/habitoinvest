@@ -15,9 +15,9 @@ class IncomeListController extends GetxController {
   String get incomeId => this._incomeId;
   set incomeId(String value) => this._incomeId = value;
 
-  String _incomeName = '';
-  String get incomeName => this._incomeName;
-  set incomeName(String value) => this._incomeName = value;
+  String _incomeDescription = '';
+  String get incomeDescription => this._incomeDescription;
+  set incomeDescription(String value) => this._incomeDescription = value;
 
   Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
   List<IncomeModel> get income => _incomeList.value;
@@ -43,10 +43,10 @@ class IncomeListController extends GetxController {
       onConfirm: () {
         _incomeRepository
             .deleteIncome(
-                userUid: user!.id, incUid: incomeId, incName: incomeName)
+                userUid: user!.id, incUid: incomeId, incName: incomeDescription)
             .whenComplete(
               () => AppSnackbar.snackarStyle(
-                title: incomeName,
+                title: incomeDescription,
                 message: 'Receita apagada com sucesso',
               ),
             );

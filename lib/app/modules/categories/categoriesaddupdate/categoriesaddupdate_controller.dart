@@ -22,9 +22,9 @@ class CategoriesAddUpdateController extends GetxController {
   String get categoryId => this._categoryId;
   set categoryId(String value) => this._categoryId = value;
 
-  String _categoryName = '';
-  String get categoryName => this._categoryName;
-  set categoryName(String value) => this._categoryName = value;
+  RxString _categoryName = 'Nome'.obs;
+  String get categoryName => this._categoryName.value;
+  set categoryName(String value) => this._categoryName.value = value;
 
   String _addEditFlag = '';
   String get addEditFlag => this._addEditFlag;

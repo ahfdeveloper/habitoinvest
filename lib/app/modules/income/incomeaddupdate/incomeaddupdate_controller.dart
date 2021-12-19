@@ -12,28 +12,28 @@ import 'package:intl/intl.dart';
 class IncomeAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final CategoryRepository _categoriesRepository = CategoryRepository();
   final IncomeRepository _incomeRepository = IncomeRepository();
+  final CategoryRepository _categoriesRepository = CategoryRepository();
 
   // Máscara para digitação do valor da receita ------------------------------------
   MoneyMaskedTextController incomeValueTextFormFieldController =
       MoneyMaskedTextController(leftSymbol: 'R\$ ');
 
+  // Definição de valor inicial para o campo de data da Receita
+  TextEditingController dateTextController = TextEditingController(
+      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+
+  TextEditingController? descriptionTextController;
+  TextEditingController? addInformationTextController;
+
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
-   de seleção da categoria de receita */
+   de seleção da categoria de receita -----------------------------------------------*/
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
   List<CategoryModel> get categories => _categoriesList.value;
   String firstElementDrop = 'Selecione uma categoria...';
   var _selectedCategory = 'Selecione uma categoria...'.obs;
   String get selectedCategory => this._selectedCategory.value;
   set selectedCategory(String select) => _selectedCategory.value = select;
-
-  TextEditingController dateTextController = TextEditingController(
-      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
-
-  TextEditingController? descriptionTextController;
-  TextEditingController? valueTextController;
-  TextEditingController? addInformationTextController;
 
   // Variável usada para definição se receita foi recebida ou não
   RxBool _received = false.obs;
@@ -50,7 +50,7 @@ class IncomeAddUpdateController extends GetxController {
   String get incomeId => this._incomeId;
   set incomeId(String value) => this._incomeId = value;
 
-  // Variável informativa que mostra dado a serr digitado no TextFormField
+  // Variável informativa que mostra dado a ser digitado no TextFormField
   RxString _descriptionValue = 'Descrição'.obs;
   String get descriptionValue => this._descriptionValue.value;
   set descriptionValue(String value) => this._descriptionValue.value = value;
@@ -69,7 +69,8 @@ class IncomeAddUpdateController extends GetxController {
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
     descriptionTextController = TextEditingController();
-    valueTextController = TextEditingController();
+    incomeValueTextFormFieldController =
+        MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController = TextEditingController();
     super.onInit();
   }
@@ -100,7 +101,7 @@ class IncomeAddUpdateController extends GetxController {
   }
 
   /* Função que retorna apenas as categorias do tipo receita para preenchimento
-   do DropdownbuttonFormField */
+   do DropdownbuttonFormField ------------------------------------------------*/
   List<String> selectIncomeCategory() {
     List<String> listCategoryIncome = [firstElementDrop];
     categories.forEach((item) {
@@ -120,17 +121,17 @@ class IncomeAddUpdateController extends GetxController {
     if (addEditFlag == 'NEW') {
       if (descriptionTextController!.text != '' &&
           selectedCategory != selectIncomeCategory().first &&
-          valueTextController!.text != '' &&
           addInformationTextController!.text != '') {
         incomeDescription = descriptionTextController!.text;
         _incomeRepository
             .addIncome(
               userUid: user!.id,
+              incValue: incomeValueTextFormFieldController.numberValue,
+              incReceived: received,
               incDate: newSelectedDate,
-              incName: descriptionTextController!.text,
+              incDescription: descriptionTextController!.text,
               incCategory: selectedCategory,
-              incValue: double.parse(valueTextController!.text),
-              incObservation: addInformationTextController!.text,
+              incAddInformation: addInformationTextController!.text,
             )
             .whenComplete(
               () => AppSnackbar.snackarStyle(
@@ -144,16 +145,16 @@ class IncomeAddUpdateController extends GetxController {
     } else if (addEditFlag == 'UPDATE') {
       if (descriptionTextController!.text != '' &&
           selectedCategory != selectIncomeCategory().first &&
-          valueTextController!.text != '' &&
           addInformationTextController!.text != '') {
         incomeDescription = descriptionTextController!.text;
         _incomeRepository.updateIncome(
             userUid: user!.id,
+            incValue: incomeValueTextFormFieldController.numberValue,
+            incReceived: received,
             incDate: newSelectedDate,
-            incName: descriptionTextController!.text,
+            incDescription: descriptionTextController!.text,
             incCategory: selectedCategory,
-            incValue: double.parse(valueTextController!.text),
-            incObservation: addInformationTextController!.text,
+            incAddInformation: addInformationTextController!.text,
             incUid: incomeId)
           ..whenComplete(
             () => AppSnackbar.snackarStyle(
@@ -171,7 +172,8 @@ class IncomeAddUpdateController extends GetxController {
   void clearEditingControllers() {
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
-    valueTextController!.clear();
+    incomeValueTextFormFieldController =
+        MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();
   }
 

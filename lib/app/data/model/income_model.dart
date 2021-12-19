@@ -2,27 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class IncomeModel {
   String? id;
-  DateTime date = DateTime.now();
-  String? name;
-  String? category;
   double? value;
-  String? observation;
+  bool? received;
+  DateTime date = DateTime.now();
+  String? description;
+  String? category;
+  String? addInformation;
 
   IncomeModel(
     this.id,
-    this.date,
-    this.name,
-    this.category,
     this.value,
-    this.observation,
+    this.received,
+    this.date,
+    this.description,
+    this.category,
+    this.addInformation,
   );
 
   IncomeModel.fromDocument(DocumentSnapshot doc) {
     id = doc.id;
-    date = (doc['incDate'] as Timestamp).toDate();
-    name = doc['incName'];
-    category = doc['incCategory'];
     value = double.parse(doc['incValue'].toString());
-    observation = doc['incObservation'];
+    received = doc['incReceived'];
+    date = (doc['incDate'] as Timestamp).toDate();
+    description = doc['incDescription'];
+    category = doc['incCategory'];
+    addInformation = doc['incAddInformation'];
   }
 }

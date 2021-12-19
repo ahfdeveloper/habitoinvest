@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseadd/expenseadd_controller.dart';
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_controller.dart';
+import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
@@ -11,8 +13,11 @@ class ExpenseList extends StatelessWidget {
   final ExpenseListController _expenseListController =
       Get.find<ExpenseListController>();
 
-  final ExpenseAddUpdateController _expenseAddUpdateController =
-      Get.put(ExpenseAddUpdateController());
+  final ExpenseAddController _expenseAddController =
+      Get.put(ExpenseAddController());
+
+  final ExpenseUpdateController _expenseUpdateController =
+      Get.put(ExpenseUpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,27 +38,37 @@ class ExpenseList extends StatelessWidget {
               child: Card(
                 child: ListTile(
                   trailing: Text('R\$ ' +
-                      _expenseListController.expense[index].totalValue!
+                      _expenseListController.expense[index].value!
                           .toStringAsFixed(2)),
                   title:
                       Text(_expenseListController.expense[index].description!),
-                  subtitle: Text(DateFormat('dd/MM/yyyy').format(
-                      _expenseListController
-                          .expense[index].datePayFirstPortion!)),
+                  subtitle: Text(DateFormat('dd/MM/yyyy')
+                      .format(_expenseListController.expense[index].date)),
                   onTap: () {
-                    // _incomeAddUpdateController.addEditFlag = 'UPDATE';
-                    // _incomeAddUpdateController.incomeId =
-                    //     _incomeListController.income[index].id!;
-                    // _incomeAddUpdateController.nameTextController?.text =
-                    //     _incomeListController.income[index].name!;
-                    // _incomeAddUpdateController.selectedCategory =
-                    //     _incomeListController.income[index].category!;
-                    // _incomeAddUpdateController.valueTextController?.text =
-                    //     _incomeListController.income[index].value.toString();
-                    // _incomeAddUpdateController.observationTextController?.text =
-                    //     _incomeListController.income[index].observation!;
-                    // Get.toNamed(Routes.INCOME_ADDUPDATE,
-                    //     arguments: _incomeListController.user);
+                    _expenseUpdateController
+                            .expenseValueTextFormFieldController.text =
+                        _expenseListController.expense[index].value!
+                            .toStringAsFixed(2);
+                    _expenseUpdateController.dateTextController =
+                        TextEditingController(
+                            text: DateFormat('dd/MM/yyyy').format(
+                                _expenseListController.expense[index].date));
+                    _expenseUpdateController.expenseId =
+                        _expenseListController.expense[index].id!;
+                    _expenseUpdateController.pay =
+                        _expenseListController.expense[index].pay!;
+                    _expenseUpdateController.descriptionTextController?.text =
+                        _expenseListController.expense[index].description!;
+                    _expenseUpdateController.selectedCategory =
+                        _expenseListController.expense[index].category!;
+                    _expenseUpdateController.selectedExpenseQuality =
+                        _expenseListController.expense[index].quality!;
+
+                    _expenseUpdateController
+                            .addInformationTextController?.text =
+                        _expenseListController.expense[index].addInformation!;
+                    Get.toNamed(Routes.EXPENSE_UPDATE,
+                        arguments: _expenseListController.user);
                   },
                 ),
               ),
@@ -63,11 +78,11 @@ class ExpenseList extends StatelessWidget {
                   color: AppColors.expenseColor,
                   icon: Icons.delete,
                   onTap: () {
-                    // _incomeListController.incomeId =
-                    //     _incomeListController.income[index].id!;
-                    // _incomeListController.incomeName =
-                    //     _incomeListController.income[index].name!;
-                    // _incomeListController.deleteIncome();
+                    _expenseListController.expenseId =
+                        _expenseListController.expense[index].id!;
+                    _expenseListController.expenseDescription =
+                        _expenseListController.expense[index].description!;
+                    _expenseListController.deleteExpense();
                   },
                 ),
               ],
@@ -77,16 +92,24 @@ class ExpenseList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          _expenseAddUpdateController.addEditFlag = 'NEW';
-          _expenseAddUpdateController.visibilityInstallmentsYes = false;
-          _expenseAddUpdateController.visibilityInstallmentsNo = false;
-          _expenseAddUpdateController.containerRadioNaoColor = null;
-          _expenseAddUpdateController.containerRadioSimColor = null;
-          _expenseAddUpdateController.installmentsType = '';
-          _expenseAddUpdateController.descriptionValue = 'Descrição';
+          _expenseAddController.dateExpenseTextFormFieldController =
+              TextEditingController(
+                  text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+          _expenseAddController.visibilityInstallmentsYes = false;
+          _expenseAddController.visibilityInstallmentsNo = true;
+          _expenseAddController.containerRadioNaoColor = null;
+          _expenseAddController.containerRadioSimColor = null;
+          _expenseAddController.selectedExpenseQuality = 'Essencial';
+          _expenseAddController.installmentsType = 'Não';
+          _expenseAddController.paintContainerType();
+          _expenseAddController.pay = true;
+          _expenseAddController.descriptionValue = 'Descrição';
+          _expenseAddController.expenseValueTextFormFieldController =
+              MoneyMaskedTextController(leftSymbol: 'R\$ ');
+          _expenseAddController.qtPortionTextController!.text = '';
 
           Get.toNamed(
-            Routes.EXPENSE_ADDUPDATE,
+            Routes.EXPENSE_ADD,
             arguments: _expenseListController.user,
           );
         },

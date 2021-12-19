@@ -2,45 +2,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ExpenseModel {
   String? id;
-  double? totalValue;
-  bool? pay;
-  DateTime dateShop = DateTime.now();
+  double? value;
+  DateTime date = DateTime.now();
   String? description;
   String? category;
   String? quality;
-  DateTime? datePayFirstPortion;
-  String? portionNumber;
-  String? totalPortionNumber;
-  double? portionValue;
+  bool? pay;
   String? addInformation;
 
   ExpenseModel(
     this.id,
-    this.totalValue,
-    this.pay,
-    this.dateShop,
+    this.value,
+    this.date,
     this.description,
     this.category,
     this.quality,
-    this.datePayFirstPortion,
-    this.portionNumber,
-    this.totalPortionNumber,
-    this.portionValue,
+    this.pay,
     this.addInformation,
   );
 
   ExpenseModel.fromDocument(DocumentSnapshot doc) {
     id = doc.id;
-    totalValue = double.parse(doc['expTotalValue'].toString());
-    pay = doc['expPay'];
-    dateShop = (doc['expDateShop'] as Timestamp).toDate();
+    value = double.parse(doc['expValue'].toString());
+    date = (doc['expDate'] as Timestamp).toDate();
     description = doc['expDescription'];
     category = doc['expCategory'];
     quality = doc['expQuality'];
-    datePayFirstPortion = (doc['expDatePayFirstPortion'] as Timestamp).toDate();
-    portionNumber = doc['expPortionNumber'];
-    totalPortionNumber = doc['expTotalPortionNumber'];
-    portionValue = double.parse(doc['expPortionValue'].toString());
+    pay = doc['expPay'];
     addInformation = doc['expAddInformation'];
   }
 }

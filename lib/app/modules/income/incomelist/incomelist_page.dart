@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
@@ -35,22 +36,30 @@ class IncomeList extends StatelessWidget {
                   trailing: Text('R\$ ' +
                       _incomeListController.income[index].value!
                           .toStringAsFixed(2)),
-                  title: Text(_incomeListController.income[index].name!),
+                  title: Text(_incomeListController.income[index].description!),
                   subtitle: Text(DateFormat('dd/MM/yyyy')
                       .format(_incomeListController.income[index].date)),
                   onTap: () {
                     _incomeAddUpdateController.addEditFlag = 'UPDATE';
                     _incomeAddUpdateController.incomeId =
                         _incomeListController.income[index].id!;
+                    _incomeAddUpdateController
+                            .incomeValueTextFormFieldController.text =
+                        _incomeListController.income[index].value!
+                            .toStringAsFixed(2);
+                    _incomeAddUpdateController.received =
+                        _incomeListController.income[index].received!;
+                    _incomeAddUpdateController.dateTextController =
+                        TextEditingController(
+                            text: DateFormat('dd/MM/yyyy').format(
+                                _incomeListController.income[index].date));
                     _incomeAddUpdateController.descriptionTextController?.text =
-                        _incomeListController.income[index].name!;
+                        _incomeListController.income[index].description!;
                     _incomeAddUpdateController.selectedCategory =
                         _incomeListController.income[index].category!;
-                    _incomeAddUpdateController.valueTextController?.text =
-                        _incomeListController.income[index].value.toString();
                     _incomeAddUpdateController
                             .addInformationTextController?.text =
-                        _incomeListController.income[index].observation!;
+                        _incomeListController.income[index].addInformation!;
                     Get.toNamed(Routes.INCOME_ADDUPDATE,
                         arguments: _incomeListController.user);
                   },
@@ -64,8 +73,8 @@ class IncomeList extends StatelessWidget {
                   onTap: () {
                     _incomeListController.incomeId =
                         _incomeListController.income[index].id!;
-                    _incomeListController.incomeName =
-                        _incomeListController.income[index].name!;
+                    _incomeListController.incomeDescription =
+                        _incomeListController.income[index].description!;
                     _incomeListController.deleteIncome();
                   },
                 ),
@@ -80,6 +89,11 @@ class IncomeList extends StatelessWidget {
           _incomeAddUpdateController.dateTextController = TextEditingController(
               text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
           _incomeAddUpdateController.newSelectedDate = DateTime.now();
+          _incomeAddUpdateController.descriptionValue = 'Descrição';
+          _incomeAddUpdateController.incomeValueTextFormFieldController =
+              MoneyMaskedTextController(leftSymbol: 'R\$ ');
+          _incomeAddUpdateController.received = false;
+
           Get.toNamed(Routes.INCOME_ADDUPDATE,
               arguments: _incomeListController.user);
         },

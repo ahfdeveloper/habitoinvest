@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:get/get.dart';

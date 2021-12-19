@@ -7,8 +7,9 @@ import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:intl/intl.dart';
+import 'package:jiffy/jiffy.dart';
 
-class ExpenseAddUpdateController extends GetxController {
+class ExpenseAddController extends GetxController {
   final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
@@ -18,27 +19,25 @@ class ExpenseAddUpdateController extends GetxController {
   MoneyMaskedTextController expenseValueTextFormFieldController =
       MoneyMaskedTextController(leftSymbol: 'R\$ ');
 
-  TextEditingController dateShopTextFormFieldController = TextEditingController(
-      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
-
-  TextEditingController datePortionTextFormFieldController =
-      TextEditingController(
-          text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
-
-  TextEditingController dateNoPortionFormFieldController =
+  // Formato de exibição de data no campo de data da despesa
+  TextEditingController dateExpenseTextFormFieldController =
       TextEditingController(
           text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
   TextEditingController? descriptionTextController;
-  TextEditingController? qtdePortionTextController;
-  TextEditingController? dayPayPortionTextController;
+  TextEditingController? qtPortionTextController;
   TextEditingController? addInformationTextController;
 
-  /* Flag para indicar se o form foi aberto para cadastro de uma nova despesa
-  ou para edição de uma despesa existente ----------------------------------*/
-  String _addEditFlag = '';
-  String get addEditFlag => this._addEditFlag;
-  set addEditFlag(String value) => this._addEditFlag = value;
+  // /* Flag para indicar se o form foi aberto para cadastro de uma nova despesa
+  // ou para edição de uma despesa existente ----------------------------------*/
+  // String _addEditFlag = '';
+  // String get addEditFlag => this._addEditFlag;
+  // set addEditFlag(String value) => this._addEditFlag = value;
+
+  // Data de compra a ser setada quando da atualização ou cadastro de nova despesa
+  late DateTime _date = DateTime.now();
+  DateTime get date => this._date;
+  set date(DateTime value) => this._date = value;
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
    de seleção da categoria de despesa -----------------------------------------------*/
@@ -55,7 +54,7 @@ class ExpenseAddUpdateController extends GetxController {
     'Não essencial, mas importante',
     'Não essencial'
   ];
-  final _selectedExpenseQuality = 'Essencial'.obs;
+  RxString _selectedExpenseQuality = 'Essencial'.obs;
   String get selectedExpenseQuality => this._selectedExpenseQuality.value;
   set selectedExpenseQuality(String value) =>
       this._selectedExpenseQuality.value = value;
@@ -68,17 +67,6 @@ class ExpenseAddUpdateController extends GetxController {
       _installmentsType.value = value;
     });
   }
-
-  // Data de compra a ser setada quando da atualização ou cadastro de nova despesa
-  late DateTime _dateShop = DateTime.now();
-  DateTime get dateShop => this._dateShop;
-  set dateShop(DateTime value) => this._dateShop = value;
-
-  /* Data de pagamento da primeira parcela quando despesa parcelada ou parcela única quando despesa 
-  não parcelada a ser setada quando da atualização ou cadastro de nova despesa --------------------*/
-  DateTime _datePayFirstPortion = DateTime.now();
-  DateTime get datePayFirstPortion => this._datePayFirstPortion;
-  set datePayFirstPortion(DateTime value) => this._datePayFirstPortion = value;
 
   // Variáveis usadas para exibir informações quando o usuário escolhe se a despesa é parcelada ou não
   bool _visibilityInstallmentsNo = false;
@@ -115,6 +103,11 @@ class ExpenseAddUpdateController extends GetxController {
   String get expenseDescription => this._expenseDescription;
   set expenseDescription(String value) => this._expenseDescription = value;
 
+  // Guarda e recupera o Id da despesa
+  String _expenseId = '';
+  String get expenseId => this._expenseId;
+  set expenseId(String value) => this._expenseId = value;
+
   @override
   void onInit() {
     _categoriesList.bindStream(
@@ -123,17 +116,16 @@ class ExpenseAddUpdateController extends GetxController {
     expenseValueTextFormFieldController =
         MoneyMaskedTextController(leftSymbol: 'R\$ ');
     descriptionTextController = TextEditingController();
-    qtdePortionTextController = TextEditingController();
-    dayPayPortionTextController = TextEditingController();
+    qtPortionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
     super.onInit();
   }
 
   // Pegar data selecionada no Date Picker e setar textformfield
-  selectDateShop(
+  selectDate(
       {required BuildContext context,
       required TextEditingController textFormFieldController}) async {
-    dateShop = await showDatePicker(
+    date = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
@@ -146,137 +138,72 @@ class ExpenseAddUpdateController extends GetxController {
               child: child!);
         }) as DateTime;
     textFormFieldController
-      ..text = DateFormat('dd/MM/yyyy').format(dateShop)
-      ..selection = TextSelection.fromPosition(TextPosition(
-          offset: textFormFieldController.text.length,
-          affinity: TextAffinity.upstream));
-  }
-
-  // Pegar data selecionada no Date Picker e setar textformfield
-  selectDatePortion(
-      {required BuildContext context,
-      required TextEditingController textFormFieldController}) async {
-    datePayFirstPortion = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2050),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-              data: ThemeData.from(
-                  colorScheme:
-                      ColorScheme.light(primary: AppColors.expenseColor)),
-              child: child!);
-        }) as DateTime;
-    textFormFieldController
-      ..text = DateFormat('dd/MM/yyyy').format(datePayFirstPortion)
+      ..text = DateFormat('dd/MM/yyyy').format(date)
       ..selection = TextSelection.fromPosition(TextPosition(
           offset: textFormFieldController.text.length,
           affinity: TextAffinity.upstream));
   }
 
   // Efetua o salvamento de uma nova despesa ou de uma despesa editada
-  void saveUpdateExpense({required String addEditFlag}) {
+  void saveExpense() {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
 
-    if (addEditFlag == 'NEW') {
-      if (expenseValueTextFormFieldController.text != '' &&
-          descriptionTextController!.text != '' &&
-          selectedCategory != selectIncomeCategory().first &&
-          installmentsType != '') {
-        expenseDescription = descriptionTextController!.text;
-        if (installmentsType == 'Sim' &&
-            qtdePortionTextController!.text != '' &&
-            dayPayPortionTextController!.text != '' &&
-            installmentsType != '') {
+    if (descriptionTextController!.text != '' &&
+        selectedCategory != selectExpenseCategory().first) {
+      expenseDescription = descriptionTextController!.text;
+      bool pg = pay;
+      var data = date;
+      if (installmentsType == 'Sim' && qtPortionTextController!.text != '') {
+        for (int i = int.parse(qtPortionTextController!.text); i >= 1; i--) {
+          if (i != 1) {
+            pay = false;
+            date = Jiffy(data).add(months: i - 1).dateTime;
+          } else {
+            pay = pg;
+            date = data;
+          }
           _expenseRepository.addExpense(
             userUid: user!.id,
-            expTotalValue: expenseValueTextFormFieldController.numberValue,
-            expPay: pay,
-            expDateShop: dateShop,
-            expDescription: descriptionTextController!.text,
+            expValue: expenseValueTextFormFieldController.numberValue /
+                int.parse(qtPortionTextController!.text),
+            expDate: date,
+            expDescription: descriptionTextController!.text +
+                ' ($i/${qtPortionTextController!.text})',
             expCategory: selectedCategory,
             expQuality: selectedExpenseQuality,
-            expDatePayFirstPortion: datePayFirstPortion,
-            expPortionNumber: qtdePortionTextController!.text,
-            expTotalPortionNumber: '',
-            expPortionValue: expenseValueTextFormFieldController.numberValue,
-            expAddInformation: addInformationTextController!.text,
-          );
-          clearEditingControllers();
-        } else if (installmentsType == 'Não') {
-          _expenseRepository.addExpense(
-            userUid: user!.id,
-            expTotalValue: expenseValueTextFormFieldController.numberValue,
             expPay: pay,
-            expDateShop: dateShop,
-            expDescription: descriptionTextController!.text,
-            expCategory: selectedCategory,
-            expQuality: selectedExpenseQuality,
-            expDatePayFirstPortion: datePayFirstPortion,
-            expPortionNumber: qtdePortionTextController!.text,
-            expTotalPortionNumber: '',
-            expPortionValue: expenseValueTextFormFieldController.numberValue,
             expAddInformation: addInformationTextController!.text,
           );
-          clearEditingControllers();
         }
-
-        //         .addIncome(
-        //           userUid: user!.id,
-        //           incDate: newSelectedDate,
-        //           incName: nameTextController!.text,
-        //           incCategory: selectedCategory,
-        //           incValue: double.parse(valueTextController!.text),
-        //           incObservation: addInformationTextController!.text,
-        //         )
-        //         .whenComplete(
-        //           () => AppSnackbar.snackarStyle(
-        //             title: incomeName,
-        //             message: 'Receita cadastrada com sucesso',
-        //           ),
-        //         );
-        //     clearEditingControllers();
-        //     Get.back();
-        //   }
-        // } else if (addEditFlag == 'UPDATE') {
-        //   if (nameTextController!.text != '' &&
-        //       selectedCategory != selectIncomeCategory().first &&
-        //       valueTextController!.text != '' &&
-        //       addInformationTextController!.text != '') {
-        //     incomeName = nameTextController!.text;
-        //     _incomeRepository.updateIncome(
-        //         userUid: user!.id,
-        //         incDate: newSelectedDate,
-        //         incName: nameTextController!.text,
-        //         incCategory: selectedCategory,
-        //         incValue: double.parse(valueTextController!.text),
-        //         incObservation: addInformationTextController!.text,
-        //         incUid: incomeId)
-        //       ..whenComplete(
-        //         () => AppSnackbar.snackarStyle(
-        //           title: incomeName,
-        //           message: 'Receita atualizada com sucesso',
-        //         ),
-        //       );
-        //     clearEditingControllers();
-        Get.back();
+        clearEditingControllers();
+      } else if (installmentsType == 'Não') {
+        _expenseRepository.addExpense(
+          userUid: user!.id,
+          expValue: expenseValueTextFormFieldController.numberValue,
+          expDate: date,
+          expDescription: descriptionTextController!.text,
+          expCategory: selectedCategory,
+          expQuality: selectedExpenseQuality,
+          expPay: pay,
+          expAddInformation: addInformationTextController!.text,
+        );
+        clearEditingControllers();
       }
     }
   }
 
   /* Função que retorna apenas as categorias do tipo despesa para preenchimento
    do DropdownbuttonFormField -------------------------------------------------*/
-  List<String> selectIncomeCategory() {
-    List<String> listCategoryIncome = [firstElementDrop];
+  List<String> selectExpenseCategory() {
+    List<String> listCategoryExpense = [firstElementDrop];
     categories.forEach((item) {
       if (item.type == 'Despesa') {
-        listCategoryIncome.add(item.name!);
+        listCategoryExpense.add(item.name!);
       }
     });
-    return listCategoryIncome;
+    return listCategoryExpense;
   }
 
   // Muda a cor do container com escolha de despesa parcelada ou não.
@@ -297,6 +224,7 @@ class ExpenseAddUpdateController extends GetxController {
   void clearEditingControllers() {
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
+    selectedExpenseQuality = 'Essencial';
     expenseValueTextFormFieldController =
         MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();

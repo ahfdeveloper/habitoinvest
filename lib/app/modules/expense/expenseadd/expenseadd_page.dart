@@ -6,15 +6,15 @@ import 'package:habito_invest_app/app/global/widgets/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
-import 'package:habito_invest_app/app/modules/expense/expenseaddupdate/expenseaddupdate_controller.dart';
+import 'expenseadd_controller.dart';
 
-class ExpenseAddUpdatePage extends StatelessWidget {
-  final ExpenseAddUpdateController _expenseAddUpdateController =
-      Get.find<ExpenseAddUpdateController>();
+class ExpenseAddPage extends StatelessWidget {
+  final ExpenseAddController _expenseAddController =
+      Get.find<ExpenseAddController>();
 
   @override
   Widget build(BuildContext context) {
-    final _formkey = _expenseAddUpdateController.formkey;
+    final _formkey = _expenseAddController.formkey;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -23,13 +23,11 @@ class ExpenseAddUpdatePage extends StatelessWidget {
         title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => _expenseAddController.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () => _expenseAddUpdateController.saveUpdateExpense(
-              addEditFlag: _expenseAddUpdateController.addEditFlag,
-            ),
+            onPressed: () => _expenseAddController.saveExpense(),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
@@ -42,8 +40,8 @@ class ExpenseAddUpdatePage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _expenseAddUpdateController
-                  .expenseValueTextFormFieldController,
+              controller:
+                  _expenseAddController.expenseValueTextFormFieldController,
               validator: (value) => validatorExpenseValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
@@ -51,25 +49,10 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
-            Row(
-              children: [
-                Obx(
-                  () => Checkbox(
-                    value: _expenseAddUpdateController.pay,
-                    onChanged: (newValue) =>
-                        _expenseAddUpdateController.pay = newValue as bool,
-                  ),
-                ),
-                Text('Pago'),
-              ],
-            ),
 
-            DividerHorizontal(),
-            SizedBox(height: SPACEFORMS),
-            SizedBox(height: SPACEFORMS),
             TextFormField(
               controller:
-                  _expenseAddUpdateController.dateShopTextFormFieldController,
+                  _expenseAddController.dateExpenseTextFormFieldController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -77,28 +60,27 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseAddUpdateController.selectDateShop(
+              onTap: () => _expenseAddController.selectDate(
                   context: context,
-                  textFormFieldController: _expenseAddUpdateController
-                      .dateShopTextFormFieldController),
+                  textFormFieldController:
+                      _expenseAddController.dateExpenseTextFormFieldController),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
             Obx(
               () => TextFormField(
-                controller:
-                    _expenseAddUpdateController.descriptionTextController,
+                controller: _expenseAddController.descriptionTextController,
                 validator: (value) => validator(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.description_outlined,
-                  hint: _expenseAddUpdateController.descriptionValue,
+                  hint: _expenseAddController.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
                 onTap: () {
-                  _expenseAddUpdateController.descriptionValue = '';
-                  _expenseAddUpdateController.descriptionTextController!.text =
-                      _expenseAddUpdateController.descriptionValue;
+                  _expenseAddController.descriptionValue = '';
+                  _expenseAddController.descriptionTextController!.text =
+                      _expenseAddController.descriptionValue;
                 },
               ),
             ),
@@ -106,7 +88,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             //
             Obx(
-              () => DropdownButtonFormField(
+              () => DropdownButtonFormField<String>(
                 validator: (value) => validatorDropdown(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.category_outlined,
@@ -119,10 +101,10 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                   fontSize: 16,
                 ),
                 hint: Text(
-                  '${_expenseAddUpdateController.selectedCategory.toString()}',
+                  '${_expenseAddController.selectedCategory.toString()}',
                 ),
-                value: _expenseAddUpdateController.selectedCategory,
-                items: _expenseAddUpdateController.selectIncomeCategory().map(
+                value: _expenseAddController.selectedCategory,
+                items: _expenseAddController.selectExpenseCategory().map(
                   (String item) {
                     return DropdownMenuItem(
                       value: item,
@@ -131,14 +113,13 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseAddUpdateController.selectedCategory =
-                      newValue as String;
+                  _expenseAddController.selectedCategory = newValue as String;
                 },
               ),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
-            //
+
             Obx(
               () => DropdownButtonFormField<String>(
                 decoration: InputDecoration(
@@ -150,8 +131,8 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                   color: AppColors.themeColor,
                   fontSize: 16,
                 ),
-                value: _expenseAddUpdateController.selectedExpenseQuality,
-                items: _expenseAddUpdateController.expenseQualityList.map(
+                value: _expenseAddController.selectedExpenseQuality,
+                items: _expenseAddController.expenseQualityList.map(
                   (value) {
                     return DropdownMenuItem<String>(
                       child: Row(
@@ -173,7 +154,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseAddUpdateController.selectedExpenseQuality =
+                  _expenseAddController.selectedExpenseQuality =
                       newValue as String;
                 },
                 isExpanded: true,
@@ -202,49 +183,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _expenseAddUpdateController
-                                .containerRadioSimColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Radio(
-                                activeColor: AppColors.themeColor,
-                                value: 'Sim',
-                                groupValue: _expenseAddUpdateController
-                                    .installmentsType,
-                                onChanged: (value) {
-                                  _expenseAddUpdateController.installmentsType =
-                                      value as String;
-                                  _expenseAddUpdateController
-                                      .paintContainerType();
-                                  _expenseAddUpdateController
-                                      .visibilityInstallmentsNo = false;
-                                  _expenseAddUpdateController
-                                      .visibilityInstallmentsYes = true;
-                                },
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Sim',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: _expenseAddUpdateController
-                                .containerRadioNaoColor,
+                            color: _expenseAddController.containerRadioNaoColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -255,16 +194,15 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                               Radio(
                                 activeColor: AppColors.themeColor,
                                 value: 'Não',
-                                groupValue: _expenseAddUpdateController
-                                    .installmentsType,
+                                groupValue:
+                                    _expenseAddController.installmentsType,
                                 onChanged: (value) {
-                                  _expenseAddUpdateController.installmentsType =
+                                  _expenseAddController.installmentsType =
                                       value as String;
-                                  _expenseAddUpdateController
-                                      .paintContainerType();
-                                  _expenseAddUpdateController
+                                  _expenseAddController.paintContainerType();
+                                  _expenseAddController
                                       .visibilityInstallmentsNo = true;
-                                  _expenseAddUpdateController
+                                  _expenseAddController
                                       .visibilityInstallmentsYes = false;
                                 },
                               ),
@@ -281,13 +219,51 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _expenseAddController.containerRadioSimColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Radio(
+                                activeColor: AppColors.themeColor,
+                                value: 'Sim',
+                                groupValue:
+                                    _expenseAddController.installmentsType,
+                                onChanged: (value) {
+                                  _expenseAddController.installmentsType =
+                                      value as String;
+                                  _expenseAddController.paintContainerType();
+                                  _expenseAddController
+                                      .visibilityInstallmentsNo = false;
+                                  _expenseAddController
+                                      .visibilityInstallmentsYes = true;
+                                },
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Sim',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
 
-                  // Container será visível se o pagamento for parcelado
+                  // Container será visível se o pagamento NÃO for parcelado
                   Visibility(
-                    visible:
-                        _expenseAddUpdateController.visibilityInstallmentsYes,
+                    visible: _expenseAddController.visibilityInstallmentsNo,
                     child: Container(
                       padding: EdgeInsets.only(
                         bottom: 15.0,
@@ -295,65 +271,37 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                         right: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color:
-                            _expenseAddUpdateController.containerRadioSimColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0),
-                        ),
+                        color: _expenseAddController.containerRadioNaoColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       child: Column(
                         children: [
                           SizedBox(height: SPACEFORMS),
-                          TextFormField(
-                              controller: _expenseAddUpdateController
-                                  .datePortionTextFormFieldController,
-                              focusNode: DisabledFocusNode(),
-                              decoration: textFormFieldFormsLabel(
-                                fieldIcon: Icons.date_range_outlined,
-                                label: 'Data de pagamento da 1ª parcela',
-                                hint: null,
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Obx(
+                                    () => Checkbox(
+                                      value: _expenseAddController.pay,
+                                      onChanged: (newValue) =>
+                                          _expenseAddController.pay =
+                                              newValue as bool,
+                                    ),
+                                  ),
+                                  Text('Pago'),
+                                ],
                               ),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              keyboardType: TextInputType.number,
-                              onTap: () {
-                                _expenseAddUpdateController.selectDatePortion(
-                                  context: context,
-                                  textFormFieldController:
-                                      _expenseAddUpdateController
-                                          .datePortionTextFormFieldController,
-                                );
-                              }),
-                          Divider(color: AppColors.grey800),
-                          TextFormField(
-                            controller: _expenseAddUpdateController
-                                .dayPayPortionTextController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              labelText: 'Quantidade de parcelas',
-                              alignLabelWithHint: true,
-                            ),
-                            keyboardType: TextInputType.number,
-                          ),
-                          SizedBox(height: SPACEFORMS),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              labelText: 'Dia de pagamento das demais parcelas',
-                              alignLabelWithHint: true,
-                            ),
-                            keyboardType: TextInputType.number,
+                            ],
                           ),
                         ],
                       ),
                     ),
                   ),
 
-                  // Container será visível se o pagamento NÃO for parcelado
+                  // Container será visível se o pagamento for parcelado
                   Visibility(
-                    visible:
-                        _expenseAddUpdateController.visibilityInstallmentsNo,
+                    visible: _expenseAddController.visibilityInstallmentsYes,
                     child: Container(
                       padding: EdgeInsets.only(
                         bottom: 15.0,
@@ -361,8 +309,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                         right: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color:
-                            _expenseAddUpdateController.containerRadioNaoColor,
+                        color: _expenseAddController.containerRadioSimColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
@@ -374,32 +321,29 @@ class ExpenseAddUpdatePage extends StatelessWidget {
                           SizedBox(height: SPACEFORMS),
                           Row(
                             children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _expenseAddUpdateController
-                                      .dateNoPortionFormFieldController,
-                                  focusNode: DisabledFocusNode(),
-                                  decoration: textFormFieldFormsLabel(
-                                    fieldIcon: Icons.date_range_outlined,
-                                    label: 'Data efetiva do pagamento',
-                                    hint: null,
-                                  ),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  keyboardType: TextInputType.number,
-                                  onTap: () {
-                                    _expenseAddUpdateController
-                                        .selectDatePortion(
-                                      context: context,
-                                      textFormFieldController:
-                                          _expenseAddUpdateController
-                                              .dateNoPortionFormFieldController,
-                                    );
-                                  },
+                              Obx(
+                                () => Checkbox(
+                                  value: _expenseAddController.pay,
+                                  onChanged: (newValue) => _expenseAddController
+                                      .pay = newValue as bool,
                                 ),
                               ),
+                              Text('Pago'),
                             ],
                           ),
-                          Divider(color: AppColors.grey800),
+                          TextFormField(
+                            controller:
+                                _expenseAddController.qtPortionTextController,
+                            validator: (value) =>
+                                validatorQtPortion(int.parse(value!)),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              labelText: 'Quantidade de parcelas mensais',
+                              alignLabelWithHint: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: SPACEFORMS),
                         ],
                       ),
                     ),
@@ -409,8 +353,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller:
-                  _expenseAddUpdateController.addInformationTextController,
+              controller: _expenseAddController.addInformationTextController,
               decoration:
                   textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -424,11 +367,19 @@ class ExpenseAddUpdatePage extends StatelessWidget {
     );
   }
 
+  // Validação do TextFormField de valor da despesa
   validatorExpenseValue(value) {
     if (value == 'R\$ 0,00') {
       return 'Valor deve ser diferente de zero';
     }
     return null;
+  }
+
+  // Função de validação da quantidade de parcelas
+  validatorQtPortion(value) {
+    if (value < 2) {
+      return 'Quantidade de parcelas deve ser maior que 1';
+    }
   }
 
   // Função de validação dos TextFormfields
@@ -441,7 +392,7 @@ class ExpenseAddUpdatePage extends StatelessWidget {
 
   // Função de validação do Dropdownbutton
   validatorDropdown(value) {
-    if (value == _expenseAddUpdateController.firstElementDrop) {
+    if (value == _expenseAddController.firstElementDrop) {
       return 'Selecione um item';
     }
     return null;

@@ -12,42 +12,46 @@ class IncomeRepository {
   // Cadastra uma nova receita
   Future<void> addIncome(
       {required String userUid,
-      required DateTime incDate,
-      required String incName,
-      required String incCategory,
       required double incValue,
-      required String incObservation}) async {
+      required bool incReceived,
+      required DateTime incDate,
+      required String incDescription,
+      required String incCategory,
+      required String incAddInformation}) async {
     return _incomeProvider.addIncome(
         userUid: userUid,
-        incDate: incDate,
-        incName: incName,
-        incCategory: incCategory,
         incValue: incValue,
-        incObservation: incObservation);
+        incReceived: incReceived,
+        incDate: incDate,
+        incDescription: incDescription,
+        incCategory: incCategory,
+        incAddInformation: incAddInformation);
   }
 
   // Atualiza uma receita editada
   Future updateIncome(
       {required String userUid,
-      required DateTime incDate,
-      required String incName,
-      required String incCategory,
       required double incValue,
-      required String incObservation,
+      required bool incReceived,
+      required DateTime incDate,
+      required String incDescription,
+      required String incCategory,
+      required String incAddInformation,
       required String incUid}) async {
     return _incomeProvider.updateIncome(
         userUid: userUid,
-        incDate: incDate,
-        incName: incName,
-        incCategory: incCategory,
         incValue: incValue,
-        incObservation: incObservation,
+        incReceived: incReceived,
+        incDate: incDate,
+        incDescription: incDescription,
+        incCategory: incCategory,
+        incAddInformation: incAddInformation,
         incUid: incUid);
   }
 
   Future deleteIncome(
       {required String userUid, required incUid, required incName}) async {
     return _incomeProvider.deleteIncome(
-        userUid: userUid, incUid: incUid, incName: incName);
+        userUid: userUid, incUid: incUid, incDescription: incName);
   }
 }

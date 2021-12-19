@@ -9,7 +9,7 @@ class ExpenseProvider {
     return _firebaseFirestore
         .doc(userUid)
         .collection('expense')
-        .orderBy('expDatePayFirstPortion')
+        .orderBy('expDate')
         .snapshots()
         .map(
       (query) {
@@ -27,34 +27,62 @@ class ExpenseProvider {
   // Cadastra uma nova despesa
   Future<void> addExpense(
       {required String userUid,
-      required double expTotalValue,
-      required bool expPay,
-      required DateTime expDateShop,
+      required double expValue,
+      required DateTime expDate,
       required String expDescription,
       required String expCategory,
       required String expQuality,
-      required DateTime expDatePayFirstPortion,
-      required String expPortionNumber,
-      required String expTotalPortionNumber,
-      required double expPortionValue,
+      required bool expPay,
       required String expAddInformation}) async {
     DocumentReference documentReference =
         _firebaseFirestore.doc(userUid).collection('expense').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
-      'expTotalValue': expTotalValue,
-      'expPay': expPay,
-      'expDateShop': expDateShop,
+      'expValue': expValue,
+      'expDate': expDate,
       'expDescription': expDescription,
       'expCategory': expCategory,
       'expQuality': expQuality,
-      'expDatePayFirstPortion': expDatePayFirstPortion,
-      'expPortionNumber': expPortionNumber,
-      'expTotalPortionNumber': expTotalPortionNumber,
-      'expPortionValue': expPortionValue,
+      'expPay': expPay,
       'expAddInformation': expAddInformation,
     };
 
     await documentReference.set(data).catchError((e) => print(e));
+  }
+
+  // Atualiza uma despesa editada
+  Future updateExpense(
+      {required String userUid,
+      required double expValue,
+      required DateTime expDate,
+      required String expDescription,
+      required String expCategory,
+      required String expQuality,
+      required bool expPay,
+      required String expAddInformation,
+      required String expUid}) async {
+    DocumentReference documentReference =
+        _firebaseFirestore.doc(userUid).collection('expense').doc(expUid);
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'expValue': expValue,
+      'expDate': expDate,
+      'expDescription': expDescription,
+      'expCategory': expCategory,
+      'expQuality': expQuality,
+      'expPay': expPay,
+      'expAddInformation': expAddInformation,
+    };
+    await documentReference.update(data).catchError((e) => print(e));
+  }
+
+  // Deleta uma despesa
+  Future deleteExpense(
+      {required String userUid,
+      required expUid,
+      required expDescription}) async {
+    DocumentReference documentReference =
+        _firebaseFirestore.doc(userUid).collection('expense').doc(expUid);
+    await documentReference.delete().catchError((e) => print(e));
   }
 }

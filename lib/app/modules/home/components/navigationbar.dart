@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 
-class NavigationBar extends StatelessWidget {
+class NavBar extends StatelessWidget {
   final HomeController _controller = HomeController();
 
   @override

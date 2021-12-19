@@ -20,7 +20,9 @@ abstract class Routes {
   // Lista de Despesas
   static const EXPENSE_LIST = '/expense_list';
   // Cadastro e atualização de Despesas
-  static const EXPENSE_ADDUPDATE = '/expense_addupdate';
+  static const EXPENSE_ADD = '/expense_add';
+  // Atualização de uma despesa
+  static const EXPENSE_UPDATE = '/expense_update';
   // Lista de Investimentos
   static const INVEST_LIST = '/invest_list';
   // Cadastro e atualização de Investimentos

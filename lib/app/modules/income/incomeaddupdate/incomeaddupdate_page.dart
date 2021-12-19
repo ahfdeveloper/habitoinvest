@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
@@ -59,14 +58,13 @@ class IncomeAddUpdatePage extends StatelessWidget {
                   () => Checkbox(
                     value: _incomeAddUpdateController.received,
                     onChanged: (newValue) =>
-                        _incomeAddUpdateController.received = newValue as bool,
+                        _incomeAddUpdateController.received = newValue!,
                   ),
                 ),
                 Text('Recebido'),
               ],
             ),
             DividerHorizontal(),
-            SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             //
             TextFormField(

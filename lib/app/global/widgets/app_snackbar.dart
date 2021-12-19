@@ -8,9 +8,9 @@ class AppSnackbar {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black45,
+      backgroundColor: Colors.black87,
       colorText: AppColors.white,
-      icon: Icon(Icons.info_outline_rounded),
+      icon: Icon(Icons.info_outline_rounded, color: AppColors.white),
     );
   }
 }
