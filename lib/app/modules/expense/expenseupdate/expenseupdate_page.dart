@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
@@ -213,14 +214,6 @@ class ExpenseUpdatePage extends StatelessWidget {
     if (value < 2) {
       return 'Quantidade de parcelas deve ser maior que 1';
     }
-  }
-
-  // Função de validação dos TextFormfields
-  validator(value) {
-    if (value!.isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
   }
 
   // Função de validação do Dropdownbutton

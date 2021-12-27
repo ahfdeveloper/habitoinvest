@@ -24,9 +24,9 @@ abstract class Routes {
   // Atualização de uma despesa
   static const EXPENSE_UPDATE = '/expense_update';
   // Lista de Investimentos
-  static const INVEST_LIST = '/invest_list';
+  static const INVESTMENT_LIST = '/invest_list';
   // Cadastro e atualização de Investimentos
-  static const INVEST_ADDUPDATE = '/invest_addupdate';
+  static const INVESTMENT_ADDUPDATE = '/invest_addupdate';
   //Lista de Categorias
   static const CATEGORIES_LIST = '/categories_list';
   // Cadastro e atualização de uma categoria
@@ -37,7 +37,6 @@ abstract class Routes {
   static const PARAMETERS = '/parameters';
   // Página de Boas vindas ao app com opções para Login
   static const WELCOME = '/welcome';
-
   //---------------------
   static const CATEGORIES_UPDATE = '/categories_update';
 }

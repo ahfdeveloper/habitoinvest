@@ -20,7 +20,8 @@ class IncomeListController extends GetxController {
   set incomeDescription(String value) => this._incomeDescription = value;
 
   Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
-  List<IncomeModel> get income => _incomeList.value;
+  List<IncomeModel> get incomeList => _incomeList.value;
+  set incomeList(List<IncomeModel> value) => this._incomeList.value = value;
 
   @override
   void onInit() {

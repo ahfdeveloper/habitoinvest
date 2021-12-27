@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants.dart';
@@ -43,8 +44,8 @@ class IncomeAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller:
-                  _incomeAddUpdateController.incomeValueTextFormFieldController,
-              validator: (value) => validatorIncomeValue(value),
+                  _incomeAddUpdateController.incomeValueTextFormController,
+              validator: (value) => validatorValue(value),
               style: AppTextStyles.valueIncomeOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
@@ -152,22 +153,6 @@ class IncomeAddUpdatePage extends StatelessWidget {
     );
   }
 
-  // Função de validação dos TextFormfields
-  validator(value) {
-    if (value!.isEmpty) {
-      return 'Campo obrigatório';
-    }
-    return null;
-  }
-
-  // Validação do TextFormField de valor da receita
-  validatorIncomeValue(value) {
-    if (value == 'R\$ 0,00') {
-      return 'Valor deve ser diferente de zero';
-    }
-    return null;
-  }
-
   // Função de validação do Dropdownbutton
   validatorDropdown(value) {
     if (value == _incomeAddUpdateController.firstElementDrop) {
@@ -175,9 +160,4 @@ class IncomeAddUpdatePage extends StatelessWidget {
     }
     return null;
   }
-}
-
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

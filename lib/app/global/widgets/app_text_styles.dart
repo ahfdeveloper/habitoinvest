@@ -110,4 +110,11 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: AppColors.incomeColor,
   );
+
+  // Estilo usado na tela de inserção do valor da operação de investimento
+  static final valueInvestmentOperationStyle = GoogleFonts.notoSans(
+    fontSize: 30.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.investcolor,
+  );
 }

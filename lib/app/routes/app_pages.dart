@@ -16,10 +16,10 @@ import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddup
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_page.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investaddupdate_binding.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investaddupdate_page.dart';
-import 'package:habito_invest_app/app/modules/invest/investlist/investlist_binding.dart';
-import 'package:habito_invest_app/app/modules/invest/investlist/investlist_page.dart';
+import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_binding.dart';
+import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_page.dart';
+import 'package:habito_invest_app/app/modules/invest/investmentlist/investmentlist_binding.dart';
+import 'package:habito_invest_app/app/modules/invest/investmentlist/investmentlist_page.dart';
 import 'package:habito_invest_app/app/modules/login/login_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_page.dart';
@@ -94,12 +94,12 @@ class AppPages {
       binding: ExpenseUpdateBinding(),
     ),
     GetPage(
-      name: Routes.INVEST_LIST,
-      page: () => InvestList(),
-      binding: InvestListBinding(),
+      name: Routes.INVESTMENT_LIST,
+      page: () => InvestmentList(),
+      binding: InvestmentListBinding(),
     ),
     GetPage(
-      name: Routes.INVEST_ADDUPDATE,
+      name: Routes.INVESTMENT_ADDUPDATE,
       page: () => InvestAddUpdatePage(),
       binding: InvestAddUpdateBinding(),
     ),

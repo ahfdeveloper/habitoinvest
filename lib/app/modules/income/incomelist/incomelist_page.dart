@@ -26,7 +26,7 @@ class IncomeList extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           padding: EdgeInsets.all(2.0),
-          itemCount: _incomeListController.income.length,
+          itemCount: _incomeListController.incomeList.length,
           itemBuilder: (context, index) {
             return Slidable(
               actionExtentRatio: 0.25,
@@ -34,32 +34,33 @@ class IncomeList extends StatelessWidget {
               child: Card(
                 child: ListTile(
                   trailing: Text('R\$ ' +
-                      _incomeListController.income[index].value!
+                      _incomeListController.incomeList[index].value!
                           .toStringAsFixed(2)),
-                  title: Text(_incomeListController.income[index].description!),
+                  title: Text(
+                      _incomeListController.incomeList[index].description!),
                   subtitle: Text(DateFormat('dd/MM/yyyy')
-                      .format(_incomeListController.income[index].date)),
+                      .format(_incomeListController.incomeList[index].date)),
                   onTap: () {
                     _incomeAddUpdateController.addEditFlag = 'UPDATE';
                     _incomeAddUpdateController.incomeId =
-                        _incomeListController.income[index].id!;
+                        _incomeListController.incomeList[index].id!;
                     _incomeAddUpdateController
-                            .incomeValueTextFormFieldController.text =
-                        _incomeListController.income[index].value!
+                            .incomeValueTextFormController.text =
+                        _incomeListController.incomeList[index].value!
                             .toStringAsFixed(2);
                     _incomeAddUpdateController.received =
-                        _incomeListController.income[index].received!;
+                        _incomeListController.incomeList[index].received!;
                     _incomeAddUpdateController.dateTextController =
                         TextEditingController(
                             text: DateFormat('dd/MM/yyyy').format(
-                                _incomeListController.income[index].date));
+                                _incomeListController.incomeList[index].date));
                     _incomeAddUpdateController.descriptionTextController?.text =
-                        _incomeListController.income[index].description!;
+                        _incomeListController.incomeList[index].description!;
                     _incomeAddUpdateController.selectedCategory =
-                        _incomeListController.income[index].category!;
+                        _incomeListController.incomeList[index].category!;
                     _incomeAddUpdateController
                             .addInformationTextController?.text =
-                        _incomeListController.income[index].addInformation!;
+                        _incomeListController.incomeList[index].addInformation!;
                     Get.toNamed(Routes.INCOME_ADDUPDATE,
                         arguments: _incomeListController.user);
                   },
@@ -72,9 +73,9 @@ class IncomeList extends StatelessWidget {
                   icon: Icons.delete,
                   onTap: () {
                     _incomeListController.incomeId =
-                        _incomeListController.income[index].id!;
+                        _incomeListController.incomeList[index].id!;
                     _incomeListController.incomeDescription =
-                        _incomeListController.income[index].description!;
+                        _incomeListController.incomeList[index].description!;
                     _incomeListController.deleteIncome();
                   },
                 ),
@@ -90,7 +91,7 @@ class IncomeList extends StatelessWidget {
               text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
           _incomeAddUpdateController.newSelectedDate = DateTime.now();
           _incomeAddUpdateController.descriptionValue = 'Descrição';
-          _incomeAddUpdateController.incomeValueTextFormFieldController =
+          _incomeAddUpdateController.incomeValueTextFormController =
               MoneyMaskedTextController(leftSymbol: 'R\$ ');
           _incomeAddUpdateController.received = false;
 

@@ -16,7 +16,7 @@ class IncomeAddUpdateController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
 
   // Máscara para digitação do valor da receita ------------------------------------
-  MoneyMaskedTextController incomeValueTextFormFieldController =
+  MoneyMaskedTextController incomeValueTextFormController =
       MoneyMaskedTextController(leftSymbol: 'R\$ ');
 
   // Definição de valor inicial para o campo de data da Receita
@@ -69,7 +69,7 @@ class IncomeAddUpdateController extends GetxController {
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
     descriptionTextController = TextEditingController();
-    incomeValueTextFormFieldController =
+    incomeValueTextFormController =
         MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController = TextEditingController();
     super.onInit();
@@ -113,20 +113,19 @@ class IncomeAddUpdateController extends GetxController {
   }
 
   // Efetua o salvamento de uma nova receita ou de uma receita editada
-  void saveUpdateIncome({required String addEditFlag}) {
+  void saveUpdateIncome({required String addEditFlag}) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
 
     if (addEditFlag == 'NEW') {
       if (descriptionTextController!.text != '' &&
-          selectedCategory != selectIncomeCategory().first &&
-          addInformationTextController!.text != '') {
+          selectedCategory != selectIncomeCategory().first) {
         incomeDescription = descriptionTextController!.text;
         _incomeRepository
             .addIncome(
               userUid: user!.id,
-              incValue: incomeValueTextFormFieldController.numberValue,
+              incValue: incomeValueTextFormController.numberValue,
               incReceived: received,
               incDate: newSelectedDate,
               incDescription: descriptionTextController!.text,
@@ -149,7 +148,7 @@ class IncomeAddUpdateController extends GetxController {
         incomeDescription = descriptionTextController!.text;
         _incomeRepository.updateIncome(
             userUid: user!.id,
-            incValue: incomeValueTextFormFieldController.numberValue,
+            incValue: incomeValueTextFormController.numberValue,
             incReceived: received,
             incDate: newSelectedDate,
             incDescription: descriptionTextController!.text,
@@ -172,7 +171,7 @@ class IncomeAddUpdateController extends GetxController {
   void clearEditingControllers() {
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
-    incomeValueTextFormFieldController =
+    incomeValueTextFormController =
         MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();
   }

@@ -93,7 +93,8 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.INVEST_LIST),
+                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST,
+                      arguments: _homeController.user),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
