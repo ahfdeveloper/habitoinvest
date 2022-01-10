@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/modules/simulator/components/buttons.dart';
 import 'package:habito_invest_app/app/modules/simulator/simulator_controller.dart';
 
 class SimulatorPage extends StatelessWidget {
-  final SimulatorController _controller = SimulatorController();
+  final SimulatorController _simulatorController = SimulatorController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +17,14 @@ class SimulatorPage extends StatelessWidget {
       appBar: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           backgroundColor: AppColors.themeColor,
-          title: Text('Simulador de Investimento',
-              style: AppTextStyles.appBarTextLight)),
+          title: Text('Simulador de Investimento', style: AppTextStyles.appBarTextLight)),
       body: Form(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           children: [
             SizedBox(height: SPACEFORMS * 2),
             TextFormField(
-              controller: _controller.contributionValueController,
+              controller: _simulatorController.contributionValueController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Valor a ser aplicado mensalmente',
@@ -39,7 +38,7 @@ class SimulatorPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
-              controller: _controller.interestRateController,
+              controller: _simulatorController.interestRateController,
               decoration: InputDecoration(
                 labelText: 'Taxa de juros mensal',
                 hintText: 'p.ex. 00.00',
@@ -53,10 +52,8 @@ class SimulatorPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              controller: _controller.aplicationDeadlineController,
+              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              controller: _simulatorController.aplicationDeadlineController,
               decoration: InputDecoration(
                 labelText: 'Prazo em meses',
                 hintText: 'p.ex. 60',
@@ -69,34 +66,28 @@ class SimulatorPage extends StatelessWidget {
             ),
             SizedBox(height: 30.0),
             Container(
-              child: Obx(() => Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            _controller.resultSimulation1,
-                            style: AppTextStyles.appBarTextDark,
-                          ),
-                          Text(
-                            _controller.resultSimulation2,
-                            style: AppTextStyles.appBarNumberSaldo,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            _controller.resultSimulation3,
-                            style: AppTextStyles.appBarTextDark,
-                          ),
-                          Text(
-                            _controller.resultSimulation4,
-                            style: AppTextStyles.appBarNumberSaldo,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
+              child: Obx(
+                () => Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.resultSimulation1,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.resultSimulation2,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -108,14 +99,14 @@ class SimulatorPage extends StatelessWidget {
             Expanded(
               child: ButtonWidget.transparent(
                 label: 'Nova simulação',
-                onTap: () => _controller.limpaFormulario(),
+                onTap: () => _simulatorController.limpaFormulario(),
               ),
             ),
             SizedBox(width: 8.0),
             Expanded(
               child: ButtonWidget.black(
                 label: 'SIMULAR',
-                onTap: () => _controller.totalAplication(),
+                onTap: () => _simulatorController.totalAplication(),
               ),
             ),
           ],

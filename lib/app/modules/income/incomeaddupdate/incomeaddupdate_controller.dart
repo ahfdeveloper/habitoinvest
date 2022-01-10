@@ -5,8 +5,9 @@ import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 
 class IncomeAddUpdateController extends GetxController {
@@ -17,7 +18,7 @@ class IncomeAddUpdateController extends GetxController {
 
   // Máscara para digitação do valor da receita ------------------------------------
   MoneyMaskedTextController incomeValueTextFormController =
-      MoneyMaskedTextController(leftSymbol: 'R\$ ');
+      moneyValueController;
 
   // Definição de valor inicial para o campo de data da Receita
   TextEditingController dateTextController = TextEditingController(
@@ -69,8 +70,7 @@ class IncomeAddUpdateController extends GetxController {
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
     descriptionTextController = TextEditingController();
-    incomeValueTextFormController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
+    incomeValueTextFormController = moneyValueController;
     addInformationTextController = TextEditingController();
     super.onInit();
   }
@@ -169,10 +169,9 @@ class IncomeAddUpdateController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
+    moneyValueController.updateValue(0.0);
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
-    incomeValueTextFormController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();
   }
 

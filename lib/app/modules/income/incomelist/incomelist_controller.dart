@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 
 class IncomeListController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -42,10 +42,7 @@ class IncomeListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        _incomeRepository
-            .deleteIncome(
-                userUid: user!.id, incUid: incomeId, incName: incomeDescription)
-            .whenComplete(
+        _incomeRepository.deleteIncome(userUid: user!.id, incUid: incomeId, incName: incomeDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: incomeDescription,
                 message: 'Receita apagada com sucesso',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 
 class CategoriesAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -32,13 +32,11 @@ class CategoriesAddUpdateController extends GetxController {
 
   Color? _containerRadioReceitaColor;
   Color? get containerRadioReceitaColor => this._containerRadioReceitaColor;
-  set containerRadioReceitaColor(Color? value) =>
-      this._containerRadioReceitaColor = value;
+  set containerRadioReceitaColor(Color? value) => this._containerRadioReceitaColor = value;
 
   Color? _containerRadioDespesaColor;
   Color? get containerRadioDespesaColor => this._containerRadioDespesaColor;
-  set containerRadioDespesaColor(Color? value) =>
-      this._containerRadioDespesaColor = value;
+  set containerRadioDespesaColor(Color? value) => this._containerRadioDespesaColor = value;
 
   void onInit() {
     super.onInit();
@@ -67,8 +65,7 @@ class CategoriesAddUpdateController extends GetxController {
     formkey.currentState!.save();
 
     if (addEditFlag == 'NEW') {
-      if (nameTextController!.text != '' &&
-          descriptionTextController!.text != '') {
+      if (nameTextController!.text != '' && descriptionTextController!.text != '') {
         categoryName = nameTextController!.text;
         _categoriesRepository
             .addCategory(
@@ -78,28 +75,18 @@ class CategoriesAddUpdateController extends GetxController {
               catDescription: descriptionTextController!.text,
             )
             .whenComplete(
-              () => AppSnackbar.snackarStyle(
-                  title: categoryName,
-                  message: 'Categoria cadastrada com sucesso'),
+              () => AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria cadastrada com sucesso'),
             );
         clearEditingControllers();
         Get.back();
       }
     } else if (addEditFlag == 'UPDATE') {
-      if (nameTextController!.text != '' &&
-          descriptionTextController!.text != '') {
+      if (nameTextController!.text != '' && descriptionTextController!.text != '') {
         categoryName = nameTextController!.text;
         _categoriesRepository
-            .updateCategory(
-                userUid: user!.id,
-                catName: nameTextController!.text,
-                catType: categoryType,
-                catDescription: descriptionTextController!.text,
-                catUid: categoryId)
+            .updateCategory(userUid: user!.id, catName: nameTextController!.text, catType: categoryType, catDescription: descriptionTextController!.text, catUid: categoryId)
             .whenComplete(
-              () => AppSnackbar.snackarStyle(
-                  title: categoryName,
-                  message: 'Categoria atualizada com sucesso'),
+              () => AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria atualizada com sucesso'),
             );
         clearEditingControllers();
         Get.back();

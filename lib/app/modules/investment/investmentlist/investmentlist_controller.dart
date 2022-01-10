@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/investment_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/investment_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 
 class InvestmentListController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -17,18 +17,15 @@ class InvestmentListController extends GetxController {
 
   String _investmentDescription = '';
   String get investmentDescription => this._investmentDescription;
-  set investmentDescription(String value) =>
-      this._investmentDescription = value;
+  set investmentDescription(String value) => this._investmentDescription = value;
 
   Rx<List<InvestmentModel>> _investmentList = Rx<List<InvestmentModel>>([]);
   List<InvestmentModel> get investmentList => _investmentList.value;
-  set investmentList(List<InvestmentModel> value) =>
-      this._investmentList.value = value;
+  set investmentList(List<InvestmentModel> value) => this._investmentList.value = value;
 
   @override
   void onInit() {
-    _investmentList
-        .bindStream(_investmentRepository.getAllInvestment(userUid: user!.id));
+    _investmentList.bindStream(_investmentRepository.getAllInvestment(userUid: user!.id));
     super.onInit();
   }
 
@@ -45,12 +42,7 @@ class InvestmentListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        _investmentRepository
-            .deleteInvestment(
-                userUid: user!.id,
-                invUid: investmentId,
-                invDescription: investmentDescription)
-            .whenComplete(
+        _investmentRepository.deleteInvestment(userUid: user!.id, invUid: investmentId, invDescription: investmentDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: investmentDescription,
                 message: 'Invesimento apagado com sucesso',

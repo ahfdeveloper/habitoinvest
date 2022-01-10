@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 
 class ExpenseListController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -25,8 +25,7 @@ class ExpenseListController extends GetxController {
 
   @override
   void onInit() {
-    _expenseList
-        .bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     super.onInit();
   }
 
@@ -43,12 +42,7 @@ class ExpenseListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        _expenseRepository
-            .deleteExpense(
-                userUid: user!.id,
-                expUid: expenseId,
-                expDescription: expenseDescription)
-            .whenComplete(
+        _expenseRepository.deleteExpense(userUid: user!.id, expUid: expenseId, expDescription: expenseDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: expenseDescription,
                 message: 'Despesa apagada com sucesso',

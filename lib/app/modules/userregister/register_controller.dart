@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/login_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class RegisterController extends GetxController {

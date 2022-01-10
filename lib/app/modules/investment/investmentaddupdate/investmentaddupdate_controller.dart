@@ -3,8 +3,9 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/investment_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 
 class InvestmentAddUpdateController extends GetxController {
@@ -18,7 +19,7 @@ class InvestmentAddUpdateController extends GetxController {
 
   // Máscara para digitação do valor da receita ------------------------------------
   MoneyMaskedTextController investmentValueTextFormController =
-      MoneyMaskedTextController(leftSymbol: 'R\$ ');
+      moneyValueController;
 
   TextEditingController? descriptionTextController;
   TextEditingController? addInformationTextController;
@@ -141,9 +142,8 @@ class InvestmentAddUpdateController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
+    moneyValueController.updateValue(0.0);
     descriptionTextController!.clear();
-    investmentValueTextFormController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();
   }
 

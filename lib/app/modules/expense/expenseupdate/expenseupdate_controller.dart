@@ -5,8 +5,9 @@ import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseUpdateController extends GetxController {
@@ -17,7 +18,7 @@ class ExpenseUpdateController extends GetxController {
 
   // Máscara para digitação do valor da despesa ------------------------------------
   MoneyMaskedTextController expenseValueTextFormFieldController =
-      MoneyMaskedTextController(leftSymbol: 'R\$ ');
+      moneyValueController;
 
   // Formato de exibição de data no campo de data da despesa
   TextEditingController dateTextController = TextEditingController(
@@ -77,8 +78,7 @@ class ExpenseUpdateController extends GetxController {
     _categoriesList.bindStream(
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
-    expenseValueTextFormFieldController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
+    expenseValueTextFormFieldController = moneyValueController;
     descriptionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
     super.onInit();
@@ -146,10 +146,9 @@ class ExpenseUpdateController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
+    moneyValueController.updateValue(0.0);
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
-    expenseValueTextFormFieldController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
     addInformationTextController!.clear();
     selectedExpenseQuality = 'Essencial';
   }

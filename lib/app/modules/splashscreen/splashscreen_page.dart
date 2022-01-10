@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_controller.dart';
 
 // Implementação do SplashScreen do app

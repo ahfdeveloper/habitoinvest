@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_controller.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
 
 class InvestAddUpdateBinding implements Bindings {
   @override

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_controller.dart';
 
 class CategoriesAddUpdatePage extends StatelessWidget {
-  final CategoriesAddUpdateController _categoriesAddUpdateController =
-      Get.find<CategoriesAddUpdateController>();
+  final CategoriesAddUpdateController _categoriesAddUpdateController = Get.find<CategoriesAddUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,9 @@ class CategoriesAddUpdatePage extends StatelessWidget {
         title: Text('Categorias'),
         actions: [
           IconButton(
-              onPressed: () => _categoriesAddUpdateController.cancel(),
-              icon: Icon(Icons.cancel, color: AppColors.white)),
+            onPressed: () => _categoriesAddUpdateController.cancel(),
+            icon: Icon(Icons.cancel, color: AppColors.white),
+          ),
           IconButton(
             onPressed: () => _categoriesAddUpdateController.saveUpdateCategory(
               addEditFlag: _categoriesAddUpdateController.addEditFlag,
@@ -52,8 +52,7 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
                 onTap: () {
                   _categoriesAddUpdateController.categoryName = '';
-                  _categoriesAddUpdateController.nameTextController!.text =
-                      _categoriesAddUpdateController.categoryName;
+                  _categoriesAddUpdateController.nameTextController!.text = _categoriesAddUpdateController.categoryName;
                 },
               ),
             ),
@@ -66,8 +65,7 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: _categoriesAddUpdateController
-                            .containerRadioReceitaColor,
+                        color: _categoriesAddUpdateController.containerRadioReceitaColor,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Row(
@@ -75,13 +73,10 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                           Radio(
                             activeColor: Colors.green[800],
                             value: 'Receita',
-                            groupValue:
-                                _categoriesAddUpdateController.categoryType,
+                            groupValue: _categoriesAddUpdateController.categoryType,
                             onChanged: (value) {
-                              _categoriesAddUpdateController.categoryType =
-                                  value as String;
-                              _categoriesAddUpdateController
-                                  .paintContainerType();
+                              _categoriesAddUpdateController.categoryType = value as String;
+                              _categoriesAddUpdateController.paintContainerType();
                             },
                           ),
                           Expanded(
@@ -100,8 +95,7 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: _categoriesAddUpdateController
-                            .containerRadioDespesaColor,
+                        color: _categoriesAddUpdateController.containerRadioDespesaColor,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Row(
@@ -109,13 +103,10 @@ class CategoriesAddUpdatePage extends StatelessWidget {
                           Radio(
                             activeColor: Colors.red[500],
                             value: 'Despesa',
-                            groupValue:
-                                _categoriesAddUpdateController.categoryType,
+                            groupValue: _categoriesAddUpdateController.categoryType,
                             onChanged: (value) {
-                              _categoriesAddUpdateController.categoryType =
-                                  value as String;
-                              _categoriesAddUpdateController
-                                  .paintContainerType();
+                              _categoriesAddUpdateController.categoryType = value as String;
+                              _categoriesAddUpdateController.paintContainerType();
                             },
                           ),
                           Expanded(
@@ -137,8 +128,7 @@ class CategoriesAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller:
-                  _categoriesAddUpdateController.descriptionTextController,
+              controller: _categoriesAddUpdateController.descriptionTextController,
               decoration: textFormFieldMultilines('Descrição'),
               validator: (value) => validator(value),
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -157,9 +147,4 @@ validator(value) {
     return 'Campo obrigatório';
   }
   return null;
-}
-
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

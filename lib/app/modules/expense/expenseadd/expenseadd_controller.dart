@@ -5,7 +5,8 @@ import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -16,13 +17,10 @@ class ExpenseAddController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
 
   // Máscara para digitação do valor da despesa ------------------------------------
-  MoneyMaskedTextController expenseValueTextFormFieldController =
-      MoneyMaskedTextController(leftSymbol: 'R\$ ');
+  MoneyMaskedTextController expenseValueTextFormFieldController = moneyValueController;
 
   // Formato de exibição de data no campo de data da despesa
-  TextEditingController dateExpenseTextFormFieldController =
-      TextEditingController(
-          text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+  TextEditingController dateExpenseTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
   TextEditingController? descriptionTextController;
   TextEditingController? qtPortionTextController;
@@ -49,15 +47,10 @@ class ExpenseAddController extends GetxController {
   set selectedCategory(String select) => _selectedCategory.value = select;
 
   // Itens constantes no DropDownFormField de qualidade da despesa
-  final List expenseQualityList = [
-    'Essencial',
-    'Não essencial, mas importante',
-    'Não essencial'
-  ];
+  final List expenseQualityList = ['Essencial', 'Não essencial, mas importante', 'Não essencial'];
   RxString _selectedExpenseQuality = 'Essencial'.obs;
   String get selectedExpenseQuality => this._selectedExpenseQuality.value;
-  set selectedExpenseQuality(String value) =>
-      this._selectedExpenseQuality.value = value;
+  set selectedExpenseQuality(String value) => this._selectedExpenseQuality.value = value;
 
   // Variáveis utilizadas para escolha se despesa é parcelada ou não
   RxString _installmentsType = ''.obs;
@@ -71,22 +64,18 @@ class ExpenseAddController extends GetxController {
   // Variáveis usadas para exibir informações quando o usuário escolhe se a despesa é parcelada ou não
   bool _visibilityInstallmentsNo = false;
   bool get visibilityInstallmentsNo => this._visibilityInstallmentsNo;
-  set visibilityInstallmentsNo(bool value) =>
-      this._visibilityInstallmentsNo = value;
+  set visibilityInstallmentsNo(bool value) => this._visibilityInstallmentsNo = value;
   bool _visibilityInstallmentsYes = false;
   bool get visibilityInstallmentsYes => this._visibilityInstallmentsYes;
-  set visibilityInstallmentsYes(bool value) =>
-      this._visibilityInstallmentsYes = value;
+  set visibilityInstallmentsYes(bool value) => this._visibilityInstallmentsYes = value;
 
   // Variáveis usadas para definir a cor do container de acordo com escolha se despesa é parcelada ou não
   Color? _containerRadioSimColor;
   Color? get containerRadioSimColor => this._containerRadioSimColor;
-  set containerRadioSimColor(Color? value) =>
-      this._containerRadioSimColor = value;
+  set containerRadioSimColor(Color? value) => this._containerRadioSimColor = value;
   Color? _containerRadioNaoColor;
   Color? get containerRadioNaoColor => this._containerRadioNaoColor;
-  set containerRadioNaoColor(Color? value) =>
-      this._containerRadioNaoColor = value;
+  set containerRadioNaoColor(Color? value) => this._containerRadioNaoColor = value;
 
   // Variável informativa que mostra dado a serr digitado no TextFormField
   RxString _descriptionValue = 'Descrição'.obs;
@@ -113,8 +102,7 @@ class ExpenseAddController extends GetxController {
     _categoriesList.bindStream(
       _categoriesRepository.getAllCategories(userUid: user!.id),
     );
-    expenseValueTextFormFieldController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
+    expenseValueTextFormFieldController = moneyValueController;
     descriptionTextController = TextEditingController();
     qtPortionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
@@ -122,26 +110,18 @@ class ExpenseAddController extends GetxController {
   }
 
   // Pegar data selecionada no Date Picker e setar textformfield
-  selectDate(
-      {required BuildContext context,
-      required TextEditingController textFormFieldController}) async {
+  selectDate({required BuildContext context, required TextEditingController textFormFieldController}) async {
     date = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime(2050),
         builder: (BuildContext context, Widget? child) {
-          return Theme(
-              data: ThemeData.from(
-                  colorScheme:
-                      ColorScheme.light(primary: AppColors.expenseColor)),
-              child: child!);
+          return Theme(data: ThemeData.from(colorScheme: ColorScheme.light(primary: AppColors.expenseColor)), child: child!);
         }) as DateTime;
     textFormFieldController
       ..text = DateFormat('dd/MM/yyyy').format(date)
-      ..selection = TextSelection.fromPosition(TextPosition(
-          offset: textFormFieldController.text.length,
-          affinity: TextAffinity.upstream));
+      ..selection = TextSelection.fromPosition(TextPosition(offset: textFormFieldController.text.length, affinity: TextAffinity.upstream));
   }
 
   // Efetua o salvamento de uma nova despesa ou de uma despesa editada
@@ -150,8 +130,7 @@ class ExpenseAddController extends GetxController {
     if (!isValid) return;
     formkey.currentState!.save();
 
-    if (descriptionTextController!.text != '' &&
-        selectedCategory != selectExpenseCategory().first) {
+    if (descriptionTextController!.text != '' && selectedCategory != selectExpenseCategory().first) {
       expenseDescription = descriptionTextController!.text;
       bool pg = pay;
       var data = date;
@@ -166,11 +145,9 @@ class ExpenseAddController extends GetxController {
           }
           _expenseRepository.addExpense(
             userUid: user!.id,
-            expValue: expenseValueTextFormFieldController.numberValue /
-                int.parse(qtPortionTextController!.text),
+            expValue: expenseValueTextFormFieldController.numberValue / int.parse(qtPortionTextController!.text),
             expDate: date,
-            expDescription: descriptionTextController!.text +
-                ' ($i/${qtPortionTextController!.text})',
+            expDescription: descriptionTextController!.text + ' ($i/${qtPortionTextController!.text})',
             expCategory: selectedCategory,
             expQuality: selectedExpenseQuality,
             expPay: pay,
@@ -225,8 +202,7 @@ class ExpenseAddController extends GetxController {
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
     selectedExpenseQuality = 'Essencial';
-    expenseValueTextFormFieldController =
-        MoneyMaskedTextController(leftSymbol: 'R\$ ');
+    expenseValueTextFormFieldController = moneyValueController;
     addInformationTextController!.clear();
     installmentsType = '';
   }

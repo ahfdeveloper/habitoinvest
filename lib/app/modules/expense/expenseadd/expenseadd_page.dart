@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'expenseadd_controller.dart';
 
 class ExpenseAddPage extends StatelessWidget {
-  final ExpenseAddController _expenseAddController =
-      Get.find<ExpenseAddController>();
+  final ExpenseAddController _expenseAddController = Get.find<ExpenseAddController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +39,7 @@ class ExpenseAddPage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller:
-                  _expenseAddController.expenseValueTextFormFieldController,
+              controller: _expenseAddController.expenseValueTextFormFieldController,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
@@ -52,8 +49,7 @@ class ExpenseAddPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
-              controller:
-                  _expenseAddController.dateExpenseTextFormFieldController,
+              controller: _expenseAddController.dateExpenseTextFormFieldController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -61,10 +57,7 @@ class ExpenseAddPage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseAddController.selectDate(
-                  context: context,
-                  textFormFieldController:
-                      _expenseAddController.dateExpenseTextFormFieldController),
+              onTap: () => _expenseAddController.selectDate(context: context, textFormFieldController: _expenseAddController.dateExpenseTextFormFieldController),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
@@ -80,8 +73,7 @@ class ExpenseAddPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
                 onTap: () {
                   _expenseAddController.descriptionValue = '';
-                  _expenseAddController.descriptionTextController!.text =
-                      _expenseAddController.descriptionValue;
+                  _expenseAddController.descriptionTextController!.text = _expenseAddController.descriptionValue;
                 },
               ),
             ),
@@ -155,8 +147,7 @@ class ExpenseAddPage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseAddController.selectedExpenseQuality =
-                      newValue as String;
+                  _expenseAddController.selectedExpenseQuality = newValue as String;
                 },
                 isExpanded: true,
               ),
@@ -195,16 +186,12 @@ class ExpenseAddPage extends StatelessWidget {
                               Radio(
                                 activeColor: AppColors.themeColor,
                                 value: 'Não',
-                                groupValue:
-                                    _expenseAddController.installmentsType,
+                                groupValue: _expenseAddController.installmentsType,
                                 onChanged: (value) {
-                                  _expenseAddController.installmentsType =
-                                      value as String;
+                                  _expenseAddController.installmentsType = value as String;
                                   _expenseAddController.paintContainerType();
-                                  _expenseAddController
-                                      .visibilityInstallmentsNo = true;
-                                  _expenseAddController
-                                      .visibilityInstallmentsYes = false;
+                                  _expenseAddController.visibilityInstallmentsNo = true;
+                                  _expenseAddController.visibilityInstallmentsYes = false;
                                 },
                               ),
                               Expanded(
@@ -234,16 +221,12 @@ class ExpenseAddPage extends StatelessWidget {
                               Radio(
                                 activeColor: AppColors.themeColor,
                                 value: 'Sim',
-                                groupValue:
-                                    _expenseAddController.installmentsType,
+                                groupValue: _expenseAddController.installmentsType,
                                 onChanged: (value) {
-                                  _expenseAddController.installmentsType =
-                                      value as String;
+                                  _expenseAddController.installmentsType = value as String;
                                   _expenseAddController.paintContainerType();
-                                  _expenseAddController
-                                      .visibilityInstallmentsNo = false;
-                                  _expenseAddController
-                                      .visibilityInstallmentsYes = true;
+                                  _expenseAddController.visibilityInstallmentsNo = false;
+                                  _expenseAddController.visibilityInstallmentsYes = true;
                                 },
                               ),
                               Expanded(
@@ -285,9 +268,7 @@ class ExpenseAddPage extends StatelessWidget {
                                   Obx(
                                     () => Checkbox(
                                       value: _expenseAddController.pay,
-                                      onChanged: (newValue) =>
-                                          _expenseAddController.pay =
-                                              newValue as bool,
+                                      onChanged: (newValue) => _expenseAddController.pay = newValue as bool,
                                     ),
                                   ),
                                   Text('Pago'),
@@ -325,18 +306,15 @@ class ExpenseAddPage extends StatelessWidget {
                               Obx(
                                 () => Checkbox(
                                   value: _expenseAddController.pay,
-                                  onChanged: (newValue) => _expenseAddController
-                                      .pay = newValue as bool,
+                                  onChanged: (newValue) => _expenseAddController.pay = newValue as bool,
                                 ),
                               ),
                               Text('Pago'),
                             ],
                           ),
                           TextFormField(
-                            controller:
-                                _expenseAddController.qtPortionTextController,
-                            validator: (value) =>
-                                validatorQtPortion(int.parse(value!)),
+                            controller: _expenseAddController.qtPortionTextController,
+                            validator: (value) => validatorQtPortion(int.parse(value!)),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               labelText: 'Quantidade de parcelas mensais',
@@ -355,8 +333,7 @@ class ExpenseAddPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _expenseAddController.addInformationTextController,
-              decoration:
-                  textFormFieldMultilines('Informações adicionais (opcional)'),
+              decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
               maxLines: 5,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
@@ -57,44 +57,36 @@ class HomePage extends StatelessWidget {
                   ),
                   child: Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: AppColors.incomeColor,
-                        borderRadius: BorderRadius.circular(15)),
+                    decoration: BoxDecoration(color: AppColors.incomeColor, borderRadius: BorderRadius.circular(15)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Text(
                           'Receitas',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST,
-                      arguments: _homeController.user),
+                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: _homeController.user),
                   child: Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: AppColors.expenseColor,
-                        borderRadius: BorderRadius.circular(15)),
+                    decoration: BoxDecoration(color: AppColors.expenseColor, borderRadius: BorderRadius.circular(15)),
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         Text(
                           'Despesas',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST,
-                      arguments: _homeController.user),
+                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -106,8 +98,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text(
                           'Investir',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
@@ -124,8 +115,10 @@ class HomePage extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text('Simular Despesa',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'Simular Despesa',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),

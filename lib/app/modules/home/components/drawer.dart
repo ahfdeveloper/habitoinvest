@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
@@ -26,10 +26,7 @@ class DrawerHome extends StatelessWidget {
             ),
             accountName: Text(
               '${_homeController.user!.name}',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                  color: AppColors.white),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, color: AppColors.white),
             ),
             accountEmail: Text(
               '${_homeController.user!.email}',
@@ -38,35 +35,28 @@ class DrawerHome extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.themeColor),
           ),
           ListTile(
-            leading:
-                Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
-            title: Text('Definir metas',
-                style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.GOALS),
+            leading: Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
+            title: Text('Definir metas', style: AppTextStyles.generallyTextDarkBody),
+            onTap: () => Get.offAndToNamed(Routes.GOALS, arguments: _homeController.user),
           ),
           ListTile(
             leading: Icon(Icons.calculate, color: AppColors.bodyTextPagesColor),
-            title: Text('Simular Investimento',
-                style: AppTextStyles.generallyTextDarkBody),
+            title: Text('Simular Investimento', style: AppTextStyles.generallyTextDarkBody),
             onTap: () => Get.offAndToNamed(Routes.SIMULATOR),
           ),
           ListTile(
             leading: Icon(Icons.category, color: AppColors.bodyTextPagesColor),
-            title:
-                Text('Categorias', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST,
-                arguments: _homeController.user),
+            title: Text('Categorias', style: AppTextStyles.generallyTextDarkBody),
+            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST, arguments: _homeController.user),
           ),
           ListTile(
             leading: Icon(Icons.view_list, color: AppColors.bodyTextPagesColor),
-            title:
-                Text('Relatórios', style: AppTextStyles.generallyTextDarkBody),
+            title: Text('Relatórios', style: AppTextStyles.generallyTextDarkBody),
             onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),
-            title:
-                Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
+            title: Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
             onTap: () => Get.offAndToNamed(Routes.PARAMETERS),
           ),
           Divider(color: Colors.grey[400]),
@@ -82,8 +72,7 @@ class DrawerHome extends StatelessWidget {
           ),
           Divider(color: Colors.grey[500]),
           ListTile(
-            leading:
-                Icon(Icons.exit_to_app, color: AppColors.bodyTextPagesColor),
+            leading: Icon(Icons.exit_to_app, color: AppColors.bodyTextPagesColor),
             title: Text('Sair', style: AppTextStyles.generallyTextDarkBody),
             onTap: () => LoginController().logout(),
           ),

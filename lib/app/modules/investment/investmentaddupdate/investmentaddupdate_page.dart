@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_controller.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
 
 class InvestAddUpdatePage extends StatelessWidget {
   final InvestmentAddUpdateController _investmentAddUpdateController =
@@ -25,7 +24,7 @@ class InvestAddUpdatePage extends StatelessWidget {
         iconTheme: IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => _investmentAddUpdateController.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(

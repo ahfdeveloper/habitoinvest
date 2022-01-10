@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_controller.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
@@ -99,7 +99,7 @@ class InvestmentList extends StatelessWidget {
           _investmentAddUpdateController.newSelectedDate = DateTime.now();
           _investmentAddUpdateController.descriptionValue = 'Descrição';
           _investmentAddUpdateController.investmentValueTextFormController =
-              MoneyMaskedTextController(leftSymbol: 'R\$ ');
+              moneyValueController;
           _investmentAddUpdateController.madeEffective = false;
           Get.toNamed(Routes.INVESTMENT_ADDUPDATE,
               arguments: _investmentListController.user);

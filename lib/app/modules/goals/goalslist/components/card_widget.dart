@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 
-class CardWidget extends StatelessWidget{
+class CardWidget extends StatelessWidget {
   final String? goalName;
   final String? goalValue;
   final String? goalUniverse;
-  
-  const CardWidget({this.goalName, this.goalValue, this.goalUniverse});
+  final VoidCallback? onTap;
+
+  const CardWidget({this.goalName, this.goalValue, this.goalUniverse, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.DEFINITION_GOALS, arguments: goalName),
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           border: Border.fromBorderSide(BorderSide(color: AppColors.grey300)),
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10.0),
-        ),            
+        ),
         child: Padding(
           padding: const EdgeInsets.all(9.0),
           child: Row(
@@ -38,10 +37,9 @@ class CardWidget extends StatelessWidget{
                 ),
               ),
             ],
-          )
+          ),
         ),
       ),
     );
   }
-
 }

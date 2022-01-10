@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 
 // Estilo dos TextFormFields usados no app. Padrão material design
 InputDecoration textFormFieldForms({
@@ -61,24 +61,31 @@ InputDecoration textFormFieldValueOperation() {
   );
 }
 
+// Estilo do TextField para inserção dos valores das metas
+InputDecoration textFieldValueGoal() {
+  return InputDecoration(
+    border: InputBorder.none,
+    focusedBorder: InputBorder.none,
+    labelStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 80.0,
+    ),
+  );
+}
+
 // Estilo dos TextFormFields usados no app. Padrão com bordas
-InputDecoration textFormFieldDecoration2(
-    String label, Color borderFocus, bool multilines) {
+InputDecoration textFormFieldDecoration2(String label, Color borderFocus, bool multilines) {
   return InputDecoration(
     filled: true,
     fillColor: Colors.white,
     labelText: label,
     hintText: 'p.ex. 0.00',
-    labelStyle: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: AppColors.bodyTextPagesColor,
-        fontSize: 18),
+    labelStyle: TextStyle(fontWeight: FontWeight.bold, color: AppColors.bodyTextPagesColor, fontSize: 18),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5.0),
       borderSide: BorderSide(color: Colors.grey[100]!),
     ),
-    focusedBorder:
-        OutlineInputBorder(borderSide: BorderSide(color: borderFocus)),
+    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: borderFocus)),
     alignLabelWithHint: multilines,
   );
 }

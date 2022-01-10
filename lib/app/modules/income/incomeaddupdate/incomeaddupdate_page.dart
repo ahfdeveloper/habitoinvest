@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/disable_focusnode/disable_focusnode.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
-  final IncomeAddUpdateController _incomeAddUpdateController =
-      Get.find<IncomeAddUpdateController>();
+  final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +41,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller:
-                  _incomeAddUpdateController.incomeValueTextFormController,
+              controller: _incomeAddUpdateController.incomeValueTextFormController,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueIncomeOperationStyle,
               keyboardType: TextInputType.number,
@@ -58,8 +55,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
                 Obx(
                   () => Checkbox(
                     value: _incomeAddUpdateController.received,
-                    onChanged: (newValue) =>
-                        _incomeAddUpdateController.received = newValue!,
+                    onChanged: (newValue) => _incomeAddUpdateController.received = newValue!,
                   ),
                 ),
                 Text('Recebido'),
@@ -84,8 +80,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
             //
             Obx(
               () => TextFormField(
-                controller:
-                    _incomeAddUpdateController.descriptionTextController,
+                controller: _incomeAddUpdateController.descriptionTextController,
                 validator: (value) => validator(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.description_outlined,
@@ -94,8 +89,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
                 onTap: () {
                   _incomeAddUpdateController.descriptionValue = '';
-                  _incomeAddUpdateController.descriptionTextController!.text =
-                      _incomeAddUpdateController.descriptionValue;
+                  _incomeAddUpdateController.descriptionTextController!.text = _incomeAddUpdateController.descriptionValue;
                 },
               ),
             ),
@@ -128,8 +122,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _incomeAddUpdateController.selectedCategory =
-                      newValue as String;
+                  _incomeAddUpdateController.selectedCategory = newValue as String;
                 },
               ),
             ),
@@ -138,10 +131,8 @@ class IncomeAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             //
             TextFormField(
-              controller:
-                  _incomeAddUpdateController.addInformationTextController,
-              decoration:
-                  textFormFieldMultilines('Informações adicionais (opcional)'),
+              controller: _incomeAddUpdateController.addInformationTextController,
+              decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
               maxLines: 5,

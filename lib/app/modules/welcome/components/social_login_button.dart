@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../global/widgets/app_colors.dart';
-import '../../../global/widgets/app_images.dart';
-import '../../../global/widgets/app_text_styles.dart';
+import '../../../global/widgets/app_colors/app_colors.dart';
+import '../../../global/widgets/app_images/app_images.dart';
+import '../../../global/widgets/app_text_styles/app_text_styles.dart';
 
 class SocialLoginButton extends StatelessWidget {
   final VoidCallback onTap;

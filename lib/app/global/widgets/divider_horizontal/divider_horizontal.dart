@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../app_colors.dart';
+import '../app_colors/app_colors.dart';
 
 class DividerHorizontal extends StatelessWidget {
   const DividerHorizontal({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 
 class AppTextStyles {
   // Estilo da expressão "Meu saldo" na appBar na HomePage
@@ -116,5 +116,12 @@ class AppTextStyles {
     fontSize: 30.0,
     fontWeight: FontWeight.bold,
     color: AppColors.investcolor,
+  );
+
+  // Estilo usado no valor inserido das metas
+  static final valueGoals = GoogleFonts.notoSans(
+    fontSize: 55.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.themeColor,
   );
 }

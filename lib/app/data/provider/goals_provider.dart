@@ -1,26 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:habito_invest_app/app/data/model/income_model.dart';
+import 'package:habito_invest_app/app/data/model/goals_model.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
-class IncomeProvider {
-  //Retorna todas as receitas cadastradas
-  Stream<List<IncomeModel>> getAllIncome({required String userUid}) {
-    return _firebaseFirestore.doc(userUid).collection('income').orderBy('incDate').snapshots().map(
+class GoalsProvider {
+  // Retorna as metas cadastradas
+  Stream<List<GoalsModel>> getAllGoals({required String userUid}) {
+    return _firebaseFirestore.doc(userUid).collection('goals').snapshots().map(
       (query) {
-        List<IncomeModel> retIncome = [];
+        List<GoalsModel> retGoals = [];
         query.docs.forEach(
           (element) {
-            retIncome.add(IncomeModel.fromDocument(element));
+            retGoals.add(GoalsModel.fromDocument(element));
           },
         );
-        return retIncome;
+        print(retGoals.length);
+        return retGoals;
       },
     );
   }
 
   // Cadastra uma nova receita
-  Future<void> addIncome(
+  /* Future<void> addIncome(
       {required String userUid,
       required double incValue,
       required bool incReceived,
@@ -69,5 +70,5 @@ class IncomeProvider {
   Future deleteIncome({required String userUid, required incUid, required incDescription}) async {
     DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
     await documentReference.delete().catchError((e) => print(e));
-  }
+  } */
 }

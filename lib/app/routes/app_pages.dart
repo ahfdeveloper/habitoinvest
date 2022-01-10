@@ -9,17 +9,19 @@ import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_bi
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_page.dart';
-import 'package:habito_invest_app/app/modules/goals/goals_binding.dart';
-import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_binding.dart';
+import 'package:habito_invest_app/app/modules/goals/goalsaddupdate/goalsaddupdate_binding.dart';
+import 'package:habito_invest_app/app/modules/goals/goalsaddupdate/goalsaddupdate_page.dart';
+import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_binding.dart';
+import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_page.dart';
 import 'package:habito_invest_app/app/modules/home/home_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_page.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_binding.dart';
-import 'package:habito_invest_app/app/modules/invest/investaddupdate/investmentaddupdate_page.dart';
-import 'package:habito_invest_app/app/modules/invest/investmentlist/investmentlist_binding.dart';
-import 'package:habito_invest_app/app/modules/invest/investmentlist/investmentlist_page.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_binding.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_page.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentlist/investmentlist_binding.dart';
+import 'package:habito_invest_app/app/modules/investment/investmentlist/investmentlist_page.dart';
 import 'package:habito_invest_app/app/modules/login/login_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_page.dart';
@@ -30,8 +32,6 @@ import 'package:habito_invest_app/app/modules/userregister/register_binding.dart
 import 'package:habito_invest_app/app/modules/userregister/register_page.dart';
 import 'package:habito_invest_app/app/modules/welcome/welcome_page.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import 'package:habito_invest_app/app/modules/goals/goals_page.dart';
-import 'package:habito_invest_app/app/modules/goalsdefinition/goalsdefinition_page.dart';
 import 'package:habito_invest_app/app/modules/home/home_page.dart';
 import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_page.dart';
 import 'package:habito_invest_app/app/modules/login/login_page.dart';
@@ -60,13 +60,13 @@ class AppPages {
     ),
     GetPage(
       name: Routes.GOALS,
-      page: () => GoalsPage(),
-      binding: GoalsBinding(),
+      page: () => GoalsListPage(),
+      binding: GoalsListBinding(),
     ),
     GetPage(
       name: Routes.DEFINITION_GOALS,
-      page: () => GoalsDefinitionPage(),
-      binding: GoalsDefinitionBinding(),
+      page: () => GoalsAddUpdatePage(),
+      binding: GoalsAddUpdateBinding(),
     ),
     GetPage(
       name: Routes.INCOME_LIST,
