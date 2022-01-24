@@ -14,61 +14,83 @@ class GoalsProvider {
             retGoals.add(GoalsModel.fromDocument(element));
           },
         );
-        print(retGoals.length);
         return retGoals;
       },
     );
   }
 
-  // Cadastra uma nova receita
-  /* Future<void> addIncome(
-      {required String userUid,
-      required double incValue,
-      required bool incReceived,
-      required DateTime incDate,
-      required String incDescription,
-      required String incCategory,
-      required String incAddInformation}) async {
-    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('income').doc();
+  // Cadastra uma nova meta
+  /*  Future<void> addGoal({
+    required String userUid,
+    required DateTime gDate,
+    required int gPercInvest,
+    required int gPercNotEssExp,
+    required double gValueInvest,
+    required int gValueNotEssExp,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
-      'incValue': incValue,
-      'incReceived': incReceived,
-      'incDate': incDate,
-      'incDescription': incDescription,
-      'incCategory': incCategory,
-      'incAddInformation': incAddInformation,
+      'gDate': gDate,
+      'gPercentageInvestment': gPercInvest,
+      'gPercentageNotEssentialExpenses': gPercNotEssExp,
+      'gValueInvestment': gValueInvest,
+      'gValueNotEssentialExpenses': gValueNotEssExp,
+    };
+
+    await documentReference.set(data).catchError((e) => print(e));
+  } */
+
+  // Quando usuário não possui metas cadastradas adiciona valor default zero para que o mesmo atualize
+  Future<void> addGoal({
+    required String userUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc();
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'gDate': DateTime.now(),
+      'gPercentageInvestment': 0,
+      'gPercentageNotEssentialExpenses': 0,
+      'gValueInvestment': 0,
+      'gValueNotEssentialExpenses': 0,
     };
 
     await documentReference.set(data).catchError((e) => print(e));
   }
 
-  // Atualiza uma receita editada
-  Future updateIncome(
-      {required String userUid,
-      required double incValue,
-      required bool incReceived,
-      required DateTime incDate,
-      required String incDescription,
-      required String incCategory,
-      required String incAddInformation,
-      required String incUid}) async {
-    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
+  // Atualiza a meta investimento
+  Future updateInvestiment({
+    required String userUid,
+    required DateTime gDate,
+    required int gPercentageInvestment,
+    required double gValueInvestment,
+    required String gUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc(gUid);
 
     Map<String, dynamic> data = <String, dynamic>{
-      'incValue': incValue,
-      'incReceived': incReceived,
-      'incDate': incDate,
-      'incDescription': incDescription,
-      'incCategory': incCategory,
-      'incAddInformation': incAddInformation
+      'gDate': gDate,
+      'gPercentageInvestment': gPercentageInvestment,
+      'gValueInvestment': gValueInvestment,
     };
     await documentReference.update(data).catchError((e) => print(e));
   }
 
-  // Deleta uma despesa
-  Future deleteIncome({required String userUid, required incUid, required incDescription}) async {
-    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
-    await documentReference.delete().catchError((e) => print(e));
-  } */
+  // Atualiza a meta gastos não essenciais
+  Future updateNotEssentialExpense({
+    required String userUid,
+    required DateTime gDate,
+    required int gPercentageNotEssentialExpenses,
+    required double gValueNotEssentialExpenses,
+    required String gUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc(gUid);
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'gDate': gDate,
+      'gPercentageNotEssentialExpenses': gPercentageNotEssentialExpenses,
+      'gValueNotEssentialExpenses': gValueNotEssentialExpenses,
+    };
+    await documentReference.update(data).catchError((e) => print(e));
+  }
 }

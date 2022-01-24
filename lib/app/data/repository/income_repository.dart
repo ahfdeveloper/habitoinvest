@@ -39,19 +39,18 @@ class IncomeRepository {
       required String incAddInformation,
       required String incUid}) async {
     return _incomeProvider.updateIncome(
-        userUid: userUid,
-        incValue: incValue,
-        incReceived: incReceived,
-        incDate: incDate,
-        incDescription: incDescription,
-        incCategory: incCategory,
-        incAddInformation: incAddInformation,
-        incUid: incUid);
+      userUid: userUid,
+      incValue: incValue,
+      incReceived: incReceived,
+      incDate: incDate,
+      incDescription: incDescription,
+      incCategory: incCategory,
+      incAddInformation: incAddInformation,
+      incUid: incUid,
+    );
   }
 
-  Future deleteIncome(
-      {required String userUid, required incUid, required incName}) async {
-    return _incomeProvider.deleteIncome(
-        userUid: userUid, incUid: incUid, incDescription: incName);
+  Future deleteIncome({required String userUid, required incUid, required incName}) async {
+    return _incomeProvider.deleteIncome(userUid: userUid, incUid: incUid, incDescription: incName);
   }
 }

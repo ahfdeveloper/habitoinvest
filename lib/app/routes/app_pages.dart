@@ -9,10 +9,12 @@ import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_bi
 import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_page.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_page.dart';
-import 'package:habito_invest_app/app/modules/goals/goalsaddupdate/goalsaddupdate_binding.dart';
-import 'package:habito_invest_app/app/modules/goals/goalsaddupdate/goalsaddupdate_page.dart';
 import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_binding.dart';
 import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_page.dart';
+import 'package:habito_invest_app/app/modules/goals/goalsupdate/goalsupdate_page.dart';
+import 'package:habito_invest_app/app/modules/goals/goalsupdate/goalsaupdate_binding.dart';
+import 'package:habito_invest_app/app/modules/goals/goalswarning/goalswarning_binding.dart';
+import 'package:habito_invest_app/app/modules/goals/goalswarning/goalswarning_page.dart';
 import 'package:habito_invest_app/app/modules/home/home_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_binding.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_page.dart';
@@ -64,9 +66,14 @@ class AppPages {
       binding: GoalsListBinding(),
     ),
     GetPage(
-      name: Routes.DEFINITION_GOALS,
-      page: () => GoalsAddUpdatePage(),
-      binding: GoalsAddUpdateBinding(),
+      name: Routes.GOALS_DEFINITION,
+      page: () => GoalsUpdatePage(),
+      binding: GoalsUpdateBinding(),
+    ),
+    GetPage(
+      name: Routes.GOALS_WARNING,
+      page: () => GoalsWarningPage(),
+      binding: GoalsWarningBinding(),
     ),
     GetPage(
       name: Routes.INCOME_LIST,

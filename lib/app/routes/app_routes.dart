@@ -12,7 +12,9 @@ abstract class Routes {
   // Lista de Metas
   static const GOALS = '/goals';
   // Definir Metas
-  static const DEFINITION_GOALS = '/definition_goals';
+  static const GOALS_DEFINITION = '/goals_definition';
+  // Aviso de Metas não cadastradas
+  static const GOALS_WARNING = '/goals_warning';
   // Lista de Receitas
   static const INCOME_LIST = '/income_list';
   // Cadastro e atualização de Receitas

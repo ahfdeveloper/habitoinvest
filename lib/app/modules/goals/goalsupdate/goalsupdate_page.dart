@@ -4,35 +4,36 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
-import 'package:intl/intl.dart';
-import 'goalsaddupdate_controller.dart';
+import 'goalsupdate_controller.dart';
 
-class GoalsAddUpdatePage extends StatelessWidget {
-  final GoalsAddUpdateController _goalsAddUpdateController = Get.find<GoalsAddUpdateController>();
+class GoalsUpdatePage extends StatelessWidget {
+  final GoalsUpdateController _goalsUpdateController = Get.find<GoalsUpdateController>();
 
   @override
   Widget build(BuildContext context) {
     const dialogPadding = 5.0;
+    final _formkey = _goalsUpdateController.formkey;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        title: Text(_goalsAddUpdateController.title, style: TextStyle(color: AppColors.white)),
+        title: Text(_goalsUpdateController.title, style: TextStyle(color: AppColors.white)),
         backgroundColor: AppColors.themeColor,
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => _goalsUpdateController.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () {/*Código para salvar*/},
+            onPressed: () => _goalsUpdateController.updateGoal(),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
-      body: Container(
+      body: Form(
+        key: _formkey,
         child: Obx(
           () => Column(
             children: [
@@ -45,19 +46,19 @@ class GoalsAddUpdatePage extends StatelessWidget {
                         padding: const EdgeInsets.all(2.0),
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: _goalsAddUpdateController.buttonColorPercentage),
+                            side: BorderSide(color: _goalsUpdateController.buttonColorPercentage),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            backgroundColor: _goalsAddUpdateController.buttonBackgroundColorPercentage,
+                            backgroundColor: _goalsUpdateController.buttonBackgroundColorPercentage,
                           ),
                           child: Text(
                             'Porcentagem',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: _goalsAddUpdateController.buttonColorPercentage,
+                              color: _goalsUpdateController.buttonColorPercentage,
                             ),
                           ),
                           onPressed: () {
-                            _goalsAddUpdateController.percentageButtonSelect();
+                            _goalsUpdateController.percentageButtonSelect();
                           },
                         ),
                       ),
@@ -67,19 +68,19 @@ class GoalsAddUpdatePage extends StatelessWidget {
                         padding: const EdgeInsets.all(2.0),
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: _goalsAddUpdateController.buttonColorFixedValue),
+                            side: BorderSide(color: _goalsUpdateController.buttonColorFixedValue),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                            backgroundColor: _goalsAddUpdateController.buttonBackgroundColorFixedValue,
+                            backgroundColor: _goalsUpdateController.buttonBackgroundColorFixedValue,
                           ),
                           child: Text(
                             'Valor Fixo',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: _goalsAddUpdateController.buttonColorFixedValue,
+                              color: _goalsUpdateController.buttonColorFixedValue,
                             ),
                           ),
                           onPressed: () {
-                            _goalsAddUpdateController.fixedValueButtonSelect();
+                            _goalsUpdateController.fixedValueButtonSelect();
                           },
                         ),
                       ),
@@ -96,8 +97,8 @@ class GoalsAddUpdatePage extends StatelessWidget {
                       children: [
                         Expanded(
                           flex: 3,
-                          child: TextField(
-                            controller: _goalsAddUpdateController.controller,
+                          child: TextFormField(
+                            controller: _goalsUpdateController.controller,
                             showCursor: false,
                             autofocus: true,
                             textAlign: TextAlign.center,
@@ -106,16 +107,6 @@ class GoalsAddUpdatePage extends StatelessWidget {
                             style: AppTextStyles.valueGoals,
                           ),
                         ),
-                        // Text(
-                        //   _goalsAddUpdateController.value,
-                        //   style: TextStyle(fontSize: 80, color: Colors.black),
-                        // ),
-                        // Expanded(
-                        //   child: Text(
-                        //     _goalsAddUpdateController.endValue,
-                        //     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -124,10 +115,6 @@ class GoalsAddUpdatePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text('*Última atualização: ' + DateFormat('dd/MM/yyyy').format(_goalsAddUpdateController.dateUpdate)),
       ),
     );
   }

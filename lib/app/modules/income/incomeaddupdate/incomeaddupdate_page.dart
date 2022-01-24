@@ -20,7 +20,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.incomeColor,
-        title: Text('Nova Receita'),
+        title: Text('Receita'),
         actions: [
           IconButton(
             onPressed: () => _incomeAddUpdateController.cancel(),
@@ -54,8 +54,8 @@ class IncomeAddUpdatePage extends StatelessWidget {
               children: [
                 Obx(
                   () => Checkbox(
-                    value: _incomeAddUpdateController.received,
-                    onChanged: (newValue) => _incomeAddUpdateController.received = newValue!,
+                    value: _incomeAddUpdateController.updateReceived,
+                    onChanged: (newValue) => _incomeAddUpdateController.updateReceived = newValue!,
                   ),
                 ),
                 Text('Recebido'),

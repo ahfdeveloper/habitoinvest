@@ -43,7 +43,7 @@ class IncomeProvider {
   }
 
   // Atualiza uma receita editada
-  Future updateIncome(
+  Future<void> updateIncome(
       {required String userUid,
       required double incValue,
       required bool incReceived,
@@ -66,7 +66,7 @@ class IncomeProvider {
   }
 
   // Deleta uma despesa
-  Future deleteIncome({required String userUid, required incUid, required incDescription}) async {
+  Future<void> deleteIncome({required String userUid, required incUid, required incDescription}) async {
     DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('income').doc(incUid);
     await documentReference.delete().catchError((e) => print(e));
   }

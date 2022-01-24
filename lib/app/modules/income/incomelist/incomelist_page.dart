@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/income/incomelist/incomelist_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
@@ -35,8 +36,10 @@ class IncomeList extends StatelessWidget {
                   onTap: () {
                     _incomeAddUpdateController.addEditFlag = 'UPDATE';
                     _incomeAddUpdateController.incomeId = _incomeListController.incomeList[index].id!;
+                    _incomeAddUpdateController.incomeValue = _incomeListController.incomeList[index].value!;
                     _incomeAddUpdateController.incomeValueTextFormController.text = _incomeListController.incomeList[index].value!.toStringAsFixed(2);
                     _incomeAddUpdateController.received = _incomeListController.incomeList[index].received!;
+                    _incomeAddUpdateController.updateReceived = _incomeListController.incomeList[index].received!;
                     _incomeAddUpdateController.dateTextController = TextEditingController(
                       text: DateFormat('dd/MM/yyyy').format(_incomeListController.incomeList[index].date),
                     );
@@ -55,6 +58,7 @@ class IncomeList extends StatelessWidget {
                   onTap: () {
                     _incomeListController.incomeId = _incomeListController.incomeList[index].id!;
                     _incomeListController.incomeDescription = _incomeListController.incomeList[index].description!;
+                    _incomeListController.incomeValue = _incomeListController.incomeList[index].value!;
                     _incomeListController.deleteIncome();
                   },
                 ),
@@ -66,11 +70,11 @@ class IncomeList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           _incomeAddUpdateController.addEditFlag = 'NEW';
+          moneyValueController.updateValue(0.0);
           _incomeAddUpdateController.dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
           _incomeAddUpdateController.newSelectedDate = DateTime.now();
           _incomeAddUpdateController.descriptionValue = 'Descrição';
           _incomeAddUpdateController.received = false;
-
           Get.toNamed(Routes.INCOME_ADDUPDATE, arguments: _incomeListController.user);
         },
         backgroundColor: AppColors.incomeColor,

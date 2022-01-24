@@ -5,17 +5,17 @@ import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart'
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 
 class NavBar extends StatelessWidget {
-  final HomeController _controller = HomeController();
+  final HomeController _homeController = HomeController();
 
   @override
   Widget build(Object context) {
     return Obx(
       () => BottomNavyBar(
-        selectedIndex: _controller.currentIndex,
+        selectedIndex: _homeController.currentIndex,
         showElevation: true,
         itemCornerRadius: 20.0,
         curve: Curves.easeIn,
-        onItemSelected: _controller.changePage,
+        onItemSelected: _homeController.changePage,
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: Icon(Icons.dashboard),

@@ -35,10 +35,15 @@ class DrawerHome extends StatelessWidget {
             decoration: BoxDecoration(color: AppColors.themeColor),
           ),
           ListTile(
-            leading: Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
-            title: Text('Definir metas', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.GOALS, arguments: _homeController.user),
-          ),
+              leading: Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
+              title: Text('Definir metas', style: AppTextStyles.generallyTextDarkBody),
+              onTap: () {
+                if (_homeController.goalsList.isEmpty) {
+                  Get.offAndToNamed(Routes.GOALS_WARNING, arguments: _homeController.user);
+                } else {
+                  Get.offAndToNamed(Routes.GOALS, arguments: _homeController.user);
+                }
+              }),
           ListTile(
             leading: Icon(Icons.calculate, color: AppColors.bodyTextPagesColor),
             title: Text('Simular Investimento', style: AppTextStyles.generallyTextDarkBody),

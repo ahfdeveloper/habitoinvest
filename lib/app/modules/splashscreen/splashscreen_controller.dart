@@ -21,10 +21,11 @@ class SplashScreenController extends GetxController {
   void isLogged() {
     if (box.hasData('auth')) {
       UserModel user = UserModel(
-          id: box.read('auth')['id'],
-          email: box.read('auth')['email'],
-          name: box.read('auth')['name'],
-          urlimage: box.read('auth')['urlimage']);
+        id: box.read('auth')['id'],
+        email: box.read('auth')['email'],
+        name: box.read('auth')['name'],
+        urlimage: box.read('auth')['urlimage'],
+      );
       Get.offAllNamed(Routes.HOME, arguments: user);
     } else {
       Get.offAllNamed(Routes.WELCOME);

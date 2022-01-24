@@ -9,7 +9,7 @@ import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'components/drawer.dart';
 
 class HomePage extends StatelessWidget {
-  final HomeController _homeController = Get.find<HomeController>();
+  final HomeController _homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,24 @@ class HomePage extends StatelessWidget {
           centerTitle: true,
           shadowColor: AppColors.backgroundColor,
           backgroundColor: AppColors.backgroundColor,
+          elevation: 0.0,
           title: Column(
             children: [
-              Text('Meu saldo', style: AppTextStyles.appBarTextSaldo),
-              Text('R\$2.000,00', style: AppTextStyles.appBarNumberSaldo),
+              Container(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text('Meu saldo', style: AppTextStyles.appBarTextSaldo),
+              ),
+              Container(
+                child: Obx(
+                  () => Text(
+                    'R\$ ${_homeController.accountList.first.balance!.toStringAsFixed(2)}',
+                    style: AppTextStyles.appBarNumberSaldo,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-        backgroundColor: AppColors.backgroundColor,
         drawer: DrawerHome(),
         bottomNavigationBar: NavBar(),
         body: Column(
@@ -51,10 +61,7 @@ class HomePage extends StatelessWidget {
               childAspectRatio: 1.8,
               children: [
                 GestureDetector(
-                  onTap: () => Get.toNamed(
-                    Routes.INCOME_LIST,
-                    arguments: _homeController.user,
-                  ),
+                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: _homeController.user),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(color: AppColors.incomeColor, borderRadius: BorderRadius.circular(15)),
@@ -63,7 +70,10 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text(
                           'Receitas',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -86,7 +96,10 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
+                  onTap: () {
+                    Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user);
+                    _homeController.onInit();
+                  },
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
