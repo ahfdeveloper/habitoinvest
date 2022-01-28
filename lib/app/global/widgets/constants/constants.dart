@@ -7,3 +7,9 @@ const SPACEFORMS = 10.0;
 final MoneyMaskedTextController moneyValueController = MoneyMaskedTextController(
   leftSymbol: 'R\$ ',
 );
+
+final MoneyMaskedTextController porcentageValueController = MoneyMaskedTextController(
+  rightSymbol: '\%',
+  precision: 0,
+  decimalSeparator: '',
+);

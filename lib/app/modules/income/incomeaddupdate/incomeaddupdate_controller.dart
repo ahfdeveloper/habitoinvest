@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
@@ -31,6 +29,7 @@ class IncomeAddUpdateController extends GetxController {
   TextEditingController? descriptionTextController;
   TextEditingController? addInformationTextController;
 
+  // Lista que guarda os dados da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
 
@@ -43,7 +42,7 @@ class IncomeAddUpdateController extends GetxController {
   String get selectedCategory => this._selectedCategory.value;
   set selectedCategory(String select) => _selectedCategory.value = select;
 
-  // Variável usada para definição se receita foi recebida ou não
+  // Variável que recupera se receita foi recebida ou não quando de sua edição
   RxBool _received = false.obs;
   bool get received => this._received.value;
   set received(bool value) => this._received.value = value;
@@ -53,6 +52,7 @@ class IncomeAddUpdateController extends GetxController {
   bool get updateReceived => this._updateReceived.value;
   set updateReceived(bool value) => this._updateReceived.value = value;
 
+  // Variável que guarda valor da receita que está em edição para atualizar o saldo da conta
   double _incomeValue = 0.0;
   double get incomeValue => this._incomeValue;
   set incomeValue(double value) => this._incomeValue = value;
@@ -72,15 +72,16 @@ class IncomeAddUpdateController extends GetxController {
   String get descriptionValue => this._descriptionValue.value;
   set descriptionValue(String value) => this._descriptionValue.value = value;
 
+  // Flag que indica se se trata de uma nova receita ou outra em edição
   String _addEditFlag = '';
   String get addEditFlag => this._addEditFlag;
   set addEditFlag(String value) => this._addEditFlag = value;
 
+  // Guarda a data escolhida pelo usuário no Data Picker
   DateTime _newSelectedDate = DateTime.now();
   DateTime get newSelectedDate => this._newSelectedDate;
   set newSelectedDate(DateTime value) => this._newSelectedDate = value;
 
-  var accountId;
   @override
   void onInit() {
     _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
@@ -127,7 +128,7 @@ class IncomeAddUpdateController extends GetxController {
   }
 
   // Efetua o salvamento de uma nova receita ou de uma receita editada
-  void saveUpdateIncome({required String addEditFlag}) async {
+  Future<void> saveUpdateIncome({required String addEditFlag}) async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
@@ -170,6 +171,8 @@ class IncomeAddUpdateController extends GetxController {
     } else if (addEditFlag == 'UPDATE') {
       if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
         incomeDescription = descriptionTextController!.text;
+        /* Sequencia de if que define quando o saldo da conta deve ser atualizado dependendo se a receita foi marcada
+        como recebida ou não ---------------------------------------------------------------------------------------*/
         if (received == false && updateReceived == true) {
           _accountRepository.updateAccount(
             userUid: user!.id,
@@ -207,22 +210,21 @@ class IncomeAddUpdateController extends GetxController {
             accUid: _accountList.value.first.id!,
           );
         }
-        _incomeRepository
-            .updateIncome(
-                userUid: user!.id,
-                incValue: incomeValueTextFormController.numberValue,
-                incReceived: updateReceived,
-                incDate: newSelectedDate,
-                incDescription: descriptionTextController!.text,
-                incCategory: selectedCategory,
-                incAddInformation: addInformationTextController!.text,
-                incUid: incomeId)
-            .whenComplete(
-              () => AppSnackbar.snackarStyle(
-                title: incomeDescription,
-                message: 'Receita atualizada com sucesso',
-              ),
-            );
+        _incomeRepository.updateIncome(
+          userUid: user!.id,
+          incValue: incomeValueTextFormController.numberValue,
+          incReceived: updateReceived,
+          incDate: newSelectedDate,
+          incDescription: descriptionTextController!.text,
+          incCategory: selectedCategory,
+          incAddInformation: addInformationTextController!.text,
+          incUid: incomeId,
+        )..whenComplete(
+            () => AppSnackbar.snackarStyle(
+              title: incomeDescription,
+              message: 'Receita atualizada com sucesso',
+            ),
+          );
         clearEditingControllers();
         Get.back();
       }

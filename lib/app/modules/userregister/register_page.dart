@@ -27,8 +27,7 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 18.0),
-              Center(
-                  child: Text('CADASTRAR', style: TextStyle(fontSize: 22.0))),
+              Center(child: Text('CADASTRAR', style: TextStyle(fontSize: 22.0))),
               SizedBox(height: 40.0),
               TextFormField(
                 controller: _registerController.nameTextController,
@@ -42,10 +41,8 @@ class RegisterPage extends StatelessWidget {
                 autofocus: false,
                 decoration: InputDecoration(
                     labelText: 'Nome',
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
               ),
               SizedBox(height: 15.0),
               TextFormField(
@@ -63,10 +60,8 @@ class RegisterPage extends StatelessWidget {
                 autofocus: false,
                 decoration: InputDecoration(
                     labelText: 'E-mail',
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
               ),
               SizedBox(height: 15.0),
               TextFormField(
@@ -84,26 +79,24 @@ class RegisterPage extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                     labelText: 'Senha',
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0))),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 25.0),
-                  child: OutlinedButton(
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          _registerController.register();
-                        }
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.black),
-                      child: Text('CADASTRAR',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)))),
+                padding: EdgeInsets.only(top: 25.0),
+                child: OutlinedButton(
+                  onPressed: () {
+                    if (_formkey.currentState!.validate()) {
+                      _registerController.register();
+                    }
+                  },
+                  style: OutlinedButton.styleFrom(backgroundColor: Colors.black),
+                  child: Text(
+                    'CADASTRAR',
+                    style: TextStyle(fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               TextButton(
                 onPressed: () {
                   Get.back();

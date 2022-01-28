@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
@@ -98,6 +99,7 @@ class GoalsUpdatePage extends StatelessWidget {
                         Expanded(
                           flex: 3,
                           child: TextFormField(
+                            validator: (value) => validatorValue(value),
                             controller: _goalsUpdateController.controller,
                             showCursor: false,
                             autofocus: true,
@@ -105,6 +107,7 @@ class GoalsUpdatePage extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             decoration: textFieldValueGoal(),
                             style: AppTextStyles.valueGoals,
+                            inputFormatters: [LengthLimitingTextInputFormatter(_goalsUpdateController.maxLength)],
                           ),
                         ),
                       ],

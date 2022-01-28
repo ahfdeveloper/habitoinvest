@@ -33,10 +33,16 @@ class HomePage extends StatelessWidget {
               ),
               Container(
                 child: Obx(
-                  () => Text(
-                    'R\$ ${_homeController.accountList.first.balance!.toStringAsFixed(2)}',
-                    style: AppTextStyles.appBarNumberSaldo,
-                  ),
+                  () {
+                    if (_homeController.accountList.isEmpty || _homeController.accountList == []) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return Text(
+                        'R\$ ${_homeController.accountList.first.balance!.toStringAsFixed(2)}',
+                        style: AppTextStyles.appBarNumberSaldo,
+                      );
+                    }
+                  },
                 ),
               ),
             ],

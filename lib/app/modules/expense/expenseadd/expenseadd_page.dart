@@ -71,10 +71,9 @@ class ExpenseAddPage extends StatelessWidget {
                   hint: _expenseAddController.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () {
-                  _expenseAddController.descriptionValue = '';
-                  _expenseAddController.descriptionTextController!.text = _expenseAddController.descriptionValue;
-                },
+                onTap: () => _expenseAddController.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _expenseAddController.descriptionTextController!.text.length),
+                ),
               ),
             ),
             DividerHorizontal(),

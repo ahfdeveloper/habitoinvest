@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
@@ -11,11 +13,15 @@ class GoalsUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
   final GoalsRepository _goalsRepository = GoalsRepository();
   MoneyMaskedTextController goalFixedValueController = moneyValueController;
-  TextEditingController goalPercentageValueController = TextEditingController();
+  MoneyMaskedTextController goalPercentageValueController = porcentageValueController;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   // Recebe a instância do controller de acordo com o formato da meta selecionada
   var controller;
+
+  late int _maxLength;
+  int get maxLength => this._maxLength;
+  set maxLength(int value) => this._maxLength = value;
 
   // Recebe o nome da meta que está sendo cadastrada/editada
   String _title = '';
@@ -67,26 +73,28 @@ class GoalsUpdateController extends GetxController {
   //
   // Função chamada quando selecionado o botão para definir valor em porcentagem de meta
   void percentageButtonSelect() async {
-    this.buttonColorPercentage = AppColors.white;
-    this.buttonBackgroundColorPercentage = AppColors.themeColor;
-    this.buttonColorFixedValue = AppColors.grey400;
-    this.buttonBackgroundColorFixedValue = AppColors.transparent;
-    this.controller = null;
-    this.controller = goalPercentageValueController;
-    this.controller.text = pvalue;
-    this.controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)); //posiciona cursor fim do texto
+    buttonColorPercentage = AppColors.white;
+    buttonBackgroundColorPercentage = AppColors.themeColor;
+    buttonColorFixedValue = AppColors.grey400;
+    buttonBackgroundColorFixedValue = AppColors.transparent;
+    maxLength = 4;
+    controller = null;
+    controller = goalPercentageValueController;
+    controller.text = pvalue;
+    controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)); //posiciona cursor fim do texto
   }
 
   // Função chamada quando selecionado o botão para definir valor fixo de meta
   void fixedValueButtonSelect() async {
-    this.buttonColorFixedValue = AppColors.white;
-    this.buttonBackgroundColorFixedValue = AppColors.themeColor;
-    this.buttonColorPercentage = AppColors.grey400;
-    this.buttonBackgroundColorPercentage = AppColors.transparent;
-    this.controller = null;
-    this.controller = goalFixedValueController;
-    this.controller.text = fvalue;
-    this.controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)); //posiciona cursor fim do texto
+    buttonColorFixedValue = AppColors.white;
+    buttonBackgroundColorFixedValue = AppColors.themeColor;
+    buttonColorPercentage = AppColors.grey400;
+    buttonBackgroundColorPercentage = AppColors.transparent;
+    maxLength = 100;
+    controller = null;
+    controller = goalFixedValueController;
+    controller.text = fvalue;
+    controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)); //posiciona cursor fim do texto
   }
 
 // Efetua o atualização da meta selecionada
@@ -94,13 +102,12 @@ class GoalsUpdateController extends GetxController {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
-
     if (title == 'Investimentos') {
       if (controller == goalPercentageValueController) {
         _goalsRepository.updateInvestiment(
           userUid: user!.id,
           gDate: DateTime.now(),
-          gPercentageInvestment: int.parse(controller.text),
+          gPercentageInvestment: 0,
           gValueInvestment: 0,
           gUid: goalId,
         )..whenComplete(
@@ -132,7 +139,7 @@ class GoalsUpdateController extends GetxController {
         _goalsRepository.updateNotEssentialExpense(
           userUid: user!.id,
           gDate: DateTime.now(),
-          gPercentageNotEssentialExpenses: int.parse(controller.text),
+          gPercentageNotEssentialExpenses: controller.numbervalue,
           gValueNotEssentialExpenses: 0,
           gUid: goalId,
         )..whenComplete(

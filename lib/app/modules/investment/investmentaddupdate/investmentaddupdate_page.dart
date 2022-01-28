@@ -9,8 +9,7 @@ import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_
 import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
 
 class InvestAddUpdatePage extends StatelessWidget {
-  final InvestmentAddUpdateController _investmentAddUpdateController =
-      Get.find<InvestmentAddUpdateController>();
+  final InvestmentAddUpdateController _investmentAddUpdateController = Get.find<InvestmentAddUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +18,7 @@ class InvestAddUpdatePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.investcolor,
         title: Text('Novo Investimento', style: TextStyle(fontSize: 17.0)),
         iconTheme: IconThemeData(color: AppColors.white),
@@ -28,8 +28,7 @@ class InvestAddUpdatePage extends StatelessWidget {
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () =>
-                _investmentAddUpdateController.saveUpdateInvestment(
+            onPressed: () => _investmentAddUpdateController.saveUpdateInvestment(
               addEditFlag: _investmentAddUpdateController.addEditFlag,
             ),
             icon: Icon(Icons.save, color: AppColors.white),
@@ -43,8 +42,7 @@ class InvestAddUpdatePage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _investmentAddUpdateController
-                  .investmentValueTextFormController,
+              controller: _investmentAddUpdateController.investmentValueTextFormController,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueInvestmentOperationStyle,
               keyboardType: TextInputType.number,
@@ -57,9 +55,8 @@ class InvestAddUpdatePage extends StatelessWidget {
               children: [
                 Obx(
                   () => Checkbox(
-                    value: _investmentAddUpdateController.madeEffective,
-                    onChanged: (newValue) => _investmentAddUpdateController
-                        .madeEffective = newValue!,
+                    value: _investmentAddUpdateController.updateEffective,
+                    onChanged: (newValue) => _investmentAddUpdateController.updateEffective = newValue!,
                   ),
                 ),
                 Text('Efetivado'),
@@ -84,8 +81,7 @@ class InvestAddUpdatePage extends StatelessWidget {
             //
             Obx(
               () => TextFormField(
-                controller:
-                    _investmentAddUpdateController.descriptionTextController,
+                controller: _investmentAddUpdateController.descriptionTextController,
                 validator: (value) => validator(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.description_outlined,
@@ -94,18 +90,15 @@ class InvestAddUpdatePage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold),
                 onTap: () {
                   _investmentAddUpdateController.descriptionValue = '';
-                  _investmentAddUpdateController.descriptionTextController!
-                      .text = _investmentAddUpdateController.descriptionValue;
+                  _investmentAddUpdateController.descriptionTextController!.text = _investmentAddUpdateController.descriptionValue;
                 },
               ),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS * 2),
             TextFormField(
-              controller:
-                  _investmentAddUpdateController.addInformationTextController,
-              decoration:
-                  textFormFieldMultilines('Informações adicionais (opcional)'),
+              controller: _investmentAddUpdateController.addInformationTextController,
+              decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
               maxLines: 5,

@@ -71,7 +71,9 @@ class IncomeList extends StatelessWidget {
         onPressed: () async {
           _incomeAddUpdateController.addEditFlag = 'NEW';
           moneyValueController.updateValue(0.0);
-          _incomeAddUpdateController.dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+          _incomeAddUpdateController.dateTextController = TextEditingController(
+            text: DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          );
           _incomeAddUpdateController.newSelectedDate = DateTime.now();
           _incomeAddUpdateController.descriptionValue = 'Descrição';
           _incomeAddUpdateController.received = false;

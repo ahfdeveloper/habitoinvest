@@ -9,8 +9,7 @@ import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_
 import 'expenseupdate_controller.dart';
 
 class ExpenseUpdatePage extends StatelessWidget {
-  final ExpenseUpdateController _expenseUpdateController =
-      Get.find<ExpenseUpdateController>();
+  final ExpenseUpdateController _expenseUpdateController = Get.find<ExpenseUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +22,7 @@ class ExpenseUpdatePage extends StatelessWidget {
         title: Text('Atualizar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => Get
-                .back(), //_expenseAddUpdateController.cancel(), Implementar a limpeza dos campos
+            onPressed: () => _expenseUpdateController.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
@@ -41,12 +39,25 @@ class ExpenseUpdatePage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller:
-                  _expenseUpdateController.expenseValueTextFormFieldController,
+              controller: _expenseUpdateController.expenseValueTextFormController,
               validator: (value) => validatorExpenseValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
+            ),
+            DividerHorizontal(),
+            SizedBox(height: SPACEFORMS),
+            //
+            Row(
+              children: [
+                Obx(
+                  () => Checkbox(
+                    value: _expenseUpdateController.updatePay,
+                    onChanged: (newValue) => _expenseUpdateController.updatePay = newValue as bool,
+                  ),
+                ),
+                Text('Pago'),
+              ],
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
@@ -60,10 +71,7 @@ class ExpenseUpdatePage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseUpdateController.selectDate(
-                  context: context,
-                  textFormFieldController:
-                      _expenseUpdateController.dateTextController),
+              onTap: () => _expenseUpdateController.selectDate(context: context, textFormFieldController: _expenseUpdateController.dateTextController),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
@@ -77,15 +85,9 @@ class ExpenseUpdatePage extends StatelessWidget {
                   hint: _expenseUpdateController.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () {
-                  _expenseUpdateController.descriptionTextController!
-                      .selection = TextSelection.fromPosition(
-                    TextPosition(
-                      offset: _expenseUpdateController
-                          .descriptionTextController!.text.length,
-                    ),
-                  );
-                },
+                onTap: () => _expenseUpdateController.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _expenseUpdateController.descriptionTextController!.text.length),
+                ),
               ),
             ),
             DividerHorizontal(),
@@ -117,8 +119,7 @@ class ExpenseUpdatePage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseUpdateController.selectedCategory =
-                      newValue as String;
+                  _expenseUpdateController.selectedCategory = newValue as String;
                 },
               ),
             ),
@@ -159,36 +160,17 @@ class ExpenseUpdatePage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseUpdateController.selectedExpenseQuality =
-                      newValue as String;
+                  _expenseUpdateController.selectedExpenseQuality = newValue as String;
                 },
                 isExpanded: true,
               ),
             ),
 
-            DividerHorizontal(),
-            SizedBox(height: SPACEFORMS),
-            //
-            Row(
-              children: [
-                Obx(
-                  () => Checkbox(
-                    value: _expenseUpdateController.pay,
-                    onChanged: (newValue) =>
-                        _expenseUpdateController.pay = newValue as bool,
-                  ),
-                ),
-                Text('Pago'),
-              ],
-            ),
-
-            DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _expenseUpdateController.addInformationTextController,
-              decoration:
-                  textFormFieldMultilines('Informações adicionais (opcional)'),
+              decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
               maxLines: 5,

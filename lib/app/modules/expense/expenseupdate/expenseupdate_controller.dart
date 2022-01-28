@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
+import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
@@ -15,31 +17,39 @@ class ExpenseUpdateController extends GetxController {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
+  final AccountRepository _accountRepository = AccountRepository();
 
-  // Máscara para digitação do valor da despesa ------------------------------------
-  MoneyMaskedTextController expenseValueTextFormFieldController =
-      moneyValueController;
+  // Máscara para digitação do valor da despesa ----------------------=====---------------//
+  MoneyMaskedTextController expenseValueTextFormController = moneyValueController;
 
   // Formato de exibição de data no campo de data da despesa
-  TextEditingController dateTextController = TextEditingController(
-      text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
+  TextEditingController dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
-  // Controllers dos campos de descrição e Informações adicionais
+  // Controllers dos campos de descrição e Informações adicionais ------------------------//
   TextEditingController? descriptionTextController;
   TextEditingController? addInformationTextController;
 
-  // Guarda e recupera o Id da despesa
+  // Variável que guarda valor da despesa que está em edição para atualizar o saldo da conta //
+  double _expenseValue = 0.0;
+  double get expenseValue => this._expenseValue;
+  set expenseValue(double value) => this._expenseValue = value;
+
+  // Guarda e recupera o Id da despesa ---------------------------------------------------//
   String _expenseId = '';
   String get expenseId => this._expenseId;
   set expenseId(String value) => this._expenseId = value;
 
-  // Variável informativa que mostra dado a ser digitado no TextFormField
+  // Variável informativa que mostra dado a ser digitado no TextFormField ----------------//
   RxString _descriptionValue = 'Descrição'.obs;
   String get descriptionValue => this._descriptionValue.value;
   set descriptionValue(String value) => this._descriptionValue.value = value;
 
-  /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
-  de seleção da categoria de despesa -----------------------------------------------*/
+  // Carrega o registro que mantém saldo da conta do usuário
+  Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
+  List<AccountModel> get accountList => _accountList.value;
+
+  /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField de 
+  seleção da categoria de despesa --------------------------------------------------------*/
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
   List<CategoryModel> get categories => _categoriesList.value;
   String firstElementDrop = 'Selecione uma categoria...';
@@ -47,78 +57,109 @@ class ExpenseUpdateController extends GetxController {
   String get selectedCategory => this._selectedCategory.value;
   set selectedCategory(String select) => _selectedCategory.value = select;
 
-  // Itens constantes no DropDownFormField de qualidade da despesa
-  final List expenseQualityList = [
-    'Essencial',
-    'Não essencial, mas importante',
-    'Não essencial'
-  ];
+  // Itens constantes no DropDownFormField de qualidade da despesa -----------------------//
+  final List expenseQualityList = ['Essencial', 'Não essencial, mas importante', 'Não essencial'];
   RxString _selectedExpenseQuality = 'Essencial'.obs;
   String get selectedExpenseQuality => this._selectedExpenseQuality.value;
-  set selectedExpenseQuality(String value) =>
-      this._selectedExpenseQuality.value = value;
+  set selectedExpenseQuality(String value) => this._selectedExpenseQuality.value = value;
 
-  // Variável usada para definição se despesa foi paga ou não
+  // Variável que recebe informação se receita em edição está paga ou não ----------------//
   RxBool _pay = false.obs;
   bool get pay => this._pay.value;
   set pay(bool value) => this._pay.value = value;
 
-  // Variável que guarda a descrição da despesa para exibição na snackbar
+  // Variável usada para definição se despesa foi paga ou não ----------------------------//
+  RxBool _updatePay = false.obs;
+  bool get updatePay => this._updatePay.value;
+  set updatePay(bool value) => this._updatePay.value = value;
+
+  // Variável que guarda a descrição da despesa para exibição na snackbar ----------------//
   String _expenseDescription = '';
   String get expenseDescription => this._expenseDescription;
   set expenseDescription(String value) => this._expenseDescription = value;
 
-  // Data da despesa a ser setada quando da atualização ou cadastro de nova despesa
+  // Data da despesa a ser setada quando da atualização ou cadastro de nova despesa ------//
   late DateTime _date = DateTime.now();
   DateTime get date => this._date;
   set date(DateTime value) => this._date = value;
 
   @override
   void onInit() {
-    _categoriesList.bindStream(
-      _categoriesRepository.getAllCategories(userUid: user!.id),
-    );
-    expenseValueTextFormFieldController = moneyValueController;
+    _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
+    _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    expenseValueTextFormController = moneyValueController;
     descriptionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
     super.onInit();
   }
 
   // Pegar data selecionada no Date Picker e setar textformfield
-  selectDate(
-      {required BuildContext context,
-      required TextEditingController textFormFieldController}) async {
+  selectDate({required BuildContext context, required TextEditingController textFormFieldController}) async {
     date = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime(2050),
         builder: (BuildContext context, Widget? child) {
-          return Theme(
-              data: ThemeData.from(
-                  colorScheme:
-                      ColorScheme.light(primary: AppColors.expenseColor)),
-              child: child!);
+          return Theme(data: ThemeData.from(colorScheme: ColorScheme.light(primary: AppColors.expenseColor)), child: child!);
         }) as DateTime;
     textFormFieldController
       ..text = DateFormat('dd/MM/yyyy').format(date)
-      ..selection = TextSelection.fromPosition(TextPosition(
-          offset: textFormFieldController.text.length,
-          affinity: TextAffinity.upstream));
+      ..selection = TextSelection.fromPosition(TextPosition(offset: textFormFieldController.text.length, affinity: TextAffinity.upstream));
   }
 
-  void updateExpense() {
-    if (descriptionTextController!.text != '' &&
-        selectedCategory != selectExpenseCategory().first) {
+  Future<void> updateExpense() async {
+    if (descriptionTextController!.text != '' && selectedCategory != selectExpenseCategory().first) {
       expenseDescription = descriptionTextController!.text;
+
+      /* Sequencia de if que define quando o saldo da conta deve ser atualizado dependendo se a despesa foi marcada
+        como recebida ou não ---------------------------------------------------------------------------------------*/
+      if (pay == false && updatePay == true) {
+        _accountRepository.updateAccount(
+          userUid: user!.id,
+          accBalance: _accountList.value.first.balance! - expenseValueTextFormController.numberValue,
+          accValueLT: expenseValueTextFormController.numberValue,
+          accTypeLT: 'Update Expense',
+          accDateLT: date,
+          accUid: _accountList.value.first.id!,
+        );
+      } else if (pay == true && updatePay == false) {
+        _accountRepository.updateAccount(
+          userUid: user!.id,
+          accBalance: _accountList.value.first.balance! + expenseValue,
+          accValueLT: expenseValueTextFormController.numberValue,
+          accTypeLT: 'Update Expense',
+          accDateLT: date,
+          accUid: _accountList.value.first.id!,
+        );
+      } else if (pay == true && updatePay == true) {
+        _accountRepository.updateAccount(
+          userUid: user!.id,
+          accBalance: _accountList.value.first.balance! + expenseValue - expenseValueTextFormController.numberValue,
+          accValueLT: expenseValueTextFormController.numberValue,
+          accTypeLT: 'Update Expense',
+          accDateLT: date,
+          accUid: _accountList.value.first.id!,
+        );
+      } else if (pay == false && updatePay == false) {
+        _accountRepository.updateAccount(
+          userUid: user!.id,
+          accBalance: _accountList.value.first.balance!,
+          accValueLT: expenseValueTextFormController.numberValue,
+          accTypeLT: 'Update Expense',
+          accDateLT: date,
+          accUid: _accountList.value.first.id!,
+        );
+      }
+
       _expenseRepository.updateExpense(
           userUid: user!.id,
-          expValue: expenseValueTextFormFieldController.numberValue,
+          expValue: expenseValueTextFormController.numberValue,
           expDate: date,
           expDescription: descriptionTextController!.text,
           expCategory: selectedCategory,
           expQuality: selectedExpenseQuality,
-          expPay: pay,
+          expPay: updatePay,
           expAddInformation: addInformationTextController!.text,
           expUid: expenseId)
         ..whenComplete(
@@ -132,8 +173,7 @@ class ExpenseUpdateController extends GetxController {
     }
   }
 
-  /* Função que retorna apenas as categorias do tipo despesa para preenchimento
-   do DropdownbuttonFormField -------------------------------------------------*/
+  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField --------------//
   List<String> selectExpenseCategory() {
     List<String> listCategoryExpense = [firstElementDrop];
     categories.forEach((item) {
@@ -146,10 +186,16 @@ class ExpenseUpdateController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
-    moneyValueController.updateValue(0.0);
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
-    addInformationTextController!.clear();
     selectedExpenseQuality = 'Essencial';
+    moneyValueController.updateValue(0.0);
+    addInformationTextController!.clear();
+  }
+
+  // Cancela o cadastro ou edição de uma nova receita
+  void cancel() {
+    clearEditingControllers();
+    Get.back();
   }
 }

@@ -87,10 +87,9 @@ class IncomeAddUpdatePage extends StatelessWidget {
                   hint: _incomeAddUpdateController.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () {
-                  _incomeAddUpdateController.descriptionValue = '';
-                  _incomeAddUpdateController.descriptionTextController!.text = _incomeAddUpdateController.descriptionValue;
-                },
+                onTap: () => _incomeAddUpdateController.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _incomeAddUpdateController.descriptionTextController!.text.length),
+                ),
               ),
             ),
             DividerHorizontal(),

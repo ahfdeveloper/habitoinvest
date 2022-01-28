@@ -38,7 +38,10 @@ class DrawerHome extends StatelessWidget {
               leading: Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
               title: Text('Definir metas', style: AppTextStyles.generallyTextDarkBody),
               onTap: () {
-                if (_homeController.goalsList.isEmpty) {
+                if (_homeController.goalsList.first.percentageInvestiment == 0 &&
+                    _homeController.goalsList.first.valueInvestment == 0 &&
+                    _homeController.goalsList.first.percentageNotEssentialExpenses == 0 &&
+                    _homeController.goalsList.first.valueNotEssentialExpenses == 0) {
                   Get.offAndToNamed(Routes.GOALS_WARNING, arguments: _homeController.user);
                 } else {
                   Get.offAndToNamed(Routes.GOALS, arguments: _homeController.user);

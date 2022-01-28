@@ -27,7 +27,7 @@ class GoalsListPage extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           padding: EdgeInsets.all(2.0),
-          itemCount: _goalsListController.goalsList.length,
+          itemCount: _goalsListController.goalsList.length, //////***DEFINIR QUE QUANDO O USUÁRIO SE CADASTRAR GERAR 0.0
           itemBuilder: (context, index) {
             return Column(
               children: [
