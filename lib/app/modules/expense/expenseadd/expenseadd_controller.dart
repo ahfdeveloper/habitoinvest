@@ -19,7 +19,7 @@ class ExpenseAddController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final AccountRepository _accountRepository = AccountRepository();
 
-  // Máscara para digitação do valor da despesa ----------------------------------------//
+  // Máscara para digitação do valor da despesa
   MoneyMaskedTextController expenseValueTextFormFieldController = moneyValueController;
 
   // Formato de exibição de data no campo de data da despesa
@@ -149,7 +149,7 @@ class ExpenseAddController extends GetxController {
             pay = pg;
             date = data;
           }
-          // Se despensa marcada como paga atualiza saldo da conta
+          // Se despesa marcada como paga atualiza saldo da conta
           if (pay == true) {
             _accountRepository.updateAccount(
               userUid: user!.id,

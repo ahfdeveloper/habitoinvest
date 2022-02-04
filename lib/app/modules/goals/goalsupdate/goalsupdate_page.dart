@@ -89,28 +89,61 @@ class GoalsUpdatePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(dialogPadding),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: TextFormField(
-                            validator: (value) => validatorValue(value),
-                            controller: _goalsUpdateController.controller,
-                            showCursor: false,
-                            autofocus: true,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            decoration: textFieldValueGoal(),
-                            style: AppTextStyles.valueGoals,
-                            inputFormatters: [LengthLimitingTextInputFormatter(_goalsUpdateController.maxLength)],
+              Visibility(
+                visible: _goalsUpdateController.pVisible,
+                child: Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(dialogPadding),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(flex: 2, child: Container()),
+                          Expanded(
+                            child: TextFormField(
+                              validator: (value) => validator(value),
+                              controller: _goalsUpdateController.controller,
+                              autofocus: true,
+                              showCursor: false,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(border: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.grey300))),
+                              style: AppTextStyles.valueGoals,
+                              inputFormatters: [LengthLimitingTextInputFormatter(_goalsUpdateController.maxLength)],
+                            ),
                           ),
-                        ),
-                      ],
+                          Expanded(flex: 2, child: Text(' %', style: AppTextStyles.valueGoals)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: _goalsUpdateController.fVisible,
+                child: Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(dialogPadding),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextFormField(
+                              validator: (value) => validatorValue(value),
+                              controller: _goalsUpdateController.controller,
+                              autofocus: true,
+                              showCursor: false,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              decoration: textFieldValueGoal(),
+                              style: AppTextStyles.valueGoals,
+                              inputFormatters: [LengthLimitingTextInputFormatter(_goalsUpdateController.maxLength)],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

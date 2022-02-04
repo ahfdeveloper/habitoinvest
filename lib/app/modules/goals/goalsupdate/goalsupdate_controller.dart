@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
@@ -13,13 +11,13 @@ class GoalsUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
   final GoalsRepository _goalsRepository = GoalsRepository();
   MoneyMaskedTextController goalFixedValueController = moneyValueController;
-  MoneyMaskedTextController goalPercentageValueController = porcentageValueController;
+  TextEditingController goalPercentageValueController = MaskedTextController(mask: '00');
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   // Recebe a instância do controller de acordo com o formato da meta selecionada
   var controller;
 
-  late int _maxLength;
+  int _maxLength = 0;
   int get maxLength => this._maxLength;
   set maxLength(int value) => this._maxLength = value;
 
@@ -45,6 +43,14 @@ class GoalsUpdateController extends GetxController {
   get buttonBackgroundColorFixedValue => this._buttonBackgroundColorFixedValue.value;
   set buttonBackgroundColorFixedValue(value) => this._buttonBackgroundColorFixedValue.value = value;
 
+  bool _pVisible = false;
+  get pVisible => this._pVisible;
+  set pVisible(value) => this._pVisible = value;
+
+  bool _fVisible = false;
+  get fVisible => this._fVisible;
+  set fVisible(value) => this._fVisible = value;
+
   // Guarda a meta definida em porcentagem para exibição na tela
   RxString _pvalue = ''.obs;
   get pvalue => this._pvalue.value;
@@ -55,12 +61,11 @@ class GoalsUpdateController extends GetxController {
   get fvalue => this._fvalue.value;
   set fvalue(value) => this._fvalue.value = value;
 
-//Guarda e recupera o Id da meta
+  //Guarda e recupera o Id da meta
   String _goalId = '';
   String get goalId => this._goalId;
   set goalId(String value) => this._goalId = value;
 
-  //--
   // Recebe/altera data do cadastro/edição das metas
   DateTime? _dateUpdate;
   get dateUpdate => this._dateUpdate;
@@ -73,11 +78,13 @@ class GoalsUpdateController extends GetxController {
   //
   // Função chamada quando selecionado o botão para definir valor em porcentagem de meta
   void percentageButtonSelect() async {
+    pVisible = true;
+    fVisible = false;
     buttonColorPercentage = AppColors.white;
     buttonBackgroundColorPercentage = AppColors.themeColor;
     buttonColorFixedValue = AppColors.grey400;
     buttonBackgroundColorFixedValue = AppColors.transparent;
-    maxLength = 4;
+    maxLength = 2;
     controller = null;
     controller = goalPercentageValueController;
     controller.text = pvalue;
@@ -86,6 +93,8 @@ class GoalsUpdateController extends GetxController {
 
   // Função chamada quando selecionado o botão para definir valor fixo de meta
   void fixedValueButtonSelect() async {
+    pVisible = false;
+    fVisible = true;
     buttonColorFixedValue = AppColors.white;
     buttonBackgroundColorFixedValue = AppColors.themeColor;
     buttonColorPercentage = AppColors.grey400;
@@ -107,7 +116,7 @@ class GoalsUpdateController extends GetxController {
         _goalsRepository.updateInvestiment(
           userUid: user!.id,
           gDate: DateTime.now(),
-          gPercentageInvestment: 0,
+          gPercentageInvestment: int.parse(controller.text),
           gValueInvestment: 0,
           gUid: goalId,
         )..whenComplete(
@@ -139,7 +148,7 @@ class GoalsUpdateController extends GetxController {
         _goalsRepository.updateNotEssentialExpense(
           userUid: user!.id,
           gDate: DateTime.now(),
-          gPercentageNotEssentialExpenses: controller.numbervalue,
+          gPercentageNotEssentialExpenses: int.parse(controller.text),
           gValueNotEssentialExpenses: 0,
           gUid: goalId,
         )..whenComplete(
@@ -171,7 +180,7 @@ class GoalsUpdateController extends GetxController {
 
   // Cancela a atualização das metas
   void cancel() {
-    controller.updateValue(0.0);
+    //controller.updateValue(0.0);
     Get.back();
   }
 }

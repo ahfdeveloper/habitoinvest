@@ -19,28 +19,6 @@ class GoalsProvider {
     );
   }
 
-  // Cadastra uma nova meta
-  /*  Future<void> addGoal({
-    required String userUid,
-    required DateTime gDate,
-    required int gPercInvest,
-    required int gPercNotEssExp,
-    required double gValueInvest,
-    required int gValueNotEssExp,
-  }) async {
-    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc();
-
-    Map<String, dynamic> data = <String, dynamic>{
-      'gDate': gDate,
-      'gPercentageInvestment': gPercInvest,
-      'gPercentageNotEssentialExpenses': gPercNotEssExp,
-      'gValueInvestment': gValueInvest,
-      'gValueNotEssentialExpenses': gValueNotEssExp,
-    };
-
-    await documentReference.set(data).catchError((e) => print(e));
-  } */
-
   // Quando usuário não possui metas cadastradas adiciona valor default zero para que o mesmo atualize
   Future<void> addGoal({
     required String userUid,

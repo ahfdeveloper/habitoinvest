@@ -7,9 +7,6 @@ class GoalsListController extends GetxController {
   final UserModel? user = Get.arguments;
   final GoalsRepository _goalsRepository = GoalsRepository();
 
-  bool verifica1 = true;
-  bool verifica2 = false;
-
   String _goalsId = '';
   String get goalsId => this._goalsId;
   set goalsId(String value) => this._goalsId = value;
@@ -42,17 +39,6 @@ class GoalsListController extends GetxController {
   @override
   void onInit() {
     _goalsList.bindStream(_goalsRepository.getAllGoals(userUid: user!.id));
-    verificaLista();
     super.onInit();
-  }
-
-  verificaLista() {
-    if (goalsList.isEmpty) {
-      verifica1 = true;
-      verifica2 = false;
-    } else {
-      verifica1 = false;
-      verifica2 = true;
-    }
   }
 }

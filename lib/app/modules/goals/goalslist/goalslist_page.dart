@@ -27,7 +27,7 @@ class GoalsListPage extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           padding: EdgeInsets.all(2.0),
-          itemCount: _goalsListController.goalsList.length, //////***DEFINIR QUE QUANDO O USUÁRIO SE CADASTRAR GERAR 0.0
+          itemCount: _goalsListController.goalsList.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -36,21 +36,21 @@ class GoalsListPage extends StatelessWidget {
                   child: Column(
                     children: [
                       CardWidget(
-                        goalName: 'Investimentos',
-                        goalValue: _goalsListController.goalsList.first.percentageInvestiment != 0
-                            ? ('${_goalsListController.goalsList.first.percentageInvestiment}\%')
-                            : 'R\$ ${_goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2)}',
-                        goalUniverse: 'do total das receitas',
-                        onTap: () => loadDataCardInvestiment(),
-                      ),
-                      SizedBox(height: SPACEFORMS),
-                      CardWidget(
                         goalName: 'Gastos não essenciais',
                         goalValue: _goalsListController.goalsList.first.percentageNotEssentialExpenses != 0
                             ? '${_goalsListController.goalsList.first.percentageNotEssentialExpenses}%'
                             : 'R\$ ${_goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}',
-                        goalUniverse: 'por período',
+                        goalUniverse: _goalsListController.goalsList.first.percentageNotEssentialExpenses != 0 ? 'do total das receitas' : 'por período',
                         onTap: () => loadDataCardNotEssentialExpense(),
+                      ),
+                      SizedBox(height: SPACEFORMS),
+                      CardWidget(
+                        goalName: 'Investimentos',
+                        goalValue: _goalsListController.goalsList.first.percentageInvestiment != 0
+                            ? ('${_goalsListController.goalsList.first.percentageInvestiment}\%')
+                            : 'R\$ ${_goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2)}',
+                        goalUniverse: _goalsListController.goalsList.first.percentageInvestiment != 0 ? 'do total das receitas' : 'por período',
+                        onTap: () => loadDataCardInvestiment(),
                       ),
                       SizedBox(height: SPACEFORMS),
                       Align(
@@ -69,9 +69,8 @@ class GoalsListPage extends StatelessWidget {
 
   // Carrefa dados da meta investimento para a próxima tela
   loadDataCardInvestiment() {
-    _goalsAddUpdateController.pvalue = _goalsListController.goalsList.first.percentageInvestiment.toString();
-    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2);
     _goalsAddUpdateController.goalId = _goalsListController.goalsList.first.id!;
+    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2);
     if (_goalsListController.goalsList.first.valueInvestment != 0) {
       _goalsAddUpdateController.fixedValueButtonSelect();
     } else {
@@ -83,9 +82,8 @@ class GoalsListPage extends StatelessWidget {
 
   // Carrefa dados do meta gastos não essenciais para a próxima tela
   loadDataCardNotEssentialExpense() {
-    _goalsAddUpdateController.pvalue = _goalsListController.goalsList.first.percentageNotEssentialExpenses.toString();
-    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2);
     _goalsAddUpdateController.goalId = _goalsListController.goalsList.first.id!;
+    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2);
     if (_goalsListController.goalsList.first.valueNotEssentialExpenses != 0) {
       _goalsAddUpdateController.fixedValueButtonSelect();
     } else {

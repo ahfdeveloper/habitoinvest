@@ -9,6 +9,11 @@ class ExpenseRepository {
     return _expenseProvider.getAllExpense(userUid: userUid);
   }
 
+  //Retorna todos os gastos não essenciais pagos no período atual
+  Stream<List<ExpenseModel>> getNotEssencExpCurrent({required String userUid}) {
+    return _expenseProvider.getNotEssencExpCurrent(userUid: userUid);
+  }
+
   // Chama função do provider que cadastra uma nova despesa
   Future<void> addExpense(
       {required String userUid,
@@ -56,11 +61,7 @@ class ExpenseRepository {
   }
 
   // Chama a dunção do provider que apaga uma despesa
-  Future deleteExpense(
-      {required String userUid,
-      required expUid,
-      required expDescription}) async {
-    return _expenseProvider.deleteExpense(
-        userUid: userUid, expUid: expUid, expDescription: expDescription);
+  Future deleteExpense({required String userUid, required expUid, required expDescription}) async {
+    return _expenseProvider.deleteExpense(userUid: userUid, expUid: expUid, expDescription: expDescription);
   }
 }
