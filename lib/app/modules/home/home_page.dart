@@ -61,22 +61,29 @@ class HomePage extends StatelessWidget {
                       children: [
                         SizedBox(height: 20.0),
                         ChartCard(
-                          title: 'Gastos não essenciais',
-                          effective: 'Gastos: ',
-                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == [] ? CircularProgressIndicator() : loadGoalExpenses(),
-                          effectiveValue: _homeController.notEssExpCurrent.isEmpty || _homeController.notEssExpCurrent == []
+                          title: 'Despesas não essenciais',
+                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
                               ? CircularProgressIndicator()
-                              : _homeController.loadNotEssencialExpenses(),
+                              : _homeController.loadGoalExpenses(),
+                          effectiveValue: _homeController.notEssExpCurrent.isEmpty || _homeController.notEssExpCurrent == []
+                              ? Text('Despesas: R\$0.00')
+                              : _homeController.loadNotEssencialExpensesCurrent(),
                           colorChart: AppColors.expenseColor,
+                          percentGoal: _homeController.goalNotEssentialExpenses == 0
+                              ? 0.0
+                              : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
                         ),
                         SizedBox(height: 10.0),
                         ChartCard(
-                          title: 'Investimentos',
-                          effective: 'Investido: ',
-                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == [] ? CircularProgressIndicator() : loadGoalInvestiment(),
-                          effectiveValue: CircularProgressIndicator(),
-                          colorChart: AppColors.investcolor,
-                        ),
+                            title: 'Investimentos',
+                            goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
+                                ? CircularProgressIndicator()
+                                : _homeController.loadGoalInvestiment(),
+                            effectiveValue: _homeController.investimentListCurrent.isEmpty || _homeController.investimentListCurrent == []
+                                ? Text('Investido: R\$0.00')
+                                : _homeController.loadInvestmensCurrent(),
+                            colorChart: AppColors.investcolor,
+                            percentGoal: _homeController.goalInvestiment == 0 ? 0.0 : _homeController.totalInvestments / _homeController.goalInvestiment),
                       ],
                     ),
                   )),
@@ -177,23 +184,5 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // Retorna a meta de Gastos não essenciais
-  loadGoalExpenses() {
-    if (_homeController.goalsList.first.valueNotEssentialExpenses != 0.0) {
-      return Text('Meta: R\$${_homeController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}');
-    } else {
-      return Text('Meta: ${_homeController.goalsList.first.percentageNotEssentialExpenses.toString()}% das receitas');
-    }
-  }
-
-  // Retorna a meta de Investimentos
-  loadGoalInvestiment() {
-    if (_homeController.goalsList.first.valueInvestment != 0.0) {
-      return Text('Meta: R\$${_homeController.goalsList.first.valueInvestment!.toStringAsFixed(2)}');
-    } else {
-      return Text('Meta: ${_homeController.goalsList.first.percentageInvestiment.toString()}% das receitas');
-    }
   }
 }

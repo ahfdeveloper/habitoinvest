@@ -45,6 +45,7 @@ class InvestmentList extends StatelessWidget {
                     _investmentAddUpdateController.updateEffective = _investmentListController.investmentList[index].madeEffective!;
                     _investmentAddUpdateController.dateTextController =
                         TextEditingController(text: DateFormat('dd/MM/yyyy').format(_investmentListController.investmentList[index].date));
+                    _investmentAddUpdateController.newSelectedDate = _investmentListController.investmentList[index].date;
                     _investmentAddUpdateController.descriptionTextController?.text = _investmentListController.investmentList[index].description!;
                     _investmentAddUpdateController.addInformationTextController?.text = _investmentListController.investmentList[index].addInformation!;
                     Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _investmentListController.user);

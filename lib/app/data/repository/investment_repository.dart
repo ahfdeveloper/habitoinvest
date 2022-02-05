@@ -9,6 +9,10 @@ class InvestmentRepository {
     return _investmentProvider.getAllInvestment(userUid: userUid);
   }
 
+  Stream<List<InvestmentModel>> getInvestmentCurrent({required String userUid, required int dayInitial}) {
+    return _investmentProvider.getInvestmentCurrent(userUid: userUid, dayInitial: dayInitial);
+  }
+
   // Cadastra um novo investimento
   Future<void> addInvestment(
       {required String userUid,
@@ -48,10 +52,7 @@ class InvestmentRepository {
   }
 
   // Deleta um investimento
-  Future deleteInvestment(
-      {required String userUid,
-      required invUid,
-      required invDescription}) async {
+  Future deleteInvestment({required String userUid, required invUid, required invDescription}) async {
     return _investmentProvider.deleteInvestment(
       userUid: userUid,
       invUid: invUid,

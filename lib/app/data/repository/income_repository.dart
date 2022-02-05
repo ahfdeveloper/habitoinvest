@@ -4,12 +4,14 @@ import 'package:habito_invest_app/app/data/provider/income_provider.dart';
 class IncomeRepository {
   final IncomeProvider _incomeProvider = IncomeProvider();
 
-  // Lista todas as receitas
   Stream<List<IncomeModel>> getAllIncome({required String userUid}) {
     return _incomeProvider.getAllIncome(userUid: userUid);
   }
 
-  // Cadastra uma nova receita
+  Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial}) {
+    return _incomeProvider.getIncomeCurrent(userUid: userUid, dayInitial: dayInitial);
+  }
+
   Future<void> addIncome(
       {required String userUid,
       required double incValue,
@@ -28,7 +30,6 @@ class IncomeRepository {
         incAddInformation: incAddInformation);
   }
 
-  // Atualiza uma receita editada
   Future updateIncome(
       {required String userUid,
       required double incValue,

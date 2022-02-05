@@ -79,9 +79,9 @@ class ExpenseUpdateController extends GetxController {
   set expenseDescription(String value) => this._expenseDescription = value;
 
   // Data da despesa a ser setada quando da atualização ou cadastro de nova despesa ------//
-  late DateTime _date = DateTime.now();
-  DateTime get date => this._date;
-  set date(DateTime value) => this._date = value;
+  late DateTime _newSelectedDate = DateTime.now();
+  DateTime get newSelectedDate => this._newSelectedDate;
+  set newSelectedDate(DateTime value) => this._newSelectedDate = value;
 
   @override
   void onInit() {
@@ -95,7 +95,7 @@ class ExpenseUpdateController extends GetxController {
 
   // Pegar data selecionada no Date Picker e setar textformfield
   selectDate({required BuildContext context, required TextEditingController textFormFieldController}) async {
-    date = await showDatePicker(
+    newSelectedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
@@ -104,7 +104,7 @@ class ExpenseUpdateController extends GetxController {
           return Theme(data: ThemeData.from(colorScheme: ColorScheme.light(primary: AppColors.expenseColor)), child: child!);
         }) as DateTime;
     textFormFieldController
-      ..text = DateFormat('dd/MM/yyyy').format(date)
+      ..text = DateFormat('dd/MM/yyyy').format(newSelectedDate)
       ..selection = TextSelection.fromPosition(TextPosition(offset: textFormFieldController.text.length, affinity: TextAffinity.upstream));
   }
 
@@ -120,7 +120,7 @@ class ExpenseUpdateController extends GetxController {
           accBalance: _accountList.value.first.balance! - expenseValueTextFormController.numberValue,
           accValueLT: expenseValueTextFormController.numberValue,
           accTypeLT: 'Update Expense',
-          accDateLT: date,
+          accDateLT: newSelectedDate,
           accUid: _accountList.value.first.id!,
         );
       } else if (pay == true && updatePay == false) {
@@ -129,7 +129,7 @@ class ExpenseUpdateController extends GetxController {
           accBalance: _accountList.value.first.balance! + expenseValue,
           accValueLT: expenseValueTextFormController.numberValue,
           accTypeLT: 'Update Expense',
-          accDateLT: date,
+          accDateLT: newSelectedDate,
           accUid: _accountList.value.first.id!,
         );
       } else if (pay == true && updatePay == true) {
@@ -138,7 +138,7 @@ class ExpenseUpdateController extends GetxController {
           accBalance: _accountList.value.first.balance! + expenseValue - expenseValueTextFormController.numberValue,
           accValueLT: expenseValueTextFormController.numberValue,
           accTypeLT: 'Update Expense',
-          accDateLT: date,
+          accDateLT: newSelectedDate,
           accUid: _accountList.value.first.id!,
         );
       } else if (pay == false && updatePay == false) {
@@ -147,7 +147,7 @@ class ExpenseUpdateController extends GetxController {
           accBalance: _accountList.value.first.balance!,
           accValueLT: expenseValueTextFormController.numberValue,
           accTypeLT: 'Update Expense',
-          accDateLT: date,
+          accDateLT: newSelectedDate,
           accUid: _accountList.value.first.id!,
         );
       }
@@ -155,7 +155,7 @@ class ExpenseUpdateController extends GetxController {
       _expenseRepository.updateExpense(
           userUid: user!.id,
           expValue: expenseValueTextFormController.numberValue,
-          expDate: date,
+          expDate: newSelectedDate,
           expDescription: descriptionTextController!.text,
           expCategory: selectedCategory,
           expQuality: selectedExpenseQuality,

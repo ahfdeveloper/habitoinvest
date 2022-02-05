@@ -64,7 +64,7 @@ class AppTextStyles {
     fontSize: 13.0,
   );
 
-  // Estilo do testo na página de boas vindas
+  // Estilo do texto na página de boas vindas
   static final TextStyle titleHome = GoogleFonts.lexendDeca(
     fontSize: 32,
     fontWeight: FontWeight.w600,
@@ -85,12 +85,14 @@ class AppTextStyles {
     color: AppColors.white,
   );
 
+  // Estilo do texto nos formulários
   static final input = GoogleFonts.inter(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     color: AppColors.input,
   );
 
+  // Estilo usado na página Welcome (Novo por aqui)
   static final textBlack = GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w400,
@@ -123,5 +125,11 @@ class AppTextStyles {
     fontSize: 55.0,
     fontWeight: FontWeight.bold,
     color: AppColors.themeColor,
+  );
+
+  static final parametersText = GoogleFonts.notoSans(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w700,
+    color: AppColors.bodyTextPagesColor,
   );
 }

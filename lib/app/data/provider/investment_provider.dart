@@ -1,18 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/investment_model.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 
-final CollectionReference _firebaseFirestore =
-    FirebaseFirestore.instance.collection('users');
+final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
 class InvestmentProvider {
   //Retorna todos os investimentos cadastrados
   Stream<List<InvestmentModel>> getAllInvestment({required String userUid}) {
-    return _firebaseFirestore
-        .doc(userUid)
-        .collection('investment')
-        .orderBy('invDate')
-        .snapshots()
-        .map(
+    return _firebaseFirestore.doc(userUid).collection('investment').orderBy('invDate').snapshots().map(
       (query) {
         List<InvestmentModel> retInvestment = [];
         query.docs.forEach(
@@ -25,6 +20,28 @@ class InvestmentProvider {
     );
   }
 
+  //Retorna todas os investimentos feitos no período atual
+  Stream<List<InvestmentModel>> getInvestmentCurrent({required String userUid, required int dayInitial}) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('investment')
+        .where('invMadeEffective', isEqualTo: true)
+        .orderBy('invDate')
+        .where('invDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
+        .snapshots()
+        .map(
+      (query) {
+        List<InvestmentModel> retIncome = [];
+        query.docs.forEach(
+          (element) {
+            retIncome.add(InvestmentModel.fromDocument(element));
+          },
+        );
+        return retIncome;
+      },
+    );
+  }
+
   // Cadastra um novo investimento
   Future<void> addInvestment(
       {required String userUid,
@@ -33,8 +50,7 @@ class InvestmentProvider {
       required DateTime invDate,
       required String invDescription,
       required String invAddInformation}) async {
-    DocumentReference documentReference =
-        _firebaseFirestore.doc(userUid).collection('investment').doc();
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('investment').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
       'invValue': invValue,
@@ -55,8 +71,7 @@ class InvestmentProvider {
       required String invDescription,
       required String invAddInformation,
       required String invUid}) async {
-    DocumentReference documentReference =
-        _firebaseFirestore.doc(userUid).collection('investment').doc(invUid);
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('investment').doc(invUid);
 
     Map<String, dynamic> data = <String, dynamic>{
       'invValue': invValue,
@@ -69,12 +84,8 @@ class InvestmentProvider {
   }
 
   // Deleta um investimento
-  Future deleteInvestment(
-      {required String userUid,
-      required invUid,
-      required invDescription}) async {
-    DocumentReference documentReference =
-        _firebaseFirestore.doc(userUid).collection('investment').doc(invUid);
+  Future deleteInvestment({required String userUid, required invUid, required invDescription}) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('investment').doc(invUid);
     await documentReference.delete().catchError((e) => print(e));
   }
 }

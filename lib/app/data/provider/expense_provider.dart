@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
@@ -19,14 +20,14 @@ class ExpenseProvider {
   }
 
   //Retorna todos os gastos não essenciais pagos no período atual
-  Stream<List<ExpenseModel>> getNotEssencExpCurrent({required String userUid}) {
+  Stream<List<ExpenseModel>> getNotEssencExpCurrent({required String userUid, required int dayInitial}) {
     return _firebaseFirestore
         .doc(userUid)
         .collection('expense')
         .where('expQuality', isEqualTo: 'Não essencial')
         .where('expPay', isEqualTo: true)
         .orderBy('expDate')
-        .where('expDate', isGreaterThanOrEqualTo: getInitialDateQuery())
+        .where('expDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
         .snapshots()
         .map(
       (query) {
@@ -39,41 +40,6 @@ class ExpenseProvider {
         return retExpense;
       },
     );
-  }
-
-  // //Retorna todos os gastos pagos no período atual
-  // Stream<List<ExpenseModel>> getExpenseCurrent({required String userUid}) {
-  //   return _firebaseFirestore
-  //       .doc(userUid)
-  //       .collection('expense')
-  //       .where('expPay', isEqualTo: true)
-  //       .orderBy('expDate')
-  //       .where('expDate', isGreaterThanOrEqualTo: getInitialDateQuery())
-  //       .snapshots()
-  //       .map(
-  //     (query) {
-  //       List<ExpenseModel> retExpense = [];
-  //       query.docs.forEach(
-  //         (element) {
-  //           retExpense.add(ExpenseModel.fromDocument(element));
-  //         },
-  //       );
-  //       return retExpense;
-  //     },
-  //   );
-  // }
-
-  getInitialDateQuery() {
-    //DateTime date = DateTime.now();
-    int day = DateTime.now().day;
-    int month = DateTime.now().month;
-    int year = DateTime.now().year;
-
-    if (day >= 20) {
-      return DateTime(20, month, year, 00, 00, 00);
-    } else {
-      return DateTime(20, month - 1, year, year, 00, 00, 00);
-    }
   }
 
   // Cadastra uma nova despesa

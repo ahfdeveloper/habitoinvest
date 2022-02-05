@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
@@ -7,6 +8,28 @@ class IncomeProvider {
   //Retorna todas as receitas cadastradas
   Stream<List<IncomeModel>> getAllIncome({required String userUid}) {
     return _firebaseFirestore.doc(userUid).collection('income').orderBy('incDate').snapshots().map(
+      (query) {
+        List<IncomeModel> retIncome = [];
+        query.docs.forEach(
+          (element) {
+            retIncome.add(IncomeModel.fromDocument(element));
+          },
+        );
+        return retIncome;
+      },
+    );
+  }
+
+  //Retorna todas as receitas recebidas no período atual
+  Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial}) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('income')
+        .where('incReceived', isEqualTo: true)
+        .orderBy('incDate')
+        .where('incDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
+        .snapshots()
+        .map(
       (query) {
         List<IncomeModel> retIncome = [];
         query.docs.forEach(

@@ -3,16 +3,16 @@ import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_st
 import 'package:habito_invest_app/app/modules/home/components/chart.dart';
 
 class ChartCard extends StatelessWidget {
+  final double percentGoal;
   final String title;
   final Widget goalValue;
-  final String effective;
   final Widget effectiveValue;
   final Color colorChart;
 
   ChartCard({
     Key? key,
+    required this.percentGoal,
     required this.title,
-    required this.effective,
     required this.goalValue,
     required this.effectiveValue,
     required this.colorChart,
@@ -28,7 +28,7 @@ class ChartCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: ChartHome(colorChart: colorChart, percentageValue: 0.55),
+              child: ChartHome(colorChart: colorChart, percentageValue: percentGoal),
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),

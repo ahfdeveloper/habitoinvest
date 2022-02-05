@@ -40,9 +40,9 @@ class IncomeList extends StatelessWidget {
                     _incomeAddUpdateController.incomeValueTextFormController.text = _incomeListController.incomeList[index].value!.toStringAsFixed(2);
                     _incomeAddUpdateController.received = _incomeListController.incomeList[index].received!;
                     _incomeAddUpdateController.updateReceived = _incomeListController.incomeList[index].received!;
-                    _incomeAddUpdateController.dateTextController = TextEditingController(
-                      text: DateFormat('dd/MM/yyyy').format(_incomeListController.incomeList[index].date),
-                    );
+                    _incomeAddUpdateController.dateTextController =
+                        TextEditingController(text: DateFormat('dd/MM/yyyy').format(_incomeListController.incomeList[index].date));
+                    _incomeAddUpdateController.newSelectedDate = _incomeListController.incomeList[index].date;
                     _incomeAddUpdateController.descriptionTextController?.text = _incomeListController.incomeList[index].description!;
                     _incomeAddUpdateController.selectedCategory = _incomeListController.incomeList[index].category!;
                     _incomeAddUpdateController.addInformationTextController?.text = _incomeListController.incomeList[index].addInformation!;

@@ -40,44 +40,12 @@ class ParametersPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10.0),
-            Text('Dia de início do período de apuração: *',
-                style: AppTextStyles.generallyTextDarkBody),
+            Text('Dia de início do período de apuração: *', style: AppTextStyles.generallyTextDarkBody),
             Row(
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Obx(() => DropdownButton<String>(
-                        isExpanded: true,
-                        value: _controller.dropdownDayType,
-                        icon: RotatedBox(
-                          quarterTurns: 1,
-                          child: Icon(Icons.chevron_right),
-                        ),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: TextStyle(
-                          color: AppColors.bodyTextPagesColor,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        underline: Container(
-                          height: 2,
-                          color: AppColors.grey800,
-                        ),
-                        onChanged: (String? newValue) =>
-                            _controller.dropdownDayType = newValue,
-                        items: <String>['Dia fixo', 'Dia útil']
-                            .map<DropdownMenuItem<String>>((value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      )),
-                ),
+                Text('Dia', style: AppTextStyles.parametersText),
                 SizedBox(width: 25.0),
                 Expanded(
-                  flex: 1,
                   child: Obx(() => DropdownButton<int>(
                         isExpanded: true,
                         value: _controller.dropdownDay,
@@ -96,27 +64,24 @@ class ParametersPage extends StatelessWidget {
                           height: 2.0,
                           color: AppColors.grey800,
                         ),
-                        onChanged: (int? newValue) =>
-                            _controller.dropdownDay = newValue,
+                        onChanged: (int? newValue) => _controller.dropdownDay = newValue,
                         items: daysMonth.map<DropdownMenuItem<int>>((value) {
                           return DropdownMenuItem<int>(
                             value: value,
-                            child: Text('$value'),
+                            child: Center(child: Text('$value')),
                           );
                         }).toList(),
                       )),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 3,
                   child: Container(),
                 )
               ],
             ),
             SizedBox(height: 5.0),
             Text(
-              '*Informe o dia do mês que deseja que se inicie o período de apuração de suas ' +
-                  'metas. Você pode informar esse período como sendo um dia fixo (por exemplo ' +
-                  'todo dia 05), ou um dia útil (por exemplo todo 7º dia útil).',
+              '*Informe o dia do mês que deseja que se inicie o período de apuração de suas ' + 'metas.',
               style: TextStyle(fontSize: 14.0),
             ),
           ],
