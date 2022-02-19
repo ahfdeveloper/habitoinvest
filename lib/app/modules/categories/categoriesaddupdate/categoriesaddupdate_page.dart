@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
@@ -140,11 +141,4 @@ class CategoriesAddUpdatePage extends StatelessWidget {
       ),
     );
   }
-}
-
-validator(value) {
-  if (value!.isEmpty) {
-    return 'Campo obrigatório';
-  }
-  return null;
 }

@@ -9,15 +9,16 @@ class SplashScreenPage extends GetView<SplashScreenController> {
   Widget build(BuildContext context) {
     controller;
     return Scaffold(
-        backgroundColor: AppColors.themeColor,
-        body: Container(
-          margin: EdgeInsets.all(80.0),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/moeda.png'),
-              fit: BoxFit.contain,
-            ),
+      backgroundColor: AppColors.themeColor,
+      body: Container(
+        margin: EdgeInsets.all(80.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/moeda.png'),
+            fit: BoxFit.contain,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

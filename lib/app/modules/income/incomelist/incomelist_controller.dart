@@ -14,6 +14,12 @@ class IncomeListController extends GetxController {
   final IncomeRepository _incomeRepository = IncomeRepository();
   final AccountRepository _accountRepository = AccountRepository();
 
+  late TextEditingController searchFormFieldController = TextEditingController();
+
+  RxBool _searchBoolean = false.obs;
+  get searchBoolean => this._searchBoolean.value;
+  set searchBoolean(value) => this._searchBoolean.value = value;
+
   String _incomeId = '';
   String get incomeId => this._incomeId;
   set incomeId(String value) => this._incomeId = value;
@@ -30,12 +36,17 @@ class IncomeListController extends GetxController {
   List<IncomeModel> get incomeList => _incomeList.value;
   set incomeList(List<IncomeModel> value) => this._incomeList.value = value;
 
+  Rx<List<IncomeModel>> _result = Rx<List<IncomeModel>>([]);
+  List<IncomeModel> get result => _result.value;
+  set result(List<IncomeModel> value) => this._result.value = value;
+
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
 
   @override
   void onInit() {
     _incomeList.bindStream(_incomeRepository.getAllIncome(userUid: user!.id));
+    _result.bindStream(_incomeRepository.getAllIncome(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     super.onInit();
   }
@@ -79,5 +90,10 @@ class IncomeListController extends GetxController {
       buttonColor: AppColors.themeColor,
       radius: 5.0,
     );
+  }
+
+  void runFilter(enteredKeyworld) {
+    enteredKeyworld = searchFormFieldController.text;
+    incomeList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();
   }
 }

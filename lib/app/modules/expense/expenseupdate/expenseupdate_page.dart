@@ -22,7 +22,7 @@ class ExpenseUpdatePage extends StatelessWidget {
         title: Text('Atualizar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => _expenseUpdateController.cancel(),
+            onPressed: () => cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
@@ -40,11 +40,29 @@ class ExpenseUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _expenseUpdateController.expenseValueTextFormController,
+              autofocus: true,
               validator: (value) => validatorExpenseValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
+              onChanged: (value) {
+                _expenseUpdateController.workedCost(value);
+              },
             ),
+            DividerHorizontal(),
+            SizedBox(height: 3.0),
+            Obx(
+              () => Row(
+                children: [
+                  Text('Horas de trabalho: '),
+                  Text(
+                    _expenseUpdateController.workedHours.toStringAsFixed(1) + ' *',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 3.0),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
@@ -175,7 +193,11 @@ class ExpenseUpdatePage extends StatelessWidget {
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),
-            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS * 2),
+            Text(
+              '*O cálculo das horas de trabalho que equivalem ao valor da despesa é calculado com base nas médias ' +
+                  'de renda mensal e horas trabalhadas por semana definidas nos parâmetros.',
+            )
           ],
         ),
       ),

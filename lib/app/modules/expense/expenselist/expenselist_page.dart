@@ -38,6 +38,7 @@ class ExpenseList extends StatelessWidget {
                   onTap: () {
                     _expenseUpdateController.expenseValue = _expenseListController.expense[index].value!;
                     _expenseUpdateController.expenseValueTextFormController.text = _expenseListController.expense[index].value!.toStringAsFixed(2);
+                    _expenseUpdateController.workedCost(_expenseListController.expense[index].value!.toStringAsFixed(2));
                     _expenseUpdateController.dateTextController =
                         TextEditingController(text: DateFormat('dd/MM/yyyy').format(_expenseListController.expense[index].date));
                     _expenseUpdateController.newSelectedDate = _expenseListController.expense[index].date;

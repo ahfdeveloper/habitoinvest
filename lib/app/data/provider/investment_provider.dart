@@ -31,13 +31,13 @@ class InvestmentProvider {
         .snapshots()
         .map(
       (query) {
-        List<InvestmentModel> retIncome = [];
+        List<InvestmentModel> retInvestment = [];
         query.docs.forEach(
           (element) {
-            retIncome.add(InvestmentModel.fromDocument(element));
+            retInvestment.add(InvestmentModel.fromDocument(element));
           },
         );
-        return retIncome;
+        return retInvestment;
       },
     );
   }
@@ -63,7 +63,7 @@ class InvestmentProvider {
   }
 
   // Atualiza um investimento cadastrado
-  Future updateInvestment(
+  Future<void> updateInvestment(
       {required String userUid,
       required double invValue,
       required bool invMadeEffective,
@@ -84,7 +84,7 @@ class InvestmentProvider {
   }
 
   // Deleta um investimento
-  Future deleteInvestment({required String userUid, required invUid, required invDescription}) async {
+  Future<void> deleteInvestment({required String userUid, required invUid, required invDescription}) async {
     DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('investment').doc(invUid);
     await documentReference.delete().catchError((e) => print(e));
   }

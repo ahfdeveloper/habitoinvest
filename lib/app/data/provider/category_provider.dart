@@ -34,7 +34,7 @@ class CategoriesProvider {
   }
 
   // Atualiza uma categoria editada
-  Future updateCategory({
+  Future<void> updateCategory({
     required String userUid,
     required String catName,
     required String catType,
@@ -49,7 +49,7 @@ class CategoriesProvider {
   }
 
   // Deleta uma categoria
-  Future deleteCategory({
+  Future<void> deleteCategory({
     required String userUid,
     required catUid,
     required catName,

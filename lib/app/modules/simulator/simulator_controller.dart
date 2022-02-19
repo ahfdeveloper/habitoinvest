@@ -10,62 +10,98 @@ class SimulatorController extends GetxController {
 
   MoneyMaskedTextController contributionValueController = moneyValueController;
   TextEditingController interestRateController = TextEditingController();
-  TextEditingController aplicationDeadlineController = TextEditingController();
-
-  RxDouble _contributionValue = 0.0.obs;
-  get contributionValue => this._contributionValue.value;
-  set contributionValue(value) => this._contributionValue.value = value;
 
   RxDouble _interestRate = 0.0.obs;
   get interestRate => this._interestRate.value;
   set interestRate(value) => this._interestRate.value = value;
 
-  RxInt _aplicationDeadline = 0.obs;
-  get aplicationDeadline => this._aplicationDeadline.value;
-  set aplicationDeadline(value) => this._aplicationDeadline.value = value;
+  // Armazena o total dos aportes de acordo com o tempo
+  double _contributionValue = 0.0;
+  get contributionValue => this._contributionValue;
+  set contributionValue(value) => this._contributionValue = value;
 
-  RxString _totalContribution = ''.obs;
-  get totalContribution => this._totalContribution.value;
-  set totalContribution(value) => this._totalContribution.value = value;
+  // Armazena total dos aportes em 5 anos
+  RxString _contributionFiveYears = ''.obs;
+  get contributionFiveYears => this._contributionFiveYears.value;
+  set contributionFiveYears(value) => this._contributionFiveYears.value = value;
 
-  RxString _totalWithProfitability = ''.obs;
-  get totalWithProfitability => this._totalWithProfitability.value;
-  set totalWithProfitability(value) => this._totalWithProfitability.value = value;
+  // Armazena o total dos aportes + rentabilidade em 5 anos
+  RxString _profitabilityFiveYears = ''.obs;
+  get profitabilityFiveYears => this._profitabilityFiveYears.value;
+  set profitabilityFiveYears(value) => this._profitabilityFiveYears.value = value;
 
-  RxString _resultSimulation1 = ''.obs;
-  get resultSimulation1 => this._resultSimulation1.value;
-  set resultSimulation1(value) => this._resultSimulation1.value = value;
+  // Armazena total dos aportes em 10 anos
+  RxString _contributionTenYears = ''.obs;
+  get contributionTenYears => this._contributionTenYears.value;
+  set contributionTenYears(value) => this._contributionTenYears.value = value;
 
-  RxString _resultSimulation2 = ''.obs;
-  get resultSimulation2 => this._resultSimulation2.value;
-  set resultSimulation2(value) => this._resultSimulation2.value = value;
+  // Armazena o total dos aportes + rentabilidade em 10 anos
+  RxString _profitabilityTenYears = ''.obs;
+  get profitabilityTenYears => this._profitabilityTenYears.value;
+  set profitabilityTenYears(value) => this._profitabilityTenYears.value = value;
+
+  // Armazena total dos aportes em 20 anos
+  RxString _contributionTwentyYears = ''.obs;
+  get contributionTwentyYears => this._contributionTwentyYears.value;
+  set contributionTwentyYears(value) => this._contributionTwentyYears.value = value;
+
+  // Armazena o total dos aportes + rentabilidade em 20 anos
+  RxString _profitabilityTwentyYears = ''.obs;
+  get profitabilityTwentyYears => this._profitabilityTwentyYears.value;
+  set profitabilityTwentyYears(value) => this._profitabilityTwentyYears.value = value;
+
+  // Armazena total dos aportes em 30 anos
+  RxString _contributionThirtyYears = ''.obs;
+  get contributionThirtyYears => this._contributionThirtyYears.value;
+  set contributionThirtyYears(value) => this._contributionThirtyYears.value = value;
+
+  // Armazena o total dos aportes + rentabilidade em 20 anos
+  RxString _profitabilityThirtyYears = ''.obs;
+  get profitabilityThirtyYears => this._profitabilityThirtyYears.value;
+  set profitabilityThirtyYears(value) => this._profitabilityThirtyYears.value = value;
 
   // Retorna o valor aportado durante certo período de tempo e o valor atualizado com a rentabilidade
   totalAplication() {
     contributionValue = contributionValueController.numberValue;
     interestRate = double.parse(interestRateController.text);
-    aplicationDeadline = int.parse(aplicationDeadlineController.text);
-
     double accumulatedValue = 0.0;
-    for (int i = 0; i < aplicationDeadline; i++) {
-      accumulatedValue = accumulatedValue + (accumulatedValue * interestRate / 100) + contributionValue;
-    }
 
-    totalContribution = formatter.format(contributionValue * aplicationDeadline);
-    totalWithProfitability = formatter.format(accumulatedValue);
-    resultSimulation1 = 'Valor total aportado:  $totalContribution';
-    resultSimulation2 = 'Aporte + rentabilidade:  $totalWithProfitability';
+    for (int i = 1; i <= 360; i++) {
+      accumulatedValue = accumulatedValue + (accumulatedValue * interestRate / 100) + contributionValue;
+      if (i == 60) {
+        contributionFiveYears = 'Aporte total em 5 anos:  ${formatter.format(contributionValue * 60)}';
+        profitabilityFiveYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+      }
+
+      if (i == 120) {
+        contributionTenYears = 'Aporte total em 10 anos:  ${formatter.format(contributionValue * 120)}';
+        profitabilityTenYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+      }
+
+      if (i == 240) {
+        contributionTwentyYears = 'Aporte total em 20 anos:  ${formatter.format(contributionValue * 240)}';
+        profitabilityTwentyYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+      }
+
+      if (i == 360) {
+        contributionThirtyYears = 'Aporte total em 30 anos:  ${formatter.format(contributionValue * 360)}';
+        profitabilityThirtyYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+      }
+    }
   }
 
   // Limpa o formulário para nova simulação
   limpaFormulario() {
     contributionValueController.text = 0.0.toString();
     interestRateController.text = '';
-    aplicationDeadlineController.text = '';
-    totalContribution = '';
-    totalWithProfitability = '';
-    resultSimulation1 = '';
-    resultSimulation2 = '';
+    contributionFiveYears = '';
+    contributionTenYears = '';
+    contributionTwentyYears = '';
+    contributionThirtyYears = '';
+    profitabilityFiveYears = '';
+    profitabilityTenYears = '';
+    profitabilityTwentyYears = '';
+    profitabilityThirtyYears = '';
     DisabledFocusNode();
   }
 }

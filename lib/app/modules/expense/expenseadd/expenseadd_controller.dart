@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
+import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
+import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +20,7 @@ class ExpenseAddController extends GetxController {
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final AccountRepository _accountRepository = AccountRepository();
+  final ParametersRepository _parametersRepository = ParametersRepository();
 
   // Máscara para digitação do valor da despesa
   MoneyMaskedTextController expenseValueTextFormFieldController = moneyValueController;
@@ -29,7 +32,7 @@ class ExpenseAddController extends GetxController {
   TextEditingController? qtPortionTextController;
   TextEditingController? addInformationTextController;
 
-  // Data de compra a ser setada quando da atualização ou cadastro de nova despesa -----//
+  // Data de compra a ser setada quando da atualização ou cadastro de nova despesa
   late DateTime _date = DateTime.now();
   DateTime get date => this._date;
   set date(DateTime value) => this._date = value;
@@ -37,6 +40,10 @@ class ExpenseAddController extends GetxController {
   // Carrega o registro que mantém saldo da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
+
+  // Carrega o registro que mantém saldo da conta do usuário
+  Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
+  List<ParametersModel> get parametersList => _parametersList.value;
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField de 
   seleção da categoria de despesa ------------------------------------------------------*/
@@ -56,13 +63,9 @@ class ExpenseAddController extends GetxController {
   // Variáveis utilizadas para escolha se despesa é parcelada ou não
   RxString _installmentsType = ''.obs;
   String get installmentsType => this._installmentsType.value;
-  set installmentsType(String value) {
-    _installmentsType.update((val) {
-      _installmentsType.value = value;
-    });
-  }
+  set installmentsType(String value) => this._installmentsType.value = value;
 
-  // Variáveis usadas para exibir informações quando o usuário escolhe se a despesa é parcelada ou não ----------//
+  // Variáveis usadas para exibir informações quando o usuário escolhe se a despesa é parcelada ou não
   bool _visibilityInstallmentsNo = false;
   bool get visibilityInstallmentsNo => this._visibilityInstallmentsNo;
   set visibilityInstallmentsNo(bool value) => this._visibilityInstallmentsNo = value;
@@ -70,7 +73,7 @@ class ExpenseAddController extends GetxController {
   bool get visibilityInstallmentsYes => this._visibilityInstallmentsYes;
   set visibilityInstallmentsYes(bool value) => this._visibilityInstallmentsYes = value;
 
-  // Variáveis usadas para definir a cor do container de acordo com escolha se despesa é parcelada ou não -------//
+  // Variáveis usadas para definir a cor do container de acordo com escolha se despesa é parcelada ou não
   Color? _containerRadioSimColor;
   Color? get containerRadioSimColor => this._containerRadioSimColor;
   set containerRadioSimColor(Color? value) => this._containerRadioSimColor = value;
@@ -78,12 +81,17 @@ class ExpenseAddController extends GetxController {
   Color? get containerRadioNaoColor => this._containerRadioNaoColor;
   set containerRadioNaoColor(Color? value) => this._containerRadioNaoColor = value;
 
-  // Variável informativa que mostra dado a serr digitado no TextFormField---------------------------------------//
+  // Armzena quantidade de horas de trabalho equivalente a despesa
+  RxDouble _workedHours = 0.0.obs;
+  double get workedHours => this._workedHours.value;
+  set workedHours(double value) => this._workedHours.value = value;
+
+  // Variável informativa que mostra dado a serr digitado no TextFormField
   RxString _descriptionValue = 'Descrição'.obs;
   String get descriptionValue => this._descriptionValue.value;
   set descriptionValue(String value) => this._descriptionValue.value = value;
 
-  // Variável usada para definição se despesa foi paga ou não ---------------------------------------------------//
+  // Variável usada para definição se despesa foi paga ou não
   RxBool _pay = false.obs;
   bool get pay => this._pay.value;
   set pay(bool value) => this._pay.value = value;
@@ -102,6 +110,7 @@ class ExpenseAddController extends GetxController {
   void onInit() {
     _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
     expenseValueTextFormFieldController = moneyValueController;
     descriptionTextController = TextEditingController();
     qtPortionTextController = TextEditingController();
@@ -109,7 +118,15 @@ class ExpenseAddController extends GetxController {
     super.onInit();
   }
 
-  // Pegar data selecionada no Date Picker e setar textformfield --------------------------------------------------//
+  workedCost(value) async {
+    value = expenseValueTextFormFieldController.numberValue;
+    if (parametersList.first.workedHours != 0) {
+      double monthHours = parametersList.first.workedHours! * 4.5;
+      workedHours = value / (parametersList.first.salary! / monthHours);
+    }
+  }
+
+  // Pegar data selecionada no Date Picker e setar textformfield
   selectDate({required BuildContext context, required TextEditingController textFormFieldController}) async {
     date = await showDatePicker(
         context: context,
@@ -129,7 +146,7 @@ class ExpenseAddController extends GetxController {
       );
   }
 
-  // Efetua o salvamento de uma nova despesa ou de uma despesa editada ---------------------------------------------//
+  // Efetua o salvamento de uma nova despesa ou de uma despesa editada
   Future<void> saveExpense() async {
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
@@ -171,10 +188,8 @@ class ExpenseAddController extends GetxController {
             expAddInformation: addInformationTextController!.text,
           );
         }
-        clearEditingControllers();
         Get.back();
       } else if (installmentsType == 'Não') {
-        // Se despensa marcada como paga atualiza saldo da conta
         if (pay == true) {
           _accountRepository.updateAccount(
             userUid: user!.id,
@@ -195,13 +210,12 @@ class ExpenseAddController extends GetxController {
           expPay: pay,
           expAddInformation: addInformationTextController!.text,
         );
-        clearEditingControllers();
         Get.back();
       }
     }
   }
 
-  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField ------------//
+  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField
   List<String> selectExpenseCategory() {
     List<String> listCategoryExpense = [firstElementDrop];
     categories.forEach((item) {
@@ -212,7 +226,7 @@ class ExpenseAddController extends GetxController {
     return listCategoryExpense;
   }
 
-  // Muda a cor do container com escolha de despesa parcelada ou não ---------------------------------------------------//
+  // Muda a cor do container com escolha de despesa parcelada ou não
   void paintContainerType() {
     if (installmentsType == 'Sim') {
       containerRadioSimColor = AppColors.grey300;
@@ -234,11 +248,6 @@ class ExpenseAddController extends GetxController {
     moneyValueController.updateValue(0.0);
     addInformationTextController!.clear();
     installmentsType = '';
-  }
-
-  // Cancela o cadastro ou edição de uma nova receita
-  void cancel() {
-    clearEditingControllers();
-    Get.back();
+    workedHours = 0.0;
   }
 }

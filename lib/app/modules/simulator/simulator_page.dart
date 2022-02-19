@@ -49,21 +49,6 @@ class SimulatorPage extends StatelessWidget {
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: SPACEFORMS),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-              controller: _simulatorController.aplicationDeadlineController,
-              decoration: InputDecoration(
-                labelText: 'Prazo em meses',
-                hintText: 'p.ex. 60',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide(color: AppColors.grey300),
-                ),
-              ),
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: 30.0),
             Container(
               child: Obx(
@@ -72,7 +57,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.resultSimulation1,
+                          _simulatorController.contributionFiveYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -80,11 +65,63 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.resultSimulation2,
+                          _simulatorController.profitabilityFiveYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
                     ),
+                    SizedBox(height: SPACEFORMS),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.contributionTenYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.profitabilityTenYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: SPACEFORMS),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.contributionTwentyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.profitabilityTwentyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: SPACEFORMS),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.contributionThirtyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          _simulatorController.profitabilityThirtyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: SPACEFORMS),
                   ],
                 ),
               ),

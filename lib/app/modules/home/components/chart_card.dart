@@ -7,6 +7,7 @@ class ChartCard extends StatelessWidget {
   final String title;
   final Widget goalValue;
   final Widget effectiveValue;
+  final Widget hoursValue;
   final Color colorChart;
 
   ChartCard({
@@ -15,6 +16,7 @@ class ChartCard extends StatelessWidget {
     required this.title,
     required this.goalValue,
     required this.effectiveValue,
+    required this.hoursValue,
     required this.colorChart,
   }) : super(key: key);
 
@@ -40,6 +42,7 @@ class ChartCard extends StatelessWidget {
                   SizedBox(height: 10.0),
                   goalValue,
                   effectiveValue,
+                  hoursValue,
                 ],
               ),
             )

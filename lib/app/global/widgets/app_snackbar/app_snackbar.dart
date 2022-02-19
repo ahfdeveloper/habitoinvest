@@ -8,6 +8,7 @@ class AppSnackbar {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(milliseconds: 1200),
       backgroundColor: Colors.black87,
       colorText: AppColors.white,
       icon: Icon(Icons.info_outline_rounded, color: AppColors.white),

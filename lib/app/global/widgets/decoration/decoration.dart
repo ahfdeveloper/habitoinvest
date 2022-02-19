@@ -20,6 +20,24 @@ InputDecoration textFormFieldForms({
   );
 }
 
+InputDecoration textFormFieldFormsWithUnderline({
+  IconData? fieldIcon,
+  String? label,
+  required String? hint,
+}) {
+  return InputDecoration(
+    contentPadding: EdgeInsets.zero,
+    border: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.grey300)),
+    icon: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(fieldIcon, color: AppColors.grey600),
+      ],
+    ),
+    hintText: hint,
+  );
+}
+
 InputDecoration textFormFieldFormsLabel({
   IconData? fieldIcon,
   required String? label,

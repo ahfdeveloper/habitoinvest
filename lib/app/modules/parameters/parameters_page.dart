@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
 
 class ParametersPage extends StatelessWidget {
-  final ParametersController _controller = ParametersController();
+  final ParametersController _parameterController = Get.find<ParametersController>();
 
   @override
   Widget build(BuildContext context) {
+    final _formkey = _parameterController.formkey;
     final Color interfaceColor = AppColors.themeColor;
-    List<int> daysMonth = [];
-
-    for (int i = 1; i <= 31; i++) {
-      daysMonth.add(i);
-    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
+        automaticallyImplyLeading: false,
         backgroundColor: interfaceColor,
         title: Text('Parâmetros do usuário'),
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () {/*Código para salvar*/},
+            onPressed: () => _parameterController.updateParameter(),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(13.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10.0),
-            Text('Dia de início do período de apuração: *', style: AppTextStyles.generallyTextDarkBody),
-            Row(
+      body: Obx(
+        () => Form(
+          key: _formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(13.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Dia', style: AppTextStyles.parametersText),
-                SizedBox(width: 25.0),
-                Expanded(
-                  child: Obx(() => DropdownButton<int>(
+                SizedBox(height: 10.0),
+                Text('Dia de início do período de apuração: *', style: AppTextStyles.generallyTextDarkBody),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today_rounded, color: AppColors.bodyTextPagesColor),
+                    SizedBox(width: 15.0),
+                    Expanded(
+                      child: DropdownButton<int>(
                         isExpanded: true,
-                        value: _controller.dropdownDay,
+                        value: _parameterController.dropdownDay,
                         icon: RotatedBox(
                           quarterTurns: 1,
                           child: Icon(Icons.chevron_right),
@@ -61,30 +63,92 @@ class ParametersPage extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                         underline: Container(
-                          height: 2.0,
+                          height: 1.0,
                           color: AppColors.grey800,
                         ),
-                        onChanged: (int? newValue) => _controller.dropdownDay = newValue,
-                        items: daysMonth.map<DropdownMenuItem<int>>((value) {
+                        onChanged: (int? newValue) => _parameterController.dropdownDay = newValue,
+                        items: _parameterController.daysMonth.map<DropdownMenuItem<int>>((value) {
                           return DropdownMenuItem<int>(
                             value: value,
                             child: Center(child: Text('$value')),
                           );
                         }).toList(),
-                      )),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Container(),
+                    )
+                  ],
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(),
-                )
+                SizedBox(height: 5.0),
+                Text(
+                  '*Informe o dia do mês que deseja que se inicie o período de apuração de suas metas.',
+                  style: TextStyle(fontSize: 14.0),
+                ),
+                SizedBox(height: 35.0),
+                Text('Renda Mensal: *', style: AppTextStyles.generallyTextDarkBody),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        controller: _parameterController.salaryTextFormController,
+                        validator: (value) => validator(value),
+                        decoration: textFormFieldFormsWithUnderline(fieldIcon: Icons.monetization_on_rounded, hint: null),
+                        style: TextStyle(
+                          color: AppColors.bodyTextPagesColor,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  '*Informe o valor médio de sua renda mensal',
+                  style: TextStyle(fontSize: 14.0),
+                ),
+                SizedBox(height: 35.0),
+                Text('Horas trabalhadas: *', style: AppTextStyles.generallyTextDarkBody),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                        controller: _parameterController.workedHoursFormController,
+                        validator: (value) => validator(value),
+                        decoration: textFormFieldFormsWithUnderline(fieldIcon: Icons.watch_later, hint: null),
+                        style: TextStyle(
+                          color: AppColors.bodyTextPagesColor,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Container(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.0),
+                Text(
+                  '*Informe a quantidade média de horas trabalhadas por semana.',
+                  style: TextStyle(fontSize: 14.0),
+                ),
               ],
             ),
-            SizedBox(height: 5.0),
-            Text(
-              '*Informe o dia do mês que deseja que se inicie o período de apuração de suas ' + 'metas.',
-              style: TextStyle(fontSize: 14.0),
-            ),
-          ],
+          ),
         ),
       ),
     );

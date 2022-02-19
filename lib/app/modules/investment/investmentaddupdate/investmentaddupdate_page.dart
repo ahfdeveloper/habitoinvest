@@ -43,6 +43,7 @@ class InvestAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _investmentAddUpdateController.investmentValueTextFormController,
+              autofocus: true,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueInvestmentOperationStyle,
               keyboardType: TextInputType.number,

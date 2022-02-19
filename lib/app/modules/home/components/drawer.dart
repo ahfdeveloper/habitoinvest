@@ -4,10 +4,12 @@ import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_st
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class DrawerHome extends StatelessWidget {
   final HomeController _homeController = Get.find<HomeController>();
+  final ParametersController _parametersController = Get.put(ParametersController());
 
   @override
   Widget build(Object context) {
@@ -63,10 +65,14 @@ class DrawerHome extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),
-            title: Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.PARAMETERS),
-          ),
+              leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),
+              title: Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
+              onTap: () {
+                _parametersController.dropdownDay = _homeController.parametersList.first.dayInitialPeriod;
+                _parametersController.salaryTextFormController.text = _homeController.parametersList.first.salary!.toStringAsFixed(2);
+                _parametersController.workedHoursFormController.text = _homeController.parametersList.first.workedHours.toString();
+                Get.offAndToNamed(Routes.PARAMETERS, arguments: _homeController.user);
+              }),
           Divider(color: Colors.grey[400]),
           ListTile(
             leading: Icon(Icons.help, color: AppColors.bodyTextPagesColor),

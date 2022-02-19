@@ -36,7 +36,7 @@ class AccountProvider {
   }
 
   //Atualiza os dados da conta
-  Future updateAccount(
+  Future<void> updateAccount(
       {required String userUid,
       required double accBalance,
       required double accValueLT,

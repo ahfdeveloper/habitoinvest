@@ -5,6 +5,7 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
 import 'package:habito_invest_app/app/data/repository/login_repository.dart';
+import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
@@ -12,6 +13,7 @@ class RegisterController extends GetxController {
   final LoginRepository _loginRepository = LoginRepository();
   final AccountRepository _accountRepository = Get.put(AccountRepository());
   final GoalsRepository _goalsRepository = Get.put(GoalsRepository());
+  final ParametersRepository _parametersRepository = Get.put(ParametersRepository());
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController passwordTextController = TextEditingController();
   final TextEditingController nameTextController = TextEditingController();
@@ -39,6 +41,9 @@ class RegisterController extends GetxController {
 
       // Cria metas zeradas para que o usuário altere depois
       _goalsRepository.addGoal(userUid: user.id);
+
+      // Cria parâmetros default para o usuário
+      _parametersRepository.addParameter(userUid: user.id);
 
       Get.dialog(
         Center(child: CircularProgressIndicator()),

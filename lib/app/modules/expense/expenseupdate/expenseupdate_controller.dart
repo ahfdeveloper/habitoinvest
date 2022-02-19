@@ -3,10 +3,12 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
+import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
+import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
@@ -18,28 +20,34 @@ class ExpenseUpdateController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final AccountRepository _accountRepository = AccountRepository();
+  final ParametersRepository _parametersRepository = ParametersRepository();
 
-  // Máscara para digitação do valor da despesa ----------------------=====---------------//
+  // Máscara para digitação do valor da despesa
   MoneyMaskedTextController expenseValueTextFormController = moneyValueController;
 
   // Formato de exibição de data no campo de data da despesa
   TextEditingController dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
-  // Controllers dos campos de descrição e Informações adicionais ------------------------//
+  // Controllers dos campos de descrição e Informações adicionais
   TextEditingController? descriptionTextController;
   TextEditingController? addInformationTextController;
 
-  // Variável que guarda valor da despesa que está em edição para atualizar o saldo da conta //
+  // Variável que guarda valor da despesa que está em edição para atualizar o saldo da conta
   double _expenseValue = 0.0;
   double get expenseValue => this._expenseValue;
   set expenseValue(double value) => this._expenseValue = value;
 
-  // Guarda e recupera o Id da despesa ---------------------------------------------------//
+  // Guarda e recupera o Id da despesa
   String _expenseId = '';
   String get expenseId => this._expenseId;
   set expenseId(String value) => this._expenseId = value;
 
-  // Variável informativa que mostra dado a ser digitado no TextFormField ----------------//
+  // Armzena quantidade de horas de trabalho equivalente a despesa
+  RxDouble _workedHours = 0.0.obs;
+  double get workedHours => this._workedHours.value;
+  set workedHours(double value) => this._workedHours.value = value;
+
+  // Variável informativa que mostra dado a ser digitado no TextFormField
   RxString _descriptionValue = 'Descrição'.obs;
   String get descriptionValue => this._descriptionValue.value;
   set descriptionValue(String value) => this._descriptionValue.value = value;
@@ -47,6 +55,10 @@ class ExpenseUpdateController extends GetxController {
   // Carrega o registro que mantém saldo da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
+
+  // Carrega o registro que mantém saldo da conta do usuário
+  Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
+  List<ParametersModel> get parametersList => _parametersList.value;
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField de 
   seleção da categoria de despesa --------------------------------------------------------*/
@@ -57,28 +69,28 @@ class ExpenseUpdateController extends GetxController {
   String get selectedCategory => this._selectedCategory.value;
   set selectedCategory(String select) => _selectedCategory.value = select;
 
-  // Itens constantes no DropDownFormField de qualidade da despesa -----------------------//
+  // Itens constantes no DropDownFormField de qualidade da despesa
   final List expenseQualityList = ['Essencial', 'Não essencial, mas importante', 'Não essencial'];
   RxString _selectedExpenseQuality = 'Essencial'.obs;
   String get selectedExpenseQuality => this._selectedExpenseQuality.value;
   set selectedExpenseQuality(String value) => this._selectedExpenseQuality.value = value;
 
-  // Variável que recebe informação se receita em edição está paga ou não ----------------//
+  // Variável que recebe informação se receita em edição está paga ou não
   RxBool _pay = false.obs;
   bool get pay => this._pay.value;
   set pay(bool value) => this._pay.value = value;
 
-  // Variável usada para definição se despesa foi paga ou não ----------------------------//
+  // Variável usada para definição se despesa foi paga ou não
   RxBool _updatePay = false.obs;
   bool get updatePay => this._updatePay.value;
   set updatePay(bool value) => this._updatePay.value = value;
 
-  // Variável que guarda a descrição da despesa para exibição na snackbar ----------------//
+  // Variável que guarda a descrição da despesa para exibição na snackbar
   String _expenseDescription = '';
   String get expenseDescription => this._expenseDescription;
   set expenseDescription(String value) => this._expenseDescription = value;
 
-  // Data da despesa a ser setada quando da atualização ou cadastro de nova despesa ------//
+  // Data da despesa a ser setada quando da atualização ou cadastro de nova despesa
   late DateTime _newSelectedDate = DateTime.now();
   DateTime get newSelectedDate => this._newSelectedDate;
   set newSelectedDate(DateTime value) => this._newSelectedDate = value;
@@ -87,10 +99,19 @@ class ExpenseUpdateController extends GetxController {
   void onInit() {
     _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
     expenseValueTextFormController = moneyValueController;
     descriptionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
     super.onInit();
+  }
+
+  workedCost(value) async {
+    value = expenseValueTextFormController.numberValue;
+    if (parametersList.first.workedHours != 0) {
+      double monthHours = parametersList.first.workedHours! * 4.5;
+      workedHours = value / (parametersList.first.salary! / monthHours);
+    }
   }
 
   // Pegar data selecionada no Date Picker e setar textformfield
@@ -168,12 +189,11 @@ class ExpenseUpdateController extends GetxController {
             message: 'Despesa atualizada com sucesso',
           ),
         );
-      clearEditingControllers();
       Get.back();
     }
   }
 
-  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField --------------//
+  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField
   List<String> selectExpenseCategory() {
     List<String> listCategoryExpense = [firstElementDrop];
     categories.forEach((item) {
@@ -182,20 +202,5 @@ class ExpenseUpdateController extends GetxController {
       }
     });
     return listCategoryExpense;
-  }
-
-  // Limpa os campos do formulário
-  void clearEditingControllers() {
-    descriptionTextController!.clear();
-    selectedCategory = firstElementDrop;
-    selectedExpenseQuality = 'Essencial';
-    moneyValueController.updateValue(0.0);
-    addInformationTextController!.clear();
-  }
-
-  // Cancela o cadastro ou edição de uma nova receita
-  void cancel() {
-    clearEditingControllers();
-    Get.back();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/modules/home/components/chart_card.dart';
@@ -55,38 +56,90 @@ class HomePage extends StatelessWidget {
           decoration: BoxDecoration(color: Colors.grey[200]),
           child: Column(
             children: [
-              Obx(() => Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20.0),
-                        ChartCard(
-                          title: 'Despesas não essenciais',
-                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
-                              ? CircularProgressIndicator()
-                              : _homeController.loadGoalExpenses(),
-                          effectiveValue: _homeController.notEssExpCurrent.isEmpty || _homeController.notEssExpCurrent == []
-                              ? Text('Despesas: R\$0.00')
-                              : _homeController.loadNotEssencialExpensesCurrent(),
-                          colorChart: AppColors.expenseColor,
-                          percentGoal: _homeController.goalNotEssentialExpenses == 0
-                              ? 0.0
-                              : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
+              Obx(
+                () => Container(
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.0),
+                      ChartCard(
+                        title: 'Despesas não essenciais',
+                        goalValue:
+                            _homeController.goalsList.isEmpty || _homeController.goalsList == [] ? CircularProgressIndicator() : _homeController.loadGoalExpenses(),
+                        effectiveValue: (_homeController.expenseList.isEmpty || _homeController.expenseList == [])
+                            ? Text('Despesas: R\$0.00')
+                            : _homeController.loadNotEssencialExpensesCurrent(),
+                        hoursValue: _homeController.parametersList.isEmpty || _homeController.parametersList == []
+                            ? Text('Horas de trabalho: ')
+                            : _homeController.loadWorkedHours(),
+                        colorChart: AppColors.expenseColor,
+                        percentGoal: _homeController.expenseList.isEmpty || _homeController.expenseList == [] || _homeController.goalNotEssentialExpenses == 0.0
+                            ? 0.0
+                            : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
+                      ),
+                      SizedBox(height: 10.0),
+                      ChartCard(
+                        title: 'Investimentos',
+                        goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
+                            ? CircularProgressIndicator()
+                            : _homeController.loadGoalInvestiment(),
+                        effectiveValue: _homeController.investimentList.isEmpty || _homeController.investimentList == []
+                            ? Text('Investido: R\$0.00')
+                            : _homeController.loadInvestmensCurrent(),
+                        hoursValue: Text(''),
+                        colorChart: AppColors.investcolor,
+                        percentGoal: _homeController.investimentList.isEmpty || _homeController.investimentList == [] || _homeController.goalInvestiment == 0.0
+                            ? 0.0
+                            : (_homeController.totalInvestments / _homeController.goalInvestiment),
+                      ),
+                      SizedBox(height: 15.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                        child: LinearProgressIndicator(
+                          value: _homeController.percentagePeriodCurrent(),
+                          color: Colors.black,
+                          backgroundColor: Colors.black12,
                         ),
-                        SizedBox(height: 10.0),
-                        ChartCard(
-                            title: 'Investimentos',
-                            goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
-                                ? CircularProgressIndicator()
-                                : _homeController.loadGoalInvestiment(),
-                            effectiveValue: _homeController.investimentListCurrent.isEmpty || _homeController.investimentListCurrent == []
-                                ? Text('Investido: R\$0.00')
-                                : _homeController.loadInvestmensCurrent(),
-                            colorChart: AppColors.investcolor,
-                            percentGoal: _homeController.goalInvestiment == 0 ? 0.0 : _homeController.totalInvestments / _homeController.goalInvestiment),
-                      ],
-                    ),
-                  )),
+                      ),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Dias passados: ${_homeController.periodIndicator(DateTime.now())}',
+                                      style: TextStyle(fontSize: 11.0),
+                                    ),
+                                    Text(
+                                      'Dias do período: ${_homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last)}',
+                                      style: TextStyle(fontSize: 11.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      (_homeController.percentagePeriodCurrent() * 100).toStringAsFixed(0) + '%',
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(color: Colors.white),
@@ -139,7 +192,6 @@ class HomePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user);
-                      _homeController.onInit();
                     },
                     child: Container(
                       width: double.infinity,
@@ -159,7 +211,12 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      print(_homeController.periodIndicator(DateTime.now()));
+                      print(_homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last));
+                      print((_homeController.periodIndicator(DateTime.now()) /
+                          _homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last)));
+                    },
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -170,7 +227,7 @@ class HomePage extends StatelessWidget {
                         alignment: Alignment.center,
                         children: [
                           Text(
-                            'Simular Despesa',
+                            'Projeção de despesas',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],

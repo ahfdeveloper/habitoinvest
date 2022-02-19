@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
+// ignore: unused_import
+import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
@@ -68,7 +70,7 @@ class ExpenseProvider {
   }
 
   // Atualiza uma despesa editada
-  Future updateExpense(
+  Future<void> updateExpense(
       {required String userUid,
       required double expValue,
       required DateTime expDate,
@@ -93,7 +95,7 @@ class ExpenseProvider {
   }
 
   // Deleta uma despesa
-  Future deleteExpense({required String userUid, required expUid, required expDescription}) async {
+  Future<void> deleteExpense({required String userUid, required expUid, required expDescription}) async {
     DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('expense').doc(expUid);
     await documentReference.delete().catchError((e) => print(e));
   }

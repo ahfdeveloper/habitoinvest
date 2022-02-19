@@ -42,6 +42,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _incomeAddUpdateController.incomeValueTextFormController,
+              autofocus: true,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueIncomeOperationStyle,
               keyboardType: TextInputType.number,

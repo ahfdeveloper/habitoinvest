@@ -5,44 +5,47 @@ import 'package:habito_invest_app/app/data/model/expense_model.dart';
 import 'package:habito_invest_app/app/data/model/goals_model.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
 import 'package:habito_invest_app/app/data/model/investment_model.dart';
+import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
 import 'package:habito_invest_app/app/data/repository/investment_repository.dart';
+import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
+import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 class HomeController extends GetxController {
   final UserModel? user = Get.arguments;
-  GoalsRepository _goalsRepository = GoalsRepository();
-  AccountRepository _accountRepository = AccountRepository();
-  ExpenseRepository _expenseRepository = ExpenseRepository();
-  IncomeRepository _incomeRepository = IncomeRepository();
-  InvestmentRepository _investmentRepository = InvestmentRepository();
+  final GoalsRepository _goalsRepository = GoalsRepository();
+  final AccountRepository _accountRepository = AccountRepository();
+  final ExpenseRepository _expenseRepository = ExpenseRepository();
+  final IncomeRepository _incomeRepository = IncomeRepository();
+  final InvestmentRepository _investmentRepository = InvestmentRepository();
+  final ParametersRepository _parametersRepository = ParametersRepository();
 
   Rx<List<GoalsModel>> _goalsList = Rx<List<GoalsModel>>([]);
   List<GoalsModel> get goalsList => this._goalsList.value;
-  set goalsList(List<GoalsModel> value) => this._goalsList.value = value;
 
-  Rx<List<ExpenseModel>> _notEssExpCurrent = Rx<List<ExpenseModel>>([]);
-  List<ExpenseModel> get notEssExpCurrent => this._notEssExpCurrent.value;
-  set notEssExpCurrent(List<ExpenseModel> value) => this._notEssExpCurrent.value = value;
+  Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get expenseList => this._expenseList.value;
 
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => this._accountList.value;
-  set accountList(List<AccountModel> value) => this._accountList.value = value;
 
-  Rx<List<IncomeModel>> _incomeListCurrent = Rx<List<IncomeModel>>([]);
-  List<IncomeModel> get incomeListCurrent => _incomeListCurrent.value;
-  set incomeListCurrent(List<IncomeModel> value) => this._incomeListCurrent.value = value;
+  Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
+  List<IncomeModel> get incomeList => _incomeList.value;
 
-  Rx<List<InvestmentModel>> _investimentListCurrent = Rx<List<InvestmentModel>>([]);
-  List<InvestmentModel> get investimentListCurrent => _investimentListCurrent.value;
-  set investimentListCurrent(List<InvestmentModel> value) => this._investimentListCurrent.value = value;
+  Rx<List<InvestmentModel>> _investimentList = Rx<List<InvestmentModel>>([]);
+  List<InvestmentModel> get investimentList => _investimentList.value;
 
-  RxString _balance = ''.obs;
-  String get balance => this._balance.value;
-  set balance(String value) => this._balance.value = value;
+  Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
+  List<ParametersModel> get parametersList => _parametersList.value;
+
+  // Armazena o valor total de receitas no período atual do usuário
+  double _totalIncome = 0.0;
+  double get totalIncome => this._totalIncome;
+  set totalIncome(double value) => this._totalIncome = value;
 
   // Armazena o valor total de despesas não essenciais no período atual do usuário
   RxDouble _totalNotEssencialExpenses = 0.0.obs;
@@ -54,16 +57,12 @@ class HomeController extends GetxController {
   double get totalInvestments => this._totalInvestments.value;
   set totalInvestments(double value) => this._totalInvestments.value = value;
 
-  // Armazena o valor total de receitas no período atual do usuário
+  // Armazena a meta de investimento no período atual do usuário
   RxDouble _goalInvestiment = 0.0.obs;
   double get goalInvestiment => this._goalInvestiment.value;
   set goalInvestiment(double value) => this._goalInvestiment.value = value;
 
-  double _totalIncome = 0.0;
-  double get totalIncome => this._totalIncome;
-  set totalIncome(double value) => this._totalIncome = value;
-
-  // Armazena o valor total de receitas no período atual do usuário
+  // Armazena a meta de despesas não essenciais no período atual do usuário
   RxDouble _goalNotEssentialExpenses = 0.0.obs;
   double get goalNotEssentialExpenses => this._goalNotEssentialExpenses.value;
   set goalNotEssentialExpenses(double value) => this._goalNotEssentialExpenses.value = value;
@@ -76,62 +75,89 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
     _goalsList.bindStream(_goalsRepository.getAllGoals(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
-    _notEssExpCurrent.bindStream(_expenseRepository.getNotEssencExpCurrent(userUid: user!.id, dayInitial: 20));
-    _incomeListCurrent.bindStream(_incomeRepository.getIncomeCurrent(userUid: user!.id, dayInitial: 20));
-    _investimentListCurrent.bindStream(_investmentRepository.getInvestmentCurrent(userUid: user!.id, dayInitial: 20));
+    _incomeList.bindStream(_incomeRepository.getAllIncome(userUid: user!.id));
+    _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _investimentList.bindStream(_investmentRepository.getAllInvestment(userUid: user!.id));
     super.onInit();
   }
 
   // Retorna a meta de Gastos não essenciais
-  loadGoalExpenses() {
+  Widget loadGoalExpenses() {
     if (goalsList.first.valueNotEssentialExpenses != 0.0) {
-      return Text('Meta: R\$${goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}');
+      goalNotEssentialExpenses = goalsList.first.valueNotEssentialExpenses!;
     } else {
       totalIncome = 0;
-      incomeListCurrent.forEach((element) {
+      incomeList.forEach((element) {
         totalIncome = totalIncome + element.value!;
       });
       goalNotEssentialExpenses = (goalsList.first.percentageNotEssentialExpenses! / 100) * totalIncome;
-      //print('Meta de despesas não essenciais: $goalNotEssentialExpenses');
-      return Text('Meta: R\$${goalNotEssentialExpenses.toStringAsFixed(2)}');
     }
+    return Text('Meta: R\$${goalNotEssentialExpenses.toStringAsFixed(2)}');
   }
 
   // Retorna a meta de Investimentos
-  loadGoalInvestiment() {
+  Widget loadGoalInvestiment() {
     if (goalsList.first.valueInvestment != 0.0) {
-      return Text('Meta: R\$${goalsList.first.valueInvestment!.toStringAsFixed(2)}');
+      goalInvestiment = goalsList.first.valueInvestment!;
     } else {
       totalIncome = 0;
-      incomeListCurrent.forEach((element) {
+      incomeList.forEach((element) {
         totalIncome = totalIncome + element.value!;
       });
       goalInvestiment = (goalsList.first.percentageInvestiment! / 100) * totalIncome;
-      //print('Meta de Investimentos: $goalInvestiment');
-      return Text('Meta: R\$${goalInvestiment.toStringAsFixed(2)}');
     }
+    return Text('Meta: R\$${goalInvestiment.toStringAsFixed(2)}');
   }
 
-  // Retorna os gastos não essenciais do período atual
+  // Retorna os gastos não essenciais do período atual do usuário
   Widget loadNotEssencialExpensesCurrent() {
     totalNotEssencialExpenses = 0.0;
-    notEssExpCurrent.forEach((element) {
-      totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
+    expenseList.forEach((element) {
+      if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
+          (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+          element.quality == 'Não essencial' &&
+          element.pay == true) {
+        totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
+        print(totalNotEssencialExpenses);
+      }
     });
-    //print('Despesas efetivadas $totalNotEssencialExpenses');
     return Text('Despesas: R\$${totalNotEssencialExpenses.toStringAsFixed(2)}');
   }
 
-  // Retorna os investimentos no período atual
+  // Retorna os investimentos no período atual do usuário
   Widget loadInvestmensCurrent() {
     totalInvestments = 0.0;
-    investimentListCurrent.forEach((element) {
-      totalInvestments = totalInvestments + element.value!.toDouble();
+    investimentList.forEach((element) {
+      if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
+          (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+          element.madeEffective == true) {
+        totalInvestments = totalInvestments + element.value!.toDouble();
+      }
     });
-    //print('Investimentos efetivados $totalInvestments');
     return Text('Investido: R\$${totalInvestments.toStringAsFixed(2)}');
+  }
+
+  // Calcula o equivalente das despesas não essenciais em horas de trabalho
+  Widget loadWorkedHours() {
+    double monthHours = parametersList.first.workedHours! * 4.5;
+    return Text('Horas de trabalho: ${(totalNotEssencialExpenses / (parametersList.first.salary! / monthHours)).toStringAsFixed(1)}');
+  }
+
+  int periodIndicator(DateTime finalDate) {
+    List<DateTime> dates = getInitialDateQuery(parametersList.first.dayInitialPeriod!);
+    DateTime from = DateTime(dates.first.year, dates.first.month, dates.first.day);
+    DateTime to = DateTime(finalDate.year, finalDate.month, finalDate.day - 1);
+
+    print(dates[0]);
+    print(dates[1]);
+    return (to.difference(from).inHours / 24).round();
+  }
+
+  double percentagePeriodCurrent() {
+    return periodIndicator(DateTime.now()) / periodIndicator(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last);
   }
 
   // Index usado na NavigationBar

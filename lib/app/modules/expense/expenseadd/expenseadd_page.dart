@@ -14,6 +14,7 @@ class ExpenseAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formkey = _expenseAddController.formkey;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -22,7 +23,7 @@ class ExpenseAddPage extends StatelessWidget {
         title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => _expenseAddController.cancel(),
+            onPressed: () => Get.back(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
@@ -40,11 +41,30 @@ class ExpenseAddPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               controller: _expenseAddController.expenseValueTextFormFieldController,
+              autofocus: true,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
+              onChanged: (value) {
+                _expenseAddController.workedCost(value);
+                print(_expenseAddController.workedHours);
+              },
             ),
+            DividerHorizontal(),
+            SizedBox(height: 3.0),
+            Obx(
+              () => Row(
+                children: [
+                  Text('Horas de trabalho: '),
+                  Text(
+                    _expenseAddController.workedHours.toStringAsFixed(1) + ' *',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 3.0),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
 
@@ -337,7 +357,11 @@ class ExpenseAddPage extends StatelessWidget {
               keyboardType: TextInputType.multiline,
               maxLines: 5,
             ),
-            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS * 2),
+            Text(
+              '*O cálculo das horas de trabalho que equivalem ao valor da despesa é calculado com base nas médias ' +
+                  'de renda mensal e horas trabalhadas por semana definidas nos parâmetros.',
+            )
           ],
         ),
       ),

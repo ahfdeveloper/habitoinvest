@@ -12,7 +12,7 @@ import 'components/card_widget.dart';
 
 class GoalsListPage extends StatelessWidget {
   final GoalsListController _goalsListController = Get.find<GoalsListController>();
-  final GoalsUpdateController _goalsAddUpdateController = Get.put(GoalsUpdateController());
+  final GoalsUpdateController _goalsUpdateController = Get.put(GoalsUpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -69,27 +69,27 @@ class GoalsListPage extends StatelessWidget {
 
   // Carrefa dados da meta investimento para a próxima tela
   loadDataCardInvestiment() {
-    _goalsAddUpdateController.goalId = _goalsListController.goalsList.first.id!;
-    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2);
+    _goalsUpdateController.goalId = _goalsListController.goalsList.first.id!;
+    _goalsUpdateController.fvalue = _goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2);
     if (_goalsListController.goalsList.first.valueInvestment != 0) {
-      _goalsAddUpdateController.fixedValueButtonSelect();
+      _goalsUpdateController.fixedValueButtonSelect();
     } else {
-      _goalsAddUpdateController.percentageButtonSelect();
+      _goalsUpdateController.percentageButtonSelect();
     }
-    _goalsAddUpdateController.title = 'Investimentos';
+    _goalsUpdateController.title = 'Investimentos';
     Get.toNamed(Routes.GOALS_DEFINITION, arguments: _goalsListController.user);
   }
 
   // Carrefa dados do meta gastos não essenciais para a próxima tela
   loadDataCardNotEssentialExpense() {
-    _goalsAddUpdateController.goalId = _goalsListController.goalsList.first.id!;
-    _goalsAddUpdateController.fvalue = _goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2);
+    _goalsUpdateController.goalId = _goalsListController.goalsList.first.id!;
+    _goalsUpdateController.fvalue = _goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2);
     if (_goalsListController.goalsList.first.valueNotEssentialExpenses != 0) {
-      _goalsAddUpdateController.fixedValueButtonSelect();
+      _goalsUpdateController.fixedValueButtonSelect();
     } else {
-      _goalsAddUpdateController.percentageButtonSelect();
+      _goalsUpdateController.percentageButtonSelect();
     }
-    _goalsAddUpdateController.title = 'Gastos não essenciais';
+    _goalsUpdateController.title = 'Gastos não essenciais';
     Get.toNamed(Routes.GOALS_DEFINITION, arguments: _goalsListController.user);
   }
 }

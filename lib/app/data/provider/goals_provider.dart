@@ -37,7 +37,7 @@ class GoalsProvider {
   }
 
   // Atualiza a meta investimento
-  Future updateInvestiment({
+  Future<void> updateInvestiment({
     required String userUid,
     required DateTime gDate,
     required int gPercentageInvestment,
@@ -55,7 +55,7 @@ class GoalsProvider {
   }
 
   // Atualiza a meta gastos não essenciais
-  Future updateNotEssentialExpense({
+  Future<void> updateNotEssentialExpense({
     required String userUid,
     required DateTime gDate,
     required int gPercentageNotEssentialExpenses,
