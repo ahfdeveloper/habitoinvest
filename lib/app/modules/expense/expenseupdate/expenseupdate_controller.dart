@@ -174,21 +174,19 @@ class ExpenseUpdateController extends GetxController {
       }
 
       _expenseRepository.updateExpense(
-          userUid: user!.id,
-          expValue: expenseValueTextFormController.numberValue,
-          expDate: newSelectedDate,
-          expDescription: descriptionTextController!.text,
-          expCategory: selectedCategory,
-          expQuality: selectedExpenseQuality,
-          expPay: updatePay,
-          expAddInformation: addInformationTextController!.text,
-          expUid: expenseId)
-        ..whenComplete(
-          () => AppSnackbar.snackarStyle(
-            title: expenseDescription,
-            message: 'Despesa atualizada com sucesso',
-          ),
-        );
+        userUid: user!.id,
+        expValue: expenseValueTextFormController.numberValue,
+        expDate: newSelectedDate,
+        expDescription: descriptionTextController!.text,
+        expCategory: selectedCategory,
+        expQuality: selectedExpenseQuality,
+        expPay: updatePay,
+        expAddInformation: addInformationTextController!.text,
+        expUid: expenseId,
+      )..whenComplete(() {
+          AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa atualizada com sucesso');
+          clearEditingControllers();
+        });
       Get.back();
     }
   }
@@ -202,5 +200,16 @@ class ExpenseUpdateController extends GetxController {
       }
     });
     return listCategoryExpense;
+  }
+
+  // Limpa os campos do formulário
+  void clearEditingControllers() {
+    moneyValueController.updateValue(0.0);
+    formkey.currentState!.reset();
+    descriptionTextController!.clear();
+    selectedCategory = firstElementDrop;
+    selectedExpenseQuality = 'Essencial';
+    addInformationTextController!.clear();
+    workedHours = 0.0;
   }
 }

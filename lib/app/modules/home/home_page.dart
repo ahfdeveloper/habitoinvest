@@ -55,94 +55,97 @@ class HomePage extends StatelessWidget {
         body: Container(
           decoration: BoxDecoration(color: Colors.grey[200]),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Obx(
-                () => Container(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20.0),
-                      ChartCard(
-                        title: 'Despesas não essenciais',
-                        goalValue:
-                            _homeController.goalsList.isEmpty || _homeController.goalsList == [] ? CircularProgressIndicator() : _homeController.loadGoalExpenses(),
-                        effectiveValue: (_homeController.expenseList.isEmpty || _homeController.expenseList == [])
-                            ? Text('Despesas: R\$0.00')
-                            : _homeController.loadNotEssencialExpensesCurrent(),
-                        hoursValue: _homeController.parametersList.isEmpty || _homeController.parametersList == []
-                            ? Text('Horas de trabalho: ')
-                            : _homeController.loadWorkedHours(),
-                        colorChart: AppColors.expenseColor,
-                        percentGoal: _homeController.expenseList.isEmpty || _homeController.expenseList == [] || _homeController.goalNotEssentialExpenses == 0.0
-                            ? 0.0
-                            : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
-                      ),
-                      SizedBox(height: 10.0),
-                      ChartCard(
-                        title: 'Investimentos',
-                        goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
-                            ? CircularProgressIndicator()
-                            : _homeController.loadGoalInvestiment(),
-                        effectiveValue: _homeController.investimentList.isEmpty || _homeController.investimentList == []
-                            ? Text('Investido: R\$0.00')
-                            : _homeController.loadInvestmensCurrent(),
-                        hoursValue: Text(''),
-                        colorChart: AppColors.investcolor,
-                        percentGoal: _homeController.investimentList.isEmpty || _homeController.investimentList == [] || _homeController.goalInvestiment == 0.0
-                            ? 0.0
-                            : (_homeController.totalInvestments / _homeController.goalInvestiment),
-                      ),
-                      SizedBox(height: 15.0),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
-                        child: LinearProgressIndicator(
-                          value: _homeController.percentagePeriodCurrent(),
-                          color: Colors.black,
-                          backgroundColor: Colors.black12,
+                () => Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: ListView(
+                      children: [
+                        SizedBox(height: 15.0),
+                        ChartCard(
+                          title: 'Despesas não essenciais',
+                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
+                              ? CircularProgressIndicator()
+                              : _homeController.loadGoalExpenses(),
+                          effectiveValue: (_homeController.expenseList.isEmpty || _homeController.expenseList == [])
+                              ? Text('Despesas: R\$0.00')
+                              : _homeController.loadNotEssencialExpensesCurrent(),
+                          hoursValue: _homeController.parametersList.isEmpty || _homeController.parametersList == []
+                              ? Text('Horas de trabalho: ')
+                              : _homeController.loadWorkedHours(),
+                          colorChart: AppColors.expenseColor,
+                          percentGoal: _homeController.expenseList.isEmpty || _homeController.expenseList == [] || _homeController.goalNotEssentialExpenses == 0.0
+                              ? 0.0
+                              : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
                         ),
-                      ),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dias passados: ${_homeController.periodIndicator(DateTime.now())}',
-                                      style: TextStyle(fontSize: 11.0),
-                                    ),
-                                    Text(
-                                      'Dias do período: ${_homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last)}',
-                                      style: TextStyle(fontSize: 11.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      (_homeController.percentagePeriodCurrent() * 100).toStringAsFixed(0) + '%',
-                                      textAlign: TextAlign.end,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                        SizedBox(height: 10.0),
+                        ChartCard(
+                          title: 'Investimentos',
+                          goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
+                              ? CircularProgressIndicator()
+                              : _homeController.loadGoalInvestiment(),
+                          effectiveValue: _homeController.investimentList.isEmpty || _homeController.investimentList == []
+                              ? Text('Investido: R\$0.00')
+                              : _homeController.loadInvestmensCurrent(),
+                          hoursValue: Text(''),
+                          colorChart: AppColors.investColor,
+                          percentGoal: _homeController.investimentList.isEmpty || _homeController.investimentList == [] || _homeController.goalInvestiment == 0.0
+                              ? 0.0
+                              : (_homeController.totalInvestments / _homeController.goalInvestiment),
+                        ),
+                        SizedBox(height: 15.0),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
+                          child: LinearProgressIndicator(
+                            value: _homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.percentagePeriodCurrent(),
+                            color: Colors.black,
+                            backgroundColor: Colors.black12,
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Dias passados: ${_homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.periodIndicator(DateTime.now())}',
+                                        style: TextStyle(fontSize: 11.0),
+                                      ),
+                                      Text(
+                                        'Dias do período: ${_homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod! - 1).last)}',
+                                        style: TextStyle(fontSize: 11.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        (_homeController.parametersList.isEmpty || _homeController.parametersList == []
+                                                    ? 0
+                                                    : _homeController.percentagePeriodCurrent() * 100)
+                                                .toStringAsFixed(0) +
+                                            '%',
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(color: Colors.white),
                 ),
               ),
               GridView.count(
@@ -190,13 +193,11 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user);
-                    },
+                    onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppColors.investcolor,
+                        color: AppColors.investColor,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Stack(

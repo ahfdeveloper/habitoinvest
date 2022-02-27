@@ -1,7 +1,17 @@
 // Validação do TextFormField com valores que usa MoneyMaskedTextController
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+
+UserModel? _user;
+get user => _user;
+set user(value) => _user = value;
+
+updateUser(newUser) {
+  user = newUser;
+}
 
 validatorValue(value) {
   if (value == 'R\$ 0,00') {
@@ -44,6 +54,8 @@ List<DateTime> getInitialDateQuery(int dayInitialPeriod) {
     return [DateTime(year, month - 1, dayInitialPeriod - 1), DateTime(year, month, dayInitialPeriod)];
   }
 }
+
+arrowBack() {}
 
 // Atualizar o controller de valor moeda e retorna para página anterior
 void cancel() {

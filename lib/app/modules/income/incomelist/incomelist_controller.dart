@@ -16,6 +16,7 @@ class IncomeListController extends GetxController {
 
   late TextEditingController searchFormFieldController = TextEditingController();
 
+  // Indica quando o botão de procurar foi clicado ou não
   RxBool _searchBoolean = false.obs;
   get searchBoolean => this._searchBoolean.value;
   set searchBoolean(value) => this._searchBoolean.value = value;
@@ -33,11 +34,11 @@ class IncomeListController extends GetxController {
   set incomeDescription(String value) => this._incomeDescription = value;
 
   Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
-  List<IncomeModel> get incomeList => _incomeList.value;
+  List<IncomeModel> get incomeList => this._incomeList.value;
   set incomeList(List<IncomeModel> value) => this._incomeList.value = value;
 
   Rx<List<IncomeModel>> _result = Rx<List<IncomeModel>>([]);
-  List<IncomeModel> get result => _result.value;
+  List<IncomeModel> get result => this._result.value;
   set result(List<IncomeModel> value) => this._result.value = value;
 
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
@@ -59,6 +60,7 @@ class IncomeListController extends GetxController {
         'Deseja realmente excluir esta receita?',
         textAlign: TextAlign.center,
       ),
+      buttonColor: AppColors.themeColor,
       textCancel: 'Cancelar',
       cancelTextColor: AppColors.themeColor,
       textConfirm: 'OK',
@@ -84,14 +86,12 @@ class IncomeListController extends GetxController {
                 message: 'Receita apagada com sucesso',
               ),
             );
-
         Get.back();
       },
-      buttonColor: AppColors.themeColor,
-      radius: 5.0,
     );
   }
 
+// Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;
     incomeList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();

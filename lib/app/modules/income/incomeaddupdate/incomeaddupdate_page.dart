@@ -7,6 +7,7 @@ import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
@@ -23,13 +24,14 @@ class IncomeAddUpdatePage extends StatelessWidget {
         title: Text('Receita'),
         actions: [
           IconButton(
-            onPressed: () => _incomeAddUpdateController.cancel(),
+            onPressed: () {
+              Get.offAndToNamed(Routes.INCOME_LIST, arguments: _incomeAddUpdateController.user);
+              _incomeAddUpdateController.clearEditingControllers();
+            },
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () => _incomeAddUpdateController.saveUpdateIncome(
-              addEditFlag: _incomeAddUpdateController.addEditFlag,
-            ),
+            onPressed: () => _incomeAddUpdateController.saveUpdateIncome(addEditFlag: _incomeAddUpdateController.addEditFlag),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
@@ -124,6 +126,7 @@ class IncomeAddUpdatePage extends StatelessWidget {
                 onChanged: (newValue) {
                   _incomeAddUpdateController.selectedCategory = newValue as String;
                 },
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               ),
             ),
             DividerHorizontal(),

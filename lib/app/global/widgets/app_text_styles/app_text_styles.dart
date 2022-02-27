@@ -117,7 +117,7 @@ class AppTextStyles {
   static final valueInvestmentOperationStyle = GoogleFonts.notoSans(
     fontSize: 30.0,
     fontWeight: FontWeight.bold,
-    color: AppColors.investcolor,
+    color: AppColors.investColor,
   );
 
   // Estilo usado no valor inserido das metas

@@ -7,15 +7,15 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
 class IncomeAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final IncomeRepository _incomeRepository = IncomeRepository();
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final AccountRepository _accountRepository = AccountRepository();
@@ -48,7 +48,7 @@ class IncomeAddUpdateController extends GetxController {
   set received(bool value) => this._received.value = value;
 
 // Variável usada para definição se receita foi recebida ou não
-  RxBool _updateReceived = false.obs;
+  RxBool _updateReceived = true.obs;
   bool get updateReceived => this._updateReceived.value;
   set updateReceived(bool value) => this._updateReceived.value = value;
 
@@ -134,40 +134,81 @@ class IncomeAddUpdateController extends GetxController {
     formkey.currentState!.save();
 
     if (addEditFlag == 'NEW') {
-      if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
-        incomeDescription = descriptionTextController!.text;
-        // Se receita marcada como recebida atualiza saldo do usuário
-        if (updateReceived == true) {
-          _accountRepository.updateAccount(
-            userUid: user!.id,
-            accBalance: _accountList.value.first.balance! + incomeValueTextFormController.numberValue,
-            accValueLT: incomeValueTextFormController.numberValue,
-            accTypeLT: 'Income',
-            accDateLT: newSelectedDate,
-            accUid: _accountList.value.first.id!,
-          );
-        }
-        _incomeRepository
-            .addIncome(
-              userUid: user!.id,
-              incValue: incomeValueTextFormController.numberValue,
-              incReceived: updateReceived,
-              incDate: newSelectedDate,
-              incDescription: descriptionTextController!.text,
-              incCategory: selectedCategory,
-              incAddInformation: addInformationTextController!.text,
-            )
-            .whenComplete(
-              () => AppSnackbar.snackarStyle(
-                title: incomeDescription,
-                message: 'Receita cadastrada com sucesso',
-              ),
-            );
-        clearEditingControllers();
-        Get.back();
-      }
-
-      // TENHO QUE FAZER VARIAVEL DE VALOR E VALOR VELHO
+      Get.defaultDialog(
+        title: 'Novo Investimento',
+        content: Text(
+          'Esse é o momento ideal para investir. Vamos lá? ',
+          textAlign: TextAlign.center,
+        ),
+        buttonColor: AppColors.themeColor,
+        textCancel: 'Salvar e investir depois',
+        cancelTextColor: AppColors.themeColor,
+        textConfirm: 'Salvar e investir',
+        confirmTextColor: AppColors.white,
+        onConfirm: () {
+          if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
+            incomeDescription = descriptionTextController!.text;
+            Get.back();
+            // Se receita marcada como recebida, atualiza saldo do usuário
+            if (updateReceived == true) {
+              _accountRepository.updateAccount(
+                userUid: user!.id,
+                accBalance: _accountList.value.first.balance! + incomeValueTextFormController.numberValue,
+                accValueLT: incomeValueTextFormController.numberValue,
+                accTypeLT: 'Income',
+                accDateLT: newSelectedDate,
+                accUid: _accountList.value.first.id!,
+              );
+            }
+            _incomeRepository.addIncome(
+                userUid: user!.id,
+                incValue: incomeValueTextFormController.numberValue,
+                incReceived: updateReceived,
+                incDate: newSelectedDate,
+                incDescription: descriptionTextController!.text,
+                incCategory: selectedCategory,
+                incAddInformation: addInformationTextController!.text)
+              ..whenComplete(() {
+                FocusManager.instance.primaryFocus?.unfocus();
+                AppSnackbar.snackarStyle(title: incomeDescription, message: 'Receita cadastrada com sucesso');
+                clearEditingControllers();
+                //Future.delayed(Duration(milliseconds: 1200), () {
+                Get.offAndToNamed(Routes.INVESTMENT_ADDUPDATE, arguments: user);
+                //});
+              });
+          }
+        },
+        onCancel: () {
+          if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
+            incomeDescription = descriptionTextController!.text;
+            // Se receita marcada como recebida, atualiza saldo do usuário
+            if (updateReceived == true) {
+              _accountRepository.updateAccount(
+                userUid: user!.id,
+                accBalance: _accountList.value.first.balance! + incomeValueTextFormController.numberValue,
+                accValueLT: incomeValueTextFormController.numberValue,
+                accTypeLT: 'Income',
+                accDateLT: newSelectedDate,
+                accUid: _accountList.value.first.id!,
+              );
+            }
+            _incomeRepository.addIncome(
+                userUid: user!.id,
+                incValue: incomeValueTextFormController.numberValue,
+                incReceived: updateReceived,
+                incDate: newSelectedDate,
+                incDescription: descriptionTextController!.text,
+                incCategory: selectedCategory,
+                incAddInformation: addInformationTextController!.text)
+              ..whenComplete(() {
+                FocusManager.instance.primaryFocus?.unfocus();
+                AppSnackbar.snackarStyle(title: incomeDescription, message: 'Receita cadastrada com sucesso');
+                clearEditingControllers();
+              });
+            Get.back();
+          }
+        },
+      );
     } else if (addEditFlag == 'UPDATE') {
       if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
         incomeDescription = descriptionTextController!.text;
@@ -220,12 +261,11 @@ class IncomeAddUpdateController extends GetxController {
           incAddInformation: addInformationTextController!.text,
           incUid: incomeId,
         )..whenComplete(
-            () => AppSnackbar.snackarStyle(
-              title: incomeDescription,
-              message: 'Receita atualizada com sucesso',
-            ),
+            () {
+              AppSnackbar.snackarStyle(title: incomeDescription, message: 'Receita atualizada com sucesso');
+              clearEditingControllers();
+            },
           );
-        clearEditingControllers();
         Get.back();
       }
     }
@@ -234,6 +274,7 @@ class IncomeAddUpdateController extends GetxController {
   // Limpa os campos do formulário
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
+    formkey.currentState!.reset();
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
     addInformationTextController!.clear();

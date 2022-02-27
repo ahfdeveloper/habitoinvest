@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
+import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
@@ -10,6 +12,14 @@ class ExpenseListController extends GetxController {
   final UserModel? user = Get.arguments;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
+  final AccountRepository _accountRepository = AccountRepository();
+
+  late TextEditingController searchFormFieldController = TextEditingController();
+
+  // Indica quando o botão de procurar foi clicado ou não
+  RxBool _searchBoolean = false.obs;
+  get searchBoolean => this._searchBoolean.value;
+  set searchBoolean(value) => this._searchBoolean.value = value;
 
   String _expenseId = '';
   String get expenseId => this._expenseId;
@@ -19,13 +29,28 @@ class ExpenseListController extends GetxController {
   String get expenseDescription => this._expenseDescription;
   set expenseDescription(String value) => this._expenseDescription = value;
 
+  double _expenseValue = 0.0;
+  double get expenseValue => this._expenseValue;
+  set expenseValue(double value) => this._expenseValue = value;
+
   // Variável que guarda a lista de despesas
   Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
-  List<ExpenseModel> get expense => _expenseList.value;
+  List<ExpenseModel> get expenseList => this._expenseList.value;
+  set expenseList(List<ExpenseModel> value) => this._expenseList.value = value;
+
+  // Variável que guarda os dados da conta
+  Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
+  List<AccountModel> get accountList => _accountList.value;
+
+  Rx<List<ExpenseModel>> _result = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get result => this._result.value;
+  set result(List<ExpenseModel> value) => this._result.value = value;
 
   @override
   void onInit() {
     _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _result.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     super.onInit();
   }
 
@@ -37,22 +62,35 @@ class ExpenseListController extends GetxController {
         'Deseja realmente excluir esta despesa?',
         textAlign: TextAlign.center,
       ),
+      buttonColor: AppColors.themeColor,
       textCancel: 'Cancelar',
       cancelTextColor: AppColors.themeColor,
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
+        print(user!.id);
+        _accountRepository.updateAccount(
+          userUid: user!.id,
+          accBalance: _accountList.value.first.balance! + expenseValue,
+          accValueLT: expenseValue,
+          accTypeLT: 'Delete Expense',
+          accDateLT: DateTime.now(),
+          accUid: _accountList.value.first.id!,
+        );
         _expenseRepository.deleteExpense(userUid: user!.id, expUid: expenseId, expDescription: expenseDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: expenseDescription,
                 message: 'Despesa apagada com sucesso',
               ),
             );
-
         Get.back();
       },
-      buttonColor: AppColors.themeColor,
-      radius: 5.0,
     );
+  }
+
+  // Filtra os dados de acordo com a descrição digitada pelo usuário
+  void runFilter(enteredKeyworld) {
+    enteredKeyworld = searchFormFieldController.text;
+    expenseList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();
   }
 }

@@ -67,28 +67,26 @@ class CategoriesAddUpdateController extends GetxController {
     if (addEditFlag == 'NEW') {
       if (nameTextController!.text != '' && descriptionTextController!.text != '') {
         categoryName = nameTextController!.text;
-        _categoriesRepository
-            .addCategory(
-              userUid: user!.id,
-              catName: nameTextController!.text,
-              catType: categoryType,
-              catDescription: descriptionTextController!.text,
-            )
-            .whenComplete(
-              () => AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria cadastrada com sucesso'),
-            );
-        clearEditingControllers();
+        _categoriesRepository.addCategory(
+          userUid: user!.id,
+          catName: nameTextController!.text,
+          catType: categoryType,
+          catDescription: descriptionTextController!.text,
+        )..whenComplete(() {
+            AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria cadastrada com sucesso');
+            clearEditingControllers();
+          });
         Get.back();
       }
     } else if (addEditFlag == 'UPDATE') {
       if (nameTextController!.text != '' && descriptionTextController!.text != '') {
         categoryName = nameTextController!.text;
-        _categoriesRepository
-            .updateCategory(userUid: user!.id, catName: nameTextController!.text, catType: categoryType, catDescription: descriptionTextController!.text, catUid: categoryId)
-            .whenComplete(
-              () => AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria atualizada com sucesso'),
-            );
-        clearEditingControllers();
+        _categoriesRepository.updateCategory(
+            userUid: user!.id, catName: nameTextController!.text, catType: categoryType, catDescription: descriptionTextController!.text, catUid: categoryId)
+          ..whenComplete(() {
+            AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria atualizada com sucesso');
+            clearEditingControllers();
+          });
         Get.back();
       }
     }

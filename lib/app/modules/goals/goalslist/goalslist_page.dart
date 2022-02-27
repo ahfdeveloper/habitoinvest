@@ -19,6 +19,8 @@ class GoalsListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         title: Text('Definir Metas', style: AppTextStyles.appBarTextLight),
         iconTheme: IconThemeData(color: Colors.white),

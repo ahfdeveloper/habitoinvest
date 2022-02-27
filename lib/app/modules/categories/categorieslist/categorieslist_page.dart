@@ -9,11 +9,9 @@ import 'package:habito_invest_app/app/modules/categories/categorieslist/categori
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class CategoriesList extends StatelessWidget {
-  final CategoriesListController _categoriesListController =
-      Get.find<CategoriesListController>();
+  final CategoriesListController _categoriesListController = Get.find<CategoriesListController>();
 
-  final CategoriesAddUpdateController _categoriesAddUpdateController =
-      Get.put(CategoriesAddUpdateController());
+  final CategoriesAddUpdateController _categoriesAddUpdateController = Get.put(CategoriesAddUpdateController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +19,8 @@ class CategoriesList extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
         systemOverlayStyle: SystemUiOverlayStyle.light,
         title: Text('Categorias', style: AppTextStyles.appBarTextLight),
         backgroundColor: interfaceColor,
@@ -35,25 +35,16 @@ class CategoriesList extends StatelessWidget {
               actionPane: SlidableDrawerActionPane(),
               child: Card(
                 child: ListTile(
-                  title:
-                      Text(_categoriesListController.categories[index].name!),
-                  subtitle: Text(
-                      _categoriesListController.categories[index].description!),
+                  title: Text(_categoriesListController.categories[index].name!),
+                  subtitle: Text(_categoriesListController.categories[index].description!),
                   onTap: () {
                     _categoriesAddUpdateController.addEditFlag = 'UPDATE';
-                    _categoriesAddUpdateController.categoryId =
-                        _categoriesListController.categories[index].id!;
-                    _categoriesAddUpdateController.nameTextController?.text =
-                        _categoriesListController.categories[index].name!;
-                    _categoriesAddUpdateController.categoryType =
-                        _categoriesListController.categories[index].type!;
-                    _categoriesAddUpdateController
-                            .descriptionTextController?.text =
-                        _categoriesListController
-                            .categories[index].description!;
+                    _categoriesAddUpdateController.categoryId = _categoriesListController.categories[index].id!;
+                    _categoriesAddUpdateController.nameTextController?.text = _categoriesListController.categories[index].name!;
+                    _categoriesAddUpdateController.categoryType = _categoriesListController.categories[index].type!;
+                    _categoriesAddUpdateController.descriptionTextController?.text = _categoriesListController.categories[index].description!;
                     _categoriesAddUpdateController.paintContainerType();
-                    Get.toNamed(Routes.CATEGORIES_ADDUPDATE,
-                        arguments: _categoriesListController.user);
+                    Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: _categoriesListController.user);
                   },
                 ),
               ),
@@ -63,10 +54,8 @@ class CategoriesList extends StatelessWidget {
                   color: AppColors.expenseColor,
                   icon: Icons.delete,
                   onTap: () {
-                    _categoriesListController.categoryId =
-                        _categoriesListController.categories[index].id!;
-                    _categoriesListController.categoryName =
-                        _categoriesListController.categories[index].name!;
+                    _categoriesListController.categoryId = _categoriesListController.categories[index].id!;
+                    _categoriesListController.categoryName = _categoriesListController.categories[index].name!;
                     if (!_categoriesListController.verifyCategoryIncome()) {
                       _categoriesListController.deleteCategory();
                     }
@@ -82,8 +71,7 @@ class CategoriesList extends StatelessWidget {
           _categoriesAddUpdateController.addEditFlag = 'NEW';
           _categoriesAddUpdateController.categoryType = '';
           _categoriesAddUpdateController.paintContainerType();
-          Get.toNamed(Routes.CATEGORIES_ADDUPDATE,
-              arguments: _categoriesListController.user);
+          Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: _categoriesListController.user);
         },
         backgroundColor: AppColors.themeColor,
         tooltip: 'Nova Categoria',

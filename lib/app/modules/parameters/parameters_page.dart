@@ -19,14 +19,11 @@ class ParametersPage extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => cancel()),
         backgroundColor: interfaceColor,
         title: Text('Parâmetros do usuário'),
         actions: [
-          IconButton(
-            onPressed: () => cancel(),
-            icon: Icon(Icons.cancel, color: AppColors.white),
-          ),
           IconButton(
             onPressed: () => _parameterController.updateParameter(),
             icon: Icon(Icons.save, color: AppColors.white),

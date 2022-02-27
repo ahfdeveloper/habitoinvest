@@ -14,8 +14,7 @@ class LoginController extends GetxController {
 
   // Função que efetua login do usuário através de e-mail e senha no app
   void login() async {
-    Get.dialog(Center(child: CircularProgressIndicator()),
-        barrierDismissible: false);
+    Get.dialog(Center(child: CircularProgressIndicator()), barrierDismissible: false);
     UserModel? user = await loginRepository.signInWithEmailAndPassword(
       email: emailTextController.text,
       password: passwordTextController.text,
@@ -28,8 +27,7 @@ class LoginController extends GetxController {
 
   // Função que efetua o login social com a conta Google no app
   void googleSignIn() async {
-    Get.dialog(Center(child: CircularProgressIndicator()),
-        barrierDismissible: false);
+    Get.dialog(Center(child: CircularProgressIndicator()), barrierDismissible: false);
     UserModel? user = await loginRepository.signInWithGoogle();
 
     if (user != null) {

@@ -19,8 +19,8 @@ class InvestAddUpdatePage extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.investcolor,
-        title: Text('Novo Investimento', style: TextStyle(fontSize: 17.0)),
+        backgroundColor: AppColors.investColor,
+        title: Text(_investmentAddUpdateController.title, style: TextStyle(fontSize: 17.0)),
         iconTheme: IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
@@ -89,10 +89,9 @@ class InvestAddUpdatePage extends StatelessWidget {
                   hint: _investmentAddUpdateController.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () {
-                  _investmentAddUpdateController.descriptionValue = '';
-                  _investmentAddUpdateController.descriptionTextController!.text = _investmentAddUpdateController.descriptionValue;
-                },
+                onTap: () => _investmentAddUpdateController.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _investmentAddUpdateController.descriptionTextController!.text.length),
+                ),
               ),
             ),
             DividerHorizontal(),

@@ -10,6 +10,7 @@ import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -118,14 +119,6 @@ class ExpenseAddController extends GetxController {
     super.onInit();
   }
 
-  workedCost(value) async {
-    value = expenseValueTextFormFieldController.numberValue;
-    if (parametersList.first.workedHours != 0) {
-      double monthHours = parametersList.first.workedHours! * 4.5;
-      workedHours = value / (parametersList.first.salary! / monthHours);
-    }
-  }
-
   // Pegar data selecionada no Date Picker e setar textformfield
   selectDate({required BuildContext context, required TextEditingController textFormFieldController}) async {
     date = await showDatePicker(
@@ -186,9 +179,14 @@ class ExpenseAddController extends GetxController {
             expQuality: selectedExpenseQuality,
             expPay: pay,
             expAddInformation: addInformationTextController!.text,
-          );
+          )..whenComplete(
+              () {
+                AppSnackbar.snackarStyle(title: expenseDescription, message: 'Investimento cadastrado com sucesso');
+                clearEditingControllers();
+                Get.back();
+              },
+            );
         }
-        Get.back();
       } else if (installmentsType == 'Não') {
         if (pay == true) {
           _accountRepository.updateAccount(
@@ -209,13 +207,25 @@ class ExpenseAddController extends GetxController {
           expQuality: selectedExpenseQuality,
           expPay: pay,
           expAddInformation: addInformationTextController!.text,
-        );
+        )..whenComplete(() {
+            AppSnackbar.snackarStyle(title: expenseDescription, message: 'Investimento cadastrado com sucesso');
+            clearEditingControllers();
+          });
         Get.back();
       }
     }
   }
 
-  // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField
+  // Estima o valor da despesa em horas de trabalho
+  workedCost(value) async {
+    value = expenseValueTextFormFieldController.numberValue;
+    if (parametersList.first.workedHours != 0) {
+      double monthHours = parametersList.first.workedHours! * 4.5;
+      workedHours = value / (parametersList.first.salary! / monthHours);
+    }
+  }
+
+  // Retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField
   List<String> selectExpenseCategory() {
     List<String> listCategoryExpense = [firstElementDrop];
     categories.forEach((item) {

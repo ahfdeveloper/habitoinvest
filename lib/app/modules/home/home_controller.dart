@@ -91,7 +91,11 @@ class HomeController extends GetxController {
     } else {
       totalIncome = 0;
       incomeList.forEach((element) {
-        totalIncome = totalIncome + element.value!;
+        if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
+            (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+            element.received == true) {
+          totalIncome = totalIncome + element.value!;
+        }
       });
       goalNotEssentialExpenses = (goalsList.first.percentageNotEssentialExpenses! / 100) * totalIncome;
     }
@@ -105,7 +109,11 @@ class HomeController extends GetxController {
     } else {
       totalIncome = 0;
       incomeList.forEach((element) {
-        totalIncome = totalIncome + element.value!;
+        if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
+            (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+            element.received == true) {
+          totalIncome = totalIncome + element.value!;
+        }
       });
       goalInvestiment = (goalsList.first.percentageInvestiment! / 100) * totalIncome;
     }
@@ -121,7 +129,6 @@ class HomeController extends GetxController {
           element.quality == 'Não essencial' &&
           element.pay == true) {
         totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
-        print(totalNotEssencialExpenses);
       }
     });
     return Text('Despesas: R\$${totalNotEssencialExpenses.toStringAsFixed(2)}');
@@ -149,10 +156,7 @@ class HomeController extends GetxController {
   int periodIndicator(DateTime finalDate) {
     List<DateTime> dates = getInitialDateQuery(parametersList.first.dayInitialPeriod!);
     DateTime from = DateTime(dates.first.year, dates.first.month, dates.first.day);
-    DateTime to = DateTime(finalDate.year, finalDate.month, finalDate.day - 1);
-
-    print(dates[0]);
-    print(dates[1]);
+    DateTime to = DateTime(finalDate.year, finalDate.month, finalDate.day);
     return (to.difference(from).inHours / 24).round();
   }
 

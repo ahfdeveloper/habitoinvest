@@ -19,6 +19,9 @@ class IncomeList extends StatelessWidget {
       () => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
+          backgroundColor: AppColors.incomeColor,
+          automaticallyImplyLeading: true,
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.offAllNamed(Routes.HOME, arguments: _incomeListController.user)),
           title: _incomeListController.searchBoolean == false
               ? Text('Receitas')
               : TextFormField(
@@ -26,13 +29,12 @@ class IncomeList extends StatelessWidget {
                   style: AppTextStyles.appBarTextLight,
                   autofocus: true,
                   decoration: InputDecoration(
-                    hintText: 'Procurar',
+                    hintText: 'Descrição da receita',
                     hintStyle: TextStyle(color: Colors.white54),
                     border: UnderlineInputBorder(borderSide: BorderSide.none),
                   ),
                   onChanged: (value) => _incomeListController.runFilter(value),
                 ),
-          backgroundColor: AppColors.incomeColor,
           actions: [
             // Determina qual botão vai aparece no appBar de acordo com a ação do usuário
             _incomeListController.searchBoolean == false
@@ -104,12 +106,6 @@ class IncomeList extends StatelessWidget {
           onPressed: () async {
             _incomeAddUpdateController.addEditFlag = 'NEW';
             moneyValueController.updateValue(0.0);
-            _incomeAddUpdateController.dateTextController = TextEditingController(
-              text: DateFormat('dd/MM/yyyy').format(DateTime.now()),
-            );
-            _incomeAddUpdateController.newSelectedDate = DateTime.now();
-            _incomeAddUpdateController.descriptionValue = 'Descrição';
-            _incomeAddUpdateController.received = false;
             Get.toNamed(Routes.INCOME_ADDUPDATE, arguments: _incomeListController.user);
           },
           backgroundColor: AppColors.incomeColor,

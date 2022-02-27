@@ -9,7 +9,7 @@ class AppColors {
   static final Color grey600 = Color(0XFF757575);
   static final Color grey800 = Color(0XFF424242);
   static final Color transparent = Colors.transparent;
-  static final Color investcolor = Color(0XFFF9A825);
+  static final Color investColor = Color(0XFFF9A825);
   static final Color backgroundColor = Color(0XFFEEEEEE);
   static final Color incomeColor = Color(0XFF388E3C);
   static final Color expenseColor = Color(0XFFE53935);

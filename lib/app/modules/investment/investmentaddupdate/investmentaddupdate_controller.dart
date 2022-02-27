@@ -8,6 +8,7 @@ import 'package:habito_invest_app/app/data/repository/investment_repository.dart
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
 class InvestmentAddUpdateController extends GetxController {
@@ -15,6 +16,11 @@ class InvestmentAddUpdateController extends GetxController {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final InvestmentRepository _investmentRepository = InvestmentRepository();
   final AccountRepository _accountRepository = AccountRepository();
+
+  // Título da page
+  String _title = 'Novo Investimento';
+  String get title => this._title;
+  set title(String value) => this._title = value;
 
   // Controller do campo data do investimento. Por default seta a data do dia
   TextEditingController dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
@@ -31,7 +37,7 @@ class InvestmentAddUpdateController extends GetxController {
   List<AccountModel> get accountList => _accountList.value;
 
   // Flag para identificar se se trata de adição ou alteração de um investimento
-  String _addEditFlag = '';
+  String _addEditFlag = 'NEWAFTERINCOME';
   String get addEditFlag => this._addEditFlag;
   set addEditFlag(String value) => this._addEditFlag = value;
 
@@ -61,7 +67,7 @@ class InvestmentAddUpdateController extends GetxController {
   set effective(bool value) => this._effective.value = value;
 
   // Variável guarda marcação do usuário sobre efetivação do investimento e atualiza o BD
-  RxBool _updateEffective = false.obs;
+  RxBool _updateEffective = true.obs;
   bool get updateEffective => this._updateEffective.value;
   set updateEffective(bool value) => this._updateEffective.value = value;
 
@@ -89,7 +95,7 @@ class InvestmentAddUpdateController extends GetxController {
         return Theme(
           data: ThemeData.from(
             colorScheme: ColorScheme.light(
-              primary: AppColors.investcolor,
+              primary: AppColors.investColor,
               onPrimary: AppColors.themeColor,
             ),
           ),
@@ -113,7 +119,7 @@ class InvestmentAddUpdateController extends GetxController {
     if (!isValid) return;
     formkey.currentState!.save();
 
-    if (addEditFlag == 'NEW') {
+    if (addEditFlag == 'NEW' || addEditFlag == 'NEWAFTERINCOME') {
       if (descriptionTextController!.text != '') {
         investmentDescription = descriptionTextController!.text;
         if (updateEffective == true) {
@@ -126,22 +132,25 @@ class InvestmentAddUpdateController extends GetxController {
             accUid: _accountList.value.first.id!,
           );
         }
-        _investmentRepository
-            .addInvestment(
-                userUid: user!.id,
-                invValue: investmentValueTextFormController.numberValue,
-                invMadeEffective: updateEffective,
-                invDate: newSelectedDate,
-                invDescription: descriptionTextController!.text,
-                invAddInformation: addInformationTextController!.text)
-            .whenComplete(
-              () => AppSnackbar.snackarStyle(
-                title: investmentDescription,
-                message: 'Investimento cadastrado com sucesso',
-              ),
-            );
-        clearEditingControllers();
-        Get.back();
+        _investmentRepository.addInvestment(
+            userUid: user!.id,
+            invValue: investmentValueTextFormController.numberValue,
+            invMadeEffective: updateEffective,
+            invDate: newSelectedDate,
+            invDescription: descriptionTextController!.text,
+            invAddInformation: addInformationTextController!.text)
+          ..whenComplete(() {
+            AppSnackbar.snackarStyle(title: investmentDescription, message: 'Investimento cadastrado com sucesso');
+            clearEditingControllers();
+          });
+        if (addEditFlag == 'NEWAFTERINCOME') {
+          FocusManager.instance.primaryFocus?.unfocus();
+          Get.offAndToNamed(Routes.INCOME_LIST, arguments: user);
+        } else if (addEditFlag == 'NEW') {
+          FocusManager.instance.primaryFocus?.unfocus();
+          addEditFlag = 'NEWAFTERINCOME';
+          Get.back();
+        }
       }
     } else if (addEditFlag == 'UPDATE') {
       if (descriptionTextController!.text != '') {
@@ -187,20 +196,18 @@ class InvestmentAddUpdateController extends GetxController {
         }
 
         _investmentRepository.updateInvestment(
-            userUid: user!.id,
-            invValue: investmentValueTextFormController.numberValue,
-            invMadeEffective: updateEffective,
-            invDate: newSelectedDate,
-            invDescription: descriptionTextController!.text,
-            invAddInformation: addInformationTextController!.text,
-            invUid: investmentId)
-          ..whenComplete(
-            () => AppSnackbar.snackarStyle(
-              title: investmentDescription,
-              message: 'Investimento atualizado com sucesso',
-            ),
-          );
-        clearEditingControllers();
+          userUid: user!.id,
+          invValue: investmentValueTextFormController.numberValue,
+          invMadeEffective: updateEffective,
+          invDate: newSelectedDate,
+          invDescription: descriptionTextController!.text,
+          invAddInformation: addInformationTextController!.text,
+          invUid: investmentId,
+        )..whenComplete(() {
+            AppSnackbar.snackarStyle(title: investmentDescription, message: 'Investimento atualizado com sucesso');
+            clearEditingControllers();
+          });
+        addEditFlag = 'NEWAFTERINCOME';
         Get.back();
       }
     }
@@ -209,13 +216,19 @@ class InvestmentAddUpdateController extends GetxController {
   // Limpa os campos do formulário
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
+    formkey.currentState!.reset();
     descriptionTextController!.clear();
     addInformationTextController!.clear();
   }
 
   // Cancela o cadastro ou edição de uma nova receita
   void cancel() {
-    clearEditingControllers();
-    Get.back();
+    if (addEditFlag == 'NEWAFTERINCOME') {
+      clearEditingControllers();
+      Get.offAndToNamed(Routes.INCOME_LIST, arguments: user);
+    } else {
+      clearEditingControllers();
+      Get.back();
+    }
   }
 }

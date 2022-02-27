@@ -139,6 +139,7 @@ class ExpenseUpdatePage extends StatelessWidget {
                 onChanged: (newValue) {
                   _expenseUpdateController.selectedCategory = newValue as String;
                 },
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               ),
             ),
             DividerHorizontal(),
@@ -167,7 +168,7 @@ class ExpenseUpdatePage extends StatelessWidget {
                                 ? AppColors.expenseColor
                                 : value == 'Essencial'
                                     ? AppColors.incomeColor
-                                    : AppColors.investcolor,
+                                    : AppColors.investColor,
                           ),
                           Text('    '),
                           Text(value),

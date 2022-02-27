@@ -34,7 +34,7 @@ class NavBar extends StatelessWidget {
           BottomNavyBarItem(
             icon: Icon(Icons.monetization_on),
             title: Text('Metas'),
-            activeColor: AppColors.investcolor,
+            activeColor: AppColors.investColor,
             inactiveColor: AppColors.grey800,
             textAlign: TextAlign.center,
           ),

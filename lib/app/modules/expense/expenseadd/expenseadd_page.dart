@@ -155,7 +155,7 @@ class ExpenseAddPage extends StatelessWidget {
                                 ? AppColors.expenseColor
                                 : value == 'Essencial'
                                     ? AppColors.incomeColor
-                                    : AppColors.investcolor,
+                                    : AppColors.investColor,
                           ),
                           Text('    '),
                           Text(value),
