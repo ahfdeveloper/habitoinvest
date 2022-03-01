@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/modules/home/components/chart.dart';
+import 'package:habito_invest_app/app/modules/home/components/goalschart/chart_home.dart';
 
 class ChartCard extends StatelessWidget {
   final double percentGoal;
@@ -38,7 +38,7 @@ class ChartCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: AppTextStyles.appBarTextDark),
+                  Text(title, style: AppTextStyles.titleCardProjection),
                   SizedBox(height: 10.0),
                   goalValue,
                   effectiveValue,

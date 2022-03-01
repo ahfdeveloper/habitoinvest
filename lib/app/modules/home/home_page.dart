@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/modules/home/components/chart_card.dart';
-import 'package:habito_invest_app/app/modules/home/components/navigationbar.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/modules/home/components/timeindicator/time_indicator_description.dart';
+import 'package:habito_invest_app/app/modules/home/components/timeindicator/time_indicator_progress.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import 'components/drawer.dart';
+import 'components/drawer/drawer.dart';
+import 'components/goalschart/chart_card_home.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
@@ -22,36 +25,20 @@ class HomePage extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: AppColors.white),
           centerTitle: true,
           shadowColor: AppColors.backgroundColor,
-          backgroundColor: AppColors.backgroundColor,
+          backgroundColor: AppColors.themeColor,
           elevation: 0.0,
-          title: Column(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.only(top: 10.0),
-                child: Text('Meu saldo', style: AppTextStyles.appBarTextSaldo),
-              ),
-              Container(
-                child: Obx(
-                  () {
-                    if (_homeController.accountList.isEmpty || _homeController.accountList == []) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return Text(
-                        'R\$ ${_homeController.accountList.first.balance!.toStringAsFixed(2)}',
-                        style: AppTextStyles.appBarNumberSaldo,
-                      );
-                    }
-                  },
-                ),
-              ),
+              Text('Olá ${_homeController.user!.name}', style: AppTextStyles.appBarTextLight),
             ],
           ),
         ),
         drawer: DrawerHome(),
-        bottomNavigationBar: NavBar(),
+        //bottomNavigationBar: NavBar(),
         body: Container(
           decoration: BoxDecoration(color: Colors.grey[200]),
           child: Column(
@@ -63,18 +50,57 @@ class HomePage extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.white),
                     child: ListView(
                       children: [
+                        Container(
+                          color: AppColors.themeColor,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0, top: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Meu Saldo',
+                                      style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 14.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0, bottom: 8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Obx(
+                                      () {
+                                        if (_homeController.accountList.isEmpty || _homeController.accountList == []) {
+                                          return CircularProgressIndicator();
+                                        } else {
+                                          return Text(
+                                            '${moneyFormatter.format(_homeController.accountList.first.balance!)}',
+                                            style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         SizedBox(height: 15.0),
                         ChartCard(
                           title: 'Despesas não essenciais',
                           goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
                               ? CircularProgressIndicator()
-                              : _homeController.loadGoalExpenses(),
+                              : Text('Meta:  ${moneyFormatter.format(_homeController.loadGoalExpenses())}'),
                           effectiveValue: (_homeController.expenseList.isEmpty || _homeController.expenseList == [])
-                              ? Text('Despesas: R\$0.00')
-                              : _homeController.loadNotEssencialExpensesCurrent(),
+                              ? Text('Despesas:  ${moneyFormatter.format(0)}')
+                              : Text('Despesas:  ${moneyFormatter.format(_homeController.loadNotEssencialExpensesCurrent())}'),
                           hoursValue: _homeController.parametersList.isEmpty || _homeController.parametersList == []
-                              ? Text('Horas de trabalho: ')
-                              : _homeController.loadWorkedHours(),
+                              ? Text('Horas de trabalho:  ${0.0}')
+                              : Text('Horas de trabalho:  ${_homeController.loadWorkedHours().toStringAsFixed(1)}'),
                           colorChart: AppColors.expenseColor,
                           percentGoal: _homeController.expenseList.isEmpty || _homeController.expenseList == [] || _homeController.goalNotEssentialExpenses == 0.0
                               ? 0.0
@@ -85,10 +111,10 @@ class HomePage extends StatelessWidget {
                           title: 'Investimentos',
                           goalValue: _homeController.goalsList.isEmpty || _homeController.goalsList == []
                               ? CircularProgressIndicator()
-                              : _homeController.loadGoalInvestiment(),
+                              : Text('Meta:  ${moneyFormatter.format(_homeController.loadGoalInvestiment())}'),
                           effectiveValue: _homeController.investimentList.isEmpty || _homeController.investimentList == []
-                              ? Text('Investido: R\$0.00')
-                              : _homeController.loadInvestmensCurrent(),
+                              ? Text('Despesas:  ${moneyFormatter.format(0)}')
+                              : Text('Investido:  ${moneyFormatter.format(_homeController.loadInvestmensCurrent())}'),
                           hoursValue: Text(''),
                           colorChart: AppColors.investColor,
                           percentGoal: _homeController.investimentList.isEmpty || _homeController.investimentList == [] || _homeController.goalInvestiment == 0.0
@@ -96,52 +122,21 @@ class HomePage extends StatelessWidget {
                               : (_homeController.totalInvestments / _homeController.goalInvestiment),
                         ),
                         SizedBox(height: 15.0),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 5.0),
-                          child: LinearProgressIndicator(
-                            value: _homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.percentagePeriodCurrent(),
-                            color: Colors.black,
-                            backgroundColor: Colors.black12,
-                          ),
+                        //
+                        TimeIndicatorProgress(
+                          percentageCurrent:
+                              _homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.percentagePeriodCurrent(),
                         ),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Dias passados: ${_homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.periodIndicator(DateTime.now())}',
-                                        style: TextStyle(fontSize: 11.0),
-                                      ),
-                                      Text(
-                                        'Dias do período: ${_homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod! - 1).last)}',
-                                        style: TextStyle(fontSize: 11.0),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        (_homeController.parametersList.isEmpty || _homeController.parametersList == []
-                                                    ? 0
-                                                    : _homeController.percentagePeriodCurrent() * 100)
-                                                .toStringAsFixed(0) +
-                                            '%',
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        //
+                        TimeIndicatorDescription(
+                          pastDays:
+                              _homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.periodIndicator(DateTime.now()),
+                          periodDays: _homeController.parametersList.isEmpty || _homeController.parametersList == []
+                              ? 0
+                              : _homeController
+                                  .periodIndicator(getInitialDateQuery(dayInitialPeriod: _homeController.parametersList.first.dayInitialPeriod! - 1).last),
+                          percentageDaysPassed:
+                              _homeController.parametersList.isEmpty || _homeController.parametersList == [] ? 0 : _homeController.percentagePeriodCurrent() * 100,
                         ),
                       ],
                     ),
@@ -212,12 +207,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      print(_homeController.periodIndicator(DateTime.now()));
-                      print(_homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last));
-                      print((_homeController.periodIndicator(DateTime.now()) /
-                          _homeController.periodIndicator(getInitialDateQuery(_homeController.parametersList.first.dayInitialPeriod!).last)));
-                    },
+                    onTap: () => Get.toNamed(Routes.PROJECTION, arguments: _homeController.user),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(

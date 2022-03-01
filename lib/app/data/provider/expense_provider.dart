@@ -1,37 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
-// ignore: unused_import
-import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
 class ExpenseProvider {
   Stream<List<ExpenseModel>> getAllExpense({required String userUid}) {
     return _firebaseFirestore.doc(userUid).collection('expense').orderBy('expDate').snapshots().map(
-      (query) {
-        List<ExpenseModel> retExpense = [];
-        query.docs.forEach(
-          (element) {
-            retExpense.add(ExpenseModel.fromDocument(element));
-          },
-        );
-        return retExpense;
-      },
-    );
-  }
-
-  //Retorna todos os gastos não essenciais pagos no período atual
-  Stream<List<ExpenseModel>> getNotEssencExpCurrent({required String userUid, required int dayInitial}) {
-    return _firebaseFirestore
-        .doc(userUid)
-        .collection('expense')
-        .where('expQuality', isEqualTo: 'Não essencial')
-        .where('expPay', isEqualTo: true)
-        .orderBy('expDate')
-        .where('expDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
-        .snapshots()
-        .map(
       (query) {
         List<ExpenseModel> retExpense = [];
         query.docs.forEach(

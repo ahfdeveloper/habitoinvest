@@ -27,6 +27,8 @@ import 'package:habito_invest_app/app/modules/investment/investmentlist/investme
 import 'package:habito_invest_app/app/modules/login/login_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_binding.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_page.dart';
+import 'package:habito_invest_app/app/modules/projection/projection_binding.dart';
+import 'package:habito_invest_app/app/modules/projection/projection_page.dart';
 import 'package:habito_invest_app/app/modules/simulator/simulator_bindings.dart';
 import 'package:habito_invest_app/app/modules/simulator/simulator_page.dart';
 import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_binding.dart';
@@ -129,6 +131,11 @@ class AppPages {
       name: Routes.PARAMETERS,
       page: () => ParametersPage(),
       binding: ParametersBinding(),
+    ),
+    GetPage(
+      name: Routes.PROJECTION,
+      page: () => ProjectionPage(),
+      binding: ProjectionBinding(),
     ),
     GetPage(
       name: Routes.WELCOME,

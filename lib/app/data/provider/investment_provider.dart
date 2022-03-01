@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/investment_model.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
@@ -8,28 +7,6 @@ class InvestmentProvider {
   //Retorna todos os investimentos cadastrados
   Stream<List<InvestmentModel>> getAllInvestment({required String userUid}) {
     return _firebaseFirestore.doc(userUid).collection('investment').orderBy('invDate').snapshots().map(
-      (query) {
-        List<InvestmentModel> retInvestment = [];
-        query.docs.forEach(
-          (element) {
-            retInvestment.add(InvestmentModel.fromDocument(element));
-          },
-        );
-        return retInvestment;
-      },
-    );
-  }
-
-  //Retorna todas os investimentos feitos no período atual
-  Stream<List<InvestmentModel>> getInvestmentCurrent({required String userUid, required int dayInitial}) {
-    return _firebaseFirestore
-        .doc(userUid)
-        .collection('investment')
-        .where('invMadeEffective', isEqualTo: true)
-        .orderBy('invDate')
-        .where('invDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
-        .snapshots()
-        .map(
       (query) {
         List<InvestmentModel> retInvestment = [];
         query.docs.forEach(

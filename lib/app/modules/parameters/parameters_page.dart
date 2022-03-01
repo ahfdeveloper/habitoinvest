@@ -22,7 +22,7 @@ class ParametersPage extends StatelessWidget {
         automaticallyImplyLeading: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => cancel()),
         backgroundColor: interfaceColor,
-        title: Text('Parâmetros do usuário'),
+        title: Text('Parâmetros do usuário', style: AppTextStyles.appBarTextLight),
         actions: [
           IconButton(
             onPressed: () => _parameterController.updateParameter(),
@@ -81,7 +81,7 @@ class ParametersPage extends StatelessWidget {
                 SizedBox(height: 5.0),
                 Text(
                   '*Informe o dia do mês que deseja que se inicie o período de apuração de suas metas.',
-                  style: TextStyle(fontSize: 14.0),
+                  style: AppTextStyles.generallyLittleTextDarkBody,
                 ),
                 SizedBox(height: 35.0),
                 Text('Renda Mensal: *', style: AppTextStyles.generallyTextDarkBody),
@@ -108,10 +108,7 @@ class ParametersPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10.0),
-                Text(
-                  '*Informe o valor médio de sua renda mensal',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                Text('*Informe o valor médio de sua renda mensal', style: AppTextStyles.generallyLittleTextDarkBody),
                 SizedBox(height: 35.0),
                 Text('Horas trabalhadas: *', style: AppTextStyles.generallyTextDarkBody),
                 Row(
@@ -139,10 +136,7 @@ class ParametersPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10.0),
-                Text(
-                  '*Informe a quantidade média de horas trabalhadas por semana.',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                Text('*Informe a quantidade média de horas trabalhadas por semana.', style: AppTextStyles.generallyLittleTextDarkBody),
               ],
             ),
           ),

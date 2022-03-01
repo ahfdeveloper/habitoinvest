@@ -184,6 +184,7 @@ class ExpenseUpdateController extends GetxController {
         expAddInformation: addInformationTextController!.text,
         expUid: expenseId,
       )..whenComplete(() {
+          FocusManager.instance.primaryFocus?.unfocus();
           AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa atualizada com sucesso');
           clearEditingControllers();
         });

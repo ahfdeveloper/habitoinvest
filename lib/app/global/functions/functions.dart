@@ -41,7 +41,7 @@ class EnabledFocusNode extends FocusNode {
 }
 
 // Retorna o período a ser considerado para verificar as metas
-List<DateTime> getInitialDateQuery(int dayInitialPeriod) {
+List<DateTime> getInitialDateQuery({required int dayInitialPeriod}) {
   int day = DateTime.now().day;
   int month = DateTime.now().month;
   int year = DateTime.now().year;
@@ -55,7 +55,20 @@ List<DateTime> getInitialDateQuery(int dayInitialPeriod) {
   }
 }
 
-arrowBack() {}
+// Retorna o período a ser usado na apuração da projeção das metas
+List<DateTime> getDateProjectionExpense({required int dayInitialPeriod, required int fowardMonth}) {
+  int day = DateTime.now().day;
+  int month = DateTime.now().month;
+  int year = DateTime.now().year;
+
+  if (day >= dayInitialPeriod && day <= 31) {
+    // retorna dia anterior ao dia de início do período
+    return [DateTime(year, month + fowardMonth, dayInitialPeriod - 1), DateTime(year, month + 1 + fowardMonth, dayInitialPeriod)];
+  } else {
+    // retorna dia posterior ao dia de início do período
+    return [DateTime(year, month - 1 + fowardMonth, dayInitialPeriod - 1), DateTime(year, month + fowardMonth, dayInitialPeriod)];
+  }
+}
 
 // Atualizar o controller de valor moeda e retorna para página anterior
 void cancel() {

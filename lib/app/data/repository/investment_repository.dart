@@ -9,10 +9,6 @@ class InvestmentRepository {
     return _investmentProvider.getAllInvestment(userUid: userUid);
   }
 
-  Stream<List<InvestmentModel>> getInvestmentCurrent({required String userUid, required int dayInitial}) {
-    return _investmentProvider.getInvestmentCurrent(userUid: userUid, dayInitial: dayInitial);
-  }
-
   // Cadastra um novo investimento
   Future<void> addInvestment(
       {required String userUid,

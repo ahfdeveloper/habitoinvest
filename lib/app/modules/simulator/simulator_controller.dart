@@ -3,11 +3,8 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/global/functions/functions.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:intl/intl.dart';
 
 class SimulatorController extends GetxController {
-  final formatter = NumberFormat.currency(locale: "pt-br", symbol: "R\$");
-
   MoneyMaskedTextController contributionValueController = moneyValueController;
   TextEditingController interestRateController = TextEditingController();
 
@@ -69,23 +66,23 @@ class SimulatorController extends GetxController {
     for (int i = 1; i <= 360; i++) {
       accumulatedValue = accumulatedValue + (accumulatedValue * interestRate / 100) + contributionValue;
       if (i == 60) {
-        contributionFiveYears = 'Aporte total em 5 anos:  ${formatter.format(contributionValue * 60)}';
-        profitabilityFiveYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+        contributionFiveYears = 'Aporte total em 5 anos:  ${moneyFormatter.format(contributionValue * 60)}';
+        profitabilityFiveYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 120) {
-        contributionTenYears = 'Aporte total em 10 anos:  ${formatter.format(contributionValue * 120)}';
-        profitabilityTenYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+        contributionTenYears = 'Aporte total em 10 anos:  ${moneyFormatter.format(contributionValue * 120)}';
+        profitabilityTenYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 240) {
-        contributionTwentyYears = 'Aporte total em 20 anos:  ${formatter.format(contributionValue * 240)}';
-        profitabilityTwentyYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+        contributionTwentyYears = 'Aporte total em 20 anos:  ${moneyFormatter.format(contributionValue * 240)}';
+        profitabilityTwentyYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 360) {
-        contributionThirtyYears = 'Aporte total em 30 anos:  ${formatter.format(contributionValue * 360)}';
-        profitabilityThirtyYears = 'Aporte + rentabilidade:  ${formatter.format(accumulatedValue)}';
+        contributionThirtyYears = 'Aporte total em 30 anos:  ${moneyFormatter.format(contributionValue * 360)}';
+        profitabilityThirtyYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
       }
     }
   }

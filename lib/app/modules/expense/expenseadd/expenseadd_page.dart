@@ -48,7 +48,6 @@ class ExpenseAddPage extends StatelessWidget {
               decoration: textFormFieldValueOperation(),
               onChanged: (value) {
                 _expenseAddController.workedCost(value);
-                print(_expenseAddController.workedHours);
               },
             ),
             DividerHorizontal(),
@@ -127,6 +126,7 @@ class ExpenseAddPage extends StatelessWidget {
                 onChanged: (newValue) {
                   _expenseAddController.selectedCategory = newValue as String;
                 },
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
               ),
             ),
             DividerHorizontal(),

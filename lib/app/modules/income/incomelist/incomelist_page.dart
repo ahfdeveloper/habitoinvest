@@ -23,7 +23,10 @@ class IncomeList extends StatelessWidget {
           automaticallyImplyLeading: true,
           leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.offAllNamed(Routes.HOME, arguments: _incomeListController.user)),
           title: _incomeListController.searchBoolean == false
-              ? Text('Receitas')
+              ? Text(
+                  'Receitas',
+                  style: AppTextStyles.appBarTextLight,
+                )
               : TextFormField(
                   controller: _incomeListController.searchFormFieldController,
                   style: AppTextStyles.appBarTextLight,

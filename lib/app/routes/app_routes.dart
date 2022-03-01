@@ -37,6 +37,8 @@ abstract class Routes {
   static const SIMULATOR = '/simulator';
   // Cadastro de Parâmetros
   static const PARAMETERS = '/parameters';
+  // Projeção de despesas
+  static const PROJECTION = '/projection';
   // Página de Boas vindas ao app com opções para Login
   static const WELCOME = '/welcome';
   //---------------------

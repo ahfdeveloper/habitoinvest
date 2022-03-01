@@ -24,6 +24,13 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor clara
+  static final TextStyle percentageChartHome = GoogleFonts.notoSans(
+    color: AppColors.grey800,
+    fontSize: 21.0,
+    fontWeight: FontWeight.w700,
+  );
+
   // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor escura
   static final TextStyle appBarTextLight = GoogleFonts.notoSans(
     color: AppColors.white,
@@ -31,11 +38,32 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  // Estilo do título do card de projeção de despesas
+  static final TextStyle titleCardProjection = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    fontSize: 17.0,
+    fontWeight: FontWeight.w800,
+  );
+
+  // Estilo padrão usado no corpo das páginas quando o background é claro
+  static final TextStyle textCardProjection = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    fontSize: 13.0,
+    fontWeight: FontWeight.w400,
+  );
+
   // Estilo padrão usado no corpo das páginas quando o background é claro
   static final TextStyle generallyTextDarkBody = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 14.0,
+    fontSize: 15.0,
     fontWeight: FontWeight.w700,
+  );
+
+  // Estilo padrão usado no corpo das páginas quando o background é claro
+  static final TextStyle generallyLittleTextDarkBody = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    fontSize: 13.0,
+    fontWeight: FontWeight.w400,
   );
 
   // Estilo padrão usado no corpo das páginas quando o background é escuro
@@ -92,7 +120,7 @@ class AppTextStyles {
     color: AppColors.input,
   );
 
-  // Estilo usado na página Welcome (Novo por aqui)
+  // Estilo usado na página Welcome
   static final textBlack = GoogleFonts.inter(
     fontSize: 12,
     fontWeight: FontWeight.w400,
@@ -122,7 +150,7 @@ class AppTextStyles {
 
   // Estilo usado no valor inserido das metas
   static final valueGoals = GoogleFonts.notoSans(
-    fontSize: 55.0,
+    fontSize: 50.0,
     fontWeight: FontWeight.bold,
     color: AppColors.themeColor,
   );

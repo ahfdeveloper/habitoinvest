@@ -9,11 +9,6 @@ class ExpenseRepository {
     return _expenseProvider.getAllExpense(userUid: userUid);
   }
 
-  //Retorna todos os gastos não essenciais pagos no período atual
-  Stream<List<ExpenseModel>> getNotEssencExpCurrent({required String userUid, required int dayInitial}) {
-    return _expenseProvider.getNotEssencExpCurrent(userUid: userUid, dayInitial: dayInitial);
-  }
-
   // Chama função do provider que cadastra uma nova despesa
   Future<void> addExpense(
       {required String userUid,

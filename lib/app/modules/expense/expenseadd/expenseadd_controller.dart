@@ -181,7 +181,8 @@ class ExpenseAddController extends GetxController {
             expAddInformation: addInformationTextController!.text,
           )..whenComplete(
               () {
-                AppSnackbar.snackarStyle(title: expenseDescription, message: 'Investimento cadastrado com sucesso');
+                FocusManager.instance.primaryFocus?.unfocus();
+                AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa cadastrado com sucesso');
                 clearEditingControllers();
                 Get.back();
               },
@@ -208,7 +209,8 @@ class ExpenseAddController extends GetxController {
           expPay: pay,
           expAddInformation: addInformationTextController!.text,
         )..whenComplete(() {
-            AppSnackbar.snackarStyle(title: expenseDescription, message: 'Investimento cadastrado com sucesso');
+            FocusManager.instance.primaryFocus?.unfocus();
+            AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa cadastrado com sucesso');
             clearEditingControllers();
           });
         Get.back();

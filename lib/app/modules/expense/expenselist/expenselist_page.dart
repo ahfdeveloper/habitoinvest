@@ -23,7 +23,7 @@ class ExpenseList extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.expenseColor,
           automaticallyImplyLeading: true,
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.offAllNamed(Routes.HOME, arguments: _expenseListController.user)),
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
           title: _expenseListController.searchBoolean == false
               ? Text('Despesas')
               : TextFormField(

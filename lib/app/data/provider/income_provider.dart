@@ -27,7 +27,8 @@ class IncomeProvider {
         .collection('income')
         .where('incReceived', isEqualTo: true)
         .orderBy('incDate')
-        .where('incDate', isGreaterThanOrEqualTo: getInitialDateQuery(dayInitial).first, isLessThan: getInitialDateQuery(dayInitial).last)
+        .where('incDate',
+            isGreaterThanOrEqualTo: getInitialDateQuery(dayInitialPeriod: dayInitial).first, isLessThan: getInitialDateQuery(dayInitialPeriod: dayInitial).last)
         .snapshots()
         .map(
       (query) {

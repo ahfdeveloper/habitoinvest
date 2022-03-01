@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/expense_model.dart';
@@ -85,87 +84,89 @@ class HomeController extends GetxController {
   }
 
   // Retorna a meta de Gastos não essenciais
-  Widget loadGoalExpenses() {
+  double loadGoalExpenses() {
     if (goalsList.first.valueNotEssentialExpenses != 0.0) {
       goalNotEssentialExpenses = goalsList.first.valueNotEssentialExpenses!;
     } else {
       totalIncome = 0;
       incomeList.forEach((element) {
-        if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
-            (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+        if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
+            (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
             element.received == true) {
           totalIncome = totalIncome + element.value!;
         }
       });
       goalNotEssentialExpenses = (goalsList.first.percentageNotEssentialExpenses! / 100) * totalIncome;
     }
-    return Text('Meta: R\$${goalNotEssentialExpenses.toStringAsFixed(2)}');
+    return goalNotEssentialExpenses;
   }
 
   // Retorna a meta de Investimentos
-  Widget loadGoalInvestiment() {
+  double loadGoalInvestiment() {
     if (goalsList.first.valueInvestment != 0.0) {
       goalInvestiment = goalsList.first.valueInvestment!;
     } else {
       totalIncome = 0;
       incomeList.forEach((element) {
-        if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
-            (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+        if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
+            (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
             element.received == true) {
           totalIncome = totalIncome + element.value!;
         }
       });
       goalInvestiment = (goalsList.first.percentageInvestiment! / 100) * totalIncome;
     }
-    return Text('Meta: R\$${goalInvestiment.toStringAsFixed(2)}');
+    return goalInvestiment;
   }
 
   // Retorna os gastos não essenciais do período atual do usuário
-  Widget loadNotEssencialExpensesCurrent() {
+  double loadNotEssencialExpensesCurrent() {
     totalNotEssencialExpenses = 0.0;
     expenseList.forEach((element) {
-      if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
-          (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+      if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
+          (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
           element.quality == 'Não essencial' &&
           element.pay == true) {
         totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
       }
     });
-    return Text('Despesas: R\$${totalNotEssencialExpenses.toStringAsFixed(2)}');
+    return totalNotEssencialExpenses;
   }
 
   // Retorna os investimentos no período atual do usuário
-  Widget loadInvestmensCurrent() {
+  double loadInvestmensCurrent() {
     totalInvestments = 0.0;
     investimentList.forEach((element) {
-      if (element.date.isAfter(getInitialDateQuery(parametersList.first.dayInitialPeriod!).first) &&
-          (element.date.isBefore(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last)) &&
+      if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
+          (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
           element.madeEffective == true) {
         totalInvestments = totalInvestments + element.value!.toDouble();
       }
     });
-    return Text('Investido: R\$${totalInvestments.toStringAsFixed(2)}');
+    return totalInvestments;
   }
 
   // Calcula o equivalente das despesas não essenciais em horas de trabalho
-  Widget loadWorkedHours() {
+  double loadWorkedHours() {
     double monthHours = parametersList.first.workedHours! * 4.5;
-    return Text('Horas de trabalho: ${(totalNotEssencialExpenses / (parametersList.first.salary! / monthHours)).toStringAsFixed(1)}');
+    return totalNotEssencialExpenses / (parametersList.first.salary! / monthHours);
   }
 
   int periodIndicator(DateTime finalDate) {
-    List<DateTime> dates = getInitialDateQuery(parametersList.first.dayInitialPeriod!);
+    List<DateTime> dates = getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!);
     DateTime from = DateTime(dates.first.year, dates.first.month, dates.first.day);
     DateTime to = DateTime(finalDate.year, finalDate.month, finalDate.day);
     return (to.difference(from).inHours / 24).round();
   }
 
   double percentagePeriodCurrent() {
-    return periodIndicator(DateTime.now()) / periodIndicator(getInitialDateQuery(parametersList.first.dayInitialPeriod!).last);
+    return periodIndicator(DateTime.now()) / periodIndicator(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last);
   }
 
   // Index usado na NavigationBar
   void changePage(int index) async {
     currentIndex = index;
+    update();
+    print(currentIndex);
   }
 }

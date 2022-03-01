@@ -172,9 +172,9 @@ class IncomeAddUpdateController extends GetxController {
                 FocusManager.instance.primaryFocus?.unfocus();
                 AppSnackbar.snackarStyle(title: incomeDescription, message: 'Receita cadastrada com sucesso');
                 clearEditingControllers();
-                //Future.delayed(Duration(milliseconds: 1200), () {
-                Get.offAndToNamed(Routes.INVESTMENT_ADDUPDATE, arguments: user);
-                //});
+                Future.delayed(Duration(milliseconds: 1200), () {
+                  Get.offAndToNamed(Routes.INVESTMENT_ADDUPDATE, arguments: user);
+                });
               });
           }
         },
