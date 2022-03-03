@@ -8,6 +8,10 @@ class ParametersRepository {
     return _parametersProvider.getAllParameters(userUid: userUid);
   }
 
+  Future<void> verifyParameterInBD({required String userUid}) async {
+    return _parametersProvider.verifyParameterInBD(userUid: userUid);
+  }
+
   Future<void> addParameter({required String userUid}) async {
     return _parametersProvider.addParameter(userUid: userUid);
   }

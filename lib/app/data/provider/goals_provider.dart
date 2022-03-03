@@ -19,6 +19,19 @@ class GoalsProvider {
     );
   }
 
+  // Verifica se já existe objetivos cadastrados para o usuário, se não existe aciona o cadastro
+  Future<void> verifyGoalInBD({required String userUid}) async {
+    try {
+      _firebaseFirestore.doc(userUid).collection('goals').doc().get().then((value) {
+        if (!value.exists) {
+          addGoal(userUid: userUid);
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // Quando usuário não possui metas cadastradas adiciona valor default zero para que o mesmo atualize
   Future<void> addGoal({
     required String userUid,

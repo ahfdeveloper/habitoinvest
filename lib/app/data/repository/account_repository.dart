@@ -4,19 +4,20 @@ import 'package:habito_invest_app/app/data/provider/account_provider.dart';
 class AccountRepository {
   final AccountProvider _accountProvider = AccountProvider();
 
-  // Retorna o registro da conta
   Stream<List<AccountModel>> getAccount({required String userUid}) {
     return _accountProvider.getAccount(userUid: userUid);
   }
 
-  // Cadastro dados para uma nova conta quando usuário se registra
+  Future<void> verifyAccountInBD({required String userUid}) async {
+    return _accountProvider.verifyAccountInBD(userUid: userUid);
+  }
+
   Future<void> addAccount({
     required String userUid,
   }) async {
     return _accountProvider.addAccount(userUid: userUid);
   }
 
-  // Atualiza os dados da conta
   Future<void> updateAccount(
       {required String userUid,
       required double accBalance,

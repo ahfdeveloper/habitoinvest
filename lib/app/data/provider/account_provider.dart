@@ -19,6 +19,19 @@ class AccountProvider {
     );
   }
 
+  // Verifica se já existe conta cadastrada para o usuário, se não existe aciona o cadastro
+  Future<void> verifyAccountInBD({required String userUid}) async {
+    try {
+      _firebaseFirestore.doc(userUid).collection('account').doc().get().then((value) {
+        if (!value.exists) {
+          addAccount(userUid: userUid);
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // Quando usuário não possui dados de account cadastrada adiciona valor default zero para os campos
   Future<void> addAccount({
     required String userUid,

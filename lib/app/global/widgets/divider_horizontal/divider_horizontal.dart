@@ -10,7 +10,6 @@ class DividerHorizontal extends StatelessWidget {
       width: double.maxFinite,
       height: 1.0,
       color: AppColors.stroke,
-      child: null,
     );
   }
 }

@@ -18,17 +18,11 @@ class DrawerHome extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            currentAccountPicture: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Image.asset(_homeController.user!.urlimage != null
-                  ? 'assets/user.png' // '${_homeController.user!.urlimage!}'
-                  : 'assets/user.png'),
-            ),
+            currentAccountPictureSize: Size.square(40),
+            currentAccountPicture: Image.asset('assets/user1.png'),
             accountName: Text(
               '${_homeController.user!.name}',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, color: AppColors.white),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0, color: AppColors.white),
             ),
             accountEmail: Text(
               '${_homeController.user!.email}',

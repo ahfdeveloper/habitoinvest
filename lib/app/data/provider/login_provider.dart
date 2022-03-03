@@ -13,19 +13,13 @@ class LoginProvider {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Retorna usuário logado
-  Stream<UserModel> get authStateChanged => _firebaseAuth
-      .authStateChanges()
-      .map((User? currentUser) => UserModel.fromFirebaseUser(currentUser!));
+  Stream<UserModel> get authStateChanged => _firebaseAuth.authStateChanges().map((User? currentUser) => UserModel.fromFirebaseUser(currentUser!));
 
   // Cria usuário com e-mail e senha
-  Future<UserModel?> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String name}) async {
+  Future<UserModel?> createUserWithEmailAndPassword({required String email, required String password, required String name}) async {
     User user;
     try {
-      final userCredential = (await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password));
+      final userCredential = (await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password));
       user = userCredential.user!;
       await user.updateDisplayName(name);
       await user.reload();
@@ -38,8 +32,7 @@ class LoginProvider {
   }
 
   // Login do usuário com e-mail e senha
-  Future<UserModel?> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<UserModel?> signInWithEmailAndPassword({required String email, required String password}) async {
     try {
       final currentUser = (await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -57,14 +50,12 @@ class LoginProvider {
   Future<UserModel?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      UserCredential _authResult =
-          await _firebaseAuth.signInWithCredential(credential);
+      UserCredential _authResult = await _firebaseAuth.signInWithCredential(credential);
 
       final currentUser = UserModel(
         id: _authResult.user!.uid,
@@ -81,15 +72,13 @@ class LoginProvider {
 
   /* Verifica a existência de usuário Google no BD. Caso o retorno seja negativo,
   chama a função que efetua seu registro no Firebase. */
-  Future verifyUserInBD(
-      {required String userUid,
-      required String name,
-      required String email}) async {
+  Future<void> verifyUserInBD({required String userUid, required String name, required String email}) async {
     try {
-      _firebaseFirestore.collection('users').doc(userUid).get().then((value) =>
-          !value.exists
-              ? addUserFirestore(userUid: userUid, name: name, email: email)
-              : print('Usuário já cadastrado'));
+      _firebaseFirestore.collection('users').doc(userUid).get().then((value) {
+        if (!value.exists) {
+          addUserFirestore(userUid: userUid, name: name, email: email);
+        }
+      });
     } catch (e) {
       callError(e);
       return null;
@@ -97,19 +86,61 @@ class LoginProvider {
   }
 
   // Adiciona o id do usuário como documento dentro da coleção 'users' do Firestore
-  Future addUserFirestore(
-      {required String userUid,
-      required String name,
-      required String email}) async {
+  Future<void> addUserFirestore({required String userUid, required String name, required String email}) async {
     try {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(userUid)
-          .set({'name': name, 'email': email, 'id': userUid});
+      await _firebaseFirestore.collection('users').doc(userUid).set({'name': name, 'email': email, 'id': userUid});
     } catch (e) {
       callError(e);
       return null;
     }
+  }
+
+  // Adiciona uma conta para controle de saldo para usuário Google recém registrado no banco
+  Future<void> addAccount({
+    required String userUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('account').doc();
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'accBalance': 0,
+      'accValueLT': 0,
+      'accTypeLT': 'Inicio',
+      'accDateLT': DateTime.now(),
+    };
+
+    await documentReference.set(data).catchError((e) => print(e));
+  }
+
+  // Quando usuário não possui metas cadastradas adiciona valor default zero para que o mesmo atualize
+  Future<void> addGoal({
+    required String userUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('goals').doc();
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'gDate': DateTime.now(),
+      'gPercentageInvestment': 0,
+      'gPercentageNotEssentialExpenses': 0,
+      'gValueInvestment': 0,
+      'gValueNotEssentialExpenses': 0,
+    };
+
+    await documentReference.set(data).catchError((e) => print(e));
+  }
+
+  // Quando usuário se registra a função adiciona valores padrões aos seus parâmetros
+  Future<void> addParameter({
+    required String userUid,
+  }) async {
+    DocumentReference documentReference = _firebaseFirestore.doc(userUid).collection('parameter').doc();
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'parDate': DateTime.now(),
+      'parDayInitialPeriod': 1,
+      'parSalary': 0,
+      'parWorkedHours': 0,
+    };
+    await documentReference.set(data).catchError((e) => print(e));
   }
 
   // Logoff do usuário
@@ -125,36 +156,25 @@ class LoginProvider {
     Get.back();
     switch (errorCode.code) {
       case 'user-not-found':
-        Get.defaultDialog(
-            title: 'ATENÇÃO', content: Text('Usuário não encontrado'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Usuário não encontrado'));
         break;
       case 'wrong-password':
-        Get.defaultDialog(
-            title: 'ATENÇÃO',
-            content: Text('Senha não confere com o cadastro'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Senha não confere com o cadastro'));
         break;
       case 'user-disabled':
-        Get.defaultDialog(
-            title: 'ATENÇÃO', content: Text('Este usuário foi desativado'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Este usuário foi desativado'));
         break;
       case 'too-many-requests':
-        Get.defaultDialog(
-            title: 'ATENÇÃO',
-            content: Text(
-                'Muitas tentativas de acesso. Tente novamente mais tarde'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Muitas tentativas de acesso. Tente novamente mais tarde'));
         break;
       case 'operation-not-allowed':
-        Get.defaultDialog(
-            title: 'ATENÇÃO', content: Text('Login não permitido'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Login não permitido'));
         break;
       case 'email-already-in-use':
-        Get.defaultDialog(
-            title: 'ATENÇÃO', content: Text('Este e-mail já está em uso'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Este e-mail já está em uso'));
         break;
       case 'weak-password':
-        Get.defaultDialog(
-            title: 'ATENÇÃO',
-            content: Text('Senha deve possuir, no mínimo, 6 caracteres'));
+        Get.defaultDialog(title: 'ATENÇÃO', content: Text('Senha deve possuir, no mínimo, 6 caracteres'));
         break;
       case 'invalid-email':
         Get.defaultDialog(title: 'ATENÇÃO', content: Text('E-mail inválido'));

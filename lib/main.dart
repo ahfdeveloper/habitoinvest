@@ -14,8 +14,7 @@ void main() {
   GetStorage.init('habito_invest_app');
 
   // Fixar app em Portrait
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
 
   runApp(
     FutureBuilder(
@@ -24,8 +23,7 @@ void main() {
         if (snapshot.hasError) {
           return Material(
             child: Center(
-              child: Text('Não foi possível inicializar o Firebase',
-                  textDirection: TextDirection.ltr),
+              child: Text('Não foi possível inicializar o Firebase', textDirection: TextDirection.ltr),
             ),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
@@ -35,10 +33,7 @@ void main() {
             debugShowCheckedModeBanner: false,
 
             // Setando a localização
-            localizationsDelegates: [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
-            ],
+            localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
             supportedLocales: [const Locale('pt', 'BR')],
 
             //Setando as rotas

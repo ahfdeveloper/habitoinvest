@@ -19,6 +19,18 @@ class ParametersProvider {
     );
   }
 
+  Future<void> verifyParameterInBD({required String userUid}) async {
+    try {
+      _firebaseFirestore.doc(userUid).collection('parameter').doc().get().then((value) {
+        if (!value.exists) {
+          addParameter(userUid: userUid);
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // Quando usuário se registra a função adiciona valores padrões aos seus parâmetros
   Future<void> addParameter({
     required String userUid,
