@@ -21,7 +21,7 @@ class InvestmentList extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.investColor,
           automaticallyImplyLeading: true,
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.offAllNamed(Routes.HOME, arguments: _investmentListController.user)),
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
           title: _investmentListController.searchBoolean == false
               ? Text('Investimentos')
               : TextFormField(
@@ -91,6 +91,7 @@ class InvestmentList extends StatelessWidget {
                           _investmentListController.investmentId = _investmentListController.investmentList[index].id!;
                           _investmentListController.investmentDescription = _investmentListController.investmentList[index].description!;
                           _investmentListController.investmentValue = _investmentListController.investmentList[index].value!;
+                          _investmentListController.investmentMadeEffective = _investmentListController.investmentList[index].madeEffective!;
                           _investmentListController.deleteInvestment();
                         },
                       ),
@@ -100,9 +101,10 @@ class InvestmentList extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                'Não há investimentos cadastrados',
-                style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-              )),
+                  'Não há investimentos cadastrados',
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             moneyValueController.updateValue(0.0);

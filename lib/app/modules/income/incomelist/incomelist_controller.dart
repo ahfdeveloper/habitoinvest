@@ -33,6 +33,10 @@ class IncomeListController extends GetxController {
   String get incomeDescription => this._incomeDescription;
   set incomeDescription(String value) => this._incomeDescription = value;
 
+  bool _incomeReceived = false;
+  bool get incomeReceived => this._incomeReceived;
+  set incomeReceived(bool value) => this._incomeReceived = value;
+
   Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
   List<IncomeModel> get incomeList => this._incomeList.value;
   set incomeList(List<IncomeModel> value) => this._incomeList.value = value;
@@ -66,14 +70,16 @@ class IncomeListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        _accountRepository.updateAccount(
-          userUid: user!.id,
-          accBalance: _accountList.value.first.balance! - incomeValue,
-          accValueLT: incomeValue,
-          accTypeLT: 'Delete Income',
-          accDateLT: DateTime.now(),
-          accUid: _accountList.value.first.id!,
-        );
+        if (incomeReceived == true) {
+          _accountRepository.updateAccount(
+            userUid: user!.id,
+            accBalance: _accountList.value.first.balance! - incomeValue,
+            accValueLT: incomeValue,
+            accTypeLT: 'Delete Income',
+            accDateLT: DateTime.now(),
+            accUid: _accountList.value.first.id!,
+          );
+        }
         _incomeRepository
             .deleteIncome(
               userUid: user!.id,

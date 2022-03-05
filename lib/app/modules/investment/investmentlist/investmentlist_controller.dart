@@ -28,6 +28,10 @@ class InvestmentListController extends GetxController {
   double get investmentValue => this._investmentValue;
   set investmentValue(double value) => this._investmentValue = value;
 
+  bool _investmentMadeEffective = false;
+  bool get investmentMadeEffective => this._investmentMadeEffective;
+  set investmentMadeEffective(bool value) => this._investmentMadeEffective = value;
+
   // Indica quando o botão de procurar foi clicado ou não
   RxBool _searchBoolean = false.obs;
   get searchBoolean => this._searchBoolean.value;
@@ -69,14 +73,16 @@ class InvestmentListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        _accountRepository.updateAccount(
-          userUid: user!.id,
-          accBalance: _accountList.value.first.balance! + investmentValue,
-          accValueLT: investmentValue,
-          accTypeLT: 'Delete Expense',
-          accDateLT: DateTime.now(),
-          accUid: _accountList.value.first.id!,
-        );
+        if (investmentMadeEffective == true) {
+          _accountRepository.updateAccount(
+            userUid: user!.id,
+            accBalance: _accountList.value.first.balance! + investmentValue,
+            accValueLT: investmentValue,
+            accTypeLT: 'Delete Expense',
+            accDateLT: DateTime.now(),
+            accUid: _accountList.value.first.id!,
+          );
+        }
         _investmentRepository.deleteInvestment(userUid: user!.id, invUid: investmentId, invDescription: investmentDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: investmentDescription,

@@ -7,7 +7,6 @@ import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
@@ -25,7 +24,12 @@ class IncomeAddUpdatePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.offAndToNamed(Routes.INCOME_LIST, arguments: _incomeAddUpdateController.user);
+              FocusManager.instance.primaryFocus?.unfocus();
+              _incomeAddUpdateController.cancel();
+              //if (_incomeAddUpdateController.addEditFlag == 'NEW')
+              //Get.back();
+              //else
+              //Get.offAndToNamed(Routes.INCOME_LIST, arguments: _incomeAddUpdateController.user);
               _incomeAddUpdateController.clearEditingControllers();
             },
             icon: Icon(Icons.cancel, color: AppColors.white),

@@ -34,14 +34,14 @@ class TimeIndicatorDescription extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('${percentageDaysPassed.toStringAsFixed(0)}%', textAlign: TextAlign.end),
-                ],
-              ),
-            ),
+            // Expanded(
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       Text('${percentageDaysPassed.toStringAsFixed(0)}%', textAlign: TextAlign.end),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

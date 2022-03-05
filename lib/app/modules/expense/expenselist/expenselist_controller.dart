@@ -33,6 +33,10 @@ class ExpenseListController extends GetxController {
   double get expenseValue => this._expenseValue;
   set expenseValue(double value) => this._expenseValue = value;
 
+  bool _expensePay = false;
+  bool get expensePay => this._expensePay;
+  set expensePay(bool value) => this._expensePay = value;
+
   // Variável que guarda a lista de despesas
   Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get expenseList => this._expenseList.value;
@@ -68,15 +72,16 @@ class ExpenseListController extends GetxController {
       textConfirm: 'OK',
       confirmTextColor: AppColors.white,
       onConfirm: () {
-        print(user!.id);
-        _accountRepository.updateAccount(
-          userUid: user!.id,
-          accBalance: _accountList.value.first.balance! + expenseValue,
-          accValueLT: expenseValue,
-          accTypeLT: 'Delete Expense',
-          accDateLT: DateTime.now(),
-          accUid: _accountList.value.first.id!,
-        );
+        if (expensePay == true) {
+          _accountRepository.updateAccount(
+            userUid: user!.id,
+            accBalance: _accountList.value.first.balance! + expenseValue,
+            accValueLT: expenseValue,
+            accTypeLT: 'Delete Expense',
+            accDateLT: DateTime.now(),
+            accUid: _accountList.value.first.id!,
+          );
+        }
         _expenseRepository.deleteExpense(userUid: user!.id, expUid: expenseId, expDescription: expenseDescription).whenComplete(
               () => AppSnackbar.snackarStyle(
                 title: expenseDescription,

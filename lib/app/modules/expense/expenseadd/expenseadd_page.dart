@@ -23,7 +23,7 @@ class ExpenseAddPage extends StatelessWidget {
         title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => _expenseAddController.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(

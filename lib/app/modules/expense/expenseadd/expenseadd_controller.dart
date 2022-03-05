@@ -62,12 +62,12 @@ class ExpenseAddController extends GetxController {
   set selectedExpenseQuality(String value) => this._selectedExpenseQuality.value = value;
 
   // Variáveis utilizadas para escolha se despesa é parcelada ou não
-  RxString _installmentsType = ''.obs;
+  RxString _installmentsType = 'Não'.obs;
   String get installmentsType => this._installmentsType.value;
   set installmentsType(String value) => this._installmentsType.value = value;
 
   // Variáveis usadas para exibir informações quando o usuário escolhe se a despesa é parcelada ou não
-  bool _visibilityInstallmentsNo = false;
+  bool _visibilityInstallmentsNo = true;
   bool get visibilityInstallmentsNo => this._visibilityInstallmentsNo;
   set visibilityInstallmentsNo(bool value) => this._visibilityInstallmentsNo = value;
   bool _visibilityInstallmentsYes = false;
@@ -93,7 +93,7 @@ class ExpenseAddController extends GetxController {
   set descriptionValue(String value) => this._descriptionValue.value = value;
 
   // Variável usada para definição se despesa foi paga ou não
-  RxBool _pay = false.obs;
+  RxBool _pay = true.obs;
   bool get pay => this._pay.value;
   set pay(bool value) => this._pay.value = value;
 
@@ -116,6 +116,7 @@ class ExpenseAddController extends GetxController {
     descriptionTextController = TextEditingController();
     qtPortionTextController = TextEditingController();
     addInformationTextController = TextEditingController();
+    paintContainerType();
     super.onInit();
   }
 
@@ -182,12 +183,11 @@ class ExpenseAddController extends GetxController {
           )..whenComplete(
               () {
                 FocusManager.instance.primaryFocus?.unfocus();
-                AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa cadastrado com sucesso');
-                clearEditingControllers();
-                Get.back();
               },
             );
         }
+        cancel();
+        AppSnackbar.snackarStyle(title: expenseDescription, message: '${qtPortionTextController!.text} despesa(s) cadastrada(s) com sucesso');
       } else if (installmentsType == 'Não') {
         if (pay == true) {
           _accountRepository.updateAccount(
@@ -211,7 +211,6 @@ class ExpenseAddController extends GetxController {
         )..whenComplete(() {
             FocusManager.instance.primaryFocus?.unfocus();
             AppSnackbar.snackarStyle(title: expenseDescription, message: 'Despesa cadastrado com sucesso');
-            clearEditingControllers();
           });
         Get.back();
       }
@@ -254,12 +253,25 @@ class ExpenseAddController extends GetxController {
 
   // Limpa os campos do formulário
   void clearEditingControllers() {
+    moneyValueController.updateValue(0.0);
+    pay = true;
     descriptionTextController!.clear();
+    qtPortionTextController!.clear();
+    visibilityInstallmentsNo = true;
+    visibilityInstallmentsYes = false;
+    installmentsType = 'Não';
+    containerRadioNaoColor = null;
+    containerRadioSimColor = null;
     selectedCategory = firstElementDrop;
     selectedExpenseQuality = 'Essencial';
-    moneyValueController.updateValue(0.0);
     addInformationTextController!.clear();
-    installmentsType = '';
     workedHours = 0.0;
+    paintContainerType();
+  }
+
+  // Cancela o cadastro ou edição de uma nova despesa
+  void cancel() {
+    clearEditingControllers();
+    Get.back();
   }
 }

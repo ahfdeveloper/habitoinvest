@@ -5,6 +5,7 @@ class AppColors {
   static final Color white = Color(0XFFFFFFFF);
   static final Color bodyTextPagesColor = Color(0XFF616161);
   static final Color grey300 = Color(0XFFE0E0E0);
+  static final Color grey350 = Color(0XFFD6D6D6);
   static final Color grey400 = Color(0XFFBDBDBD);
   static final Color grey600 = Color(0XFF757575);
   static final Color grey800 = Color(0XFF424242);

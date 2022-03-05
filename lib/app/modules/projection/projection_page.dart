@@ -37,24 +37,74 @@ class ProjectionPage extends StatelessWidget {
           () => Container(
             child: Column(
               children: [
-                Text('Meta de despesas não essenciais:', style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 15.0, fontWeight: FontWeight.w700)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('Meta de despesas não essenciais:', style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 14.0, fontWeight: FontWeight.w700)),
+                  ],
+                ),
                 _projectionController.goalsList.isEmpty || _projectionController.goalsList == []
-                    ? CircularProgressIndicator()
-                    : Text(
-                        '${moneyFormatter.format(_projectionController.loadGoalExpenses())}',
-                        style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 15.0, fontWeight: FontWeight.w600),
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircularProgressIndicator(),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${moneyFormatter.format(_projectionController.loadGoalExpenses())}',
+                            style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 18.0, fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ),
-                Expanded(
+                _projectionController.expenseList.isEmpty ||
+                        _projectionController.expenseList == [] ||
+                        _projectionController.parametersList.isEmpty ||
+                        _projectionController.parametersList == []
+                    ? Text('Não há despesas cadastradas')
+                    : Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(color: AppColors.backgroundColor),
+                          child: ListView.builder(
+                            itemCount: 12,
+                            itemBuilder: (context, index) {
+                              return ChartCardProjection(
+                                period: Text(
+                                  dateFormat.format(_projectionController.getPeriod(index + 1).first) +
+                                      ' à ' +
+                                      dateFormat.format(_projectionController.getPeriod(index + 1).last),
+                                  style: AppTextStyles.titleCardProjection,
+                                ),
+                                effectiveValue: Text(
+                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
+                                  style: AppTextStyles.textCardProjection,
+                                ),
+                                hoursValue: Text(
+                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
+                                  style: AppTextStyles.textCardProjection,
+                                ),
+                                colorChart: AppColors.expenseColor,
+                                goalPercent: (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                /* Expanded(
                   child: Container(
                     decoration: BoxDecoration(color: AppColors.backgroundColor),
-                    child: ListView(
-                      children: [
-                        SizedBox(height: 15.0),
-                        ChartCardProjection(
+                    child: ListView.builder(
+                      itemCount: 12,
+                      itemBuilder: (context, index) {
+                        return ChartCardProjection(
                           period: (_projectionController.parametersList.isEmpty || _projectionController.parametersList == [])
                               ? CircularProgressIndicator()
                               : Text(
-                                  dateFormat.format(_projectionController.getPeriod(1).first) + ' à ' + dateFormat.format(_projectionController.getPeriod(1).last),
+                                  dateFormat.format(_projectionController.getPeriod(index + 1).first) +
+                                      ' à ' +
+                                      dateFormat.format(_projectionController.getPeriod(index + 1).last),
                                   style: AppTextStyles.titleCardProjection,
                                 ),
                           effectiveValue: (_projectionController.expenseList.isEmpty ||
@@ -63,13 +113,13 @@ class ProjectionPage extends StatelessWidget {
                                   _projectionController.parametersList == [])
                               ? Text('Despesas previstas:  ${moneyFormatter.format(0)}', style: AppTextStyles.textCardProjection)
                               : Text(
-                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(1))}',
+                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
                                   style: AppTextStyles.textCardProjection,
                                 ),
                           hoursValue: _projectionController.parametersList.isEmpty || _projectionController.parametersList == []
                               ? Text('Horas de trabalho:  ${0.0}', style: AppTextStyles.textCardProjection)
                               : Text(
-                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(1).toStringAsFixed(1)}',
+                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
                                   style: AppTextStyles.textCardProjection,
                                 ),
                           colorChart: AppColors.expenseColor,
@@ -77,69 +127,12 @@ class ProjectionPage extends StatelessWidget {
                                   _projectionController.expenseList == [] ||
                                   _projectionController.goalNotEssentialExpenses == 0.0
                               ? 0.0
-                              : (_projectionController.notEssencialExpenses.elementAt(0) / _projectionController.goalNotEssentialExpenses),
-                        ),
-                        SizedBox(height: 10.0),
-                        ChartCardProjection(
-                          period: (_projectionController.parametersList.isEmpty || _projectionController.parametersList == [])
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  dateFormat.format(_projectionController.getPeriod(2).first) + ' à ' + dateFormat.format(_projectionController.getPeriod(2).last),
-                                  style: AppTextStyles.titleCardProjection,
-                                ),
-                          effectiveValue: (_projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.parametersList.isEmpty ||
-                                  _projectionController.parametersList == [])
-                              ? Text('Despesas previstas:  ${moneyFormatter.format(0)}', style: AppTextStyles.textCardProjection)
-                              : Text(
-                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(2))}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                          hoursValue: _projectionController.parametersList.isEmpty || _projectionController.parametersList == []
-                              ? Text('Horas de trabalho:  ${0.0}', style: AppTextStyles.textCardProjection)
-                              : Text('Horas de trabalho: ${_projectionController.loadWorkedHours(2).toStringAsFixed(1)}', style: AppTextStyles.textCardProjection),
-                          colorChart: AppColors.expenseColor,
-                          goalPercent: _projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.goalNotEssentialExpenses == 0.0
-                              ? 0.0
-                              : (_projectionController.notEssencialExpenses.elementAt(1) / _projectionController.goalNotEssentialExpenses),
-                        ),
-                        SizedBox(height: 10.0),
-                        ChartCardProjection(
-                          period: (_projectionController.parametersList.isEmpty || _projectionController.parametersList == [])
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  dateFormat.format(_projectionController.getPeriod(3).first) + ' à ' + dateFormat.format(_projectionController.getPeriod(3).last),
-                                  style: AppTextStyles.titleCardProjection,
-                                ),
-                          effectiveValue: (_projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.parametersList.isEmpty ||
-                                  _projectionController.parametersList == [])
-                              ? Text('Despesas previstas:  ${moneyFormatter.format(0)}', style: AppTextStyles.textCardProjection)
-                              : Text(
-                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(3))}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                          hoursValue: _projectionController.parametersList.isEmpty || _projectionController.parametersList == []
-                              ? Text('Horas de trabalho:  ${0.0}', style: AppTextStyles.textCardProjection)
-                              : Text(
-                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(3).toStringAsFixed(1)}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                          colorChart: AppColors.expenseColor,
-                          goalPercent: _projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.goalNotEssentialExpenses == 0.0
-                              ? 0.0
-                              : (_projectionController.notEssencialExpenses.elementAt(2) / _projectionController.goalNotEssentialExpenses),
-                        ),
-                      ],
+                              : (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
+                        );
+                      },
                     ),
                   ),
-                ),
+                ), */
               ],
             ),
           ),

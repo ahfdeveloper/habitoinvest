@@ -57,6 +57,9 @@ dependencies:
   # Efeito deslizar item de uma listview
   flutter_slidable: ^0.6.0
 
+  # Montagem dos gráficos
+  percent_indicator: ^4.0.0
+
   flutter_localizations:
     sdk: flutter
 

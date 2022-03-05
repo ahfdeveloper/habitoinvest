@@ -10,8 +10,8 @@ import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
 class IncomeList extends StatelessWidget {
-  final IncomeListController _incomeListController = Get.find<IncomeListController>();
-  final IncomeAddUpdateController _incomeAddUpdateController = Get.put(IncomeAddUpdateController());
+  final IncomeListController _incomeListController = Get.put(IncomeListController());
+  final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class IncomeList extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.incomeColor,
           automaticallyImplyLeading: true,
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.offAllNamed(Routes.HOME, arguments: _incomeListController.user)),
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
           title: _incomeListController.searchBoolean == false
               ? Text(
                   'Receitas',
@@ -93,6 +93,7 @@ class IncomeList extends StatelessWidget {
                           _incomeListController.incomeId = _incomeListController.incomeList[index].id!;
                           _incomeListController.incomeDescription = _incomeListController.incomeList[index].description!;
                           _incomeListController.incomeValue = _incomeListController.incomeList[index].value!;
+                          _incomeListController.incomeReceived = _incomeListController.incomeList[index].received!;
                           _incomeListController.deleteIncome();
                         },
                       ),
@@ -102,9 +103,10 @@ class IncomeList extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                'Receitas não cadastradas',
-                style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-              )),
+                  'Não há receitas cadastradas',
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                ),
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             _incomeAddUpdateController.addEditFlag = 'NEW';

@@ -9,7 +9,7 @@ import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class DrawerHome extends StatelessWidget {
   final HomeController _homeController = Get.find<HomeController>();
-  final ParametersController _parametersController = Get.put(ParametersController());
+  final ParametersController _parametersController = Get.find<ParametersController>();
 
   @override
   Widget build(Object context) {

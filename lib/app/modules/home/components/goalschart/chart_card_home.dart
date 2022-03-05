@@ -50,7 +50,7 @@ class ChartCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Despesas não essenciais', style: AppTextStyles.titleCardProjection),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 7.0),
                         goalValueExpense,
                         effectiveValueExpense,
                         hoursValueExpense,
@@ -79,7 +79,7 @@ class ChartCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Investimentos', style: AppTextStyles.titleCardProjection),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 7.0),
                         goalValueInvestment,
                         effectiveValueInvestment,
                       ],

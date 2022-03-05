@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class ChartHome extends StatelessWidget {
   final Color colorChart;
@@ -14,29 +15,20 @@ class ChartHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double chartSize = 90.0;
     return Container(
-      height: chartSize,
-      width: chartSize,
       child: Stack(
         children: [
           Container(
-            height: chartSize,
-            width: chartSize,
-            child: Stack(
-              children: [
-                Container(
-                  height: chartSize,
-                  width: chartSize,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 11.0,
-                    value: percentageValue,
-                    backgroundColor: AppColors.grey300,
-                    valueColor: AlwaysStoppedAnimation(colorChart),
-                  ),
-                ),
-                Center(child: Text('${(percentageValue * 100).toStringAsFixed(0)}%', style: AppTextStyles.percentageChartHome))
-              ],
+            child: CircularPercentIndicator(
+              radius: 45.0,
+              lineWidth: 9.0,
+              percent: percentageValue >= 1 ? 1 : percentageValue,
+              animation: true,
+              animationDuration: 1600,
+              progressColor: colorChart,
+              backgroundColor: AppColors.grey350,
+              circularStrokeCap: CircularStrokeCap.round,
+              center: Text('${(percentageValue * 100).toStringAsFixed(0)}%', style: AppTextStyles.percentageChartHome),
             ),
           ),
         ],
