@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/investment_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
@@ -62,11 +63,9 @@ class InvestmentListController extends GetxController {
   //Apaga um investimento
   void deleteInvestment() {
     Get.defaultDialog(
+      titleStyle: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
       title: 'Excluir Investimento',
-      content: Text(
-        'Deseja realmente excluir este investimento?',
-        textAlign: TextAlign.center,
-      ),
+      middleText: 'Deseja realmente excluir este investimento?',
       buttonColor: AppColors.themeColor,
       textCancel: 'Cancelar',
       cancelTextColor: AppColors.themeColor,

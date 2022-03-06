@@ -45,9 +45,6 @@ dependencies:
   google_sign_in: ^5.0.4
   google_sign_in_web: ^0.10.0
 
-  # Bottom Navigation Bar package
-  bottom_navy_bar: ^6.0.0
-
   # Máscara de entrada para os TextFormFields do tipo número
   flutter_masked_text2: ^0.9.1
 

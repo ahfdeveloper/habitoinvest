@@ -26,117 +26,105 @@ class ProjectionPage extends StatelessWidget {
         title: Text('Projeção de despesas', style: AppTextStyles.appBarTextLight),
         actions: [
           IconButton(
-            onPressed: () => _projectionController.testeData(),
+            onPressed: () => Get.defaultDialog(
+                titleStyle: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
+                title: 'Despesas não essenciais',
+                middleText:
+                    'A meta de despesas não essenciais exibida, caso não seja um valor fixo, é calculada com base na renda mensal cadastrada nos parâmetros e na meta em porcentagem definida pelo usuário.\n A projeção apresentada leva em consideração as despesas não marcadas como pagas',
+                textConfirm: 'OK',
+                buttonColor: AppColors.themeColor,
+                confirmTextColor: AppColors.white,
+                onConfirm: () {
+                  Get.back();
+                }),
             icon: Icon(Icons.help, color: AppColors.white),
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Obx(
-          () => Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Meta de despesas não essenciais:', style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 14.0, fontWeight: FontWeight.w700)),
-                  ],
-                ),
-                _projectionController.goalsList.isEmpty || _projectionController.goalsList == []
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircularProgressIndicator(),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${moneyFormatter.format(_projectionController.loadGoalExpenses())}',
-                            style: GoogleFonts.notoSans(color: AppColors.grey800, fontSize: 18.0, fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+      body: Obx(
+        () => _projectionController.goalsList.isEmpty ||
+                _projectionController.goalsList == [] ||
                 _projectionController.expenseList.isEmpty ||
-                        _projectionController.expenseList == [] ||
-                        _projectionController.parametersList.isEmpty ||
-                        _projectionController.parametersList == []
-                    ? Text('Não há despesas cadastradas')
-                    : Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(color: AppColors.backgroundColor),
-                          child: ListView.builder(
-                            itemCount: 12,
-                            itemBuilder: (context, index) {
-                              return ChartCardProjection(
-                                period: Text(
-                                  dateFormat.format(_projectionController.getPeriod(index + 1).first) +
-                                      ' à ' +
-                                      dateFormat.format(_projectionController.getPeriod(index + 1).last),
-                                  style: AppTextStyles.titleCardProjection,
+                _projectionController.expenseList == [] ||
+                _projectionController.parametersList.isEmpty ||
+                _projectionController.parametersList == []
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Container(
+                    height: 0.5,
+                    color: AppColors.backgroundColor,
+                  ),
+                  Container(
+                    color: AppColors.themeColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Icon(Icons.track_changes, color: AppColors.white, size: 35.0),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Meta de despesas não essenciais',
+                                      style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 14.0, fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
                                 ),
-                                effectiveValue: Text(
-                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
-                                  style: AppTextStyles.textCardProjection,
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${moneyFormatter.format(_projectionController.loadGoalExpenses())}',
+                                      style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
+                                    ),
+                                  ],
                                 ),
-                                hoursValue: Text(
-                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                                colorChart: AppColors.expenseColor,
-                                goalPercent: (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
-                              );
-                            },
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                /* Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: AppColors.backgroundColor),
-                    child: ListView.builder(
-                      itemCount: 12,
-                      itemBuilder: (context, index) {
-                        return ChartCardProjection(
-                          period: (_projectionController.parametersList.isEmpty || _projectionController.parametersList == [])
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  dateFormat.format(_projectionController.getPeriod(index + 1).first) +
-                                      ' à ' +
-                                      dateFormat.format(_projectionController.getPeriod(index + 1).last),
-                                  style: AppTextStyles.titleCardProjection,
-                                ),
-                          effectiveValue: (_projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.parametersList.isEmpty ||
-                                  _projectionController.parametersList == [])
-                              ? Text('Despesas previstas:  ${moneyFormatter.format(0)}', style: AppTextStyles.textCardProjection)
-                              : Text(
-                                  'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                          hoursValue: _projectionController.parametersList.isEmpty || _projectionController.parametersList == []
-                              ? Text('Horas de trabalho:  ${0.0}', style: AppTextStyles.textCardProjection)
-                              : Text(
-                                  'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
-                                  style: AppTextStyles.textCardProjection,
-                                ),
-                          colorChart: AppColors.expenseColor,
-                          goalPercent: _projectionController.expenseList.isEmpty ||
-                                  _projectionController.expenseList == [] ||
-                                  _projectionController.goalNotEssentialExpenses == 0.0
-                              ? 0.0
-                              : (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
-                        );
-                      },
                     ),
                   ),
-                ), */
-              ],
-            ),
-          ),
-        ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Container(
+                        decoration: BoxDecoration(color: AppColors.backgroundColor),
+                        child: ListView.builder(
+                          itemCount: 12,
+                          itemBuilder: (context, index) {
+                            return ChartCardProjection(
+                              period: Text(
+                                dateFormat.format(_projectionController.getPeriod(index + 1).first) +
+                                    ' à ' +
+                                    dateFormat.format(_projectionController.getPeriod(index + 1).last),
+                                style: AppTextStyles.titleCardHome,
+                              ),
+                              effectiveValue: Text(
+                                'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
+                                style: AppTextStyles.textCardProjection,
+                              ),
+                              hoursValue: Text(
+                                'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
+                                style: AppTextStyles.textCardProjection,
+                              ),
+                              colorChart: AppColors.expenseColor,
+                              goalPercent: (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

@@ -7,8 +7,7 @@ import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart'
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/modules/home/components/buttonfunctions/button_function.dart';
-import 'package:habito_invest_app/app/modules/home/components/timeindicator/time_indicator_description.dart';
-import 'package:habito_invest_app/app/modules/home/components/timeindicator/time_indicator_progress.dart';
+import 'package:habito_invest_app/app/modules/home/components/timeindicator/timeindicator_card.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
@@ -58,7 +57,6 @@ class HomePage extends StatelessWidget {
             ],
           ),
           drawer: DrawerHome(),
-          //bottomNavigationBar: NavBar(),
           body: _homeController.goalsList.isEmpty ||
                   _homeController.goalsList == [] ||
                   _homeController.expenseList.isEmpty ||
@@ -163,33 +161,29 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         ChartCard(
                                           // Parâmetros gráfico de despesas
-                                          goalValueExpense: Text('Meta:  ${moneyFormatter.format(_homeController.loadGoalExpenses())}'),
-                                          effectiveValueExpense: Text('Despesas:  ${moneyFormatter.format(_homeController.loadNotEssencialExpensesCurrent())}'),
-                                          hoursValueExpense: Text('Horas de trabalho:  ${_homeController.loadWorkedHours().toStringAsFixed(1)}'),
+                                          goalValueExpense: _homeController.loadGoalExpenses(),
+                                          effectiveValueExpense: _homeController.loadNotEssencialExpensesCurrent(),
+                                          hoursValueExpense: _homeController.loadWorkedHours(),
                                           percentGoalExpense: (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
                                           // Parâmetros gráfico de investimento
-                                          goalValueInvestment: Text('Meta:  ${moneyFormatter.format(_homeController.loadGoalInvestiment())}'),
-                                          effectiveValueInvestment: Text('Investido:  ${moneyFormatter.format(_homeController.loadInvestmensCurrent())}'),
+                                          goalValueInvestment: _homeController.loadGoalInvestiment(),
+                                          effectiveValueInvestment: _homeController.loadInvestmensCurrent(),
                                           percentGoalInvestment: (_homeController.totalInvestments / _homeController.goalInvestiment),
                                         ),
+                                        TimeIndicatorCard(
+                                          percentageCurrent: _homeController.percentagePeriodCurrent(),
+                                          percentageDaysPassed: _homeController.percentagePeriodCurrent() * 100,
+                                          percentageProgress: _homeController.percentagePeriodCurrent() * 100,
+                                          pastDays: _homeController.periodIndicator(DateTime.now()),
+                                          periodDays: _homeController.periodIndicator(
+                                            getInitialDateQuery(dayInitialPeriod: _homeController.parametersList.first.dayInitialPeriod! - 1).last,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
                                 )
                               ],
-                            ),
-                            SizedBox(height: 25.0),
-                            TimeIndicatorProgress(
-                              percentageProgress: _homeController.percentagePeriodCurrent() * 100,
-                              percentageCurrent: _homeController.percentagePeriodCurrent(),
-                            ),
-                            //
-                            TimeIndicatorDescription(
-                              pastDays: _homeController.periodIndicator(DateTime.now()),
-                              periodDays: _homeController.periodIndicator(
-                                getInitialDateQuery(dayInitialPeriod: _homeController.parametersList.first.dayInitialPeriod! - 1).last,
-                              ),
-                              percentageDaysPassed: _homeController.percentagePeriodCurrent() * 100,
                             ),
                           ],
                         ),
@@ -240,6 +234,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 8.0),
                   ],
                 ),
         ),

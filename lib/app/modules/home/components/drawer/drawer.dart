@@ -69,11 +69,6 @@ class DrawerHome extends StatelessWidget {
               }),
           Divider(color: Colors.grey[400]),
           ListTile(
-            leading: Icon(Icons.help, color: AppColors.bodyTextPagesColor),
-            title: Text('Ajuda', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () {},
-          ),
-          ListTile(
             leading: Icon(Icons.info, color: AppColors.bodyTextPagesColor),
             title: Text('Sobre', style: AppTextStyles.generallyTextDarkBody),
             onTap: () {},

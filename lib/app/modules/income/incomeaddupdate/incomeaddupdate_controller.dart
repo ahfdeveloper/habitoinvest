@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
@@ -135,6 +136,7 @@ class IncomeAddUpdateController extends GetxController {
 
     if (addEditFlag == 'NEW') {
       Get.defaultDialog(
+        titleStyle: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
         title: 'Novo Investimento',
         content: Text(
           'Esse é o momento ideal para investir. Vamos lá? ',

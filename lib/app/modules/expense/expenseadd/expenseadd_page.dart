@@ -6,6 +6,7 @@ import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_st
 import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'expenseadd_controller.dart';
 
 class ExpenseAddPage extends StatelessWidget {
@@ -98,36 +99,55 @@ class ExpenseAddPage extends StatelessWidget {
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
-            Obx(
-              () => DropdownButtonFormField<String>(
-                validator: (value) => validatorDropdown(value),
-                decoration: textFormFieldForms(
-                  fieldIcon: Icons.category_outlined,
-                  hint: '',
+            Row(
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    child: Obx(
+                      () => DropdownButtonFormField<String>(
+                        validator: (value) => validatorDropdown(value),
+                        decoration: textFormFieldForms(
+                          fieldIcon: Icons.category_outlined,
+                          hint: '',
+                        ),
+                        elevation: 16,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.themeColor,
+                          fontSize: 16,
+                        ),
+                        hint: Text(
+                          '${_expenseAddController.selectedCategory.toString()}',
+                        ),
+                        value: _expenseAddController.selectedCategory,
+                        items: _expenseAddController.selectExpenseCategory().map(
+                          (String item) {
+                            return DropdownMenuItem(
+                              value: item,
+                              child: Text(item),
+                            );
+                          },
+                        ).toList(),
+                        onChanged: (newValue) {
+                          _expenseAddController.selectedCategory = newValue as String;
+                        },
+                        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                      ),
+                    ),
+                  ),
                 ),
-                elevation: 16,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.themeColor,
-                  fontSize: 16,
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: IconButton(
+                      icon: Icon(Icons.add_box_outlined),
+                      color: AppColors.themeColor,
+                      onPressed: () => Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: _expenseAddController.user),
+                    ),
+                  ),
                 ),
-                hint: Text(
-                  '${_expenseAddController.selectedCategory.toString()}',
-                ),
-                value: _expenseAddController.selectedCategory,
-                items: _expenseAddController.selectExpenseCategory().map(
-                  (String item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      child: Text(item),
-                    );
-                  },
-                ).toList(),
-                onChanged: (newValue) {
-                  _expenseAddController.selectedCategory = newValue as String;
-                },
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              ),
+              ],
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),

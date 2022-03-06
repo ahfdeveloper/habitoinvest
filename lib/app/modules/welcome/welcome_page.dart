@@ -16,13 +16,13 @@ class WelcomePage extends GetView<LoginController> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 50.0),
             child: Container(
-              height: 180,
-              width: 180,
+              height: 280,
+              width: 280,
               child: Image.asset(AppImages.logo),
             ),
           ),
@@ -44,8 +44,7 @@ class WelcomePage extends GetView<LoginController> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, left: 40.0, right: 40.0),
+                  padding: const EdgeInsets.only(top: 8.0, left: 40.0, right: 40.0),
                   child: SocialLoginButton(
                     onTap: () {
                       _loginController.googleSignIn();
@@ -63,6 +62,7 @@ class WelcomePage extends GetView<LoginController> {
                       onPressed: () => Get.toNamed(Routes.REGISTER_USER),
                       child: Text('Cadastre-se'),
                     ),
+                    SizedBox(height: 80.0)
                   ],
                 ),
               ],

@@ -56,7 +56,7 @@ class ButtonFunction extends StatelessWidget {
                         style: GoogleFonts.notoSans(
                           color: AppColors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
+                          fontSize: 13.5,
                         ),
                       ),
                     ),

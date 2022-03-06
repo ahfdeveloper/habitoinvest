@@ -24,7 +24,7 @@ class ChartHome extends StatelessWidget {
               lineWidth: 9.0,
               percent: percentageValue >= 1 ? 1 : percentageValue,
               animation: true,
-              animationDuration: 1600,
+              animationDuration: 1750,
               progressColor: colorChart,
               backgroundColor: AppColors.grey350,
               circularStrokeCap: CircularStrokeCap.round,

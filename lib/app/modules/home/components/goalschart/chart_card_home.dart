@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
+import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/modules/home/components/goalschart/chart_home.dart';
 
 class ChartCard extends StatelessWidget {
   final double percentGoalExpense;
-  final Widget goalValueExpense;
-  final Widget effectiveValueExpense;
-  final Widget hoursValueExpense;
+  final double goalValueExpense;
+  final double effectiveValueExpense;
+  final double hoursValueExpense;
   final double percentGoalInvestment;
-  final Widget goalValueInvestment;
-  final Widget effectiveValueInvestment;
+  final double goalValueInvestment;
+  final double effectiveValueInvestment;
 
   ChartCard({
     Key? key,
@@ -49,11 +50,26 @@ class ChartCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Despesas não essenciais', style: AppTextStyles.titleCardProjection),
-                        SizedBox(height: 7.0),
-                        goalValueExpense,
-                        effectiveValueExpense,
-                        hoursValueExpense,
+                        Text('Despesas não essenciais', style: AppTextStyles.titleCardHome),
+                        SizedBox(height: 2.0),
+                        Row(
+                          children: [
+                            Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
+                            Text(' ${moneyFormatter.format(goalValueExpense)}', style: AppTextStyles.bodyTextCardHome),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.payment, color: AppColors.bodyTextPagesColor),
+                            Text(' ${moneyFormatter.format(effectiveValueExpense)}', style: AppTextStyles.bodyTextCardHome),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.work_outline, color: AppColors.bodyTextPagesColor),
+                            Text(' ${hoursValueExpense.toStringAsFixed(1)}', style: AppTextStyles.bodyTextCardHome),
+                          ],
+                        ),
                       ],
                     ),
                   )
@@ -63,7 +79,7 @@ class ChartCard extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: AppColors.white,
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(cornerContainer), bottomRight: Radius.circular(cornerContainer)),
+                //borderRadius: BorderRadius.only(bottomLeft: Radius.circular(cornerContainer), bottomRight: Radius.circular(cornerContainer)),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,10 +94,20 @@ class ChartCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Investimentos', style: AppTextStyles.titleCardProjection),
-                        SizedBox(height: 7.0),
-                        goalValueInvestment,
-                        effectiveValueInvestment,
+                        Text('Investimentos', style: AppTextStyles.titleCardHome),
+                        SizedBox(height: 2.0),
+                        Row(
+                          children: [
+                            Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
+                            Text(' ${moneyFormatter.format(goalValueInvestment)}', style: AppTextStyles.bodyTextCardHome),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.moving_outlined, color: AppColors.bodyTextPagesColor),
+                            Text(' ${moneyFormatter.format(effectiveValueInvestment)}', style: AppTextStyles.bodyTextCardHome),
+                          ],
+                        ),
                       ],
                     ),
                   )

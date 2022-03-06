@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
+import 'package:habito_invest_app/app/global/widgets/app_images/app_images.dart';
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:get/get.dart';
 
@@ -22,11 +24,11 @@ class LoginPage extends StatelessWidget {
                 tag: 'hero',
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  radius: 40.0,
-                  child: Image.asset('assets/moeda.png'),
+                  radius: 140.0,
+                  child: Image.asset(AppImages.logo),
                 ),
               ),
-              SizedBox(height: 48.0),
+              SizedBox(height: 40.0),
               TextFormField(
                 controller: controller.emailTextController,
                 // Validação dos dados digitados no campo e-mail
@@ -43,13 +45,11 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   labelText: 'E-mail',
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
                 ),
               ),
-              SizedBox(height: 15.0),
+              SizedBox(height: 6.0),
               TextFormField(
                 controller: controller.passwordTextController,
                 // Validação dos dados digitados no campo
@@ -66,18 +66,22 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.vpn_key),
                   labelText: 'Senha',
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 25.0),
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      backgroundColor: Get.theme.primaryColor),
+              SizedBox(height: 25.0),
+              Container(
+                height: 40,
+                child: TextButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(AppColors.themeColor),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                      ),
+                      side: MaterialStateProperty.all(BorderSide(color: AppColors.themeColor))),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       controller.login();
@@ -85,24 +89,41 @@ class LoginPage extends StatelessWidget {
                   },
                   child: Text(
                     'ENTRAR',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.notoSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15.0,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Container(
+                height: 40,
+                child: TextButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(AppColors.transparent),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                      ),
+                      side: MaterialStateProperty.all(BorderSide(color: Colors.black54))),
+                  onPressed: () {},
+                  child: Text(
+                    'Esqueci minha senha',
+                    style: GoogleFonts.notoSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15.0,
+                      color: Colors.black54,
                     ),
                   ),
                 ),
               ),
               TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Esqueci minha senha',
-                  style: TextStyle(color: Colors.black54, fontSize: 15.0),
-                ),
-              ),
-              TextButton(
                 onPressed: () => Get.back(),
-                child: Text('Voltar'),
+                child: Text(
+                  'Voltar',
+                  style: TextStyle(color: AppColors.grey800),
+                ),
               )
             ],
           ),

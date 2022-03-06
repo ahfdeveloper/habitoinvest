@@ -7,6 +7,7 @@ class AppColors {
   static final Color grey300 = Color(0XFFE0E0E0);
   static final Color grey350 = Color(0XFFD6D6D6);
   static final Color grey400 = Color(0XFFBDBDBD);
+  static final Color grey500 = Color(0XFF9E9E9E);
   static final Color grey600 = Color(0XFF757575);
   static final Color grey800 = Color(0XFF424242);
   static final Color transparent = Colors.transparent;

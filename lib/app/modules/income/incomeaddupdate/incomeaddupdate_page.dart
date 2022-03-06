@@ -7,6 +7,7 @@ import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
 import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
+import 'package:habito_invest_app/app/routes/app_routes.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
@@ -102,40 +103,58 @@ class IncomeAddUpdatePage extends StatelessWidget {
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
-            Obx(
-              () => DropdownButtonFormField(
-                validator: (value) => validatorDropdown(value),
-                decoration: textFormFieldForms(
-                  fieldIcon: Icons.category_outlined,
-                  hint: '',
+            Row(
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    child: Obx(
+                      () => DropdownButtonFormField(
+                        validator: (value) => validatorDropdown(value),
+                        decoration: textFormFieldForms(
+                          fieldIcon: Icons.category_outlined,
+                          hint: '',
+                        ),
+                        elevation: 16,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.themeColor,
+                          fontSize: 16,
+                        ),
+                        hint: Text(
+                          '${_incomeAddUpdateController.selectedCategory.toString()}',
+                        ),
+                        value: _incomeAddUpdateController.selectedCategory,
+                        items: _incomeAddUpdateController.selectIncomeCategory().map(
+                          (String item) {
+                            return DropdownMenuItem(
+                              value: item,
+                              child: Text(item),
+                            );
+                          },
+                        ).toList(),
+                        onChanged: (newValue) {
+                          _incomeAddUpdateController.selectedCategory = newValue as String;
+                        },
+                        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                      ),
+                    ),
+                  ),
                 ),
-                elevation: 16,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.themeColor,
-                  fontSize: 16,
-                ),
-                hint: Text(
-                  '${_incomeAddUpdateController.selectedCategory.toString()}',
-                ),
-                value: _incomeAddUpdateController.selectedCategory,
-                items: _incomeAddUpdateController.selectIncomeCategory().map(
-                  (String item) {
-                    return DropdownMenuItem(
-                      value: item,
-                      child: Text(item),
-                    );
-                  },
-                ).toList(),
-                onChanged: (newValue) {
-                  _incomeAddUpdateController.selectedCategory = newValue as String;
-                },
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-              ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: IconButton(
+                      icon: Icon(Icons.add_box_outlined),
+                      color: AppColors.themeColor,
+                      onPressed: () => Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: _incomeAddUpdateController.user),
+                    ),
+                  ),
+                )
+              ],
             ),
             DividerHorizontal(),
-            SizedBox(height: SPACEFORMS),
-            SizedBox(height: SPACEFORMS),
+            SizedBox(height: SPACEFORMS * 2),
             //
             TextFormField(
               controller: _incomeAddUpdateController.addInformationTextController,

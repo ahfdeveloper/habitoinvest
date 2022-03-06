@@ -96,10 +96,4 @@ class ProjectionController extends GetxController {
     DateTime finalDate = getDateProjectionExpense(dayInitialPeriod: parametersList.first.dayInitialPeriod! - 1, fowardMonth: addMonthCurrent).last;
     return [initialDate, finalDate];
   }
-
-  testeData() {
-    print('resultado ${loadNotEssencialExpensesFuture(1)}');
-    print('resultado2 ${loadNotEssencialExpensesFuture(2)}');
-    print(loadWorkedHours(1));
-  }
 }

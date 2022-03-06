@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
@@ -59,11 +60,9 @@ class IncomeListController extends GetxController {
   //Apaga uma receita
   void deleteIncome() {
     Get.defaultDialog(
+      titleStyle: GoogleFonts.notoSans(fontWeight: FontWeight.bold),
       title: 'Excluir Receita',
-      content: Text(
-        'Deseja realmente excluir esta receita?',
-        textAlign: TextAlign.center,
-      ),
+      middleText: 'Deseja realmente excluir esta receita?',
       buttonColor: AppColors.themeColor,
       textCancel: 'Cancelar',
       cancelTextColor: AppColors.themeColor,

@@ -39,10 +39,17 @@ class AppTextStyles {
   );
 
   // Estilo do título do card de projeção de despesas
-  static final TextStyle titleCardProjection = GoogleFonts.notoSans(
+  static final TextStyle titleCardHome = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 17.0,
+    fontSize: 16.0,
     fontWeight: FontWeight.w800,
+  );
+
+  // Estilo do título do card de projeção de despesas
+  static final TextStyle bodyTextCardHome = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    //fontSize: 17.0,
+    fontWeight: FontWeight.w500,
   );
 
   // Estilo padrão usado no corpo das páginas quando o background é claro

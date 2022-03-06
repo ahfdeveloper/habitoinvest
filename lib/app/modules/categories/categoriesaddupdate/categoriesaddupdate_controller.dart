@@ -26,7 +26,7 @@ class CategoriesAddUpdateController extends GetxController {
   String get categoryName => this._categoryName.value;
   set categoryName(String value) => this._categoryName.value = value;
 
-  String _addEditFlag = '';
+  String _addEditFlag = 'NEW';
   String get addEditFlag => this._addEditFlag;
   set addEditFlag(String value) => this._addEditFlag = value;
 
@@ -84,6 +84,7 @@ class CategoriesAddUpdateController extends GetxController {
         _categoriesRepository.updateCategory(
             userUid: user!.id, catName: nameTextController!.text, catType: categoryType, catDescription: descriptionTextController!.text, catUid: categoryId)
           ..whenComplete(() {
+            FocusManager.instance.primaryFocus?.unfocus();
             AppSnackbar.snackarStyle(title: categoryName, message: 'Categoria atualizada com sucesso');
             clearEditingControllers();
           });
@@ -101,6 +102,9 @@ class CategoriesAddUpdateController extends GetxController {
   void clearEditingControllers() {
     nameTextController!.clear();
     descriptionTextController!.clear();
+    addEditFlag = 'NEW';
+    categoryType = '';
+    paintContainerType();
   }
 
   @override
