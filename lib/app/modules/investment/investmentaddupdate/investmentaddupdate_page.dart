@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_text_styles.dart';
+import '../../../widgets/decoration.dart';
+import '../../../widgets/divider_horizontal.dart';
 
 class InvestAddUpdatePage extends StatelessWidget {
-  final InvestmentAddUpdateController _investmentAddUpdateController = Get.find<InvestmentAddUpdateController>();
+  final _investmentAddUpdateController = Get.put(InvestmentAddUpdateController());
 
   @override
   Widget build(BuildContext context) {
-    final _formkey = _investmentAddUpdateController.formkey;
-
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -36,7 +34,7 @@ class InvestAddUpdatePage extends StatelessWidget {
         ],
       ),
       body: Form(
-        key: _formkey,
+        key: _investmentAddUpdateController.formkey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
           children: [

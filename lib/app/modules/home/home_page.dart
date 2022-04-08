@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/modules/home/components/buttonfunctions/button_function.dart';
-import 'package:habito_invest_app/app/modules/home/components/timeindicator/timeindicator_card.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import 'components/drawer/drawer.dart';
-import 'components/goalschart/chart_card_home.dart';
+import '../../global/constants.dart';
+import '../../widgets/app_colors.dart';
+import '../../widgets/app_text_styles.dart';
+import 'widgets/buttonfunctions/button_function.dart';
+import 'widgets/drawer/drawer.dart';
+import 'widgets/goalschart/chart_card_home.dart';
+import 'widgets/timeindicator/timeindicator_card.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
@@ -59,8 +59,6 @@ class HomePage extends StatelessWidget {
           drawer: DrawerHome(),
           body: _homeController.goalsList.isEmpty ||
                   _homeController.goalsList == [] ||
-                  _homeController.expenseList.isEmpty ||
-                  _homeController.expenseList == [] ||
                   _homeController.parametersList.isEmpty ||
                   _homeController.parametersList == [] ||
                   _homeController.accountList.isEmpty ||
@@ -164,11 +162,14 @@ class HomePage extends StatelessWidget {
                                           goalValueExpense: _homeController.loadGoalExpenses(),
                                           effectiveValueExpense: _homeController.loadNotEssencialExpensesCurrent(),
                                           hoursValueExpense: _homeController.loadWorkedHours(),
-                                          percentGoalExpense: (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
+                                          percentGoalExpense: _homeController.goalNotEssentialExpenses == 0
+                                              ? 0
+                                              : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
                                           // Parâmetros gráfico de investimento
                                           goalValueInvestment: _homeController.loadGoalInvestiment(),
                                           effectiveValueInvestment: _homeController.loadInvestmensCurrent(),
-                                          percentGoalInvestment: (_homeController.totalInvestments / _homeController.goalInvestiment),
+                                          percentGoalInvestment:
+                                              _homeController.goalInvestiment == 0 ? 0 : (_homeController.totalInvestments / _homeController.goalInvestiment),
                                         ),
                                         TimeIndicatorCard(
                                           percentageCurrent: _homeController.percentagePeriodCurrent(),
@@ -185,56 +186,162 @@ class HomePage extends StatelessWidget {
                                 )
                               ],
                             ),
+                            //
+                            /* SizedBox(height: 10.0),
+                            Container(
+                              color: Colors.amber,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        //height: 75.0,
+                                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Maiores despesas não xxx xxx xxx xxx essenciais nos últimos 6 meses',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
+                                              ),
+                                              Text('Lazer',
+                                                  style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Center(
+                                                child: Text(
+                                                  'Total Investido',
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
+                                                ),
+                                              ),
+                                              Text(''),
+                                              Text('R\S0,00',
+                                                  style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ), */
+                            GridView.count(
+                              crossAxisCount: 2,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 2.3,
+                              children: [
+                                Container(
+                                  //height: 75.0,
+                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Maiores despesas não essenciais nos últimos 6 meses',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
+                                        ),
+                                        Text('Lazer', style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 69.0,
+                                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            'Total Investido',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
+                                          ),
+                                        ),
+                                        Text(''),
+                                        Text('R\S0,00',
+                                            style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            GridView.count(
+                              crossAxisCount: 3,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 0.82,
+                              children: [
+                                ButtonFunction(
+                                  icon: Icons.monetization_on,
+                                  colorButton: AppColors.incomeColor,
+                                  label: 'Receitas',
+                                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: _homeController.user),
+                                  onPressed: () {
+                                    _incomeAddUpdateController.addEditFlag = 'NEW';
+                                    moneyValueController.updateValue(0.0);
+                                    Get.toNamed(Routes.INCOME_ADDUPDATE, arguments: _homeController.user);
+                                  },
+                                ),
+                                //
+                                ButtonFunction(
+                                  icon: Icons.payment,
+                                  colorButton: AppColors.expenseColor,
+                                  label: 'Despesas',
+                                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: _homeController.user),
+                                  onPressed: () {
+                                    moneyValueController.updateValue(0.0);
+                                    Get.toNamed(Routes.EXPENSE_ADD, arguments: _homeController.user);
+                                  },
+                                ),
+                                //
+                                ButtonFunction(
+                                  icon: Icons.moving_outlined,
+                                  colorButton: AppColors.investColor,
+                                  label: 'Investimentos',
+                                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
+                                  onPressed: () {
+                                    _investmentAddUpdateController.addEditFlag = 'NEW';
+                                    moneyValueController.updateValue(0.0);
+                                    //Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
+                                    Navigator.pushNamed(context, Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
+                                  },
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    GridView.count(
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 13,
-                      childAspectRatio: 0.75,
-                      children: [
-                        ButtonFunction(
-                          icon: Icons.monetization_on,
-                          colorButton: AppColors.incomeColor,
-                          label: 'Receitas',
-                          onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: _homeController.user),
-                          onPressed: () {
-                            _incomeAddUpdateController.addEditFlag = 'NEW';
-                            moneyValueController.updateValue(0.0);
-                            Get.toNamed(Routes.INCOME_ADDUPDATE, arguments: _homeController.user);
-                          },
-                        ),
-                        //
-                        ButtonFunction(
-                          icon: Icons.payment,
-                          colorButton: AppColors.expenseColor,
-                          label: 'Despesas',
-                          onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: _homeController.user),
-                          onPressed: () {
-                            moneyValueController.updateValue(0.0);
-                            Get.toNamed(Routes.EXPENSE_ADD, arguments: _homeController.user);
-                          },
-                        ),
-                        //
-                        ButtonFunction(
-                          icon: Icons.moving_outlined,
-                          colorButton: AppColors.investColor,
-                          label: 'Investimentos',
-                          onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
-                          onPressed: () {
-                            _investmentAddUpdateController.addEditFlag = 'NEW';
-                            moneyValueController.updateValue(0.0);
-                            Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.0),
                   ],
                 ),
         ),

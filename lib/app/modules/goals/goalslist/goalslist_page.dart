@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_controller.dart';
 import 'package:habito_invest_app/app/modules/goals/goalsupdate/goalsupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
-import 'components/card_widget.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_text_styles.dart';
+import 'widgets/card_widget.dart';
 
 class GoalsListPage extends StatelessWidget {
   final GoalsListController _goalsListController = Get.find<GoalsListController>();

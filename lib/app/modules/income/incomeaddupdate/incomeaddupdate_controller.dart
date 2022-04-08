@@ -8,11 +8,11 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_snackbar.dart';
 
 class IncomeAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -21,7 +21,7 @@ class IncomeAddUpdateController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final AccountRepository _accountRepository = AccountRepository();
 
-  // Máscara para digitação do valor da receita ------------------------------------
+  // Máscara para digitação do valor da receita
   MoneyMaskedTextController incomeValueTextFormController = moneyValueController;
 
   // Definição de valor inicial para o campo de data da Receita
@@ -32,10 +32,9 @@ class IncomeAddUpdateController extends GetxController {
 
   // Lista que guarda os dados da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
-  List<AccountModel> get accountList => _accountList.value;
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
-   de seleção da categoria de receita -----------------------------------------------*/
+   de seleção da categoria de receita */
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
   List<CategoryModel> get categoriesList => _categoriesList.value;
   String firstElementDrop = 'Selecione uma categoria...';
@@ -215,7 +214,7 @@ class IncomeAddUpdateController extends GetxController {
       if (descriptionTextController!.text != '' && selectedCategory != selectIncomeCategory().first) {
         incomeDescription = descriptionTextController!.text;
         /* Sequencia de if que define quando o saldo da conta deve ser atualizado dependendo se a receita foi marcada
-        como recebida ou não ---------------------------------------------------------------------------------------*/
+        como recebida ou não */
         if (received == false && updateReceived == true) {
           _accountRepository.updateAccount(
             userUid: user!.id,
@@ -277,6 +276,7 @@ class IncomeAddUpdateController extends GetxController {
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
     formkey.currentState!.reset();
+    dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
     descriptionTextController!.clear();
     selectedCategory = firstElementDrop;
     addInformationTextController!.clear();

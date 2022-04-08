@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_text_styles.dart';
+import '../../../widgets/decoration.dart';
+import '../../../widgets/divider_horizontal.dart';
 import 'expenseupdate_controller.dart';
 
 class ExpenseUpdatePage extends StatelessWidget {
@@ -81,7 +81,7 @@ class ExpenseUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
-              controller: _expenseUpdateController.dateTextController,
+              controller: _expenseUpdateController.dateUpdateTextController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -89,7 +89,7 @@ class ExpenseUpdatePage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseUpdateController.selectDate(context: context, textFormFieldController: _expenseUpdateController.dateTextController),
+              onTap: () => _expenseUpdateController.selectDate(context: context, textFormFieldController: _expenseUpdateController.dateUpdateTextController),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),

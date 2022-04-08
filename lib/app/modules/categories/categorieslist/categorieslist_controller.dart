@@ -8,8 +8,8 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_snackbar.dart';
 
 class CategoriesListController extends GetxController {
   final UserModel? user = Get.arguments;

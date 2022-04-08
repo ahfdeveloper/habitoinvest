@@ -9,11 +9,11 @@ import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/category_repository.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_snackbar.dart';
 
 class ExpenseAddController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -265,6 +265,7 @@ class ExpenseAddController extends GetxController {
     selectedCategory = firstElementDrop;
     selectedExpenseQuality = 'Essencial';
     addInformationTextController!.clear();
+    dateExpenseTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
     workedHours = 0.0;
     paintContainerType();
   }

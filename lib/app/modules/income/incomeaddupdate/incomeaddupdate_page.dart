@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_text_styles.dart';
+import '../../../widgets/decoration.dart';
+import '../../../widgets/divider_horizontal.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();
@@ -27,10 +27,6 @@ class IncomeAddUpdatePage extends StatelessWidget {
             onPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
               _incomeAddUpdateController.cancel();
-              //if (_incomeAddUpdateController.addEditFlag == 'NEW')
-              //Get.back();
-              //else
-              //Get.offAndToNamed(Routes.INCOME_LIST, arguments: _incomeAddUpdateController.user);
               _incomeAddUpdateController.clearEditingControllers();
             },
             icon: Icon(Icons.cancel, color: AppColors.white),
@@ -111,19 +107,10 @@ class IncomeAddUpdatePage extends StatelessWidget {
                     child: Obx(
                       () => DropdownButtonFormField(
                         validator: (value) => validatorDropdown(value),
-                        decoration: textFormFieldForms(
-                          fieldIcon: Icons.category_outlined,
-                          hint: '',
-                        ),
+                        decoration: textFormFieldForms(fieldIcon: Icons.category_outlined, hint: ''),
                         elevation: 16,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.themeColor,
-                          fontSize: 16,
-                        ),
-                        hint: Text(
-                          '${_incomeAddUpdateController.selectedCategory.toString()}',
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.themeColor, fontSize: 16),
+                        hint: Text('${_incomeAddUpdateController.selectedCategory.toString()}'),
                         value: _incomeAddUpdateController.selectedCategory,
                         items: _incomeAddUpdateController.selectIncomeCategory().map(
                           (String item) {

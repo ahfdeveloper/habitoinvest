@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 

@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import '../../global/constants.dart';
 
 class ParametersController extends GetxController {
   final UserModel? user = Get.arguments;
+
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final ParametersRepository _parametersRepository = ParametersRepository();
 

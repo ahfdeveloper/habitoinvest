@@ -5,11 +5,11 @@ import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/investment_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_snackbar.dart';
 
 class InvestmentAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;
@@ -217,6 +217,7 @@ class InvestmentAddUpdateController extends GetxController {
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
     formkey.currentState!.reset();
+    dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
     descriptionTextController!.clear();
     addInformationTextController!.clear();
   }

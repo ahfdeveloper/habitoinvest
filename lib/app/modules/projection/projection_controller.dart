@@ -6,7 +6,7 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
 import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 
 class ProjectionController extends GetxController {
   final UserModel? user = Get.arguments;

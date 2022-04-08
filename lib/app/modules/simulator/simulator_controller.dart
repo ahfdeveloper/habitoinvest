@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
+import '../../global/constants.dart';
 
 class SimulatorController extends GetxController {
   MoneyMaskedTextController contributionValueController = moneyValueController;

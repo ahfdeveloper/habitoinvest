@@ -3,9 +3,9 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_snackbar/app_snackbar.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/app_snackbar.dart';
 
 class GoalsUpdateController extends GetxController {
   final UserModel? user = Get.arguments;

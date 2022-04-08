@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/modules/simulator/components/buttons.dart';
 import 'package:habito_invest_app/app/modules/simulator/simulator_controller.dart';
+import '../../global/constants.dart';
+import '../../widgets/app_colors.dart';
+import '../../widgets/app_text_styles.dart';
+import 'widgets/buttons.dart';
 
 class SimulatorPage extends StatelessWidget {
   final SimulatorController _simulatorController = SimulatorController();

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_text_styles/app_text_styles.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/modules/projection/components/chart/chart_card_projection.dart';
-
+import 'package:habito_invest_app/app/global/functions.dart';
+import '../../global/constants.dart';
+import '../../widgets/app_colors.dart';
+import '../../widgets/app_text_styles.dart';
 import 'projection_controller.dart';
+import 'widgets/chart_card_projection.dart';
 
 class ProjectionPage extends StatelessWidget {
   final ProjectionController _projectionController = Get.find<ProjectionController>();

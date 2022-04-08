@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/app_images/app_images.dart';
 import 'package:habito_invest_app/app/modules/splashscreen/splashscreen_controller.dart';
+import '../../widgets/app_colors.dart';
+import '../../widgets/app_images.dart';
 
 // Implementação do SplashScreen do app
 class SplashScreenPage extends GetView<SplashScreenController> {

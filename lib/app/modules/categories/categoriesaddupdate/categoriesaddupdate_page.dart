@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
-import 'package:habito_invest_app/app/global/widgets/constants/constants.dart';
-import 'package:habito_invest_app/app/global/widgets/decoration/decoration.dart';
-import 'package:habito_invest_app/app/global/widgets/divider_horizontal/divider_horizontal.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_controller.dart';
+import '../../../global/constants.dart';
+import '../../../widgets/app_colors.dart';
+import '../../../widgets/decoration.dart';
+import '../../../widgets/divider_horizontal.dart';
 
 class CategoriesAddUpdatePage extends StatelessWidget {
   final CategoriesAddUpdateController _categoriesAddUpdateController = Get.find<CategoriesAddUpdateController>();
 
   @override
   Widget build(BuildContext context) {
-    final Color interfaceColor = AppColors.themeColor;
-    final _formkey = _categoriesAddUpdateController.formkey;
-
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        backgroundColor: interfaceColor,
+        backgroundColor: AppColors.themeColor,
         title: Text('Categorias'),
         actions: [
           IconButton(
@@ -37,7 +34,7 @@ class CategoriesAddUpdatePage extends StatelessWidget {
         ],
       ),
       body: Form(
-        key: _formkey,
+        key: _categoriesAddUpdateController.formkey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
           children: [

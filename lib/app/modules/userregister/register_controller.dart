@@ -6,8 +6,8 @@ import 'package:habito_invest_app/app/data/repository/account_repository.dart';
 import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
 import 'package:habito_invest_app/app/data/repository/login_repository.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/widgets/app_colors/app_colors.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
+import '../../widgets/app_colors.dart';
 
 class RegisterController extends GetxController {
   final LoginRepository _loginRepository = LoginRepository();

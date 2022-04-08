@@ -12,7 +12,7 @@ import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
 import 'package:habito_invest_app/app/data/repository/income_repository.dart';
 import 'package:habito_invest_app/app/data/repository/investment_repository.dart';
 import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/functions/functions.dart';
+import 'package:habito_invest_app/app/global/functions.dart';
 
 class HomeController extends GetxController {
   final UserModel? user = Get.arguments;
