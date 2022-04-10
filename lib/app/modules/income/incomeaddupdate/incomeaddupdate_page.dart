@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
 import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../../global/constants.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_text_styles.dart';
-import '../../../widgets/decoration.dart';
-import '../../../widgets/divider_horizontal.dart';
+import '../../../core/theme/app_decoration.dart';
+import '../../../core/theme/app_text_styles.dart';
+import '../../../core/values/app_constants.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../global_widgets/divider_horizontal.dart';
 
 class IncomeAddUpdatePage extends StatelessWidget {
   final IncomeAddUpdateController _incomeAddUpdateController = Get.find<IncomeAddUpdateController>();

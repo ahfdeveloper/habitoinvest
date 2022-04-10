@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
+import 'package:habito_invest_app/app/modules/goals/goals_repository.dart';
 
 class GoalsWarningController extends GetxController {
   final UserModel? user = Get.arguments;

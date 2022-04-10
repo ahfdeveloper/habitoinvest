@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../widgets/app_colors.dart';
-import '../../widgets/app_images.dart';
-import '../../widgets/app_text_styles.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_text_styles.dart';
+import '../../core/values/app_images.dart';
 import 'widgets/email_login_button.dart';
 import 'widgets/social_login_button.dart';
 

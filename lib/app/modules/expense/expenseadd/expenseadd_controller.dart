@@ -6,14 +6,14 @@ import 'package:habito_invest_app/app/data/model/category_model.dart';
 import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
-import 'package:habito_invest_app/app/data/repository/category_repository.dart';
-import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
-import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
+import 'package:habito_invest_app/app/modules/categories/category_repository.dart';
+import 'package:habito_invest_app/app/modules/expense/expense_repository.dart';
+import 'package:habito_invest_app/app/modules/parameters/parameters_repository.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
-import '../../../global/constants.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_snackbar.dart';
+import '../../../core/utils/app_masks.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../global_widgets/app_snackbar.dart';
 
 class ExpenseAddController extends GetxController {
   final UserModel? user = Get.arguments;

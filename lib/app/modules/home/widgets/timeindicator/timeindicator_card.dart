@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../widgets/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import 'timeindicator_description.dart';
 import 'timeindicator_progress.dart';
 

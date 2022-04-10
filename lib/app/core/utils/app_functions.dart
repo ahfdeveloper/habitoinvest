@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'constants.dart';
+import 'app_masks.dart';
 
 validatorValue(value) {
   if (value == 'R\$ 0,00') {

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_controller.dart';
 import 'package:habito_invest_app/app/modules/categories/categorieslist/categorieslist_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_text_styles.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 
 class CategoriesList extends StatelessWidget {
   final CategoriesListController _categoriesListController = Get.find<CategoriesListController>();

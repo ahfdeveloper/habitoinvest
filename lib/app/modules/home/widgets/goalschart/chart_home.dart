@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import '../../../../widgets/app_colors.dart';
-import '../../../../widgets/app_text_styles.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 class ChartHome extends StatelessWidget {
   final Color colorChart;

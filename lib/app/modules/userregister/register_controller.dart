@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
-import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
-import 'package:habito_invest_app/app/data/repository/login_repository.dart';
-import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
+import 'package:habito_invest_app/app/modules/goals/goals_repository.dart';
+import 'package:habito_invest_app/app/modules/login/login_repository.dart';
+import 'package:habito_invest_app/app/modules/parameters/parameters_repository.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../widgets/app_colors.dart';
+import '../../core/theme/app_colors.dart';
 
 class RegisterController extends GetxController {
   final LoginRepository _loginRepository = LoginRepository();

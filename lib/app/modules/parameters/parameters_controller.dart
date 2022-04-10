@@ -4,8 +4,8 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import '../../global/constants.dart';
+import 'package:habito_invest_app/app/modules/parameters/parameters_repository.dart';
+import '../../core/utils/app_masks.dart';
 
 class ParametersController extends GetxController {
   final UserModel? user = Get.arguments;

@@ -5,9 +5,9 @@ import 'package:habito_invest_app/app/data/model/account_model.dart';
 import 'package:habito_invest_app/app/data/model/income_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/repository/account_repository.dart';
-import 'package:habito_invest_app/app/data/repository/income_repository.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/modules/income/income_repository.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../global_widgets/app_snackbar.dart';
 
 class IncomeListController extends GetxController {
   final UserModel? user = Get.arguments;

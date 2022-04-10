@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habito_invest_app/app/global/functions.dart';
-import '../../global/constants.dart';
-import '../../widgets/app_colors.dart';
-import '../../widgets/app_text_styles.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
+import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/app_masks.dart';
+import '../../core/theme/app_colors.dart';
 import 'projection_controller.dart';
 import 'widgets/chart_card_projection.dart';
 

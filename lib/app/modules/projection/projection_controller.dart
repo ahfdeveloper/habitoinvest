@@ -3,10 +3,10 @@ import 'package:habito_invest_app/app/data/model/expense_model.dart';
 import 'package:habito_invest_app/app/data/model/goals_model.dart';
 import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/expense_repository.dart';
-import 'package:habito_invest_app/app/data/repository/goals_repository.dart';
-import 'package:habito_invest_app/app/data/repository/parameters_repository.dart';
-import 'package:habito_invest_app/app/global/functions.dart';
+import 'package:habito_invest_app/app/modules/expense/expense_repository.dart';
+import 'package:habito_invest_app/app/modules/goals/goals_repository.dart';
+import 'package:habito_invest_app/app/modules/parameters/parameters_repository.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
 
 class ProjectionController extends GetxController {
   final UserModel? user = Get.arguments;

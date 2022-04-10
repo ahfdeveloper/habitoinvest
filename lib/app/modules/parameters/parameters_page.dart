@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
-import '../../widgets/app_colors.dart';
-import '../../widgets/app_text_styles.dart';
-import '../../widgets/decoration.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_decoration.dart';
+import '../../core/theme/app_text_styles.dart';
 
 class ParametersPage extends StatelessWidget {
   final ParametersController _parameterController = Get.find<ParametersController>();

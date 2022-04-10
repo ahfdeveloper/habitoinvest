@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:habito_invest_app/app/modules/login/login_controller.dart';
 import 'package:get/get.dart';
-import '../../widgets/app_colors.dart';
-import '../../widgets/app_images.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/values/app_images.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginController controller = Get.find<LoginController>();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/app_colors.dart';
+import '../../../core/theme/app_colors.dart';
 import 'chart_projection.dart';
 
 class ChartCardProjection extends StatelessWidget {

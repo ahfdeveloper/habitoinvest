@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/category_repository.dart';
-import '../../../widgets/app_snackbar.dart';
+import 'package:habito_invest_app/app/modules/categories/category_repository.dart';
+import '../../../global_widgets/app_snackbar.dart';
 
 class CategoriesAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/global/functions.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
 import 'package:habito_invest_app/app/modules/categories/categoriesaddupdate/categoriesaddupdate_controller.dart';
-import '../../../global/constants.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/decoration.dart';
-import '../../../widgets/divider_horizontal.dart';
+import '../../../core/theme/app_decoration.dart';
+import '../../../core/values/app_constants.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../global_widgets/divider_horizontal.dart';
 
 class CategoriesAddUpdatePage extends StatelessWidget {
   final CategoriesAddUpdateController _categoriesAddUpdateController = Get.find<CategoriesAddUpdateController>();

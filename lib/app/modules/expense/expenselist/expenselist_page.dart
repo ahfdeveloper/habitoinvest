@@ -5,9 +5,9 @@ import 'package:habito_invest_app/app/modules/expense/expenselist/expenselist_co
 import 'package:habito_invest_app/app/modules/expense/expenseupdate/expenseupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
-import '../../../global/constants.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_text_styles.dart';
+import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_masks.dart';
+import '../../../core/theme/app_colors.dart';
 
 class ExpenseList extends StatelessWidget {
   final ExpenseListController _expenseListController = Get.find<ExpenseListController>();

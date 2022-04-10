@@ -5,9 +5,9 @@ import 'package:habito_invest_app/app/modules/goals/goalslist/goalslist_controll
 import 'package:habito_invest_app/app/modules/goals/goalsupdate/goalsupdate_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
-import '../../../global/constants.dart';
-import '../../../widgets/app_colors.dart';
-import '../../../widgets/app_text_styles.dart';
+import '../../../core/theme/app_text_styles.dart';
+import '../../../core/values/app_constants.dart';
+import '../../../core/theme/app_colors.dart';
 import 'widgets/card_widget.dart';
 
 class GoalsListPage extends StatelessWidget {

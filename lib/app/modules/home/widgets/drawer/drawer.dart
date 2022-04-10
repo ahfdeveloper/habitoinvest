@@ -4,8 +4,8 @@ import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
 import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../../../widgets/app_colors.dart';
-import '../../../../widgets/app_text_styles.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 class DrawerHome extends StatelessWidget {
   final HomeController _homeController = Get.find<HomeController>();
