@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app_masks.dart';
 
+// Verifica se usuário alterou o valor da transação ou manteve zero
 validatorValue(value) {
   if (value == 'R\$ 0,00') {
     return 'Valor deve ser diferente de zero';
@@ -17,6 +18,15 @@ validator(value) {
     return 'Campo obrigatório';
   }
   return null;
+}
+
+// Verifica se uma transação é de cadastro ou atualização para habilitar ou não o foco no campo valor da transação
+bool verifyAddUpdate(String flag) {
+  if (flag == 'NEW' || flag == 'NEWAFTERINCOME') {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Desabilita o foco do TextFormField

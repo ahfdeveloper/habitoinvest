@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:habito_invest_app/app/modules/login/login_controller.dart';
-import 'package:habito_invest_app/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../routes/routes.dart';
+import '../../../login/login_controller.dart';
+import '../../../parameters/parameters_controller.dart';
+import '../../home_controller.dart';
 
 class DrawerHome extends StatelessWidget {
   final HomeController _homeController = Get.find<HomeController>();
@@ -51,7 +52,7 @@ class DrawerHome extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.category, color: AppColors.bodyTextPagesColor),
             title: Text('Categorias', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST, arguments: _homeController.user),
+            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST, arguments: {'user': _homeController.user}),
           ),
           ListTile(
             leading: Icon(Icons.view_list, color: AppColors.bodyTextPagesColor),

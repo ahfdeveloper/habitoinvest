@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/core/utils/app_functions.dart';
-import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
+
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_decoration.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/app_functions.dart';
+import 'parameters_controller.dart';
 
-class ParametersPage extends StatelessWidget {
-  final ParametersController _parameterController = Get.find<ParametersController>();
+class ParametersPage extends GetView<ParametersController> {
+  //final ParametersController _parameterController = Get.find<ParametersController>();
 
   @override
   Widget build(BuildContext context) {
-    final _formkey = _parameterController.formkey;
+    final _formkey = controller.formkey;
     final Color interfaceColor = AppColors.themeColor;
 
     return Scaffold(
@@ -25,7 +26,7 @@ class ParametersPage extends StatelessWidget {
         title: Text('Parâmetros do usuário', style: AppTextStyles.appBarTextLight),
         actions: [
           IconButton(
-            onPressed: () => _parameterController.updateParameter(),
+            onPressed: () => controller.updateParameter(),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
@@ -47,7 +48,7 @@ class ParametersPage extends StatelessWidget {
                     Expanded(
                       child: DropdownButton<int>(
                         isExpanded: true,
-                        value: _parameterController.dropdownDay,
+                        value: controller.dropdownDay,
                         icon: RotatedBox(
                           quarterTurns: 1,
                           child: Icon(Icons.chevron_right),
@@ -63,8 +64,8 @@ class ParametersPage extends StatelessWidget {
                           height: 1.0,
                           color: AppColors.grey800,
                         ),
-                        onChanged: (int? newValue) => _parameterController.dropdownDay = newValue,
-                        items: _parameterController.daysMonth.map<DropdownMenuItem<int>>((value) {
+                        onChanged: (int? newValue) => controller.dropdownDay = newValue,
+                        items: controller.daysMonth.map<DropdownMenuItem<int>>((value) {
                           return DropdownMenuItem<int>(
                             value: value,
                             child: Center(child: Text('$value')),
@@ -90,7 +91,7 @@ class ParametersPage extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: TextFormField(
-                        controller: _parameterController.salaryTextFormController,
+                        controller: controller.salaryTextFormController,
                         validator: (value) => validator(value),
                         decoration: textFormFieldFormsWithUnderline(fieldIcon: Icons.monetization_on_rounded, hint: null),
                         style: TextStyle(
@@ -118,7 +119,7 @@ class ParametersPage extends StatelessWidget {
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                        controller: _parameterController.workedHoursFormController,
+                        controller: controller.workedHoursFormController,
                         validator: (value) => validator(value),
                         decoration: textFormFieldFormsWithUnderline(fieldIcon: Icons.watch_later, hint: null),
                         style: TextStyle(

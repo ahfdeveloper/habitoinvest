@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'register_controller.dart';
 
 class RegisterBinding implements Bindings {

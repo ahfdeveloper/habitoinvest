@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:habito_invest_app/app/core/utils/app_functions.dart';
-import 'package:habito_invest_app/app/modules/home/home_controller.dart';
-import 'package:habito_invest_app/app/modules/income/incomeaddupdate/incomeaddupdate_controller.dart';
-import 'package:habito_invest_app/app/modules/investment/investmentaddupdate/investmentaddupdate_controller.dart';
-import 'package:habito_invest_app/app/modules/parameters/parameters_controller.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
-import '../../core/theme/app_text_styles.dart';
-import '../../core/utils/app_masks.dart';
+
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/app_functions.dart';
+import '../../core/utils/app_masks.dart';
+import '../../routes/routes.dart';
+import '../investmentaddupdate/investmentaddupdate_controller.dart';
+import '../parameters/parameters_controller.dart';
+import 'home_controller.dart';
 import 'widgets/buttonfunctions/button_function.dart';
 import 'widgets/drawer/drawer.dart';
 import 'widgets/goalschart/chart_card_home.dart';
@@ -19,7 +19,6 @@ import 'widgets/timeindicator/timeindicator_card.dart';
 class HomePage extends StatelessWidget {
   final HomeController _homeController = Get.put(HomeController());
   final ParametersController _parametersController = Get.put(ParametersController());
-  final IncomeAddUpdateController _incomeAddUpdateController = Get.put(IncomeAddUpdateController());
   final InvestmentAddUpdateController _investmentAddUpdateController = Get.put(InvestmentAddUpdateController());
 
   @override
@@ -63,9 +62,7 @@ class HomePage extends StatelessWidget {
                   _homeController.parametersList == [] ||
                   _homeController.accountList.isEmpty ||
                   _homeController.accountList == []
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? Center(child: CircularProgressIndicator())
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -187,62 +184,6 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             //
-                            /* SizedBox(height: 10.0),
-                            Container(
-                              color: Colors.amber,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        //height: 75.0,
-                                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Maiores despesas não xxx xxx xxx xxx essenciais nos últimos 6 meses',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
-                                              ),
-                                              Text('Lazer',
-                                                  style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10.0),
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Center(
-                                                child: Text(
-                                                  'Total Investido',
-                                                  textAlign: TextAlign.center,
-                                                  style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
-                                                ),
-                                              ),
-                                              Text(''),
-                                              Text('R\S0,00',
-                                                  style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ), */
                             GridView.count(
                               crossAxisCount: 2,
                               shrinkWrap: true,
@@ -305,11 +246,13 @@ class HomePage extends StatelessWidget {
                                   icon: Icons.monetization_on,
                                   colorButton: AppColors.incomeColor,
                                   label: 'Receitas',
-                                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: _homeController.user),
-                                  onPressed: () {
-                                    _incomeAddUpdateController.addEditFlag = 'NEW';
+                                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: {'user': _homeController.user}),
+                                  onPressed: () async {
                                     moneyValueController.updateValue(0.0);
-                                    Get.toNamed(Routes.INCOME_ADDUPDATE, arguments: _homeController.user);
+                                    Get.toNamed(
+                                      Routes.INCOME_ADDUPDATE,
+                                      arguments: {'user': _homeController.user, 'addEditFlag': 'NEW'},
+                                    );
                                   },
                                 ),
                                 //
@@ -332,8 +275,7 @@ class HomePage extends StatelessWidget {
                                   onPressed: () {
                                     _investmentAddUpdateController.addEditFlag = 'NEW';
                                     moneyValueController.updateValue(0.0);
-                                    //Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
-                                    Navigator.pushNamed(context, Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
+                                    Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
                                   },
                                 ),
                               ],

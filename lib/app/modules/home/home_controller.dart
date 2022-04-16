@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/data/model/account_model.dart';
-import 'package:habito_invest_app/app/data/model/expense_model.dart';
-import 'package:habito_invest_app/app/data/model/goals_model.dart';
-import 'package:habito_invest_app/app/data/model/income_model.dart';
-import 'package:habito_invest_app/app/data/model/investment_model.dart';
-import 'package:habito_invest_app/app/data/model/parameters_model.dart';
-import 'package:habito_invest_app/app/data/model/user_model.dart';
-import 'package:habito_invest_app/app/data/repository/account_repository.dart';
-import 'package:habito_invest_app/app/modules/expense/expense_repository.dart';
-import 'package:habito_invest_app/app/modules/goals/goals_repository.dart';
-import 'package:habito_invest_app/app/modules/income/income_repository.dart';
-import 'package:habito_invest_app/app/modules/investment/investment_repository.dart';
-import 'package:habito_invest_app/app/modules/parameters/parameters_repository.dart';
-import 'package:habito_invest_app/app/core/utils/app_functions.dart';
+
+import '../../core/utils/app_functions.dart';
+import '../../data/model/account_model.dart';
+import '../../data/model/expense_model.dart';
+import '../../data/model/goals_model.dart';
+import '../../data/model/income_model.dart';
+import '../../data/model/investment_model.dart';
+import '../../data/model/parameters_model.dart';
+import '../../data/model/user_model.dart';
+import '../../data/service/account_repository.dart';
+import '../../data/service/expense_repository.dart';
+import '../../data/service/goals_repository.dart';
+import '../../data/service/income_repository.dart';
+import '../../data/service/investment_repository.dart';
+import '../../data/service/parameters_repository.dart';
 
 class HomeController extends GetxController {
   final UserModel? user = Get.arguments;

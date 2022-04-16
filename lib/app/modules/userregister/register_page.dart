@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/modules/userregister/register_controller.dart';
+
 import '../../core/theme/app_colors.dart';
+import 'register_controller.dart';
 
 class RegisterPage extends StatelessWidget {
   final RegisterController _registerController = RegisterController();

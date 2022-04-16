@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/core/utils/app_functions.dart';
+
+import '../../core/utils/app_functions.dart';
 import '../../core/utils/app_masks.dart';
 
 class SimulatorController extends GetxController {

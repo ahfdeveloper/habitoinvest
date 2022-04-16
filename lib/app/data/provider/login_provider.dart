@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:habito_invest_app/app/data/model/user_model.dart';
+
+import '../model/user_model.dart';
 
 class LoginProvider {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

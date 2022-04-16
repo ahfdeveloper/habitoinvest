@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/app_masks.dart';
-import '../../../../core/theme/app_colors.dart';
 import 'chart_home.dart';
 
 class ChartCard extends StatelessWidget {
@@ -79,7 +80,6 @@ class ChartCard extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: AppColors.white,
-                //borderRadius: BorderRadius.only(bottomLeft: Radius.circular(cornerContainer), bottomRight: Radius.circular(cornerContainer)),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

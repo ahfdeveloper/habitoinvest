@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habito_invest_app/app/modules/login/login_controller.dart';
-import 'package:habito_invest_app/app/routes/app_routes.dart';
+
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/values/app_images.dart';
+import '../../routes/routes.dart';
+import 'welcome_controller.dart';
 import 'widgets/email_login_button.dart';
 import 'widgets/social_login_button.dart';
 
-class WelcomePage extends GetView<LoginController> {
-  final LoginController _loginController = LoginController();
+class WelcomePage extends StatelessWidget {
+  final controller = Get.put(WelcomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class WelcomePage extends GetView<LoginController> {
                   padding: const EdgeInsets.only(top: 8.0, left: 40.0, right: 40.0),
                   child: SocialLoginButton(
                     onTap: () {
-                      _loginController.googleSignIn();
+                      controller.googleSignIn();
                     },
                   ),
                 ),
