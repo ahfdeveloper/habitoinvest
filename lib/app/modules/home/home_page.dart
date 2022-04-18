@@ -263,7 +263,7 @@ class HomePage extends StatelessWidget {
                                   onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: _homeController.user),
                                   onPressed: () {
                                     moneyValueController.updateValue(0.0);
-                                    Get.toNamed(Routes.EXPENSE_ADD, arguments: _homeController.user);
+                                    Get.toNamed(Routes.EXPENSE_ADD, arguments: {'user': _homeController.user});
                                   },
                                 ),
                                 //

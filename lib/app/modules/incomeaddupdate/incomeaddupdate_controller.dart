@@ -142,20 +142,6 @@ class IncomeAddUpdateController extends GetxController {
     return listCategoryIncome;
   }
 
-  int getPositionIncomeCategory(String name) {
-    int position = 1;
-    int positionFound = 0;
-    categoriesList.forEach((item) {
-      if (item.type == 'Receita') {
-        if (item.name == name) {
-          positionFound = position;
-        }
-        position++;
-      }
-    });
-    return positionFound;
-  }
-
   // Efetua o salvamento de uma nova receita ou de uma receita editada
   Future<void> saveUpdateIncome({required String addEditFlag}) async {
     print(incomeId);

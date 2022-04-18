@@ -7,13 +7,9 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_masks.dart';
 import '../../routes/routes.dart';
-import '../expenseupdate/expenseupdate_controller.dart';
 import 'expenselist_controller.dart';
 
-class ExpenseList extends StatelessWidget {
-  final ExpenseListController _expenseListController = Get.find<ExpenseListController>();
-  final ExpenseUpdateController _expenseUpdateController = Get.put(ExpenseUpdateController());
-
+class ExpenseList extends GetView<ExpenseListController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -23,10 +19,10 @@ class ExpenseList extends StatelessWidget {
           backgroundColor: AppColors.expenseColor,
           automaticallyImplyLeading: true,
           leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
-          title: _expenseListController.searchBoolean == false
+          title: controller.searchBoolean == false
               ? Text('Despesas')
               : TextFormField(
-                  controller: _expenseListController.searchFormFieldController,
+                  controller: controller.searchFormFieldController,
                   style: AppTextStyles.appBarTextLight,
                   autofocus: true,
                   decoration: InputDecoration(
@@ -34,52 +30,54 @@ class ExpenseList extends StatelessWidget {
                     hintStyle: TextStyle(color: Colors.white54),
                     border: UnderlineInputBorder(borderSide: BorderSide.none),
                   ),
-                  onChanged: (value) => _expenseListController.runFilter(value),
+                  onChanged: (value) => controller.runFilter(value),
                 ),
           actions: [
             // Determina qual botão vai aparece no appBar de acordo com a ação do usuário
-            _expenseListController.searchBoolean == false
+            controller.searchBoolean == false
                 ? IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () => _expenseListController.searchBoolean = true,
+                    onPressed: () => controller.searchBoolean = true,
                   )
                 : IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () {
-                      _expenseListController.searchBoolean = false;
-                      _expenseListController.expenseList = _expenseListController.result;
+                      controller.searchBoolean = false;
+                      controller.expenseList = controller.result;
+                      controller.searchFormFieldController.clear();
                     },
                   ),
           ],
         ),
-        body: _expenseListController.expenseList.isNotEmpty
+        body: controller.expenseList.isNotEmpty
             ? ListView.builder(
                 padding: EdgeInsets.all(2.0),
-                itemCount: _expenseListController.expenseList.length,
+                itemCount: controller.expenseList.length,
                 itemBuilder: (context, index) {
                   return Slidable(
                     actionExtentRatio: 0.25,
                     actionPane: SlidableDrawerActionPane(),
                     child: Card(
                       child: ListTile(
-                        trailing: Text('R\$ ' + _expenseListController.expenseList[index].value!.toStringAsFixed(2)),
-                        title: Text(_expenseListController.expenseList[index].description!),
-                        subtitle: Text(DateFormat('dd/MM/yyyy').format(_expenseListController.expenseList[index].date)),
+                        trailing: Text('R\$ ' + controller.expenseList[index].value!.toStringAsFixed(2)),
+                        title: Text(controller.expenseList[index].description!),
+                        subtitle: Text(DateFormat('dd/MM/yyyy').format(controller.expenseList[index].date)),
                         onTap: () {
-                          _expenseUpdateController.expenseValue = _expenseListController.expenseList[index].value!;
-                          _expenseUpdateController.expenseValueTextFormController.text = _expenseListController.expenseList[index].value!.toStringAsFixed(2);
-                          _expenseUpdateController.workedCost(_expenseListController.expenseList[index].value!.toStringAsFixed(2));
-                          _expenseUpdateController.dateUpdateTextController =
-                              TextEditingController(text: DateFormat('dd/MM/yyyy').format(_expenseListController.expenseList[index].date));
-                          _expenseUpdateController.newSelectedDate = _expenseListController.expenseList[index].date;
-                          _expenseUpdateController.expenseId = _expenseListController.expenseList[index].id!;
-                          _expenseUpdateController.pay = _expenseListController.expenseList[index].pay!;
-                          _expenseUpdateController.updatePay = _expenseListController.expenseList[index].pay!;
-                          _expenseUpdateController.descriptionTextController?.text = _expenseListController.expenseList[index].description!;
-                          _expenseUpdateController.selectedCategory = _expenseListController.expenseList[index].category!;
-                          _expenseUpdateController.selectedExpenseQuality = _expenseListController.expenseList[index].quality!;
-                          _expenseUpdateController.addInformationTextController?.text = _expenseListController.expenseList[index].addInformation!;
-                          Get.toNamed(Routes.EXPENSE_UPDATE, arguments: _expenseListController.user);
+                          Get.toNamed(Routes.EXPENSE_UPDATE, arguments: {
+                            'user': controller.user,
+                            'expenseId': controller.expenseList[index].id!,
+                            'expenseValue': controller.expenseList[index].value!,
+                            'expenseValueTextFormController': controller.expenseList[index].value!.toStringAsFixed(2),
+                            'workedCost': controller.workedCost(controller.expenseList[index].value!),
+                            'dateUpdateTextController': TextEditingController(text: DateFormat('dd/MM/yyyy').format(controller.expenseList[index].date)),
+                            'newSelectedDate': controller.expenseList[index].date,
+                            'pay': controller.expenseList[index].pay!,
+                            'updatePay': controller.expenseList[index].pay!,
+                            'descriptionTextController': TextEditingController(text: controller.expenseList[index].description!),
+                            'selectedCategory': controller.expenseList[index].category!,
+                            'selectedExpenseQuality': controller.expenseList[index].quality!,
+                            'addInformationTextController': TextEditingController(text: controller.expenseList[index].addInformation!),
+                          });
                         },
                       ),
                     ),
@@ -89,11 +87,11 @@ class ExpenseList extends StatelessWidget {
                         color: AppColors.expenseColor,
                         icon: Icons.delete,
                         onTap: () {
-                          _expenseListController.expenseId = _expenseListController.expenseList[index].id!;
-                          _expenseListController.expenseDescription = _expenseListController.expenseList[index].description!;
-                          _expenseListController.expenseValue = _expenseListController.expenseList[index].value!;
-                          _expenseListController.expensePay = _expenseListController.expenseList[index].pay!;
-                          _expenseListController.deleteExpense();
+                          controller.expenseId = controller.expenseList[index].id!;
+                          controller.expenseDescription = controller.expenseList[index].description!;
+                          controller.expenseValue = controller.expenseList[index].value!;
+                          controller.expensePay = controller.expenseList[index].pay!;
+                          controller.deleteExpense();
                         },
                       ),
                     ],
@@ -109,7 +107,7 @@ class ExpenseList extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             moneyValueController.updateValue(0.0);
-            Get.toNamed(Routes.EXPENSE_ADD, arguments: _expenseListController.user);
+            Get.toNamed(Routes.EXPENSE_ADD, arguments: {'user': controller.user});
           },
           backgroundColor: AppColors.expenseColor,
           tooltip: 'Nova Despesa',

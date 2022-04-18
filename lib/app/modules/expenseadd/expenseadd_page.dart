@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global_widgets/app_addcategory_button.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_decoration.dart';
@@ -10,12 +11,12 @@ import '../../global_widgets/divider_horizontal.dart';
 import '../../routes/routes.dart';
 import 'expenseadd_controller.dart';
 
-class ExpenseAddPage extends StatelessWidget {
-  final ExpenseAddController _expenseAddController = Get.find<ExpenseAddController>();
+class ExpenseAddPage extends GetView<ExpenseAddController> {
+  //final ExpenseAddController _expenseAddController = Get.find<ExpenseAddController>();
 
   @override
   Widget build(BuildContext context) {
-    final _formkey = _expenseAddController.formkey;
+    final _formkey = controller.formkey;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -25,11 +26,11 @@ class ExpenseAddPage extends StatelessWidget {
         title: Text('Cadastrar Despesa'),
         actions: [
           IconButton(
-            onPressed: () => _expenseAddController.cancel(),
+            onPressed: () => controller.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () => _expenseAddController.saveExpense(),
+            onPressed: () => controller.saveExpense(),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
@@ -42,14 +43,14 @@ class ExpenseAddPage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _expenseAddController.expenseValueTextFormFieldController,
+              controller: controller.expenseValueTextFormFieldController,
               autofocus: true,
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueExpenseOperationStyle,
               keyboardType: TextInputType.number,
               decoration: textFormFieldValueOperation(),
               onChanged: (value) {
-                _expenseAddController.workedCost(value);
+                controller.workedCost(value);
               },
             ),
             DividerHorizontal(),
@@ -59,7 +60,7 @@ class ExpenseAddPage extends StatelessWidget {
                 children: [
                   Text('Horas de trabalho: '),
                   Text(
-                    _expenseAddController.workedHours.toStringAsFixed(1) + ' *',
+                    controller.workedHours.toStringAsFixed(1) + ' *',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -70,7 +71,7 @@ class ExpenseAddPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
 
             TextFormField(
-              controller: _expenseAddController.dateExpenseTextFormFieldController,
+              controller: controller.dateExpenseTextFormFieldController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -78,22 +79,22 @@ class ExpenseAddPage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _expenseAddController.selectDate(context: context, textFormFieldController: _expenseAddController.dateExpenseTextFormFieldController),
+              onTap: () => controller.selectDate(context: context, textFormFieldController: controller.dateExpenseTextFormFieldController),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
             Obx(
               () => TextFormField(
-                controller: _expenseAddController.descriptionTextController,
+                controller: controller.descriptionTextController,
                 validator: (value) => validator(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.description_outlined,
-                  hint: _expenseAddController.descriptionValue,
+                  hint: controller.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () => _expenseAddController.descriptionTextController!.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _expenseAddController.descriptionTextController!.text.length),
+                onTap: () => controller.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.descriptionTextController!.text.length),
                 ),
               ),
             ),
@@ -108,21 +109,12 @@ class ExpenseAddPage extends StatelessWidget {
                     child: Obx(
                       () => DropdownButtonFormField<String>(
                         validator: (value) => validatorDropdown(value),
-                        decoration: textFormFieldForms(
-                          fieldIcon: Icons.category_outlined,
-                          hint: '',
-                        ),
+                        decoration: textFormFieldForms(fieldIcon: Icons.category_outlined, hint: ''),
                         elevation: 16,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.themeColor,
-                          fontSize: 16,
-                        ),
-                        hint: Text(
-                          '${_expenseAddController.selectedCategory.toString()}',
-                        ),
-                        value: _expenseAddController.selectedCategory,
-                        items: _expenseAddController.selectExpenseCategory().map(
+                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.themeColor, fontSize: 16),
+                        hint: Text('${controller.selectedCategory.toString()}'),
+                        value: controller.selectedCategory,
+                        items: controller.selectExpenseCategory().map(
                           (String item) {
                             return DropdownMenuItem(
                               value: item,
@@ -130,24 +122,13 @@ class ExpenseAddPage extends StatelessWidget {
                             );
                           },
                         ).toList(),
-                        onChanged: (newValue) {
-                          _expenseAddController.selectedCategory = newValue as String;
-                        },
+                        onChanged: (newValue) => controller.selectedCategory = newValue as String,
                         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: IconButton(
-                      icon: Icon(Icons.add_box_outlined),
-                      color: AppColors.themeColor,
-                      onPressed: () => Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: _expenseAddController.user),
-                    ),
-                  ),
-                ),
+                AddCategoryButton(userData: controller.user!),
               ],
             ),
             DividerHorizontal(),
@@ -164,8 +145,8 @@ class ExpenseAddPage extends StatelessWidget {
                   color: AppColors.themeColor,
                   fontSize: 16,
                 ),
-                value: _expenseAddController.selectedExpenseQuality,
-                items: _expenseAddController.expenseQualityList.map(
+                value: controller.selectedExpenseQuality,
+                items: controller.expenseQualityList.map(
                   (value) {
                     return DropdownMenuItem<String>(
                       child: Row(
@@ -187,7 +168,7 @@ class ExpenseAddPage extends StatelessWidget {
                   },
                 ).toList(),
                 onChanged: (newValue) {
-                  _expenseAddController.selectedExpenseQuality = newValue as String;
+                  controller.selectedExpenseQuality = newValue as String;
                 },
                 isExpanded: true,
               ),
@@ -215,7 +196,7 @@ class ExpenseAddPage extends StatelessWidget {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _expenseAddController.containerRadioNaoColor,
+                            color: controller.containerRadioNaoColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -226,12 +207,12 @@ class ExpenseAddPage extends StatelessWidget {
                               Radio(
                                 activeColor: AppColors.themeColor,
                                 value: 'Não',
-                                groupValue: _expenseAddController.installmentsType,
+                                groupValue: controller.installmentsType,
                                 onChanged: (value) {
-                                  _expenseAddController.installmentsType = value as String;
-                                  _expenseAddController.paintContainerType();
-                                  _expenseAddController.visibilityInstallmentsNo = true;
-                                  _expenseAddController.visibilityInstallmentsYes = false;
+                                  controller.installmentsType = value as String;
+                                  controller.paintContainerType();
+                                  controller.visibilityInstallmentsNo = true;
+                                  controller.visibilityInstallmentsYes = false;
                                 },
                               ),
                               Expanded(
@@ -250,7 +231,7 @@ class ExpenseAddPage extends StatelessWidget {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _expenseAddController.containerRadioSimColor,
+                            color: controller.containerRadioSimColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
@@ -261,12 +242,12 @@ class ExpenseAddPage extends StatelessWidget {
                               Radio(
                                 activeColor: AppColors.themeColor,
                                 value: 'Sim',
-                                groupValue: _expenseAddController.installmentsType,
+                                groupValue: controller.installmentsType,
                                 onChanged: (value) {
-                                  _expenseAddController.installmentsType = value as String;
-                                  _expenseAddController.paintContainerType();
-                                  _expenseAddController.visibilityInstallmentsNo = false;
-                                  _expenseAddController.visibilityInstallmentsYes = true;
+                                  controller.installmentsType = value as String;
+                                  controller.paintContainerType();
+                                  controller.visibilityInstallmentsNo = false;
+                                  controller.visibilityInstallmentsYes = true;
                                 },
                               ),
                               Expanded(
@@ -287,7 +268,7 @@ class ExpenseAddPage extends StatelessWidget {
 
                   // Container será visível se o pagamento NÃO for parcelado
                   Visibility(
-                    visible: _expenseAddController.visibilityInstallmentsNo,
+                    visible: controller.visibilityInstallmentsNo,
                     child: Container(
                       padding: EdgeInsets.only(
                         bottom: 15.0,
@@ -295,7 +276,7 @@ class ExpenseAddPage extends StatelessWidget {
                         right: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color: _expenseAddController.containerRadioNaoColor,
+                        color: controller.containerRadioNaoColor,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       child: Column(
@@ -307,8 +288,8 @@ class ExpenseAddPage extends StatelessWidget {
                                 children: [
                                   Obx(
                                     () => Checkbox(
-                                      value: _expenseAddController.pay,
-                                      onChanged: (newValue) => _expenseAddController.pay = newValue as bool,
+                                      value: controller.pay,
+                                      onChanged: (newValue) => controller.pay = newValue as bool,
                                     ),
                                   ),
                                   Text('Pago'),
@@ -323,7 +304,7 @@ class ExpenseAddPage extends StatelessWidget {
 
                   // Container será visível se o pagamento for parcelado
                   Visibility(
-                    visible: _expenseAddController.visibilityInstallmentsYes,
+                    visible: controller.visibilityInstallmentsYes,
                     child: Container(
                       padding: EdgeInsets.only(
                         bottom: 15.0,
@@ -331,7 +312,7 @@ class ExpenseAddPage extends StatelessWidget {
                         right: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color: _expenseAddController.containerRadioSimColor,
+                        color: controller.containerRadioSimColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
@@ -345,15 +326,15 @@ class ExpenseAddPage extends StatelessWidget {
                             children: [
                               Obx(
                                 () => Checkbox(
-                                  value: _expenseAddController.pay,
-                                  onChanged: (newValue) => _expenseAddController.pay = newValue as bool,
+                                  value: controller.pay,
+                                  onChanged: (newValue) => controller.pay = newValue as bool,
                                 ),
                               ),
                               Text('Pago'),
                             ],
                           ),
                           TextFormField(
-                            controller: _expenseAddController.qtPortionTextController,
+                            controller: controller.qtPortionTextController,
                             validator: (value) => validatorQtPortion(int.parse(value!)),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
@@ -372,7 +353,7 @@ class ExpenseAddPage extends StatelessWidget {
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _expenseAddController.addInformationTextController,
+              controller: controller.addInformationTextController,
               decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,
@@ -398,7 +379,7 @@ class ExpenseAddPage extends StatelessWidget {
 
   // Função de validação do Dropdownbutton
   validatorDropdown(value) {
-    if (value == _expenseAddController.firstElementDrop) {
+    if (value == controller.firstElementDrop) {
       return 'Selecione um item';
     }
     return null;

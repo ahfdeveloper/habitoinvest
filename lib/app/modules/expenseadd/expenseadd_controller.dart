@@ -17,7 +17,7 @@ import '../../data/service/parameters_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 
 class ExpenseAddController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final CategoryRepository _categoriesRepository = CategoryRepository();
@@ -30,9 +30,9 @@ class ExpenseAddController extends GetxController {
   // Formato de exibição de data no campo de data da despesa
   TextEditingController dateExpenseTextFormFieldController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
-  TextEditingController? descriptionTextController;
-  TextEditingController? qtPortionTextController;
-  TextEditingController? addInformationTextController;
+  TextEditingController? descriptionTextController = TextEditingController(text: '');
+  TextEditingController? qtPortionTextController = TextEditingController(text: '');
+  TextEditingController? addInformationTextController = TextEditingController(text: '');
 
   // Data de compra a ser setada quando da atualização ou cadastro de nova despesa
   late DateTime _date = DateTime.now();
@@ -113,10 +113,6 @@ class ExpenseAddController extends GetxController {
     _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
-    expenseValueTextFormFieldController = moneyValueController;
-    descriptionTextController = TextEditingController();
-    qtPortionTextController = TextEditingController();
-    addInformationTextController = TextEditingController();
     paintContainerType();
     super.onInit();
   }

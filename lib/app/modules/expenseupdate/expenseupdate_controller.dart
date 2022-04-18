@@ -16,7 +16,7 @@ import '../../data/service/parameters_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 
 class ExpenseUpdateController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final CategoryRepository _categoriesRepository = CategoryRepository();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
@@ -30,8 +30,8 @@ class ExpenseUpdateController extends GetxController {
   TextEditingController dateUpdateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
 
   // Controllers dos campos de descrição e Informações adicionais
-  TextEditingController? descriptionTextController;
-  TextEditingController? addInformationTextController;
+  TextEditingController descriptionTextController = TextEditingController(text: '');
+  TextEditingController addInformationTextController = TextEditingController(text: '');
 
   // Variável que guarda valor da despesa que está em edição para atualizar o saldo da conta
   double _expenseValue = 0.0;
@@ -55,7 +55,6 @@ class ExpenseUpdateController extends GetxController {
 
   // Carrega o registro que mantém saldo da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
-  List<AccountModel> get accountList => _accountList.value;
 
   // Carrega o registro que mantém saldo da conta do usuário
   Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
@@ -64,7 +63,7 @@ class ExpenseUpdateController extends GetxController {
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField de 
   seleção da categoria de despesa --------------------------------------------------------*/
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
-  List<CategoryModel> get categories => _categoriesList.value;
+  List<CategoryModel> get categoriesList => _categoriesList.value;
   String firstElementDrop = 'Selecione uma categoria...';
   var _selectedCategory = 'Selecione uma categoria...'.obs;
   String get selectedCategory => this._selectedCategory.value;
@@ -99,11 +98,20 @@ class ExpenseUpdateController extends GetxController {
   @override
   void onInit() {
     _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
-    _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
-    expenseValueTextFormController = moneyValueController;
-    descriptionTextController = TextEditingController();
-    addInformationTextController = TextEditingController();
+    _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    expenseId = Get.arguments['expenseId'];
+    expenseValue = Get.arguments['expenseValue'];
+    expenseValueTextFormController.text = Get.arguments['expenseValueTextFormController'];
+    dateUpdateTextController = Get.arguments['dateUpdateTextController'];
+    newSelectedDate = Get.arguments['newSelectedDate'];
+    pay = Get.arguments['pay'];
+    updatePay = Get.arguments['updatePay'];
+    descriptionTextController = Get.arguments['descriptionTextController'];
+    selectedCategory = Get.arguments['selectedCategory'];
+    selectedExpenseQuality = Get.arguments['selectedExpenseQuality'];
+    addInformationTextController = Get.arguments['addInformationTextController'];
+    workedHours = Get.arguments['workedCost'];
     super.onInit();
   }
 
@@ -131,8 +139,8 @@ class ExpenseUpdateController extends GetxController {
   }
 
   Future<void> updateExpense() async {
-    if (descriptionTextController!.text != '' && selectedCategory != selectExpenseCategory().first) {
-      expenseDescription = descriptionTextController!.text;
+    if (descriptionTextController.text != '' && selectedCategory != selectExpenseCategory().first) {
+      expenseDescription = descriptionTextController.text;
 
       /* Sequencia de if que define quando o saldo da conta deve ser atualizado dependendo se a despesa foi marcada
         como recebida ou não ---------------------------------------------------------------------------------------*/
@@ -178,11 +186,11 @@ class ExpenseUpdateController extends GetxController {
         userUid: user!.id,
         expValue: expenseValueTextFormController.numberValue,
         expDate: newSelectedDate,
-        expDescription: descriptionTextController!.text,
+        expDescription: descriptionTextController.text,
         expCategory: selectedCategory,
         expQuality: selectedExpenseQuality,
         expPay: updatePay,
-        expAddInformation: addInformationTextController!.text,
+        expAddInformation: addInformationTextController.text,
         expUid: expenseId,
       )..whenComplete(() {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -196,7 +204,7 @@ class ExpenseUpdateController extends GetxController {
   // Função que retorna apenas as categorias do tipo despesa para preenchimento do DropdownbuttonFormField
   List<String> selectExpenseCategory() {
     List<String> listCategoryExpense = [firstElementDrop];
-    categories.forEach((item) {
+    categoriesList.forEach((item) {
       if (item.type == 'Despesa') {
         listCategoryExpense.add(item.name!);
       }
@@ -207,12 +215,11 @@ class ExpenseUpdateController extends GetxController {
   // Limpa os campos do formulário
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
-    formkey.currentState!.reset();
     dateUpdateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
-    descriptionTextController!.clear();
+    descriptionTextController.clear();
     selectedCategory = firstElementDrop;
     selectedExpenseQuality = 'Essencial';
-    addInformationTextController!.clear();
+    addInformationTextController.clear();
     workedHours = 0.0;
   }
 }

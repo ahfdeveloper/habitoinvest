@@ -6,6 +6,7 @@ import '../../core/theme/app_decoration.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_functions.dart';
 import '../../core/values/app_constants.dart';
+import '../../global_widgets/app_addcategory_button.dart';
 import '../../global_widgets/divider_horizontal.dart';
 import '../../routes/routes.dart';
 import 'incomeaddupdate_controller.dart';
@@ -112,7 +113,8 @@ class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
                                 decoration: textFormFieldForms(fieldIcon: Icons.category_outlined, hint: ''),
                                 elevation: 16,
                                 style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.themeColor, fontSize: 16),
-                                value: controller.selectIncomeCategory()[controller.getPositionIncomeCategory(controller.selectedCategory)],
+                                hint: Text('${controller.selectedCategory.toString()}'),
+                                value: controller.selectedCategory,
                                 items: controller.selectIncomeCategory().map(
                                   (String item) {
                                     return DropdownMenuItem(
@@ -129,21 +131,13 @@ class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            child: IconButton(
-                              icon: Icon(Icons.add_box_outlined),
-                              color: AppColors.themeColor,
-                              onPressed: () => Get.toNamed(Routes.CATEGORIES_ADDUPDATE, arguments: controller.user),
-                            ),
-                          ),
-                        )
+                        AddCategoryButton(userData: controller.user!),
                       ],
                     ),
+
                     DividerHorizontal(),
                     SizedBox(height: SPACEFORMS * 2),
-                    //
+
                     TextFormField(
                       controller: controller.addInformationTextController,
                       decoration: textFormFieldMultilines('Informações adicionais (opcional)'),

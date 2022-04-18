@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:habito_invest_app/app/data/model/parameters_model.dart';
+import 'package:habito_invest_app/app/data/service/parameters_repository.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../data/model/account_model.dart';
@@ -15,7 +17,9 @@ class ExpenseListController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final AccountRepository _accountRepository = AccountRepository();
+  final ParametersRepository _parametersRepository = ParametersRepository();
 
+  // Campo para busca de despesas que aparece na appBar quando toca na lupa
   late TextEditingController searchFormFieldController = TextEditingController();
 
   // Indica quando o botão de procurar foi clicado ou não
@@ -48,6 +52,10 @@ class ExpenseListController extends GetxController {
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
 
+  // Variável que guarda os dados da conta
+  Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
+  List<ParametersModel> get parametersList => _parametersList.value;
+
   Rx<List<ExpenseModel>> _result = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get result => this._result.value;
   set result(List<ExpenseModel> value) => this._result.value = value;
@@ -57,6 +65,7 @@ class ExpenseListController extends GetxController {
     _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _result.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
     super.onInit();
   }
 
@@ -97,5 +106,15 @@ class ExpenseListController extends GetxController {
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;
     expenseList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();
+  }
+
+  // Calcula horas de trabalho equivalentes para a despesa selecionada
+  double workedCost(value) {
+    if (parametersList.first.workedHours != 0) {
+      double monthHours = parametersList.first.workedHours! * 4.5;
+      return value / (parametersList.first.salary! / monthHours);
+    } else {
+      throw Exception('Erro ao calcular as horas de trabalho');
+    }
   }
 }
