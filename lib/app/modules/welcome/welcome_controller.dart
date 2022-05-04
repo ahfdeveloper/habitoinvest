@@ -34,7 +34,7 @@ class WelcomeController extends GetxController {
       _goalsRepository.verifyGoalInBD(userUid: user.id);
       _parametersRepository.verifyParameterInBD(userUid: user.id);
 
-      Get.offAllNamed(Routes.HOME, arguments: user);
+      Get.offAllNamed(Routes.HOME, arguments: {'user': user});
     }
   }
 }

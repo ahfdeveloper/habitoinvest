@@ -23,7 +23,7 @@ class LoginController extends GetxController {
     );
     if (user != null) {
       box.write('auth', user);
-      Get.offAllNamed(Routes.HOME, arguments: user);
+      Get.offAllNamed(Routes.HOME, arguments: {'user': user});
     }
   }
 

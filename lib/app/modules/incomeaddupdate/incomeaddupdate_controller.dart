@@ -144,9 +144,6 @@ class IncomeAddUpdateController extends GetxController {
 
   // Efetua o salvamento de uma nova receita ou de uma receita editada
   Future<void> saveUpdateIncome({required String addEditFlag}) async {
-    print(incomeId);
-    print(addEditFlag);
-    print(user!.name);
     final isValid = formkey.currentState!.validate();
     if (!isValid) return;
     formkey.currentState!.save();
@@ -192,7 +189,7 @@ class IncomeAddUpdateController extends GetxController {
                 AppSnackbar.snackarStyle(title: incomeDescription, message: 'Receita cadastrada com sucesso');
                 clearEditingControllers();
                 Future.delayed(Duration(milliseconds: 1200), () {
-                  Get.offAndToNamed(Routes.INVESTMENT_ADDUPDATE, arguments: user);
+                  Get.offAndToNamed(Routes.INVESTMENT_ADDUPDATE, arguments: {'user': user, 'addEditFlag': 'NEWAFTERINCOME'});
                 });
               });
           }

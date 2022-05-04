@@ -10,7 +10,7 @@ import '../../data/service/goals_repository.dart';
 import '../../data/service/parameters_repository.dart';
 
 class ProjectionController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final ParametersRepository _parametersRepository = ParametersRepository();
   final GoalsRepository _goalsRepository = GoalsRepository();

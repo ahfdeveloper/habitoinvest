@@ -9,9 +9,7 @@ import 'welcome_controller.dart';
 import 'widgets/email_login_button.dart';
 import 'widgets/social_login_button.dart';
 
-class WelcomePage extends StatelessWidget {
-  final controller = Get.put(WelcomeController());
-
+class WelcomePage extends GetView<WelcomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +20,8 @@ class WelcomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Container(
-              height: 280,
-              width: 280,
+              height: 250,
+              width: 250,
               child: Image.asset(AppImages.logo),
             ),
           ),
@@ -41,7 +39,7 @@ class WelcomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                   child: EmailLoginButton(
-                    onTap: () => Get.toNamed(Routes.LOGIN),
+                    onTap: () => Get.offAndToNamed(Routes.LOGIN),
                   ),
                 ),
                 Padding(
@@ -60,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                       style: AppTextStyles.textBlack,
                     ),
                     TextButton(
-                      onPressed: () => Get.toNamed(Routes.REGISTER_USER),
+                      onPressed: () => Get.offAndToNamed(Routes.REGISTER_USER),
                       child: Text('Cadastre-se'),
                     ),
                     SizedBox(height: 80.0)

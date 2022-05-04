@@ -13,7 +13,7 @@ import '../../global_widgets/app_snackbar.dart';
 import '../../routes/routes.dart';
 
 class InvestmentAddUpdateController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final InvestmentRepository _investmentRepository = InvestmentRepository();
   final AccountRepository _accountRepository = AccountRepository();
@@ -30,15 +30,15 @@ class InvestmentAddUpdateController extends GetxController {
   MoneyMaskedTextController investmentValueTextFormController = moneyValueController;
 
   // Definição do controller do restante dos campos
-  TextEditingController? descriptionTextController;
-  TextEditingController? addInformationTextController;
+  TextEditingController? descriptionTextController = TextEditingController(text: '');
+  TextEditingController? addInformationTextController = TextEditingController(text: '');
 
   // Lista que guarda os dados da conta do usuário
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
 
   // Flag para identificar se se trata de adição ou alteração de um investimento
-  String _addEditFlag = 'NEWAFTERINCOME';
+  String _addEditFlag = '';
   String get addEditFlag => this._addEditFlag;
   set addEditFlag(String value) => this._addEditFlag = value;
 
@@ -79,9 +79,19 @@ class InvestmentAddUpdateController extends GetxController {
 
   @override
   void onInit() {
-    descriptionTextController = TextEditingController();
-    addInformationTextController = TextEditingController();
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
+    addEditFlag = Get.arguments['addEditFlag'];
+    if (addEditFlag == 'UPDATE') {
+      investmentId = Get.arguments['investmentId'];
+      investimentValue = Get.arguments['investimentValue'];
+      newSelectedDate = Get.arguments['newSelectedDate'];
+      investmentValueTextFormController.text = Get.arguments['investmentValueTextFormController'];
+      dateTextController = Get.arguments['dateTextController'];
+      descriptionTextController = Get.arguments['descriptionTextController'];
+      effective = Get.arguments['effective'];
+      updateEffective = Get.arguments['updateEffective'];
+      addInformationTextController = Get.arguments['addInformationTextController'];
+    }
     super.onInit();
   }
 
@@ -217,7 +227,6 @@ class InvestmentAddUpdateController extends GetxController {
   // Limpa os campos do formulário
   void clearEditingControllers() {
     moneyValueController.updateValue(0.0);
-    formkey.currentState!.reset();
     dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
     descriptionTextController!.clear();
     addInformationTextController!.clear();

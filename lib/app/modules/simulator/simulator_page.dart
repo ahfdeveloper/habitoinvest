@@ -8,9 +8,7 @@ import '../../core/values/app_constants.dart';
 import 'simulator_controller.dart';
 import 'widgets/buttons.dart';
 
-class SimulatorPage extends StatelessWidget {
-  final SimulatorController _simulatorController = SimulatorController();
-
+class SimulatorPage extends GetView<SimulatorController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +23,7 @@ class SimulatorPage extends StatelessWidget {
           children: [
             SizedBox(height: SPACEFORMS * 2),
             TextFormField(
-              controller: _simulatorController.contributionValueController,
+              controller: controller.contributionValueController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Valor a ser aplicado mensalmente',
@@ -39,7 +37,7 @@ class SimulatorPage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             TextFormField(
               keyboardType: TextInputType.number,
-              controller: _simulatorController.interestRateController,
+              controller: controller.interestRateController,
               decoration: InputDecoration(
                 labelText: 'Taxa de juros mensal',
                 hintText: 'p.ex. 00.00',
@@ -58,7 +56,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.contributionFiveYears,
+                          controller.contributionFiveYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -66,24 +64,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.profitabilityFiveYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: SPACEFORMS),
-                    Row(
-                      children: [
-                        Text(
-                          _simulatorController.contributionTenYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          _simulatorController.profitabilityTenYears,
+                          controller.profitabilityFiveYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -92,7 +73,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.contributionTwentyYears,
+                          controller.contributionTenYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -100,7 +81,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.profitabilityTwentyYears,
+                          controller.profitabilityTenYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -109,7 +90,7 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.contributionThirtyYears,
+                          controller.contributionTwentyYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -117,7 +98,24 @@ class SimulatorPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          _simulatorController.profitabilityThirtyYears,
+                          controller.profitabilityTwentyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: SPACEFORMS),
+                    Row(
+                      children: [
+                        Text(
+                          controller.contributionThirtyYears,
+                          style: AppTextStyles.appBarTextDark,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          controller.profitabilityThirtyYears,
                           style: AppTextStyles.appBarTextDark,
                         ),
                       ],
@@ -137,14 +135,14 @@ class SimulatorPage extends StatelessWidget {
             Expanded(
               child: ButtonWidget.transparent(
                 label: 'Nova simulação',
-                onTap: () => _simulatorController.limpaFormulario(),
+                onTap: () => controller.limpaFormulario(),
               ),
             ),
             SizedBox(width: 8.0),
             Expanded(
               child: ButtonWidget.black(
                 label: 'SIMULAR',
-                onTap: () => _simulatorController.totalAplication(),
+                onTap: () => controller.totalAplication(),
               ),
             ),
           ],

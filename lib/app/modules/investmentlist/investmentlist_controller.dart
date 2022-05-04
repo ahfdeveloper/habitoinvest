@@ -11,7 +11,7 @@ import '../../data/service/investment_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 
 class InvestmentListController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final InvestmentRepository _investmentRepository = InvestmentRepository();
   final AccountRepository _accountRepository = AccountRepository();

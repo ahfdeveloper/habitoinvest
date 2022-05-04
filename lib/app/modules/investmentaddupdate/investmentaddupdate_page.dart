@@ -9,9 +9,7 @@ import '../../core/values/app_constants.dart';
 import '../../global_widgets/divider_horizontal.dart';
 import 'investmentaddupdate_controller.dart';
 
-class InvestAddUpdatePage extends StatelessWidget {
-  final _investmentAddUpdateController = Get.put(InvestmentAddUpdateController());
-
+class InvestAddUpdatePage extends GetView<InvestmentAddUpdateController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,30 +17,30 @@ class InvestAddUpdatePage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.investColor,
-        title: Text(_investmentAddUpdateController.title, style: TextStyle(fontSize: 17.0)),
+        title: Text(controller.title, style: TextStyle(fontSize: 17.0)),
         iconTheme: IconThemeData(color: AppColors.white),
         actions: [
           IconButton(
-            onPressed: () => _investmentAddUpdateController.cancel(),
+            onPressed: () => controller.cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(
-            onPressed: () => _investmentAddUpdateController.saveUpdateInvestment(
-              addEditFlag: _investmentAddUpdateController.addEditFlag,
+            onPressed: () => controller.saveUpdateInvestment(
+              addEditFlag: controller.addEditFlag,
             ),
             icon: Icon(Icons.save, color: AppColors.white),
           ),
         ],
       ),
       body: Form(
-        key: _investmentAddUpdateController.formkey,
+        key: controller.formkey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 13.0),
           children: [
             SizedBox(height: SPACEFORMS),
             TextFormField(
-              controller: _investmentAddUpdateController.investmentValueTextFormController,
-              autofocus: true,
+              controller: controller.investmentValueTextFormController,
+              autofocus: verifyAddUpdate(controller.addEditFlag),
               validator: (value) => validatorValue(value),
               style: AppTextStyles.valueInvestmentOperationStyle,
               keyboardType: TextInputType.number,
@@ -55,8 +53,8 @@ class InvestAddUpdatePage extends StatelessWidget {
               children: [
                 Obx(
                   () => Checkbox(
-                    value: _investmentAddUpdateController.updateEffective,
-                    onChanged: (newValue) => _investmentAddUpdateController.updateEffective = newValue!,
+                    value: controller.updateEffective,
+                    onChanged: (newValue) => controller.updateEffective = newValue!,
                   ),
                 ),
                 Text('Efetivado'),
@@ -66,7 +64,7 @@ class InvestAddUpdatePage extends StatelessWidget {
             SizedBox(height: SPACEFORMS),
             //
             TextFormField(
-              controller: _investmentAddUpdateController.dateTextController,
+              controller: controller.dateTextController,
               focusNode: DisabledFocusNode(),
               decoration: textFormFieldForms(
                 fieldIcon: Icons.date_range_outlined,
@@ -74,29 +72,29 @@ class InvestAddUpdatePage extends StatelessWidget {
                 hint: null,
               ),
               style: TextStyle(fontWeight: FontWeight.bold),
-              onTap: () => _investmentAddUpdateController.selectDate(context),
+              onTap: () => controller.selectDate(context),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS),
             //
             Obx(
               () => TextFormField(
-                controller: _investmentAddUpdateController.descriptionTextController,
+                controller: controller.descriptionTextController,
                 validator: (value) => validator(value),
                 decoration: textFormFieldForms(
                   fieldIcon: Icons.description_outlined,
-                  hint: _investmentAddUpdateController.descriptionValue,
+                  hint: controller.descriptionValue,
                 ),
                 style: TextStyle(fontWeight: FontWeight.bold),
-                onTap: () => _investmentAddUpdateController.descriptionTextController!.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _investmentAddUpdateController.descriptionTextController!.text.length),
+                onTap: () => controller.descriptionTextController!.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.descriptionTextController!.text.length),
                 ),
               ),
             ),
             DividerHorizontal(),
             SizedBox(height: SPACEFORMS * 2),
             TextFormField(
-              controller: _investmentAddUpdateController.addInformationTextController,
+              controller: controller.addInformationTextController,
               decoration: textFormFieldMultilines('Informações adicionais (opcional)'),
               style: TextStyle(fontWeight: FontWeight.bold),
               keyboardType: TextInputType.multiline,

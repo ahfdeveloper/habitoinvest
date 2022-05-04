@@ -27,7 +27,7 @@ class SplashScreenController extends GetxController {
         name: box.read('auth')['name'],
         urlimage: box.read('auth')['urlimage'],
       );
-      Get.offAllNamed(Routes.HOME, arguments: user);
+      Get.offAllNamed(Routes.HOME, arguments: {'user': user});
     } else {
       Get.offAllNamed(Routes.WELCOME);
     }

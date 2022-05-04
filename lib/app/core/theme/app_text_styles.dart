@@ -24,17 +24,17 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
-  // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor clara
-  static final TextStyle percentageChartHome = GoogleFonts.notoSans(
-    color: AppColors.grey800,
-    fontSize: 21.0,
-    fontWeight: FontWeight.w700,
-  );
-
   // Estilo do texto presente nas appBar de modo geral quando a mesma tem cor escura
   static final TextStyle appBarTextLight = GoogleFonts.notoSans(
     color: AppColors.white,
     fontSize: 17.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  // Estilo do texto da porcentagem do gráfico localizado na HOME
+  static final TextStyle percentageChartHome = GoogleFonts.notoSans(
+    color: AppColors.grey800,
+    fontSize: 21.0,
     fontWeight: FontWeight.w700,
   );
 
@@ -52,11 +52,18 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
   );
 
-  // Estilo padrão usado no corpo das páginas quando o background é claro
+  // Estilo padrão nos cards de projeção de despesas
   static final TextStyle textCardProjection = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
     fontSize: 13.0,
     fontWeight: FontWeight.w400,
+  );
+
+  // Estilo padrão usado no texto do corpo da page GoalWarning
+  static final TextStyle textGoalWarning = GoogleFonts.notoSans(
+    color: AppColors.bodyTextPagesColor,
+    fontSize: 25.0,
+    fontWeight: FontWeight.w700,
   );
 
   // Estilo padrão usado no corpo das páginas quando o background é claro
@@ -66,7 +73,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
   );
 
-  // Estilo padrão usado no corpo das páginas quando o background é claro
+  // Estilo padrão usado no corpo das páginas quando o background é claro e o texto é menor
   static final TextStyle generallyLittleTextDarkBody = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
     fontSize: 13.0,

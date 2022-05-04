@@ -120,6 +120,8 @@ class ExpenseUpdateController extends GetxController {
     if (parametersList.first.workedHours != 0) {
       double monthHours = parametersList.first.workedHours! * 4.5;
       workedHours = value / (parametersList.first.salary! / monthHours);
+    } else {
+      workedHours = 0;
     }
   }
 

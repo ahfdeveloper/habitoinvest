@@ -41,6 +41,4 @@ abstract class Routes {
   static const PROJECTION = '/projection';
   // Página de Boas vindas ao app com opções para Login
   static const WELCOME = '/welcome';
-  //---------------------
-  static const CATEGORIES_UPDATE = '/categories_update';
 }

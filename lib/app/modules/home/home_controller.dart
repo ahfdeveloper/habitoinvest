@@ -16,7 +16,7 @@ import '../../data/service/investment_repository.dart';
 import '../../data/service/parameters_repository.dart';
 
 class HomeController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GoalsRepository _goalsRepository = GoalsRepository();
   final AccountRepository _accountRepository = AccountRepository();
   final ExpenseRepository _expenseRepository = ExpenseRepository();

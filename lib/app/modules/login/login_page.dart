@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/routes/routes.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/values/app_images.dart';
 import 'login_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  final LoginController controller = Get.find<LoginController>();
-
+class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -120,7 +119,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () => Get.back(),
+                onPressed: () => Get.offAndToNamed(Routes.WELCOME),
                 child: Text(
                   'Voltar',
                   style: TextStyle(color: AppColors.grey800),

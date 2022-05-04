@@ -10,10 +10,7 @@ import '../../core/utils/app_masks.dart';
 import 'projection_controller.dart';
 import 'widgets/chart_card_projection.dart';
 
-class ProjectionPage extends StatelessWidget {
-  final ProjectionController _projectionController = Get.find<ProjectionController>();
-  final Color interfaceColor = AppColors.themeColor;
-
+class ProjectionPage extends GetView<ProjectionController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +19,7 @@ class ProjectionPage extends StatelessWidget {
         systemOverlayStyle: SystemUiOverlayStyle.light,
         automaticallyImplyLeading: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => cancel()),
-        backgroundColor: interfaceColor,
+        backgroundColor: AppColors.themeColor,
         title: Text('Projeção de despesas', style: AppTextStyles.appBarTextLight),
         actions: [
           IconButton(
@@ -42,12 +39,12 @@ class ProjectionPage extends StatelessWidget {
         ],
       ),
       body: Obx(
-        () => _projectionController.goalsList.isEmpty ||
-                _projectionController.goalsList == [] ||
-                _projectionController.expenseList.isEmpty ||
-                _projectionController.expenseList == [] ||
-                _projectionController.parametersList.isEmpty ||
-                _projectionController.parametersList == []
+        () => controller.goalsList.isEmpty ||
+                controller.goalsList == [] ||
+                controller.expenseList.isEmpty ||
+                controller.expenseList == [] ||
+                controller.parametersList.isEmpty ||
+                controller.parametersList == []
             ? Center(
                 child: CircularProgressIndicator(),
               )
@@ -80,7 +77,7 @@ class ProjectionPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${moneyFormatter.format(_projectionController.loadGoalExpenses())}',
+                                      '${moneyFormatter.format(controller.loadGoalExpenses())}',
                                       style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                                     ),
                                   ],
@@ -102,21 +99,19 @@ class ProjectionPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ChartCardProjection(
                               period: Text(
-                                dateFormat.format(_projectionController.getPeriod(index + 1).first) +
-                                    ' à ' +
-                                    dateFormat.format(_projectionController.getPeriod(index + 1).last),
+                                dateFormat.format(controller.getPeriod(index + 1).first) + ' à ' + dateFormat.format(controller.getPeriod(index + 1).last),
                                 style: AppTextStyles.titleCardHome,
                               ),
                               effectiveValue: Text(
-                                'Despesas previstas:  ${moneyFormatter.format(_projectionController.loadNotEssencialExpensesFuture(index + 1))}',
+                                'Despesas previstas:  ${moneyFormatter.format(controller.loadNotEssencialExpensesFuture(index + 1))}',
                                 style: AppTextStyles.textCardProjection,
                               ),
                               hoursValue: Text(
-                                'Horas de trabalho: ${_projectionController.loadWorkedHours(index + 1).toStringAsFixed(1)}',
+                                'Horas de trabalho: ${controller.loadWorkedHours(index + 1).toStringAsFixed(1)}',
                                 style: AppTextStyles.textCardProjection,
                               ),
                               colorChart: AppColors.expenseColor,
-                              goalPercent: (_projectionController.notEssencialExpenses.elementAt(index) / _projectionController.goalNotEssentialExpenses),
+                              goalPercent: (controller.notEssencialExpenses.elementAt(index) / controller.goalNotEssentialExpenses),
                             );
                           },
                         ),

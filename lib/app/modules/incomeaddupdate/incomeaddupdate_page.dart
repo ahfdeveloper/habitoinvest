@@ -8,7 +8,6 @@ import '../../core/utils/app_functions.dart';
 import '../../core/values/app_constants.dart';
 import '../../global_widgets/app_addcategory_button.dart';
 import '../../global_widgets/divider_horizontal.dart';
-import '../../routes/routes.dart';
 import 'incomeaddupdate_controller.dart';
 
 class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
@@ -38,7 +37,7 @@ class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
         ],
       ),
       body: Obx(
-        () => controller.categoriesList.isEmpty || controller.categoriesList == []
+        () => (controller.categoriesList.isEmpty || controller.categoriesList == []) && controller.addEditFlag == 'UPDATE'
             ? Center(child: CircularProgressIndicator())
             : Form(
                 key: _formkey,

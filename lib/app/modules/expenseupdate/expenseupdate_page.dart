@@ -8,7 +8,6 @@ import '../../core/utils/app_functions.dart';
 import '../../core/values/app_constants.dart';
 import '../../global_widgets/app_addcategory_button.dart';
 import '../../global_widgets/divider_horizontal.dart';
-import '../../routes/routes.dart';
 import 'expenseupdate_controller.dart';
 
 class ExpenseUpdatePage extends GetView<ExpenseUpdateController> {

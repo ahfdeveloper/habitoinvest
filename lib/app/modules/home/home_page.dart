@@ -8,19 +8,13 @@ import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_functions.dart';
 import '../../core/utils/app_masks.dart';
 import '../../routes/routes.dart';
-import '../investmentaddupdate/investmentaddupdate_controller.dart';
-import '../parameters/parameters_controller.dart';
 import 'home_controller.dart';
 import 'widgets/buttonfunctions/button_function.dart';
 import 'widgets/drawer/drawer.dart';
 import 'widgets/goalschart/chart_card_home.dart';
 import 'widgets/timeindicator/timeindicator_card.dart';
 
-class HomePage extends StatelessWidget {
-  final HomeController _homeController = Get.put(HomeController());
-  final ParametersController _parametersController = Get.put(ParametersController());
-  final InvestmentAddUpdateController _investmentAddUpdateController = Get.put(InvestmentAddUpdateController());
-
+class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -40,28 +34,30 @@ class HomePage extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Olá ${_homeController.user!.name}', style: AppTextStyles.appBarTextLight),
+                Text('Olá ${controller.user!.name}', style: AppTextStyles.appBarTextLight),
               ],
             ),
             actions: [
               IconButton(
                 onPressed: () {
-                  _parametersController.dropdownDay = _homeController.parametersList.first.dayInitialPeriod;
-                  _parametersController.salaryTextFormController.text = _homeController.parametersList.first.salary!.toStringAsFixed(2);
-                  _parametersController.workedHoursFormController.text = _homeController.parametersList.first.workedHours.toString();
-                  Get.toNamed(Routes.PARAMETERS, arguments: _homeController.user);
+                  Get.toNamed(Routes.PARAMETERS, arguments: {
+                    'user': controller.user,
+                    'dropdownDay': controller.parametersList.first.dayInitialPeriod,
+                    'salaryTextFormController': controller.parametersList.first.salary!.toStringAsFixed(2),
+                    'workedHoursFormController': TextEditingController(text: controller.parametersList.first.workedHours.toString()),
+                  });
                 },
                 icon: Icon(Icons.settings),
               ),
             ],
           ),
           drawer: DrawerHome(),
-          body: _homeController.goalsList.isEmpty ||
-                  _homeController.goalsList == [] ||
-                  _homeController.parametersList.isEmpty ||
-                  _homeController.parametersList == [] ||
-                  _homeController.accountList.isEmpty ||
-                  _homeController.accountList == []
+          body: controller.goalsList.isEmpty ||
+                  controller.goalsList == [] ||
+                  controller.parametersList.isEmpty ||
+                  controller.parametersList == [] ||
+                  controller.accountList.isEmpty ||
+                  controller.accountList == []
               ? Center(child: CircularProgressIndicator())
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +97,7 @@ class HomePage extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '${moneyFormatter.format(_homeController.accountList.first.balance!)}',
+                                                  '${moneyFormatter.format(controller.accountList.first.balance!)}',
                                                   style: GoogleFonts.notoSans(color: AppColors.white, fontSize: 19.0, fontWeight: FontWeight.bold),
                                                 ),
                                               ],
@@ -123,7 +119,7 @@ class HomePage extends StatelessWidget {
                                                       RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                                                     ),
                                                     side: MaterialStateProperty.all(BorderSide(color: AppColors.white))),
-                                                onPressed: () => Get.toNamed(Routes.PROJECTION, arguments: _homeController.user),
+                                                onPressed: () => Get.toNamed(Routes.PROJECTION, arguments: {'user': controller.user}),
                                                 child: Text(
                                                   'Projeção de despesas',
                                                   style: GoogleFonts.notoSans(
@@ -156,25 +152,24 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         ChartCard(
                                           // Parâmetros gráfico de despesas
-                                          goalValueExpense: _homeController.loadGoalExpenses(),
-                                          effectiveValueExpense: _homeController.loadNotEssencialExpensesCurrent(),
-                                          hoursValueExpense: _homeController.loadWorkedHours(),
-                                          percentGoalExpense: _homeController.goalNotEssentialExpenses == 0
+                                          goalValueExpense: controller.loadGoalExpenses(),
+                                          effectiveValueExpense: controller.loadNotEssencialExpensesCurrent(),
+                                          hoursValueExpense: controller.loadWorkedHours(),
+                                          percentGoalExpense: controller.goalNotEssentialExpenses == 0
                                               ? 0
-                                              : (_homeController.totalNotEssencialExpenses / _homeController.goalNotEssentialExpenses),
+                                              : (controller.totalNotEssencialExpenses / controller.goalNotEssentialExpenses),
                                           // Parâmetros gráfico de investimento
-                                          goalValueInvestment: _homeController.loadGoalInvestiment(),
-                                          effectiveValueInvestment: _homeController.loadInvestmensCurrent(),
-                                          percentGoalInvestment:
-                                              _homeController.goalInvestiment == 0 ? 0 : (_homeController.totalInvestments / _homeController.goalInvestiment),
+                                          goalValueInvestment: controller.loadGoalInvestiment(),
+                                          effectiveValueInvestment: controller.loadInvestmensCurrent(),
+                                          percentGoalInvestment: controller.goalInvestiment == 0 ? 0 : (controller.totalInvestments / controller.goalInvestiment),
                                         ),
                                         TimeIndicatorCard(
-                                          percentageCurrent: _homeController.percentagePeriodCurrent(),
-                                          percentageDaysPassed: _homeController.percentagePeriodCurrent() * 100,
-                                          percentageProgress: _homeController.percentagePeriodCurrent() * 100,
-                                          pastDays: _homeController.periodIndicator(DateTime.now()),
-                                          periodDays: _homeController.periodIndicator(
-                                            getInitialDateQuery(dayInitialPeriod: _homeController.parametersList.first.dayInitialPeriod! - 1).last,
+                                          percentageCurrent: controller.percentagePeriodCurrent(),
+                                          percentageDaysPassed: controller.percentagePeriodCurrent() * 100,
+                                          percentageProgress: controller.percentagePeriodCurrent() * 100,
+                                          pastDays: controller.periodIndicator(DateTime.now()),
+                                          periodDays: controller.periodIndicator(
+                                            getInitialDateQuery(dayInitialPeriod: controller.parametersList.first.dayInitialPeriod! - 1).last,
                                           ),
                                         )
                                       ],
@@ -246,12 +241,12 @@ class HomePage extends StatelessWidget {
                                   icon: Icons.monetization_on,
                                   colorButton: AppColors.incomeColor,
                                   label: 'Receitas',
-                                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: {'user': _homeController.user}),
+                                  onTap: () => Get.toNamed(Routes.INCOME_LIST, arguments: {'user': controller.user}),
                                   onPressed: () async {
                                     moneyValueController.updateValue(0.0);
                                     Get.toNamed(
                                       Routes.INCOME_ADDUPDATE,
-                                      arguments: {'user': _homeController.user, 'addEditFlag': 'NEW'},
+                                      arguments: {'user': controller.user, 'addEditFlag': 'NEW'},
                                     );
                                   },
                                 ),
@@ -260,10 +255,10 @@ class HomePage extends StatelessWidget {
                                   icon: Icons.payment,
                                   colorButton: AppColors.expenseColor,
                                   label: 'Despesas',
-                                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: _homeController.user),
+                                  onTap: () => Get.toNamed(Routes.EXPENSE_LIST, arguments: {'user': controller.user}),
                                   onPressed: () {
                                     moneyValueController.updateValue(0.0);
-                                    Get.toNamed(Routes.EXPENSE_ADD, arguments: {'user': _homeController.user});
+                                    Get.toNamed(Routes.EXPENSE_ADD, arguments: {'user': controller.user});
                                   },
                                 ),
                                 //
@@ -271,11 +266,10 @@ class HomePage extends StatelessWidget {
                                   icon: Icons.moving_outlined,
                                   colorButton: AppColors.investColor,
                                   label: 'Investimentos',
-                                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: _homeController.user),
+                                  onTap: () => Get.toNamed(Routes.INVESTMENT_LIST, arguments: {'user': controller.user}),
                                   onPressed: () {
-                                    _investmentAddUpdateController.addEditFlag = 'NEW';
                                     moneyValueController.updateValue(0.0);
-                                    Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _homeController.user);
+                                    Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: {'user': controller.user, 'addEditFlag': 'NEW'});
                                   },
                                 ),
                               ],

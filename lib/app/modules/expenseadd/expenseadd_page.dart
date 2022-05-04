@@ -8,7 +8,6 @@ import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_functions.dart';
 import '../../core/values/app_constants.dart';
 import '../../global_widgets/divider_horizontal.dart';
-import '../../routes/routes.dart';
 import 'expenseadd_controller.dart';
 
 class ExpenseAddPage extends GetView<ExpenseAddController> {

@@ -4,7 +4,7 @@ import '../../data/model/user_model.dart';
 import '../../data/service/goals_repository.dart';
 
 class GoalsWarningController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   GoalsRepository _goalsRepository = GoalsRepository();
 
   // Cadastra todas as metas

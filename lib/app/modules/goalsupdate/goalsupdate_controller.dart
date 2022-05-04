@@ -9,10 +9,10 @@ import '../../data/service/goals_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 
 class GoalsUpdateController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GoalsRepository _goalsRepository = GoalsRepository();
   MoneyMaskedTextController goalFixedValueController = moneyValueController;
-  TextEditingController goalPercentageValueController = MaskedTextController(mask: '00');
+  TextEditingController goalPercentageValueController = TextEditingController(text: '00');
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   // Recebe a instância do controller de acordo com o formato da meta selecionada
@@ -76,7 +76,20 @@ class GoalsUpdateController extends GetxController {
   get value => this._value.value;
   set value(value) => this._value.value = value;
 
-  //
+  @override
+  void onInit() {
+    title = Get.arguments['title'];
+    goalId = Get.arguments['goalId'];
+    fvalue = Get.arguments['fvalue'];
+    pvalue = Get.arguments['pvalue'];
+    if (double.parse(fvalue) != 0) {
+      fixedValueButtonSelect();
+    } else {
+      percentageButtonSelect();
+    }
+    super.onInit();
+  }
+
   // Função chamada quando selecionado o botão para definir valor em porcentagem de meta
   void percentageButtonSelect() async {
     pVisible = true;
@@ -88,7 +101,9 @@ class GoalsUpdateController extends GetxController {
     maxLength = 2;
     controller = null;
     controller = goalPercentageValueController;
-    controller.text = pvalue;
+    if (pvalue != '0') {
+      controller = TextEditingController(text: pvalue);
+    }
     controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)); //posiciona cursor fim do texto
   }
 
@@ -177,11 +192,5 @@ class GoalsUpdateController extends GetxController {
         Get.back();
       }
     }
-  }
-
-  // Cancela a atualização das metas
-  void cancel() {
-    //controller.updateValue(0.0);
-    Get.back();
   }
 }

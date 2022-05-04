@@ -9,7 +9,7 @@ import '../../data/model/user_model.dart';
 import '../../data/service/parameters_repository.dart';
 
 class ParametersController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final ParametersRepository _parametersRepository = ParametersRepository();
@@ -18,7 +18,7 @@ class ParametersController extends GetxController {
   MoneyMaskedTextController salaryTextFormController = moneyValueController;
 
   // Controller da quantidade de horas trabalhada
-  TextEditingController workedHoursFormController = TextEditingController();
+  TextEditingController workedHoursFormController = TextEditingController(text: '');
 
   // Lista que guarda os parâmetros do usuário
   Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
@@ -38,6 +38,9 @@ class ParametersController extends GetxController {
   @override
   void onInit() {
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
+    dropdownDay = Get.arguments['dropdownDay'];
+    salaryTextFormController.text = Get.arguments['salaryTextFormController'];
+    workedHoursFormController = Get.arguments['workedHoursFormController'];
     createListDays();
     super.onInit();
   }
@@ -66,5 +69,5 @@ class ParametersController extends GetxController {
     );
     moneyValueController.updateValue(0.0);
     Get.back();
-  }
+  } ////IMPLEMENTAR SNACKBAR
 }

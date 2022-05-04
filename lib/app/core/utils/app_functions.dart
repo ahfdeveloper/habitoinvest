@@ -6,7 +6,7 @@ import 'app_masks.dart';
 
 // Verifica se usuário alterou o valor da transação ou manteve zero
 validatorValue(value) {
-  if (value == 'R\$ 0,00') {
+  if (value == 'R\$ 0,00' || value == '') {
     return 'Valor deve ser diferente de zero';
   }
   return null;
@@ -16,6 +16,8 @@ validatorValue(value) {
 validator(value) {
   if (value!.isEmpty) {
     return 'Campo obrigatório';
+  } else if (value == '0' || value == '00') {
+    return 'Valor deve ser diferente de 0';
   }
   return null;
 }

@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import '../../core/theme/app_colors.dart';
 import 'register_controller.dart';
 
-class RegisterPage extends StatelessWidget {
-  final RegisterController _registerController = RegisterController();
+class RegisterPage extends GetView<RegisterController> {
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -31,7 +30,7 @@ class RegisterPage extends StatelessWidget {
               Center(child: Text('CADASTRAR', style: TextStyle(fontSize: 22.0))),
               SizedBox(height: 40.0),
               TextFormField(
-                controller: _registerController.nameTextController,
+                controller: controller.nameTextController,
                 // Validação dos dados digitados no campo
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -47,7 +46,7 @@ class RegisterPage extends StatelessWidget {
               ),
               SizedBox(height: 15.0),
               TextFormField(
-                controller: _registerController.emailTextController,
+                controller: controller.emailTextController,
                 // Validação dos dados digitados no campo e-mail
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -66,7 +65,7 @@ class RegisterPage extends StatelessWidget {
               ),
               SizedBox(height: 15.0),
               TextFormField(
-                controller: _registerController.passwordTextController,
+                controller: controller.passwordTextController,
                 // Validação dos dados digitados no campo senha
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -88,7 +87,7 @@ class RegisterPage extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {
                     if (_formkey.currentState!.validate()) {
-                      _registerController.register();
+                      controller.register();
                     }
                   },
                   style: OutlinedButton.styleFrom(backgroundColor: Colors.black),

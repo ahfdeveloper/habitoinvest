@@ -7,9 +7,7 @@ import '../../core/theme/app_text_styles.dart';
 import '../../routes/routes.dart';
 import 'goalswarning_controller.dart';
 
-class GoalsWarningPage extends StatelessWidget {
-  final GoalsWarningController _goalsWarningController = GoalsWarningController();
-
+class GoalsWarningPage extends GetView<GoalsWarningController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,17 +21,29 @@ class GoalsWarningPage extends StatelessWidget {
       body: Center(
         child: Container(
           padding: EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Text('Suas metas ainda não foram definidas'),
-              Text('Deseja cadastrar?'),
-              ElevatedButton(
-                onPressed: () {
-                  Get.offAndToNamed(Routes.GOALS, arguments: _goalsWarningController.user);
-                },
-                child: Text('Cadastrar'),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                Text(
+                  'Suas metas ainda não foram definidas',
+                  style: AppTextStyles.textGoalWarning,
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Efetue o cadastro',
+                  style: AppTextStyles.textGoalWarning,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 15.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.offAndToNamed(Routes.GOALS, arguments: {'user': controller.user});
+                  },
+                  child: Text('Cadastrar', style: TextStyle(fontSize: 20.0)),
+                ),
+              ],
+            ),
           ),
         ),
       ),

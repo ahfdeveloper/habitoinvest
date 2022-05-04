@@ -13,7 +13,7 @@ import '../../data/service/expense_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 
 class ExpenseListController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ExpenseRepository _expenseRepository = ExpenseRepository();
   final AccountRepository _accountRepository = AccountRepository();
@@ -114,7 +114,7 @@ class ExpenseListController extends GetxController {
       double monthHours = parametersList.first.workedHours! * 4.5;
       return value / (parametersList.first.salary! / monthHours);
     } else {
-      throw Exception('Erro ao calcular as horas de trabalho');
+      return 0;
     }
   }
 }

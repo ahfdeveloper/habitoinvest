@@ -7,13 +7,9 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_masks.dart';
 import '../../routes/routes.dart';
-import '../investmentaddupdate/investmentaddupdate_controller.dart';
 import 'investmentlist_controller.dart';
 
-class InvestmentList extends StatelessWidget {
-  final InvestmentListController _investmentListController = Get.find<InvestmentListController>();
-  final InvestmentAddUpdateController _investmentAddUpdateController = Get.put(InvestmentAddUpdateController());
-
+class InvestmentList extends GetView<InvestmentListController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -23,10 +19,10 @@ class InvestmentList extends StatelessWidget {
           backgroundColor: AppColors.investColor,
           automaticallyImplyLeading: true,
           leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
-          title: _investmentListController.searchBoolean == false
+          title: controller.searchBoolean == false
               ? Text('Investimentos')
               : TextFormField(
-                  controller: _investmentListController.searchFormFieldController,
+                  controller: controller.searchFormFieldController,
                   style: AppTextStyles.appBarTextLight,
                   autofocus: true,
                   decoration: InputDecoration(
@@ -34,52 +30,53 @@ class InvestmentList extends StatelessWidget {
                     hintStyle: TextStyle(color: Colors.white54),
                     border: UnderlineInputBorder(borderSide: BorderSide.none),
                   ),
-                  onChanged: (value) => _investmentListController.runFilter(value),
+                  onChanged: (value) => controller.runFilter(value),
                 ),
           actions: [
             // Determina qual botão vai aparece no appBar de acordo com a ação do usuário
-            _investmentListController.searchBoolean == false
+            controller.searchBoolean == false
                 ? IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () => _investmentListController.searchBoolean = true,
+                    onPressed: () => controller.searchBoolean = true,
                   )
                 : IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () {
-                      _investmentListController.searchBoolean = false;
-                      _investmentListController.investmentList = _investmentListController.result;
+                      controller.searchBoolean = false;
+                      controller.investmentList = controller.result;
+                      controller.searchFormFieldController.clear();
                     },
                   ),
           ],
         ),
-        body: _investmentListController.investmentList.isNotEmpty
+        body: controller.investmentList.isNotEmpty
             ? ListView.builder(
                 padding: EdgeInsets.all(2.0),
-                itemCount: _investmentListController.investmentList.length,
+                itemCount: controller.investmentList.length,
                 itemBuilder: (context, index) {
                   return Slidable(
                     actionExtentRatio: 0.25,
                     actionPane: SlidableDrawerActionPane(),
                     child: Card(
                       child: ListTile(
-                        trailing: Text('R\$ ' + _investmentListController.investmentList[index].value!.toStringAsFixed(2)),
-                        title: Text(_investmentListController.investmentList[index].description!),
-                        subtitle: Text(DateFormat('dd/MM/yyyy').format(_investmentListController.investmentList[index].date)),
+                        trailing: Text('R\$ ' + controller.investmentList[index].value!.toStringAsFixed(2)),
+                        title: Text(controller.investmentList[index].description!),
+                        subtitle: Text(DateFormat('dd/MM/yyyy').format(controller.investmentList[index].date)),
                         onTap: () {
-                          _investmentAddUpdateController.title = 'Atualizar Investimento';
-                          _investmentAddUpdateController.addEditFlag = 'UPDATE';
-                          _investmentAddUpdateController.investmentId = _investmentListController.investmentList[index].id!;
-                          _investmentAddUpdateController.investimentValue = _investmentListController.investmentList[index].value!;
-                          _investmentAddUpdateController.investmentValueTextFormController.text =
-                              _investmentListController.investmentList[index].value!.toStringAsFixed(2);
-                          _investmentAddUpdateController.effective = _investmentListController.investmentList[index].madeEffective!;
-                          _investmentAddUpdateController.updateEffective = _investmentListController.investmentList[index].madeEffective!;
-                          _investmentAddUpdateController.dateTextController =
-                              TextEditingController(text: DateFormat('dd/MM/yyyy').format(_investmentListController.investmentList[index].date));
-                          _investmentAddUpdateController.newSelectedDate = _investmentListController.investmentList[index].date;
-                          _investmentAddUpdateController.descriptionTextController?.text = _investmentListController.investmentList[index].description!;
-                          _investmentAddUpdateController.addInformationTextController?.text = _investmentListController.investmentList[index].addInformation!;
-                          Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _investmentListController.user);
+                          Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: {
+                            'user': controller.user,
+                            'title': 'Atualizar Investimento',
+                            'addEditFlag': 'UPDATE',
+                            'investmentId': controller.investmentList[index].id!,
+                            'investimentValue': controller.investmentList[index].value!,
+                            'investmentValueTextFormController': controller.investmentList[index].value!.toStringAsFixed(2),
+                            'effective': controller.investmentList[index].madeEffective!,
+                            'updateEffective': controller.investmentList[index].madeEffective!,
+                            'dateTextController': TextEditingController(text: DateFormat('dd/MM/yyyy').format(controller.investmentList[index].date)),
+                            'newSelectedDate': controller.investmentList[index].date,
+                            'descriptionTextController': TextEditingController(text: controller.investmentList[index].description!),
+                            'addInformationTextController': TextEditingController(text: controller.investmentList[index].addInformation!),
+                          });
                         },
                       ),
                     ),
@@ -89,11 +86,11 @@ class InvestmentList extends StatelessWidget {
                         color: AppColors.expenseColor,
                         icon: Icons.delete,
                         onTap: () {
-                          _investmentListController.investmentId = _investmentListController.investmentList[index].id!;
-                          _investmentListController.investmentDescription = _investmentListController.investmentList[index].description!;
-                          _investmentListController.investmentValue = _investmentListController.investmentList[index].value!;
-                          _investmentListController.investmentMadeEffective = _investmentListController.investmentList[index].madeEffective!;
-                          _investmentListController.deleteInvestment();
+                          controller.investmentId = controller.investmentList[index].id!;
+                          controller.investmentDescription = controller.investmentList[index].description!;
+                          controller.investmentValue = controller.investmentList[index].value!;
+                          controller.investmentMadeEffective = controller.investmentList[index].madeEffective!;
+                          controller.deleteInvestment();
                         },
                       ),
                     ],
@@ -109,8 +106,13 @@ class InvestmentList extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             moneyValueController.updateValue(0.0);
-            _investmentAddUpdateController.addEditFlag = 'NEW';
-            Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: _investmentListController.user);
+            Get.toNamed(
+              Routes.INVESTMENT_ADDUPDATE,
+              arguments: {
+                'user': controller.user,
+                'addEditFlag': 'NEW',
+              },
+            );
           },
           backgroundColor: AppColors.investColor,
           tooltip: 'Novo Investimento',

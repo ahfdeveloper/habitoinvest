@@ -7,14 +7,10 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/values/app_constants.dart';
 import '../../routes/routes.dart';
-import '../goalsupdate/goalsupdate_controller.dart';
 import 'goalslist_controller.dart';
 import 'widgets/card_widget.dart';
 
-class GoalsListPage extends StatelessWidget {
-  final GoalsListController _goalsListController = Get.find<GoalsListController>();
-  final GoalsUpdateController _goalsUpdateController = Get.put(GoalsUpdateController());
-
+class GoalsListPage extends GetView<GoalsListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +26,7 @@ class GoalsListPage extends StatelessWidget {
       body: Obx(
         () => ListView.builder(
           padding: EdgeInsets.all(2.0),
-          itemCount: _goalsListController.goalsList.length,
+          itemCount: controller.goalsList.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -40,25 +36,23 @@ class GoalsListPage extends StatelessWidget {
                     children: [
                       CardWidget(
                         goalName: 'Gastos não essenciais',
-                        goalValue: _goalsListController.goalsList.first.percentageNotEssentialExpenses != 0
-                            ? '${_goalsListController.goalsList.first.percentageNotEssentialExpenses}%'
-                            : 'R\$ ${_goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}',
-                        goalUniverse: _goalsListController.goalsList.first.percentageNotEssentialExpenses != 0 ? 'do total das receitas' : 'por período',
+                        goalValue: controller.goalsList.first.percentageNotEssentialExpenses != 0
+                            ? '${controller.goalsList.first.percentageNotEssentialExpenses}%'
+                            : 'R\$ ${controller.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}',
+                        goalUniverse: controller.goalsList.first.percentageNotEssentialExpenses != 0 ? 'do total das receitas' : 'por período',
                         onTap: () => loadDataCardNotEssentialExpense(),
                       ),
                       SizedBox(height: SPACEFORMS),
                       CardWidget(
                         goalName: 'Investimentos',
-                        goalValue: _goalsListController.goalsList.first.percentageInvestiment != 0
-                            ? ('${_goalsListController.goalsList.first.percentageInvestiment}\%')
-                            : 'R\$ ${_goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2)}',
-                        goalUniverse: _goalsListController.goalsList.first.percentageInvestiment != 0 ? 'do total das receitas' : 'por período',
+                        goalValue: controller.goalsList.first.percentageInvestiment != 0
+                            ? ('${controller.goalsList.first.percentageInvestiment}\%')
+                            : 'R\$ ${controller.goalsList.first.valueInvestment!.toStringAsFixed(2)}',
+                        goalUniverse: controller.goalsList.first.percentageInvestiment != 0 ? 'do total das receitas' : 'por período',
                         onTap: () => loadDataCardInvestiment(),
                       ),
                       SizedBox(height: SPACEFORMS),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('*Última atualização: ' + DateFormat('dd/MM/yyyy').format(_goalsListController.goalsList.first.date))),
+                      Align(alignment: Alignment.topLeft, child: Text('*Última atualização: ' + DateFormat('dd/MM/yyyy').format(controller.goalsList.first.date))),
                     ],
                   ),
                 ),
@@ -72,27 +66,23 @@ class GoalsListPage extends StatelessWidget {
 
   // Carrefa dados da meta investimento para a próxima tela
   loadDataCardInvestiment() {
-    _goalsUpdateController.goalId = _goalsListController.goalsList.first.id!;
-    _goalsUpdateController.fvalue = _goalsListController.goalsList.first.valueInvestment!.toStringAsFixed(2);
-    if (_goalsListController.goalsList.first.valueInvestment != 0) {
-      _goalsUpdateController.fixedValueButtonSelect();
-    } else {
-      _goalsUpdateController.percentageButtonSelect();
-    }
-    _goalsUpdateController.title = 'Investimentos';
-    Get.toNamed(Routes.GOALS_DEFINITION, arguments: _goalsListController.user);
+    Get.toNamed(Routes.GOALS_DEFINITION, arguments: {
+      'user': controller.user,
+      'title': 'Investimentos',
+      'goalId': controller.goalsList.first.id!,
+      'fvalue': controller.goalsList.first.valueInvestment!.toStringAsFixed(2),
+      'pvalue': controller.goalsList.first.percentageInvestiment!.toString(),
+    });
   }
 
   // Carrefa dados do meta gastos não essenciais para a próxima tela
   loadDataCardNotEssentialExpense() {
-    _goalsUpdateController.goalId = _goalsListController.goalsList.first.id!;
-    _goalsUpdateController.fvalue = _goalsListController.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2);
-    if (_goalsListController.goalsList.first.valueNotEssentialExpenses != 0) {
-      _goalsUpdateController.fixedValueButtonSelect();
-    } else {
-      _goalsUpdateController.percentageButtonSelect();
-    }
-    _goalsUpdateController.title = 'Gastos não essenciais';
-    Get.toNamed(Routes.GOALS_DEFINITION, arguments: _goalsListController.user);
+    Get.toNamed(Routes.GOALS_DEFINITION, arguments: {
+      'user': controller.user,
+      'title': 'Gastos não essenciais',
+      'goalId': controller.goalsList.first.id!,
+      'fvalue': controller.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2),
+      'pvalue': controller.goalsList.first.percentageNotEssentialExpenses!.toString(),
+    });
   }
 }

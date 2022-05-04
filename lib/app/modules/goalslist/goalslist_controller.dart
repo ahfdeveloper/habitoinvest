@@ -4,7 +4,7 @@ import 'package:habito_invest_app/app/data/model/user_model.dart';
 import 'package:habito_invest_app/app/data/service/goals_repository.dart';
 
 class GoalsListController extends GetxController {
-  final UserModel? user = Get.arguments;
+  final UserModel? user = Get.arguments['user'];
   final GoalsRepository _goalsRepository = GoalsRepository();
 
   String _goalsId = '';

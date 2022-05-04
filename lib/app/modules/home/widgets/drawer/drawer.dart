@@ -5,13 +5,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../routes/routes.dart';
 import '../../../login/login_controller.dart';
-import '../../../parameters/parameters_controller.dart';
 import '../../home_controller.dart';
 
-class DrawerHome extends StatelessWidget {
-  final HomeController _homeController = Get.find<HomeController>();
-  final ParametersController _parametersController = Get.find<ParametersController>();
-
+class DrawerHome extends GetView<HomeController> {
   @override
   Widget build(Object context) {
     return Drawer(
@@ -22,11 +18,11 @@ class DrawerHome extends StatelessWidget {
             currentAccountPictureSize: Size.square(40),
             currentAccountPicture: Image.asset('assets/user1.png'),
             accountName: Text(
-              '${_homeController.user!.name}',
+              '${controller.user!.name}',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0, color: AppColors.white),
             ),
             accountEmail: Text(
-              '${_homeController.user!.email}',
+              '${controller.user!.email}',
               style: TextStyle(color: AppColors.white),
             ),
             decoration: BoxDecoration(color: AppColors.themeColor),
@@ -35,13 +31,13 @@ class DrawerHome extends StatelessWidget {
               leading: Icon(Icons.track_changes, color: AppColors.bodyTextPagesColor),
               title: Text('Definir metas', style: AppTextStyles.generallyTextDarkBody),
               onTap: () {
-                if (_homeController.goalsList.first.percentageInvestiment == 0 &&
-                    _homeController.goalsList.first.valueInvestment == 0 &&
-                    _homeController.goalsList.first.percentageNotEssentialExpenses == 0 &&
-                    _homeController.goalsList.first.valueNotEssentialExpenses == 0) {
-                  Get.offAndToNamed(Routes.GOALS_WARNING, arguments: _homeController.user);
+                if (controller.goalsList.first.percentageInvestiment == 0 &&
+                    controller.goalsList.first.valueInvestment == 0 &&
+                    controller.goalsList.first.percentageNotEssentialExpenses == 0 &&
+                    controller.goalsList.first.valueNotEssentialExpenses == 0) {
+                  Get.offAndToNamed(Routes.GOALS_WARNING, arguments: {'user': controller.user});
                 } else {
-                  Get.offAndToNamed(Routes.GOALS, arguments: _homeController.user);
+                  Get.offAndToNamed(Routes.GOALS, arguments: {'user': controller.user});
                 }
               }),
           ListTile(
@@ -52,7 +48,7 @@ class DrawerHome extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.category, color: AppColors.bodyTextPagesColor),
             title: Text('Categorias', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST, arguments: {'user': _homeController.user}),
+            onTap: () => Get.offAndToNamed(Routes.CATEGORIES_LIST, arguments: {'user': controller.user}),
           ),
           ListTile(
             leading: Icon(Icons.view_list, color: AppColors.bodyTextPagesColor),
@@ -60,14 +56,17 @@ class DrawerHome extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-              leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),
-              title: Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
-              onTap: () {
-                _parametersController.dropdownDay = _homeController.parametersList.first.dayInitialPeriod;
-                _parametersController.salaryTextFormController.text = _homeController.parametersList.first.salary!.toStringAsFixed(2);
-                _parametersController.workedHoursFormController.text = _homeController.parametersList.first.workedHours.toString();
-                Get.offAndToNamed(Routes.PARAMETERS, arguments: _homeController.user);
-              }),
+            leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),
+            title: Text('Parâmetros', style: AppTextStyles.generallyTextDarkBody),
+            onTap: () {
+              Get.offAndToNamed(Routes.PARAMETERS, arguments: {
+                'user': controller.user,
+                'dropdownDay': controller.parametersList.first.dayInitialPeriod,
+                'salaryTextFormController': controller.parametersList.first.salary!.toStringAsFixed(2),
+                'workedHoursFormController': TextEditingController(text: controller.parametersList.first.workedHours.toString()),
+              });
+            },
+          ),
           Divider(color: Colors.grey[400]),
           ListTile(
             leading: Icon(Icons.info, color: AppColors.bodyTextPagesColor),

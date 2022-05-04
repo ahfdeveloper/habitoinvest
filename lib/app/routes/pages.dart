@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:habito_invest_app/app/modules/welcome/welcome_binding.dart';
 import 'routes.dart';
 import '../modules/categoriesaddupdate/categoriesaddupdate_binding.dart';
 import '../modules/categoriesaddupdate/categoriesaddupdate_page.dart';
@@ -140,6 +141,7 @@ class Pages {
     GetPage(
       name: Routes.WELCOME,
       page: () => WelcomePage(),
+      binding: WelcomeBinding(),
     ),
   ];
 }
