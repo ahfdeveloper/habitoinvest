@@ -25,7 +25,7 @@ class GoalsUpdatePage extends StatelessWidget {
         backgroundColor: AppColors.themeColor,
         actions: [
           IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => cancel(),
             icon: Icon(Icons.cancel, color: AppColors.white),
           ),
           IconButton(

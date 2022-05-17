@@ -95,6 +95,15 @@ class InvestmentListController extends GetxController {
     );
   }
 
+  // Faz a mudança de cor do indicador de efetivado ou não no ListTile
+  Color? colorEffective(bool effective) {
+    if (effective == true) {
+      return AppColors.investColor;
+    } else {
+      return AppColors.grey400;
+    }
+  }
+
 // Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;

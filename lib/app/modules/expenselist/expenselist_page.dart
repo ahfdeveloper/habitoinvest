@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global_widgets/app_listtile_widget.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -58,12 +59,14 @@ class ExpenseList extends GetView<ExpenseListController> {
                     actionExtentRatio: 0.25,
                     actionPane: SlidableDrawerActionPane(),
                     child: Card(
-                      child: ListTile(
-                        trailing: Text('R\$ ' + controller.expenseList[index].value!.toStringAsFixed(2)),
-                        title: Text(controller.expenseList[index].description!),
-                        subtitle: Text(DateFormat('dd/MM/yyyy').format(controller.expenseList[index].date)),
-                        onTap: () {
-                          Get.toNamed(Routes.EXPENSE_UPDATE, arguments: {
+                      child: ListTileWidget(
+                        titleName: controller.expenseList[index].description!,
+                        date: controller.expenseList[index].date,
+                        value: controller.expenseList[index].value!,
+                        color: controller.colorPay(controller.expenseList[index].pay!)!,
+                        onTap: () => Get.toNamed(
+                          Routes.EXPENSE_UPDATE,
+                          arguments: {
                             'user': controller.user,
                             'expenseId': controller.expenseList[index].id!,
                             'expenseValue': controller.expenseList[index].value!,
@@ -77,8 +80,8 @@ class ExpenseList extends GetView<ExpenseListController> {
                             'selectedCategory': controller.expenseList[index].category!,
                             'selectedExpenseQuality': controller.expenseList[index].quality!,
                             'addInformationTextController': TextEditingController(text: controller.expenseList[index].addInformation!),
-                          });
-                        },
+                          },
+                        ),
                       ),
                     ),
                     secondaryActions: [

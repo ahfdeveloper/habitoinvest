@@ -57,6 +57,9 @@ dependencies:
   # Montagem dos gráficos
   percent_indicator: ^4.0.0
 
+  # Para trabalhar com arquivos SVG
+  flutter_svg: ^1.0.3
+
   flutter_localizations:
     sdk: flutter
 

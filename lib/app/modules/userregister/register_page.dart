@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/routes/routes.dart';
 
 import '../../core/theme/app_colors.dart';
 import 'register_controller.dart';
@@ -102,7 +103,7 @@ class RegisterPage extends GetView<RegisterController> {
                   Get.back();
                 },
                 child: TextButton(
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.toNamed(Routes.WELCOME),
                   child: Text(
                     'Voltar',
                     style: TextStyle(color: Colors.black54, fontSize: 15.0),

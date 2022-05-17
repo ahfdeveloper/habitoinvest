@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/core/values/app_images.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -35,6 +37,7 @@ class GoalsListPage extends GetView<GoalsListController> {
                   child: Column(
                     children: [
                       CardWidget(
+                        goalLogo: SvgPicture.asset(AppImages.expenseGoal),
                         goalName: 'Gastos não essenciais',
                         goalValue: controller.goalsList.first.percentageNotEssentialExpenses != 0
                             ? '${controller.goalsList.first.percentageNotEssentialExpenses}%'
@@ -44,6 +47,7 @@ class GoalsListPage extends GetView<GoalsListController> {
                       ),
                       SizedBox(height: SPACEFORMS),
                       CardWidget(
+                        goalLogo: SvgPicture.asset(AppImages.investmentGoal),
                         goalName: 'Investimentos',
                         goalValue: controller.goalsList.first.percentageInvestiment != 0
                             ? ('${controller.goalsList.first.percentageInvestiment}\%')

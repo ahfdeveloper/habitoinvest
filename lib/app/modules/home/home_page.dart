@@ -221,7 +221,7 @@ class HomePage extends GetView<HomeController> {
                                           ),
                                         ),
                                         Text(''),
-                                        Text('R\S0,00',
+                                        Text('R\$5.560,00',
                                             style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
                                       ],
                                     ),

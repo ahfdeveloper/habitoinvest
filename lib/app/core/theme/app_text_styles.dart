@@ -90,20 +90,21 @@ class AppTextStyles {
   //Estilo do cabeçalho presente no card de objetivos
   static final TextStyle cardHeadTextGoal = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 16.0,
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
   );
 
   // Estilo do valor presente no card de objetivos
   static final TextStyle cardValueTextGoal = GoogleFonts.notoSans(
     color: AppColors.grey800,
-    fontSize: 25.0,
+    fontSize: 30.0,
     fontWeight: FontWeight.w700,
   );
 
   // Estilo do rodapé presente no card de objetivos
   static final TextStyle cardFeatTextGoal = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 13.0,
+    fontSize: 16.0,
   );
 
   // Estilo do texto na página de boas vindas

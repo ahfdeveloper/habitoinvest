@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_masks.dart';
+import '../../global_widgets/app_listtile_widget.dart';
 import '../../routes/routes.dart';
 import 'investmentlist_controller.dart';
 
@@ -58,12 +59,14 @@ class InvestmentList extends GetView<InvestmentListController> {
                     actionExtentRatio: 0.25,
                     actionPane: SlidableDrawerActionPane(),
                     child: Card(
-                      child: ListTile(
-                        trailing: Text('R\$ ' + controller.investmentList[index].value!.toStringAsFixed(2)),
-                        title: Text(controller.investmentList[index].description!),
-                        subtitle: Text(DateFormat('dd/MM/yyyy').format(controller.investmentList[index].date)),
-                        onTap: () {
-                          Get.toNamed(Routes.INVESTMENT_ADDUPDATE, arguments: {
+                      child: ListTileWidget(
+                        titleName: controller.investmentList[index].description!,
+                        date: controller.investmentList[index].date,
+                        value: controller.investmentList[index].value!,
+                        color: controller.colorEffective(controller.investmentList[index].madeEffective!)!,
+                        onTap: () => Get.toNamed(
+                          Routes.INVESTMENT_ADDUPDATE,
+                          arguments: {
                             'user': controller.user,
                             'title': 'Atualizar Investimento',
                             'addEditFlag': 'UPDATE',
@@ -76,8 +79,8 @@ class InvestmentList extends GetView<InvestmentListController> {
                             'newSelectedDate': controller.investmentList[index].date,
                             'descriptionTextController': TextEditingController(text: controller.investmentList[index].description!),
                             'addInformationTextController': TextEditingController(text: controller.investmentList[index].addInformation!),
-                          });
-                        },
+                          },
+                        ),
                       ),
                     ),
                     secondaryActions: [

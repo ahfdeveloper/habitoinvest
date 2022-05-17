@@ -12,7 +12,7 @@ class GoalsUpdateController extends GetxController {
   final UserModel? user = Get.arguments['user'];
   final GoalsRepository _goalsRepository = GoalsRepository();
   MoneyMaskedTextController goalFixedValueController = moneyValueController;
-  TextEditingController goalPercentageValueController = TextEditingController(text: '00');
+  TextEditingController goalPercentageValueController = TextEditingController(text: '');
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   // Recebe a instância do controller de acordo com o formato da meta selecionada
@@ -96,7 +96,7 @@ class GoalsUpdateController extends GetxController {
     fVisible = false;
     buttonColorPercentage = AppColors.white;
     buttonBackgroundColorPercentage = AppColors.themeColor;
-    buttonColorFixedValue = AppColors.grey400;
+    buttonColorFixedValue = AppColors.grey800;
     buttonBackgroundColorFixedValue = AppColors.transparent;
     maxLength = 2;
     controller = null;
@@ -113,7 +113,7 @@ class GoalsUpdateController extends GetxController {
     fVisible = true;
     buttonColorFixedValue = AppColors.white;
     buttonBackgroundColorFixedValue = AppColors.themeColor;
-    buttonColorPercentage = AppColors.grey400;
+    buttonColorPercentage = AppColors.grey800;
     buttonBackgroundColorPercentage = AppColors.transparent;
     maxLength = 100;
     controller = null;

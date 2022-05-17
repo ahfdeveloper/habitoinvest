@@ -102,6 +102,15 @@ class ExpenseListController extends GetxController {
     );
   }
 
+  // Faz a mudança de cor do indicador de pago ou não no ListTile
+  Color? colorPay(bool pay) {
+    if (pay == true) {
+      return AppColors.expenseColor;
+    } else {
+      return AppColors.grey400;
+    }
+  }
+
   // Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;

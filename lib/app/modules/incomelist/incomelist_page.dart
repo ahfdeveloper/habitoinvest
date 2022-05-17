@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/global_widgets/app_listtile_widget.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -61,29 +62,28 @@ class IncomeList extends GetView<IncomeListController> {
                     actionExtentRatio: 0.25,
                     actionPane: SlidableDrawerActionPane(),
                     child: Card(
-                      child: ListTile(
-                        trailing: Text('R\$ ' + controller.incomeList[index].value!.toStringAsFixed(2)),
-                        title: Text(controller.incomeList[index].description!),
-                        subtitle: Text(DateFormat('dd/MM/yyyy').format(controller.incomeList[index].date)),
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.INCOME_ADDUPDATE,
-                            arguments: {
-                              'user': controller.user,
-                              'addEditFlag': 'UPDATE',
-                              'incomeId': controller.incomeList[index].id!,
-                              'incomeValue': controller.incomeList[index].value!,
-                              'incomeValueTextFormController': controller.incomeList[index].value!.toStringAsFixed(2),
-                              'received': controller.incomeList[index].received!,
-                              'updateReceived': controller.incomeList[index].received!,
-                              'dateTextController': TextEditingController(text: DateFormat('dd/MM/yyyy').format(controller.incomeList[index].date)),
-                              'newSelectedDate': controller.incomeList[index].date,
-                              'descriptionTextController': TextEditingController(text: controller.incomeList[index].description!),
-                              'selectedCategory': controller.incomeList[index].category!,
-                              'addInformationTextController': TextEditingController(text: controller.incomeList[index].addInformation!),
-                            },
-                          );
-                        },
+                      child: ListTileWidget(
+                        titleName: controller.incomeList[index].description!,
+                        date: controller.incomeList[index].date,
+                        value: controller.incomeList[index].value!,
+                        color: controller.colorReceived(controller.incomeList[index].received!)!,
+                        onTap: () => Get.toNamed(
+                          Routes.INCOME_ADDUPDATE,
+                          arguments: {
+                            'user': controller.user,
+                            'addEditFlag': 'UPDATE',
+                            'incomeId': controller.incomeList[index].id!,
+                            'incomeValue': controller.incomeList[index].value!,
+                            'incomeValueTextFormController': controller.incomeList[index].value!.toStringAsFixed(2),
+                            'received': controller.incomeList[index].received!,
+                            'updateReceived': controller.incomeList[index].received!,
+                            'dateTextController': TextEditingController(text: DateFormat('dd/MM/yyyy').format(controller.incomeList[index].date)),
+                            'newSelectedDate': controller.incomeList[index].date,
+                            'descriptionTextController': TextEditingController(text: controller.incomeList[index].description!),
+                            'selectedCategory': controller.incomeList[index].category!,
+                            'addInformationTextController': TextEditingController(text: controller.incomeList[index].addInformation!),
+                          },
+                        ),
                       ),
                     ),
                     secondaryActions: [

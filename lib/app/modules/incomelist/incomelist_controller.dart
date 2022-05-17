@@ -98,6 +98,15 @@ class IncomeListController extends GetxController {
     );
   }
 
+  // Faz a mudança de cor do indicador de recebido ou não no ListTile
+  Color? colorReceived(bool received) {
+    if (received == true) {
+      return AppColors.incomeColor;
+    } else {
+      return AppColors.grey400;
+    }
+  }
+
 // Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;

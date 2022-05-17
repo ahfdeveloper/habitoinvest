@@ -32,7 +32,7 @@ class SimulatorPage extends GetView<SimulatorController> {
                   borderSide: BorderSide(color: AppColors.grey300),
                 ),
               ),
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
@@ -46,7 +46,7 @@ class SimulatorPage extends GetView<SimulatorController> {
                   borderSide: BorderSide(color: AppColors.grey300),
                 ),
               ),
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
             ),
             SizedBox(height: 30.0),
             Container(

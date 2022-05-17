@@ -58,6 +58,11 @@ class SimulatorController extends GetxController {
   get profitabilityThirtyYears => this._profitabilityThirtyYears.value;
   set profitabilityThirtyYears(value) => this._profitabilityThirtyYears.value = value;
 
+  // Limpa o formulário ao sair da page
+  onClose() {
+    limpaFormulario();
+  }
+
   // Retorna o valor aportado durante certo período de tempo e o valor atualizado com a rentabilidade
   totalAplication() {
     contributionValue = contributionValueController.numberValue;
@@ -90,7 +95,7 @@ class SimulatorController extends GetxController {
 
   // Limpa o formulário para nova simulação
   limpaFormulario() {
-    contributionValueController.text = 0.0.toString();
+    moneyValueController.updateValue(0.0);
     interestRateController.text = '';
     contributionFiveYears = '';
     contributionTenYears = '';

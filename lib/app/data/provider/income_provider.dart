@@ -8,7 +8,7 @@ final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collec
 class IncomeProvider {
   //Retorna todas as receitas cadastradas
   Stream<List<IncomeModel>> getAllIncome({required String userUid}) {
-    return _firebaseFirestore.doc(userUid).collection('income').orderBy('incDate').snapshots().map(
+    return _firebaseFirestore.doc(userUid).collection('income').orderBy('incDate', descending: true).snapshots().map(
       (query) {
         List<IncomeModel> retIncome = [];
         query.docs.forEach(
