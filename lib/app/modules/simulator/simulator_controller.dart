@@ -13,6 +13,10 @@ class SimulatorController extends GetxController {
   get interestRate => this._interestRate.value;
   set interestRate(value) => this._interestRate.value = value;
 
+  RxBool _visible = false.obs;
+  get visible => this._visible.value;
+  set visible(value) => this._visible.value = value;
+
   // Armazena o total dos aportes de acordo com o tempo
   double _contributionValue = 0.0;
   get contributionValue => this._contributionValue;
@@ -72,30 +76,32 @@ class SimulatorController extends GetxController {
     for (int i = 1; i <= 360; i++) {
       accumulatedValue = accumulatedValue + (accumulatedValue * interestRate / 100) + contributionValue;
       if (i == 60) {
-        contributionFiveYears = 'Aporte total em 5 anos:  ${moneyFormatter.format(contributionValue * 60)}';
-        profitabilityFiveYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
+        contributionFiveYears = '${moneyFormatter.format(contributionValue * 60)}';
+        profitabilityFiveYears = '${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 120) {
-        contributionTenYears = 'Aporte total em 10 anos:  ${moneyFormatter.format(contributionValue * 120)}';
-        profitabilityTenYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
+        contributionTenYears = '${moneyFormatter.format(contributionValue * 120)}';
+        profitabilityTenYears = '${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 240) {
-        contributionTwentyYears = 'Aporte total em 20 anos:  ${moneyFormatter.format(contributionValue * 240)}';
-        profitabilityTwentyYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
+        contributionTwentyYears = '${moneyFormatter.format(contributionValue * 240)}';
+        profitabilityTwentyYears = '${moneyFormatter.format(accumulatedValue)}';
       }
 
       if (i == 360) {
-        contributionThirtyYears = 'Aporte total em 30 anos:  ${moneyFormatter.format(contributionValue * 360)}';
-        profitabilityThirtyYears = 'Aporte + rentabilidade:  ${moneyFormatter.format(accumulatedValue)}';
+        contributionThirtyYears = '${moneyFormatter.format(contributionValue * 360)}';
+        profitabilityThirtyYears = '${moneyFormatter.format(accumulatedValue)}';
       }
     }
+    visible = true;
   }
 
   // Limpa o formulário para nova simulação
   limpaFormulario() {
     moneyValueController.updateValue(0.0);
+    visible = false;
     interestRateController.text = '';
     contributionFiveYears = '';
     contributionTenYears = '';

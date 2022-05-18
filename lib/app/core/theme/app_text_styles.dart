@@ -90,7 +90,7 @@ class AppTextStyles {
   //Estilo do cabeçalho presente no card de objetivos
   static final TextStyle cardHeadTextGoal = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,
-    fontSize: 20.0,
+    fontSize: 19.0,
     fontWeight: FontWeight.bold,
   );
 
@@ -109,35 +109,35 @@ class AppTextStyles {
 
   // Estilo do texto na página de boas vindas
   static final TextStyle titleHome = GoogleFonts.lexendDeca(
-    fontSize: 32,
+    fontSize: 32.0,
     fontWeight: FontWeight.w600,
     color: AppColors.themeColor,
   );
 
   // Estilo no botão de login social
   static final buttonGray = GoogleFonts.inter(
-    fontSize: 15,
+    fontSize: 15.0,
     fontWeight: FontWeight.w400,
     color: AppColors.grey,
   );
 
   // Estilo no botão de login social
   static final buttonWhite = GoogleFonts.inter(
-    fontSize: 15,
+    fontSize: 15.0,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
   );
 
   // Estilo do texto nos formulários
   static final input = GoogleFonts.inter(
-    fontSize: 15,
+    fontSize: 15.0,
     fontWeight: FontWeight.w400,
     color: AppColors.input,
   );
 
   // Estilo usado na página Welcome
   static final textBlack = GoogleFonts.inter(
-    fontSize: 12,
+    fontSize: 12.0,
     fontWeight: FontWeight.w400,
     color: AppColors.themeColor,
   );
@@ -170,9 +170,22 @@ class AppTextStyles {
     color: AppColors.themeColor,
   );
 
+  // Estilo usado na page de Parâmetros
   static final parametersText = GoogleFonts.notoSans(
     fontSize: 18.0,
     fontWeight: FontWeight.w700,
     color: AppColors.bodyTextPagesColor,
+  );
+
+  // Estilo usado na tabela da page de simulação de investimentos
+  static final tableSimulatorText = GoogleFonts.notoSans(
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  // Estilo usado internamente na tabela da page de simulação de investimentos
+  static final tableInsideSimulatorText = GoogleFonts.notoSans(
+    fontSize: 15.0,
+    fontWeight: FontWeight.bold,
   );
 }

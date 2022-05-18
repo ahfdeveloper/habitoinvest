@@ -32,7 +32,7 @@ class SimulatorPage extends GetView<SimulatorController> {
                   borderSide: BorderSide(color: AppColors.grey300),
                 ),
               ),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.0),
             ),
             SizedBox(height: SPACEFORMS),
             TextFormField(
@@ -46,82 +46,125 @@ class SimulatorPage extends GetView<SimulatorController> {
                   borderSide: BorderSide(color: AppColors.grey300),
                 ),
               ),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19.0),
             ),
             SizedBox(height: 30.0),
-            Container(
-              child: Obx(
-                () => Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          controller.contributionFiveYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          controller.profitabilityFiveYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: SPACEFORMS),
-                    Row(
-                      children: [
-                        Text(
-                          controller.contributionTenYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          controller.profitabilityTenYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: SPACEFORMS),
-                    Row(
-                      children: [
-                        Text(
-                          controller.contributionTwentyYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          controller.profitabilityTwentyYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: SPACEFORMS),
-                    Row(
-                      children: [
-                        Text(
-                          controller.contributionThirtyYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          controller.profitabilityThirtyYears,
-                          style: AppTextStyles.appBarTextDark,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: SPACEFORMS),
-                  ],
+            Obx(
+              () => Visibility(
+                visible: controller.visible,
+                child: Container(
+                  color: AppColors.white,
+                  child: Table(
+                    columnWidths: {0: FractionColumnWidth(0.2)},
+                    border: TableBorder.all(),
+                    children: [
+                      TableRow(
+                        children: [
+                          Container(
+                            color: AppColors.grey300,
+                            height: 60,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Tempo', style: AppTextStyles.tableSimulatorText),
+                                  Text('(anos)', style: AppTextStyles.tableSimulatorText),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            color: AppColors.grey300,
+                            height: 60,
+                            child: Center(
+                              child: Text('Total aportado', style: AppTextStyles.tableSimulatorText),
+                            ),
+                          ),
+                          Container(
+                            color: AppColors.grey300,
+                            height: 60,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Aportado', style: AppTextStyles.tableSimulatorText),
+                                  Text('+ rentabilidade', style: AppTextStyles.tableSimulatorText),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Container(
+                            color: AppColors.grey300,
+                            height: 50,
+                            child: Center(child: Text('5', style: AppTextStyles.tableSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.contributionFiveYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.profitabilityFiveYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Container(
+                            color: AppColors.grey300,
+                            height: 50,
+                            child: Center(child: Text('10', style: AppTextStyles.tableSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.contributionTenYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.profitabilityTenYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Container(
+                            color: AppColors.grey300,
+                            height: 50,
+                            child: Center(child: Text('20', style: AppTextStyles.tableSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.contributionTwentyYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.profitabilityTwentyYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Container(
+                            color: AppColors.grey300,
+                            height: 50,
+                            child: Center(child: Text('30', style: AppTextStyles.tableSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.contributionThirtyYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                          Container(
+                            height: 50,
+                            child: Center(child: Text(controller.profitabilityThirtyYears, style: AppTextStyles.tableInsideSimulatorText)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/core/utils/app_masks.dart';
 import 'package:habito_invest_app/app/core/values/app_images.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,7 +42,7 @@ class GoalsListPage extends GetView<GoalsListController> {
                         goalName: 'Gastos não essenciais',
                         goalValue: controller.goalsList.first.percentageNotEssentialExpenses != 0
                             ? '${controller.goalsList.first.percentageNotEssentialExpenses}%'
-                            : 'R\$ ${controller.goalsList.first.valueNotEssentialExpenses!.toStringAsFixed(2)}',
+                            : moneyFormatter.format(controller.goalsList.first.valueNotEssentialExpenses!),
                         goalUniverse: controller.goalsList.first.percentageNotEssentialExpenses != 0 ? 'do total das receitas' : 'por período',
                         onTap: () => loadDataCardNotEssentialExpense(),
                       ),
@@ -51,7 +52,7 @@ class GoalsListPage extends GetView<GoalsListController> {
                         goalName: 'Investimentos',
                         goalValue: controller.goalsList.first.percentageInvestiment != 0
                             ? ('${controller.goalsList.first.percentageInvestiment}\%')
-                            : 'R\$ ${controller.goalsList.first.valueInvestment!.toStringAsFixed(2)}',
+                            : moneyFormatter.format(controller.goalsList.first.valueInvestment!),
                         goalUniverse: controller.goalsList.first.percentageInvestiment != 0 ? 'do total das receitas' : 'por período',
                         onTap: () => loadDataCardInvestiment(),
                       ),
