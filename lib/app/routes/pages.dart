@@ -1,4 +1,8 @@
 import 'package:get/route_manager.dart';
+import 'package:habito_invest_app/app/modules/transactionsreport/transactionsreport_binding.dart';
+import 'package:habito_invest_app/app/modules/transactionsreport/transactionsreport_page.dart';
+import 'package:habito_invest_app/app/modules/transactionsreportlist/transactionsreportlist_binding.dart';
+import 'package:habito_invest_app/app/modules/transactionsreportlist/transactionsreportlist_page.dart';
 import 'package:habito_invest_app/app/modules/welcome/welcome_binding.dart';
 import 'routes.dart';
 import '../modules/categoriesaddupdate/categoriesaddupdate_binding.dart';
@@ -143,5 +147,15 @@ class Pages {
       page: () => WelcomePage(),
       binding: WelcomeBinding(),
     ),
+    GetPage(
+      name: Routes.REPORT,
+      page: () => TransactionsReportPage(),
+      binding: TransactionsReportBinding(),
+    ),
+    GetPage(
+      name: Routes.REPORTLIST,
+      page: () => TransactionsReportListPage(),
+      binding: TransactionsReportListBinding(),
+    )
   ];
 }

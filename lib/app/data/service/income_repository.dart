@@ -12,6 +12,32 @@ class IncomeRepository {
     return _incomeProvider.getIncomeCurrent(userUid: userUid, dayInitial: dayInitial);
   }
 
+  Stream<List<IncomeModel>> getIncomePeriodWithCategory({
+    required String userUid,
+    required String category,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _incomeProvider.getIncomePeriodWithCategory(
+      userUid: userUid,
+      category: category,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
+  Stream<List<IncomeModel>> getAllIncomePeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _incomeProvider.getAllIncomePeriod(
+      userUid: userUid,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
   Future<void> addIncome(
       {required String userUid,
       required double incValue,

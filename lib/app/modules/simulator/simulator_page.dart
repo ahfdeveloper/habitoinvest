@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/values/app_constants.dart';
+import '../../global_widgets/buttons.dart';
 import 'simulator_controller.dart';
-import 'widgets/buttons.dart';
 
 class SimulatorPage extends GetView<SimulatorController> {
   @override
@@ -14,9 +14,11 @@ class SimulatorPage extends GetView<SimulatorController> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          backgroundColor: AppColors.themeColor,
-          title: Text('Simulador de Investimento', style: AppTextStyles.appBarTextLight)),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        backgroundColor: AppColors.themeColor,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
+        title: Text('Simulador de Investimento', style: AppTextStyles.appBarTextLight),
+      ),
       body: Form(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.0),

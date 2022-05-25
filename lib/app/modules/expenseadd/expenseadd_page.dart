@@ -135,15 +135,8 @@ class ExpenseAddPage extends GetView<ExpenseAddController> {
 
             Obx(
               () => DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.themeColor,
-                  fontSize: 16,
-                ),
+                decoration: InputDecoration(contentPadding: EdgeInsets.zero, border: InputBorder.none),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.themeColor, fontSize: 16),
                 value: controller.selectedExpenseQuality,
                 items: controller.expenseQualityList.map(
                   (value) {

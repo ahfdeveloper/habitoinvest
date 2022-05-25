@@ -44,6 +44,58 @@ class IncomeProvider {
     );
   }
 
+  //Retorna todas as receitas recebidas de acordo com uma categoria e período
+  Stream<List<IncomeModel>> getIncomePeriodWithCategory({
+    required String userUid,
+    required String category,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('income')
+        .where('incCategory', isEqualTo: category)
+        .orderBy('incDate')
+        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThan: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<IncomeModel> retIncome = [];
+        query.docs.forEach(
+          (element) {
+            retIncome.add(IncomeModel.fromDocument(element));
+          },
+        );
+        return retIncome;
+      },
+    );
+  }
+
+  //Retorna todas as receitas recebidas de acordo com uma categoria e período
+  Stream<List<IncomeModel>> getAllIncomePeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('income')
+        .orderBy('incDate')
+        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThan: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<IncomeModel> retIncome = [];
+        query.docs.forEach(
+          (element) {
+            retIncome.add(IncomeModel.fromDocument(element));
+          },
+        );
+        return retIncome;
+      },
+    );
+  }
+
   // Cadastra uma nova receita
   Future<void> addIncome(
       {required String userUid,

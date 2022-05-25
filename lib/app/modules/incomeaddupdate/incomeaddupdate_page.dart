@@ -37,7 +37,7 @@ class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
         ],
       ),
       body: Obx(
-        () => (controller.categoriesList.isEmpty || controller.categoriesList == []) && controller.addEditFlag == 'UPDATE'
+        () => (controller.categories.isEmpty || controller.categories == []) && controller.addEditFlag == 'UPDATE'
             ? Center(child: CircularProgressIndicator())
             : Form(
                 key: _formkey,
@@ -154,7 +154,7 @@ class IncomeAddUpdatePage extends GetView<IncomeAddUpdateController> {
 
   // Função de validação do Dropdownbutton
   validatorDropdown(value) {
-    if (value == controller.firstElementDrop) {
+    if (value == controller.firstElementDropCategory) {
       return 'Campo obrigatório';
     }
     return null;

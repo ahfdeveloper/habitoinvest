@@ -53,7 +53,7 @@ class DrawerHome extends GetView<HomeController> {
           ListTile(
             leading: Icon(Icons.view_list, color: AppColors.bodyTextPagesColor),
             title: Text('Relatórios', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () {},
+            onTap: () => Get.offAndToNamed(Routes.REPORT, arguments: {'user': controller.user}),
           ),
           ListTile(
             leading: Icon(Icons.settings, color: AppColors.bodyTextPagesColor),

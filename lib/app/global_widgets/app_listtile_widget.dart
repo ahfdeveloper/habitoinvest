@@ -54,9 +54,9 @@ class ListTileWidget extends StatelessWidget {
             ),
           ),
           Icon(
-            Icons.circle,
+            Icons.done_outline,
             color: color,
-            size: 19.0,
+            size: 20.0,
           ),
         ],
       ),

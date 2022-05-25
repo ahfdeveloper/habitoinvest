@@ -40,12 +40,12 @@ class IncomeAddUpdateController extends GetxController {
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField
    de seleção da categoria de receita */
-  Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
-  List<CategoryModel> get categoriesList => _categoriesList.value;
-  String firstElementDrop = 'Selecione uma categoria...';
-  var _selectedCategory = 'Selecione uma categoria...'.obs;
-  String get selectedCategory => this._selectedCategory.value;
-  set selectedCategory(String select) => _selectedCategory.value = select;
+  Rx<List<CategoryModel>> _categories = Rx<List<CategoryModel>>([]);
+  List<CategoryModel> get categories => _categories.value;
+  String firstElementDropCategory = 'Selecione uma categoria...';
+  var _selectedCategoryCategory = 'Selecione uma categoria...'.obs;
+  String get selectedCategory => this._selectedCategoryCategory.value;
+  set selectedCategory(String select) => _selectedCategoryCategory.value = select;
 
   // Flag que indica se se trata de uma nova receita ou outra em edição
   String _addEditFlag = '';
@@ -89,7 +89,7 @@ class IncomeAddUpdateController extends GetxController {
 
   @override
   void onInit() {
-    _categoriesList.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
+    _categories.bindStream(_categoriesRepository.getAllCategories(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     addEditFlag = Get.arguments['addEditFlag'];
     if (addEditFlag == 'UPDATE') {
@@ -133,8 +133,8 @@ class IncomeAddUpdateController extends GetxController {
   /* Função que retorna apenas as categorias do tipo receita para preenchimento
    do DropdownbuttonFormField ------------------------------------------------*/
   List<String> selectIncomeCategory() {
-    List<String> listCategoryIncome = [firstElementDrop];
-    categoriesList.forEach((item) {
+    List<String> listCategoryIncome = [firstElementDropCategory];
+    categories.forEach((item) {
       if (item.type == 'Receita') {
         listCategoryIncome.add(item.name!);
       }
@@ -292,7 +292,7 @@ class IncomeAddUpdateController extends GetxController {
     moneyValueController.updateValue(0.0);
     dateTextController = TextEditingController(text: DateFormat('dd/MM/yyyy').format(DateTime.now()));
     descriptionTextController.clear();
-    selectedCategory = firstElementDrop;
+    selectedCategory = firstElementDropCategory;
     addInformationTextController.clear();
   }
 

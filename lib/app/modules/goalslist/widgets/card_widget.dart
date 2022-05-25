@@ -44,7 +44,7 @@ class CardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            DividerHorizontal(),
+            //DividerHorizontal(),
             Align(
               alignment: Alignment.bottomRight,
               child: Text(goalUniverse, textAlign: TextAlign.left, style: AppTextStyles.cardFeatTextGoal),

@@ -12,7 +12,6 @@ import '../../global_widgets/app_snackbar.dart';
 
 class IncomeListController extends GetxController {
   final UserModel? user = Get.arguments['user'];
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final IncomeRepository _incomeRepository = IncomeRepository();
   final AccountRepository _accountRepository = AccountRepository();
 
@@ -103,7 +102,7 @@ class IncomeListController extends GetxController {
     if (received == true) {
       return AppColors.incomeColor;
     } else {
-      return AppColors.grey400;
+      return AppColors.grey300;
     }
   }
 

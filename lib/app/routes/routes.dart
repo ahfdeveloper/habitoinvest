@@ -41,4 +41,8 @@ abstract class Routes {
   static const PROJECTION = '/projection';
   // Página de Boas vindas ao app com opções para Login
   static const WELCOME = '/welcome';
+  // Página de busca de transações em relatório
+  static const REPORT = '/report';
+  // Página com lista de resultado da busca de transações
+  static const REPORTLIST = '/reportlist';
 }

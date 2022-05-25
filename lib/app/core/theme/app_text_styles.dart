@@ -188,4 +188,10 @@ class AppTextStyles {
     fontSize: 15.0,
     fontWeight: FontWeight.bold,
   );
+
+  static final dropdownText = GoogleFonts.notoSans(
+    fontWeight: FontWeight.bold,
+    color: AppColors.themeColor,
+    fontSize: 14.0,
+  );
 }
