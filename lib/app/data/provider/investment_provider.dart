@@ -20,6 +20,31 @@ class InvestmentProvider {
     );
   }
 
+  //Retorna todos os investimentos de acordo com um período escolhido pelo usuário
+  Stream<List<InvestmentModel>> getAllInvestmentPeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('investment')
+        .orderBy('invDate')
+        .where('invDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<InvestmentModel> retInvestment = [];
+        query.docs.forEach(
+          (element) {
+            retInvestment.add(InvestmentModel.fromDocument(element));
+          },
+        );
+        return retInvestment;
+      },
+    );
+  }
+
   // Cadastra um novo investimento
   Future<void> addInvestment(
       {required String userUid,

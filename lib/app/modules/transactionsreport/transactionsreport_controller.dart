@@ -12,14 +12,14 @@ class TransactionsReportController extends GetxController {
   final CategoryRepository _categoriesRepository = CategoryRepository();
 
   // Itens constantes no DropDownFormField de tipo de transação
-  final List transactionTypeList = ['Selecione um tipo de transação...', 'Todos', 'Receita', 'Despesa', 'Investimento'];
+  final List transactionTypeList = ['Selecione um tipo de transação...', 'Receita', 'Despesa', 'Investimento'];
   String firstElementDropTransaction = 'Selecione um tipo de transação...';
   RxString _selectedTransactionType = 'Selecione um tipo de transação...'.obs;
   String get selectedTransactionType => this._selectedTransactionType.value;
   set selectedTransactionType(String value) => _selectedTransactionType.value = value;
 
   /* Conjunto de variáveis necessárias para a implementação do DropdownButtonFormField de 
-  seleção da categoria de despesa ------------------------------------------------------*/
+  seleção da categoria de despesa */
   Rx<List<CategoryModel>> _categoriesList = Rx<List<CategoryModel>>([]);
   List<CategoryModel> get categories => _categoriesList.value;
   String firstElementDropCategory = 'Selecione uma categoria...';
@@ -28,7 +28,13 @@ class TransactionsReportController extends GetxController {
   set selectedCategory(String select) => _selectedCategory.value = select;
 
   // Itens constantes no DropDownFormField de qualidade da despesa
-  RxList<String> expenseQualityList = ['Selecione a qualidade da despesa...', 'Todos', 'Essencial', 'Não essencial, mas importante', 'Não essencial'].obs;
+  RxList<String> expenseQualityList = [
+    'Selecione a qualidade da despesa...',
+    'Todos',
+    'Essencial',
+    'Não essencial, mas importante',
+    'Não essencial',
+  ].obs;
   String firstElementDropQuality = 'Selecione a qualidade da despesa...';
   RxString _selectedExpenseQuality = 'Selecione a qualidade da despesa...'.obs;
   String get selectedExpenseQuality => this._selectedExpenseQuality.value;
@@ -165,6 +171,4 @@ class TransactionsReportController extends GetxController {
       },
     );
   }
-
-  searchTransactions() {}
 }

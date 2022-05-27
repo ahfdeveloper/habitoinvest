@@ -6,7 +6,7 @@ import '../model/income_model.dart';
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
 class IncomeProvider {
-  //Retorna todas as receitas cadastradas
+  //Retorna todas as receitas cadastradas no BD
   Stream<List<IncomeModel>> getAllIncome({required String userUid}) {
     return _firebaseFirestore.doc(userUid).collection('income').orderBy('incDate', descending: true).snapshots().map(
       (query) {
@@ -21,15 +21,18 @@ class IncomeProvider {
     );
   }
 
-  //Retorna todas as receitas recebidas no período atual
+  //Retorna todas as receitas no período atual do usuário
   Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial}) {
     return _firebaseFirestore
         .doc(userUid)
         .collection('income')
         .where('incReceived', isEqualTo: true)
         .orderBy('incDate')
-        .where('incDate',
-            isGreaterThanOrEqualTo: getInitialDateQuery(dayInitialPeriod: dayInitial).first, isLessThan: getInitialDateQuery(dayInitialPeriod: dayInitial).last)
+        .where(
+          'incDate',
+          isGreaterThanOrEqualTo: getInitialDateQuery(dayInitialPeriod: dayInitial).first,
+          isLessThan: getInitialDateQuery(dayInitialPeriod: dayInitial).last,
+        )
         .snapshots()
         .map(
       (query) {
@@ -44,7 +47,7 @@ class IncomeProvider {
     );
   }
 
-  //Retorna todas as receitas recebidas de acordo com uma categoria e período
+  //Retorna todas as receitas de acordo com uma categoria e período escolhidos pelo usuário
   Stream<List<IncomeModel>> getIncomePeriodWithCategory({
     required String userUid,
     required String category,
@@ -56,7 +59,7 @@ class IncomeProvider {
         .collection('income')
         .where('incCategory', isEqualTo: category)
         .orderBy('incDate')
-        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThan: endDate)
+        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
         .snapshots()
         .map(
       (query) {
@@ -71,7 +74,7 @@ class IncomeProvider {
     );
   }
 
-  //Retorna todas as receitas recebidas de acordo com uma categoria e período
+  //Retorna todas as receitas, independente da categoria, de acordo com um período escolhido pelo usuário
   Stream<List<IncomeModel>> getAllIncomePeriod({
     required String userUid,
     required DateTime initialDate,
@@ -81,7 +84,7 @@ class IncomeProvider {
         .doc(userUid)
         .collection('income')
         .orderBy('incDate')
-        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThan: endDate)
+        .where('incDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
         .snapshots()
         .map(
       (query) {
@@ -119,7 +122,7 @@ class IncomeProvider {
     await documentReference.set(data).catchError((e) => print(e));
   }
 
-  // Atualiza uma receita editada
+  // Atualiza uma receita editada pelo usuário
   Future<void> updateIncome(
       {required String userUid,
       required double incValue,

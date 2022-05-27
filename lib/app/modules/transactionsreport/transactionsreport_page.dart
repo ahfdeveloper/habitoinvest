@@ -183,6 +183,7 @@ class TransactionsReportPage extends GetView<TransactionsReportController> {
                     'user': controller.user,
                     'transactionType': controller.selectedTransactionType,
                     'category': controller.selectedCategory,
+                    'expenseQuality': controller.selectedExpenseQuality,
                     'initialDate': controller.initialDate,
                     'endDate': controller.endDate,
                   }),

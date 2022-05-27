@@ -36,12 +36,42 @@ class TransactionsReportListPage extends GetView<TransactionsReportListControlle
                   );
                 },
               )
-            : Center(
-                child: Text(
-                  'Não há receitas cadastradas',
-                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-                ),
-              ),
+            : controller.expenseList.isNotEmpty
+                ? ListView.builder(
+                    padding: EdgeInsets.all(2.0),
+                    itemCount: controller.expenseList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTileWidget(
+                            titleName: controller.expenseList[index].description!,
+                            date: controller.expenseList[index].date,
+                            value: controller.expenseList[index].value!,
+                            color: controller.colorReceived(controller.expenseList[index].pay!)!,
+                            onTap: () => {}),
+                      );
+                    },
+                  )
+                : controller.investmentList.isNotEmpty
+                    ? ListView.builder(
+                        padding: EdgeInsets.all(2.0),
+                        itemCount: controller.investmentList.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTileWidget(
+                                titleName: controller.investmentList[index].description!,
+                                date: controller.investmentList[index].date,
+                                value: controller.investmentList[index].value!,
+                                color: controller.colorReceived(controller.investmentList[index].madeEffective!)!,
+                                onTap: () => {}),
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Text(
+                          'Transações não encontradas',
+                          style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                        ),
+                      ),
       ),
     );
   }

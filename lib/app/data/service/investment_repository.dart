@@ -4,12 +4,22 @@ import '../provider/investment_provider.dart';
 class InvestmentRepository {
   final InvestmentProvider _investmentProvider = InvestmentProvider();
 
-  //Retorna todos os investimentos cadastrados
   Stream<List<InvestmentModel>> getAllInvestment({required String userUid}) {
     return _investmentProvider.getAllInvestment(userUid: userUid);
   }
 
-  // Cadastra um novo investimento
+  Stream<List<InvestmentModel>> getAllInvestmentPeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _investmentProvider.getAllInvestmentPeriod(
+      userUid: userUid,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
   Future<void> addInvestment(
       {required String userUid,
       required double invValue,
@@ -27,7 +37,6 @@ class InvestmentRepository {
     );
   }
 
-  // Atualiza um investimento cadastrado
   Future updateInvestment(
       {required String userUid,
       required double invValue,
@@ -47,7 +56,6 @@ class InvestmentRepository {
     );
   }
 
-  // Deleta um investimento
   Future deleteInvestment({required String userUid, required invUid, required invDescription}) async {
     return _investmentProvider.deleteInvestment(
       userUid: userUid,

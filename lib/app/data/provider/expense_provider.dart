@@ -5,8 +5,117 @@ import '../model/expense_model.dart';
 final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collection('users');
 
 class ExpenseProvider {
+  // Retorna todas as despesas cadastradas no BD
   Stream<List<ExpenseModel>> getAllExpense({required String userUid}) {
     return _firebaseFirestore.doc(userUid).collection('expense').orderBy('expDate').snapshots().map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas de acordo com uma categoria, qualidade da despesa e período escolhidos pelo usuário
+  Stream<List<ExpenseModel>> getExpensePeriodWithCategQuality({
+    required String userUid,
+    required String category,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .where('expCategory', isEqualTo: category)
+        .where('expQuality', isEqualTo: expenseQuality)
+        .orderBy('expDate')
+        .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas de qualquer qualidade de acordo com uma categoria e período escolhidos pelo usuário
+  Stream<List<ExpenseModel>> getExpensePeriodWithCategory({
+    required String userUid,
+    required String category,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .where('expCategory', isEqualTo: category)
+        .orderBy('expDate')
+        .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas de qualquer categoria de acordo com uma qualidade e período escolhidos pelo usuário
+  Stream<List<ExpenseModel>> getExpensePeriodWithQuality({
+    required String userUid,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .where('expQuality', isEqualTo: expenseQuality)
+        .orderBy('expDate')
+        .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas, independente da categoria e qualidade da despesa de acordo com um período escolhido pelo usuário
+  Stream<List<ExpenseModel>> getAllExpensePeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .orderBy('expDate')
+        .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
       (query) {
         List<ExpenseModel> retExpense = [];
         query.docs.forEach(
@@ -44,7 +153,7 @@ class ExpenseProvider {
     await documentReference.set(data).catchError((e) => print(e));
   }
 
-  // Atualiza uma despesa editada
+  // Atualiza uma despesa editada pelo usuário
   Future<void> updateExpense(
       {required String userUid,
       required double expValue,

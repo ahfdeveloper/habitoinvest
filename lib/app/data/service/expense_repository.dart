@@ -4,12 +4,66 @@ import '../provider/expense_provider.dart';
 class ExpenseRepository {
   final ExpenseProvider _expenseProvider = ExpenseProvider();
 
-  // Chama função do provider que retorna a lista de despesas
   Stream<List<ExpenseModel>> getAllExpense({required String userUid}) {
     return _expenseProvider.getAllExpense(userUid: userUid);
   }
 
-  // Chama função do provider que cadastra uma nova despesa
+  Stream<List<ExpenseModel>> getExpensePeriodWithCategQuality({
+    required String userUid,
+    required String category,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _expenseProvider.getExpensePeriodWithCategQuality(
+      userUid: userUid,
+      category: category,
+      expenseQuality: expenseQuality,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
+  Stream<List<ExpenseModel>> getExpensePeriodWithCategory({
+    required String userUid,
+    required String category,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _expenseProvider.getExpensePeriodWithCategory(
+      userUid: userUid,
+      category: category,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
+  Stream<List<ExpenseModel>> getExpensePeriodWithQuality({
+    required String userUid,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _expenseProvider.getExpensePeriodWithQuality(
+      userUid: userUid,
+      expenseQuality: expenseQuality,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
+  Stream<List<ExpenseModel>> getAllExpensePeriod({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+  }) {
+    return _expenseProvider.getAllExpensePeriod(
+      userUid: userUid,
+      initialDate: initialDate,
+      endDate: endDate,
+    );
+  }
+
   Future<void> addExpense(
       {required String userUid,
       required double expValue,
@@ -31,7 +85,6 @@ class ExpenseRepository {
     );
   }
 
-  // Atualiza uma despesa editada
   Future updateExpense(
       {required String userUid,
       required double expValue,
@@ -55,7 +108,6 @@ class ExpenseRepository {
     );
   }
 
-  // Chama a dunção do provider que apaga uma despesa
   Future deleteExpense({required String userUid, required expUid, required expDescription}) async {
     return _expenseProvider.deleteExpense(userUid: userUid, expUid: expUid, expDescription: expDescription);
   }
