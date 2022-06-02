@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:habito_invest_app/app/core/values/app_images.dart';
 import 'package:habito_invest_app/app/routes/routes.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -23,12 +24,12 @@ class RegisterPage extends GetView<RegisterController> {
                 tag: 'hero',
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  radius: 25.0,
-                  child: Image.asset('assets/moeda.png'),
+                  radius: 55.0,
+                  child: Image.asset(AppImages.logo),
                 ),
               ),
               SizedBox(height: 18.0),
-              Center(child: Text('CADASTRAR', style: TextStyle(fontSize: 22.0))),
+              Center(child: Text('CADASTRE-SE', style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold))),
               SizedBox(height: 40.0),
               TextFormField(
                 controller: controller.nameTextController,

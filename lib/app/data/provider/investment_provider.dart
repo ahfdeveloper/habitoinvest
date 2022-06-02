@@ -45,6 +45,29 @@ class InvestmentProvider {
     );
   }
 
+  //Retorna todos os investimentos do último ano
+  Stream<List<InvestmentModel>> getAllInvestmentLastYear({
+    required String userUid,
+  }) {
+    DateTime _now = DateTime.now();
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('investment')
+        .where('invDate', isGreaterThanOrEqualTo: DateTime(_now.year - 1, _now.month, _now.day))
+        .snapshots()
+        .map(
+      (query) {
+        List<InvestmentModel> retInvestment = [];
+        query.docs.forEach(
+          (element) {
+            retInvestment.add(InvestmentModel.fromDocument(element));
+          },
+        );
+        return retInvestment;
+      },
+    );
+  }
+
   // Cadastra um novo investimento
   Future<void> addInvestment(
       {required String userUid,

@@ -33,7 +33,6 @@ class TransactionsReportPage extends GetView<TransactionsReportController> {
           children: [
             Obx(
               () => DropdownButtonFormField<String>(
-                validator: (value) => validatorDropdown(value),
                 decoration: textFormFieldForms(fieldIcon: Icons.attach_money, hint: ''),
                 style: AppTextStyles.dropdownText,
                 hint: Text(''),
@@ -75,7 +74,6 @@ class TransactionsReportPage extends GetView<TransactionsReportController> {
             SizedBox(height: SPACEFORMS),
             Obx(
               () => DropdownButtonFormField<String>(
-                validator: (value) => validatorDropdown(value),
                 decoration: textFormFieldForms(fieldIcon: Icons.category_outlined, hint: ''),
                 elevation: 16,
                 style: AppTextStyles.dropdownText,
@@ -194,13 +192,5 @@ class TransactionsReportPage extends GetView<TransactionsReportController> {
         ),
       ),
     );
-  }
-
-  // Função de validação do Dropdownbutton
-  validatorDropdown(value) {
-    if (value == controller.firstElementDropCategory) {
-      return 'Selecione um item';
-    }
-    return null;
   }
 }

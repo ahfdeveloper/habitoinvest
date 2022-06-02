@@ -20,6 +20,12 @@ class InvestmentRepository {
     );
   }
 
+  Stream<List<InvestmentModel>> getAllInvestmentLastYear({
+    required String userUid,
+  }) {
+    return _investmentProvider.getAllInvestmentLastYear(userUid: userUid);
+  }
+
   Future<void> addInvestment(
       {required String userUid,
       required double invValue,

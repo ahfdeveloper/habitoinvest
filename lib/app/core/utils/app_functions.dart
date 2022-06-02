@@ -50,10 +50,10 @@ List<DateTime> getInitialDateQuery({required int dayInitialPeriod}) {
   int year = DateTime.now().year;
 
   if (day >= dayInitialPeriod && day <= 31) {
-    // retorna dia anterior ao dia de início do período
     return [DateTime(year, month, dayInitialPeriod - 1), DateTime(year, month + 1, dayInitialPeriod)];
+  } else if (month == 1) {
+    return [DateTime(year - 1, month - 1, dayInitialPeriod - 1), DateTime(year, month, dayInitialPeriod)];
   } else {
-    // retorna dia posterior ao dia de início do período
     return [DateTime(year, month - 1, dayInitialPeriod - 1), DateTime(year, month, dayInitialPeriod)];
   }
 }
@@ -65,11 +65,23 @@ List<DateTime> getDateProjectionExpense({required int dayInitialPeriod, required
   int year = DateTime.now().year;
 
   if (day >= dayInitialPeriod && day <= 31) {
-    // retorna dia anterior ao dia de início do período
     return [DateTime(year, month + fowardMonth, dayInitialPeriod - 1), DateTime(year, month + 1 + fowardMonth, dayInitialPeriod)];
   } else {
-    // retorna dia posterior ao dia de início do período
     return [DateTime(year, month - 1 + fowardMonth, dayInitialPeriod - 1), DateTime(year, month + fowardMonth, dayInitialPeriod)];
+  }
+}
+
+DateTime getInitialCurrentPeriod({required int dayInitialPeriod}) {
+  int day = DateTime.now().day;
+  int month = DateTime.now().month;
+  int year = DateTime.now().year;
+
+  if (day >= dayInitialPeriod && day <= 31) {
+    return DateTime(year, month, dayInitialPeriod);
+  } else if (month == 1) {
+    return DateTime(year - 1, month - 1, dayInitialPeriod);
+  } else {
+    return DateTime(year, month - 1, dayInitialPeriod);
   }
 }
 

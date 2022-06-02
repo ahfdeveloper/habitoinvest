@@ -57,7 +57,11 @@ class HomePage extends GetView<HomeController> {
                   controller.parametersList.isEmpty ||
                   controller.parametersList == [] ||
                   controller.accountList.isEmpty ||
-                  controller.accountList == []
+                  controller.accountList == [] ||
+                  controller.expenseLastYearList.isEmpty ||
+                  controller.expenseLastYearList == [] ||
+                  controller.investimentLastYearList.isEmpty ||
+                  controller.investimentLastYearList == []
               ? Center(child: CircularProgressIndicator())
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +164,7 @@ class HomePage extends GetView<HomeController> {
                                               : (controller.totalNotEssencialExpenses / controller.goalNotEssentialExpenses),
                                           // Parâmetros gráfico de investimento
                                           goalValueInvestment: controller.loadGoalInvestiment(),
-                                          effectiveValueInvestment: controller.loadInvestmensCurrent(),
+                                          effectiveValueInvestment: controller.loadInvestmentCurrent(),
                                           percentGoalInvestment: controller.goalInvestiment == 0 ? 0 : (controller.totalInvestments / controller.goalInvestiment),
                                         ),
                                         TimeIndicatorCard(
@@ -188,7 +192,6 @@ class HomePage extends GetView<HomeController> {
                               childAspectRatio: 2.3,
                               children: [
                                 Container(
-                                  //height: 75.0,
                                   decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.all(Radius.circular(10.0))),
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -196,11 +199,14 @@ class HomePage extends GetView<HomeController> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Maiores despesas não essenciais nos últimos 6 meses',
+                                          'Média mensal de despesas não essenciais (últimos 12 meses)',
                                           textAlign: TextAlign.center,
                                           style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
                                         ),
-                                        Text('Lazer', style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
+                                        Text(
+                                          '${moneyFormatter.format(controller.averageExpenseLastYear())}',
+                                          style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -215,13 +221,12 @@ class HomePage extends GetView<HomeController> {
                                       children: [
                                         Center(
                                           child: Text(
-                                            'Total Investido',
+                                            'Total investido\n(últimos 12 meses)',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.notoSans(fontSize: 11.0, color: AppColors.bodyTextPagesColor),
                                           ),
                                         ),
-                                        Text(''),
-                                        Text('R\$5.560,00',
+                                        Text('${moneyFormatter.format(controller.investmentLastYear())}',
                                             style: GoogleFonts.notoSans(fontWeight: FontWeight.bold, fontSize: 20.0, color: AppColors.bodyTextPagesColor)),
                                       ],
                                     ),

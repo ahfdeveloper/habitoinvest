@@ -64,6 +64,12 @@ class ExpenseRepository {
     );
   }
 
+  Stream<List<ExpenseModel>> getNotEssentialsExpenseLastYear({
+    required String userUid,
+  }) {
+    return _expenseProvider.getNotEssentialsExpenseLastYear(userUid: userUid);
+  }
+
   Future<void> addExpense(
       {required String userUid,
       required double expValue,

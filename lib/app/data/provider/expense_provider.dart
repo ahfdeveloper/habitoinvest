@@ -7,7 +7,7 @@ final CollectionReference _firebaseFirestore = FirebaseFirestore.instance.collec
 class ExpenseProvider {
   // Retorna todas as despesas cadastradas no BD
   Stream<List<ExpenseModel>> getAllExpense({required String userUid}) {
-    return _firebaseFirestore.doc(userUid).collection('expense').orderBy('expDate').snapshots().map(
+    return _firebaseFirestore.doc(userUid).collection('expense').orderBy('expDate', descending: true).snapshots().map(
       (query) {
         List<ExpenseModel> retExpense = [];
         query.docs.forEach(
@@ -114,6 +114,31 @@ class ExpenseProvider {
         .collection('expense')
         .orderBy('expDate')
         .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .snapshots()
+        .map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas não essenciais dos últimos 12 meses
+  Stream<List<ExpenseModel>> getNotEssentialsExpenseLastYear({
+    required String userUid,
+  }) {
+    DateTime _now = DateTime.now();
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .where('expDate', isGreaterThanOrEqualTo: DateTime(_now.year - 1, _now.month, _now.day, 0, 0))
+        .where('expQuality', isEqualTo: 'Não essencial')
+        .where('expPay', isEqualTo: true)
         .snapshots()
         .map(
       (query) {

@@ -29,20 +29,20 @@ class GoalsUpdateController extends GetxController {
 
   // Cores dos botões Porcentagem e Valor Fixo com seus getters e setters
   Rx<Color> _buttonColorPercentage = AppColors.themeColor.obs;
-  get buttonColorPercentage => this._buttonColorPercentage.value;
-  set buttonColorPercentage(value) => this._buttonColorPercentage.value = value;
+  Color get buttonColorPercentage => this._buttonColorPercentage.value;
+  set buttonColorPercentage(Color value) => this._buttonColorPercentage.value = value;
 
   Rx<Color> _buttonBackgroundColorPercentage = AppColors.transparent.obs;
-  get buttonBackgroundColorPercentage => this._buttonBackgroundColorPercentage.value;
-  set buttonBackgroundColorPercentage(value) => this._buttonBackgroundColorPercentage.value = value;
+  Color get buttonBackgroundColorPercentage => this._buttonBackgroundColorPercentage.value;
+  set buttonBackgroundColorPercentage(Color value) => this._buttonBackgroundColorPercentage.value = value;
 
   Rx<Color> _buttonColorFixedValue = AppColors.themeColor.obs;
-  get buttonColorFixedValue => this._buttonColorFixedValue.value;
-  set buttonColorFixedValue(value) => this._buttonColorFixedValue.value = value;
+  Color get buttonColorFixedValue => this._buttonColorFixedValue.value;
+  set buttonColorFixedValue(Color value) => this._buttonColorFixedValue.value = value;
 
   Rx<Color> _buttonBackgroundColorFixedValue = AppColors.transparent.obs;
-  get buttonBackgroundColorFixedValue => this._buttonBackgroundColorFixedValue.value;
-  set buttonBackgroundColorFixedValue(value) => this._buttonBackgroundColorFixedValue.value = value;
+  Color get buttonBackgroundColorFixedValue => this._buttonBackgroundColorFixedValue.value;
+  set buttonBackgroundColorFixedValue(Color value) => this._buttonBackgroundColorFixedValue.value = value;
 
   bool _pVisible = false;
   get pVisible => this._pVisible;

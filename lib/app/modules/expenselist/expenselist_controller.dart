@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:habito_invest_app/app/core/utils/app_functions.dart';
 import 'package:habito_invest_app/app/data/model/parameters_model.dart';
 import 'package:habito_invest_app/app/data/service/parameters_repository.dart';
 
@@ -43,6 +44,41 @@ class ExpenseListController extends GetxController {
   bool get expensePay => this._expensePay;
   set expensePay(bool value) => this._expensePay = value;
 
+  // Cor do texto do botão "Todos os períodos"
+  Rx<Color> _buttonTextColorAllPeriod = AppColors.expenseColor.obs;
+  Color get buttonTextColorAllPeriod => this._buttonTextColorAllPeriod.value;
+  set buttonTextColorAllPeriod(Color value) => this._buttonTextColorAllPeriod.value = value;
+
+  // Cor de fundo do botão "Todos os períodos"
+  Rx<Color> _buttonBackgroundColorallPeriod = AppColors.white.obs;
+  Color get buttonBackgroundColorallPeriod => this._buttonBackgroundColorallPeriod.value;
+  set buttonBackgroundColorallPeriod(Color value) => this._buttonBackgroundColorallPeriod.value = value;
+
+  // Cor do texto do botão "Período atual"
+  Rx<Color> _buttonTextColorCurrentPeriod = AppColors.white.obs;
+  Color get buttonTextColorCurrentPeriod => this._buttonTextColorCurrentPeriod.value;
+  set buttonTextColorCurrentPeriod(Color value) => this._buttonTextColorCurrentPeriod.value = value;
+
+  // Cor de fundo do botão "Período atual"
+  Rx<Color> _buttonBackgroundColorCurrentPeriod = AppColors.expenseColor.obs;
+  Color get buttonBackgroundColorCurrentPeriod => this._buttonBackgroundColorCurrentPeriod.value;
+  set buttonBackgroundColorCurrentPeriod(Color value) => this._buttonBackgroundColorCurrentPeriod.value = value;
+
+  // Cor do texto do botão "Períodos Futuros"
+  Rx<Color> _buttonTextColorFuturePeriod = AppColors.white.obs;
+  Color get buttonTextColorFuturePeriod => this._buttonTextColorFuturePeriod.value;
+  set buttonTextColorFuturePeriod(Color value) => this._buttonTextColorFuturePeriod.value = value;
+
+  // Cor de fundo do botão "Períodos Futuros"
+  Rx<Color> _buttonBackgroundColorFuturePeriod = AppColors.expenseColor.obs;
+  Color get buttonBackgroundColorFuturePeriod => this._buttonBackgroundColorFuturePeriod.value;
+  set buttonBackgroundColorFuturePeriod(Color value) => this._buttonBackgroundColorFuturePeriod.value = value;
+
+  // Variável que guarda a lista de despesas
+  Rx<List<ExpenseModel>> _expenseMainList = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get expenseMainList => this._expenseMainList.value;
+  set expenseMainList(List<ExpenseModel> value) => this._expenseMainList.value = value;
+
   // Variável que guarda a lista de despesas
   Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get expenseList => this._expenseList.value;
@@ -56,16 +92,18 @@ class ExpenseListController extends GetxController {
   Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
   List<ParametersModel> get parametersList => _parametersList.value;
 
+  // Variável usada para fazer o filtro por nome na busca de uma despesa na appbar
   Rx<List<ExpenseModel>> _result = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get result => this._result.value;
   set result(List<ExpenseModel> value) => this._result.value = value;
 
   @override
   void onInit() {
-    _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _expenseMainList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _result.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
+    _expenseMainList = _expenseList;
     super.onInit();
   }
 
@@ -125,5 +163,41 @@ class ExpenseListController extends GetxController {
     } else {
       return 0;
     }
+  }
+
+  void allPeriodTransactions() async {
+    buttonTextColorAllPeriod = AppColors.expenseColor;
+    buttonBackgroundColorallPeriod = AppColors.white;
+    buttonTextColorCurrentPeriod = AppColors.white;
+    buttonBackgroundColorCurrentPeriod = AppColors.expenseColor;
+    buttonTextColorFuturePeriod = AppColors.white;
+    buttonBackgroundColorFuturePeriod = AppColors.expenseColor;
+    _expenseMainList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+  }
+
+  void currentPeriodTransactions() async {
+    DateTime _now = DateTime.now();
+    buttonTextColorAllPeriod = AppColors.white;
+    buttonBackgroundColorallPeriod = AppColors.expenseColor;
+    buttonTextColorCurrentPeriod = AppColors.expenseColor;
+    buttonBackgroundColorCurrentPeriod = AppColors.white;
+    buttonTextColorFuturePeriod = AppColors.white;
+    buttonBackgroundColorFuturePeriod = AppColors.expenseColor;
+    _expenseMainList.bindStream(
+      _expenseRepository.getAllExpensePeriod(
+        userUid: user!.id,
+        initialDate: getInitialCurrentPeriod(dayInitialPeriod: parametersList.first.dayInitialPeriod!),
+        endDate: _now,
+      ),
+    );
+  }
+
+  void futurePeriodTransactions() async {
+    buttonTextColorAllPeriod = AppColors.white;
+    buttonBackgroundColorallPeriod = AppColors.expenseColor;
+    buttonTextColorCurrentPeriod = AppColors.white;
+    buttonBackgroundColorCurrentPeriod = AppColors.expenseColor;
+    buttonTextColorFuturePeriod = AppColors.expenseColor;
+    buttonBackgroundColorFuturePeriod = AppColors.white;
   }
 }

@@ -189,6 +189,7 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  // Estilo usado nos dropdown da page de relatório de transações
   static final dropdownText = GoogleFonts.notoSans(
     fontWeight: FontWeight.bold,
     color: AppColors.themeColor,

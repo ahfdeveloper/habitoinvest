@@ -30,6 +30,12 @@ class HomeController extends GetxController {
   Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get expenseList => this._expenseList.value;
 
+  Rx<List<ExpenseModel>> _expenseCurrentList = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get expenseCurrentList => this._expenseCurrentList.value;
+
+  Rx<List<ExpenseModel>> _expenseLastYearList = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get expenseLastYearList => this._expenseLastYearList.value;
+
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => this._accountList.value;
 
@@ -38,6 +44,9 @@ class HomeController extends GetxController {
 
   Rx<List<InvestmentModel>> _investimentList = Rx<List<InvestmentModel>>([]);
   List<InvestmentModel> get investimentList => _investimentList.value;
+
+  Rx<List<InvestmentModel>> _investimentLastYearList = Rx<List<InvestmentModel>>([]);
+  List<InvestmentModel> get investimentLastYearList => _investimentLastYearList.value;
 
   Rx<List<ParametersModel>> _parametersList = Rx<List<ParametersModel>>([]);
   List<ParametersModel> get parametersList => _parametersList.value;
@@ -57,6 +66,16 @@ class HomeController extends GetxController {
   double get totalInvestments => this._totalInvestments.value;
   set totalInvestments(double value) => this._totalInvestments.value = value;
 
+  // Armazena o valor total dos investimentos dos últimos 12 meses
+  RxDouble _lastYearInvestments = 0.0.obs;
+  double get lastYearInvestments => this._lastYearInvestments.value;
+  set lastYearInvestments(double value) => this._lastYearInvestments.value = value;
+
+  // Armazena o valor total das despesas não essenciais dos últimos 12 meses
+  RxDouble _lastYearExpense = 0.0.obs;
+  double get lastYearExpense => this._lastYearExpense.value;
+  set lastYearExpense(double value) => this._lastYearExpense.value = value;
+
   // Armazena a meta de investimento no período atual do usuário
   RxDouble _goalInvestiment = 0.0.obs;
   double get goalInvestiment => this._goalInvestiment.value;
@@ -68,7 +87,7 @@ class HomeController extends GetxController {
   set goalNotEssentialExpenses(double value) => this._goalNotEssentialExpenses.value = value;
 
   // Setter e Getter para variável currentIndex, para que a responsabilidade pela
-  // alteração dos estados fique sob responsabilidade do controller
+  ///// alteração dos estados fique sob responsabilidade do controller
   RxInt _currentIndex = 0.obs;
   get currentIndex => this._currentIndex.value;
   set currentIndex(value) => this._currentIndex.value = value;
@@ -80,7 +99,10 @@ class HomeController extends GetxController {
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _incomeList.bindStream(_incomeRepository.getAllIncome(userUid: user!.id));
     _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    _expenseLastYearList.bindStream(_expenseRepository.getNotEssentialsExpenseLastYear(userUid: user!.id));
     _investimentList.bindStream(_investmentRepository.getAllInvestment(userUid: user!.id));
+    _investimentLastYearList.bindStream(_investmentRepository.getAllInvestmentLastYear(userUid: user!.id));
+
     super.onInit();
   }
 
@@ -135,7 +157,7 @@ class HomeController extends GetxController {
   }
 
   // Retorna os investimentos no período atual do usuário
-  double loadInvestmensCurrent() {
+  double loadInvestmentCurrent() {
     totalInvestments = 0.0;
     investimentList.forEach((element) {
       if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
@@ -153,6 +175,7 @@ class HomeController extends GetxController {
     return totalNotEssencialExpenses / (parametersList.first.salary! / monthHours);
   }
 
+  // Calcula o tempo do período atual decorrido em dias
   int periodIndicator(DateTime finalDate) {
     List<DateTime> dates = getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!);
     DateTime from = DateTime(dates.first.year, dates.first.month, dates.first.day);
@@ -160,14 +183,26 @@ class HomeController extends GetxController {
     return (to.difference(from).inHours / 24).round();
   }
 
+  // Calcula o tempo do período atual decorrido em porcentagem
   double percentagePeriodCurrent() {
     return periodIndicator(DateTime.now()) / periodIndicator(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last);
   }
 
-  // Index usado na NavigationBar
-  void changePage(int index) async {
-    currentIndex = index;
-    update();
-    print(currentIndex);
+  // Calcula média mensal de despesas não essenciais nos últimos 12 meses
+  double averageExpenseLastYear() {
+    lastYearExpense = 0.0;
+    expenseLastYearList.forEach((element) {
+      lastYearExpense = lastYearExpense + element.value!;
+    });
+    return lastYearExpense / 12;
+  }
+
+  // Calcula o total investido nos últimos 12 meses
+  double investmentLastYear() {
+    lastYearInvestments = 0.0;
+    investimentLastYearList.forEach(
+      (element) => lastYearInvestments = lastYearInvestments + element.value!,
+    );
+    return lastYearInvestments;
   }
 }
