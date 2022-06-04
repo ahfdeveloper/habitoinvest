@@ -70,6 +70,13 @@ class ExpenseRepository {
     return _expenseProvider.getNotEssentialsExpenseLastYear(userUid: userUid);
   }
 
+  Stream<List<ExpenseModel>> getFuturePeriodExpense({
+    required String userUid,
+    required DateTime initialDate,
+  }) {
+    return _expenseProvider.getFuturePeriodExpense(userUid: userUid, initialDate: initialDate);
+  }
+
   Future<void> addExpense(
       {required String userUid,
       required double expValue,
@@ -116,5 +123,21 @@ class ExpenseRepository {
 
   Future deleteExpense({required String userUid, required expUid, required expDescription}) async {
     return _expenseProvider.deleteExpense(userUid: userUid, expUid: expUid, expDescription: expDescription);
+  }
+
+  Stream<List<ExpenseModel>> getExpensePeriodWithQualityPay({
+    required String userUid,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+    required bool pay,
+  }) {
+    return _expenseProvider.getExpensePeriodWithQualityPay(
+      userUid: userUid,
+      expenseQuality: expenseQuality,
+      initialDate: initialDate,
+      endDate: endDate,
+      pay: pay,
+    );
   }
 }

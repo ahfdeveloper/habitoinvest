@@ -45,4 +45,6 @@ abstract class Routes {
   static const REPORT = '/report';
   // Página com lista de resultado da busca de transações
   static const REPORTLIST = '/reportlist';
+  // Página Sobre do aplicativo
+  static const ABOUT = '/about';
 }

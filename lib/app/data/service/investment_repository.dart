@@ -26,6 +26,20 @@ class InvestmentRepository {
     return _investmentProvider.getAllInvestmentLastYear(userUid: userUid);
   }
 
+  Stream<List<InvestmentModel>> getInvestmentPeriodReceived({
+    required String userUid,
+    required DateTime initialDate,
+    required DateTime endDate,
+    required bool madeEffective,
+  }) {
+    return _investmentProvider.getInvestmentPeriodReceived(
+      userUid: userUid,
+      initialDate: initialDate,
+      endDate: endDate,
+      madeEffective: madeEffective,
+    );
+  }
+
   Future<void> addInvestment(
       {required String userUid,
       required double invValue,

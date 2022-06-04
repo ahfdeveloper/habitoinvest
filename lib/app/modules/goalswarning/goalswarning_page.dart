@@ -14,7 +14,7 @@ class GoalsWarningPage extends GetView<GoalsWarningController> {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        title: Text('Definir Metas Metas', style: AppTextStyles.appBarTextLight),
+        title: Text('Definir Metas', style: AppTextStyles.appBarTextLight),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: AppColors.themeColor,
       ),
@@ -37,10 +37,9 @@ class GoalsWarningPage extends GetView<GoalsWarningController> {
                 ),
                 SizedBox(height: 15.0),
                 ElevatedButton(
-                  onPressed: () {
-                    Get.offAndToNamed(Routes.GOALS, arguments: {'user': controller.user});
-                  },
                   child: Text('Cadastrar', style: TextStyle(fontSize: 20.0)),
+                  onPressed: () => Get.offAndToNamed(Routes.GOALS, arguments: {'user': controller.user}),
+                  style: ElevatedButton.styleFrom(primary: AppColors.themeColor),
                 ),
               ],
             ),

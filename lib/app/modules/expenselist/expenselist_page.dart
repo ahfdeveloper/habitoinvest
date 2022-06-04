@@ -6,6 +6,7 @@ import 'package:habito_invest_app/app/modules/expenselist/widgets/appbar_widget.
 import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/app_masks.dart';
 import '../../routes/routes.dart';
 import 'expenselist_controller.dart';
@@ -17,41 +18,6 @@ class ExpenseList extends GetView<ExpenseListController> {
       () => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBarWidget(controller: controller),
-        /* AppBar(
-          backgroundColor: AppColors.expenseColor,
-          automaticallyImplyLeading: true,
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => Get.back()),
-          title: controller.searchBoolean == false
-              ? Text('Despesas')
-              : TextFormField(
-                  controller: controller.searchFormFieldController,
-                  style: AppTextStyles.appBarTextLight,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: 'Descrição da receita',
-                    hintStyle: TextStyle(color: Colors.white54),
-                    border: UnderlineInputBorder(borderSide: BorderSide.none),
-                  ),
-                  onChanged: (value) => controller.runFilter(value),
-                ),
-          actions: [
-            // Determina qual botão vai aparece no appBar de acordo com a ação do usuário
-            controller.searchBoolean == false
-                ? IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () => controller.searchBoolean = true,
-                  )
-                : IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      controller.searchBoolean = false;
-                      controller.expenseList = controller.result;
-                      controller.searchFormFieldController.clear();
-                    },
-                  ),
-          ],
-        ) */
-
         body: Container(
           child: controller.expenseMainList.isNotEmpty
               ? ListView.builder(
@@ -107,7 +73,7 @@ class ExpenseList extends GetView<ExpenseListController> {
               : Center(
                   child: Text(
                     'Não há despesas cadastradas para o período',
-                    style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                    style: AppTextStyles.messageEmptyList,
                   ),
                 ),
         ),

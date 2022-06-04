@@ -41,8 +41,8 @@ class ProjectionPage extends GetView<ProjectionController> {
       body: Obx(
         () => controller.goalsList.isEmpty ||
                 controller.goalsList == [] ||
-                controller.expenseList.isEmpty ||
-                controller.expenseList == [] ||
+                // controller.expenseList.isEmpty ||
+                // controller.expenseList == [] ||
                 controller.parametersList.isEmpty ||
                 controller.parametersList == []
             ? Center(
@@ -111,7 +111,9 @@ class ProjectionPage extends GetView<ProjectionController> {
                                 style: AppTextStyles.textCardProjection,
                               ),
                               colorChart: AppColors.expenseColor,
-                              goalPercent: (controller.notEssencialExpenses.elementAt(index) / controller.goalNotEssentialExpenses),
+                              goalPercent: controller.goalNotEssentialExpenses == 0
+                                  ? 0
+                                  : (controller.notEssencialExpenses.elementAt(index) / controller.goalNotEssentialExpenses),
                             );
                           },
                         ),

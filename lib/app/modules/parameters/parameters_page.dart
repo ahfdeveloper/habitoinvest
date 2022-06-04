@@ -12,7 +12,6 @@ class ParametersPage extends GetView<ParametersController> {
   @override
   Widget build(BuildContext context) {
     final _formkey = controller.formkey;
-    final Color interfaceColor = AppColors.themeColor;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -20,7 +19,7 @@ class ParametersPage extends GetView<ParametersController> {
         systemOverlayStyle: SystemUiOverlayStyle.light,
         automaticallyImplyLeading: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios_new), onPressed: () => cancel()),
-        backgroundColor: interfaceColor,
+        backgroundColor: AppColors.themeColor,
         title: Text('Parâmetros do usuário', style: AppTextStyles.appBarTextLight),
         actions: [
           IconButton(

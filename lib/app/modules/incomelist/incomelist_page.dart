@@ -106,7 +106,7 @@ class IncomeList extends GetView<IncomeListController> {
             : Center(
                 child: Text(
                   'Não há receitas cadastradas',
-                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                  style: AppTextStyles.messageEmptyList,
                 ),
               ),
         floatingActionButton: FloatingActionButton(

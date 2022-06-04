@@ -71,7 +71,7 @@ class DrawerHome extends GetView<HomeController> {
           ListTile(
             leading: Icon(Icons.info, color: AppColors.bodyTextPagesColor),
             title: Text('Sobre', style: AppTextStyles.generallyTextDarkBody),
-            onTap: () {},
+            onTap: () => Get.offAndToNamed(Routes.ABOUT),
           ),
           Divider(color: Colors.grey[500]),
           ListTile(

@@ -60,6 +60,9 @@ dependencies:
   # Para trabalhar com arquivos SVG
   flutter_svg: ^1.0.3
 
+  # Para criar hyperlinks
+  url_launcher: ^6.1.2
+
   flutter_localizations:
     sdk: flutter
 

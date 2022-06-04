@@ -103,7 +103,7 @@ class ExpenseProvider {
     );
   }
 
-  //Retorna todas as despesas, independente da categoria e qualidade da despesa de acordo com um período escolhido pelo usuário
+  //Retorna todas as despesas de acordo com um período escolhido pelo usuário
   Stream<List<ExpenseModel>> getAllExpensePeriod({
     required String userUid,
     required DateTime initialDate,
@@ -139,6 +139,53 @@ class ExpenseProvider {
         .where('expDate', isGreaterThanOrEqualTo: DateTime(_now.year - 1, _now.month, _now.day, 0, 0))
         .where('expQuality', isEqualTo: 'Não essencial')
         .where('expPay', isEqualTo: true)
+        .snapshots()
+        .map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas de períodos futuros
+  Stream<List<ExpenseModel>> getFuturePeriodExpense({
+    required String userUid,
+    required DateTime initialDate,
+  }) {
+    return _firebaseFirestore.doc(userUid).collection('expense').orderBy('expDate').where('expDate', isGreaterThanOrEqualTo: initialDate).snapshots().map(
+      (query) {
+        List<ExpenseModel> retExpense = [];
+        query.docs.forEach(
+          (element) {
+            retExpense.add(ExpenseModel.fromDocument(element));
+          },
+        );
+        return retExpense;
+      },
+    );
+  }
+
+  //Retorna todas as despesas de qualquer categoria de acordo com uma qualidade, pagamento e período escolhidos pelo usuário
+  Stream<List<ExpenseModel>> getExpensePeriodWithQualityPay({
+    required String userUid,
+    required String expenseQuality,
+    required DateTime initialDate,
+    required DateTime endDate,
+    required bool pay,
+  }) {
+    return _firebaseFirestore
+        .doc(userUid)
+        .collection('expense')
+        .where('expQuality', isEqualTo: expenseQuality)
+        .orderBy('expDate')
+        .where('expDate', isGreaterThanOrEqualTo: initialDate, isLessThanOrEqualTo: endDate)
+        .where('expPay', isEqualTo: pay)
         .snapshots()
         .map(
       (query) {

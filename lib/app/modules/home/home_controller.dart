@@ -27,11 +27,8 @@ class HomeController extends GetxController {
   Rx<List<GoalsModel>> _goalsList = Rx<List<GoalsModel>>([]);
   List<GoalsModel> get goalsList => this._goalsList.value;
 
-  Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
-  List<ExpenseModel> get expenseList => this._expenseList.value;
-
-  Rx<List<ExpenseModel>> _expenseCurrentList = Rx<List<ExpenseModel>>([]);
-  List<ExpenseModel> get expenseCurrentList => this._expenseCurrentList.value;
+  Rx<List<ExpenseModel>> _expenseNotEssencialList = Rx<List<ExpenseModel>>([]);
+  List<ExpenseModel> get expenseNotEssencialList => this._expenseNotEssencialList.value;
 
   Rx<List<ExpenseModel>> _expenseLastYearList = Rx<List<ExpenseModel>>([]);
   List<ExpenseModel> get expenseLastYearList => this._expenseLastYearList.value;
@@ -39,11 +36,11 @@ class HomeController extends GetxController {
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => this._accountList.value;
 
-  Rx<List<IncomeModel>> _incomeList = Rx<List<IncomeModel>>([]);
-  List<IncomeModel> get incomeList => _incomeList.value;
+  Rx<List<IncomeModel>> _incomeCurrentList = Rx<List<IncomeModel>>([]);
+  List<IncomeModel> get incomeCurrentList => _incomeCurrentList.value;
 
-  Rx<List<InvestmentModel>> _investimentList = Rx<List<InvestmentModel>>([]);
-  List<InvestmentModel> get investimentList => _investimentList.value;
+  Rx<List<InvestmentModel>> _investimentPeriodList = Rx<List<InvestmentModel>>([]);
+  List<InvestmentModel> get investimentPeriodList => _investimentPeriodList.value;
 
   Rx<List<InvestmentModel>> _investimentLastYearList = Rx<List<InvestmentModel>>([]);
   List<InvestmentModel> get investimentLastYearList => _investimentLastYearList.value;
@@ -97,11 +94,36 @@ class HomeController extends GetxController {
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
     _goalsList.bindStream(_goalsRepository.getAllGoals(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
-    _incomeList.bindStream(_incomeRepository.getAllIncome(userUid: user!.id));
-    _expenseList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _expenseLastYearList.bindStream(_expenseRepository.getNotEssentialsExpenseLastYear(userUid: user!.id));
-    _investimentList.bindStream(_investmentRepository.getAllInvestment(userUid: user!.id));
     _investimentLastYearList.bindStream(_investmentRepository.getAllInvestmentLastYear(userUid: user!.id));
+
+    Future.delayed(Duration(seconds: 2), () {
+      _expenseNotEssencialList.bindStream(
+        _expenseRepository.getExpensePeriodWithQualityPay(
+          userUid: user!.id,
+          expenseQuality: 'Não essencial',
+          initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
+          endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
+          pay: true,
+        ),
+      );
+
+      _investimentPeriodList.bindStream(
+        _investmentRepository.getInvestmentPeriodReceived(
+            userUid: user!.id,
+            initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
+            endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
+            madeEffective: true),
+      );
+
+      _incomeCurrentList.bindStream(
+        _incomeRepository.getIncomeCurrent(
+          userUid: user!.id,
+          dayInitial: parametersList.first.dayInitialPeriod!,
+          received: true,
+        ),
+      );
+    });
 
     super.onInit();
   }
@@ -112,12 +134,8 @@ class HomeController extends GetxController {
       goalNotEssentialExpenses = goalsList.first.valueNotEssentialExpenses!;
     } else {
       totalIncome = 0;
-      incomeList.forEach((element) {
-        if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
-            (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
-            element.received == true) {
-          totalIncome = totalIncome + element.value!;
-        }
+      incomeCurrentList.forEach((element) {
+        totalIncome = totalIncome + element.value!;
       });
       goalNotEssentialExpenses = (goalsList.first.percentageNotEssentialExpenses! / 100) * totalIncome;
     }
@@ -130,12 +148,8 @@ class HomeController extends GetxController {
       goalInvestiment = goalsList.first.valueInvestment!;
     } else {
       totalIncome = 0;
-      incomeList.forEach((element) {
-        if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
-            (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
-            element.received == true) {
-          totalIncome = totalIncome + element.value!;
-        }
+      incomeCurrentList.forEach((element) {
+        totalIncome = totalIncome + element.value!;
       });
       goalInvestiment = (goalsList.first.percentageInvestiment! / 100) * totalIncome;
     }
@@ -145,13 +159,8 @@ class HomeController extends GetxController {
   // Retorna os gastos não essenciais do período atual do usuário
   double loadNotEssencialExpensesCurrent() {
     totalNotEssencialExpenses = 0.0;
-    expenseList.forEach((element) {
-      if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
-          (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
-          element.quality == 'Não essencial' &&
-          element.pay == true) {
-        totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
-      }
+    expenseNotEssencialList.forEach((element) {
+      totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
     });
     return totalNotEssencialExpenses;
   }
@@ -159,12 +168,8 @@ class HomeController extends GetxController {
   // Retorna os investimentos no período atual do usuário
   double loadInvestmentCurrent() {
     totalInvestments = 0.0;
-    investimentList.forEach((element) {
-      if (element.date.isAfter(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first) &&
-          (element.date.isBefore(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last)) &&
-          element.madeEffective == true) {
-        totalInvestments = totalInvestments + element.value!.toDouble();
-      }
+    investimentPeriodList.forEach((element) {
+      totalInvestments = totalInvestments + element.value!.toDouble();
     });
     return totalInvestments;
   }
@@ -172,7 +177,11 @@ class HomeController extends GetxController {
   // Calcula o equivalente das despesas não essenciais em horas de trabalho
   double loadWorkedHours() {
     double monthHours = parametersList.first.workedHours! * 4.5;
-    return totalNotEssencialExpenses / (parametersList.first.salary! / monthHours);
+    if (monthHours == 0) {
+      return 0;
+    } else {
+      return totalNotEssencialExpenses / (parametersList.first.salary! / monthHours);
+    }
   }
 
   // Calcula o tempo do período atual decorrido em dias

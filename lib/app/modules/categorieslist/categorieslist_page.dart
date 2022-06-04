@@ -72,6 +72,11 @@ class CategoriesList extends GetView<CategoriesListController> {
                             'descriptionTextController': TextEditingController(text: controller.categoriesList[index].description!),
                           });
                         },
+                        trailing: Icon(
+                          Icons.circle,
+                          color: controller.colorType(controller.categoriesList[index].type!),
+                          size: 20.0,
+                        ),
                       ),
                     ),
                     secondaryActions: [
@@ -96,7 +101,7 @@ class CategoriesList extends GetView<CategoriesListController> {
             : Center(
                 child: Text(
                   'Não há categorias cadastradas',
-                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                  style: AppTextStyles.messageEmptyList,
                 ),
               ),
         floatingActionButton: FloatingActionButton(

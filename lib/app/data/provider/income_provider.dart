@@ -21,12 +21,16 @@ class IncomeProvider {
     );
   }
 
-  //Retorna todas as receitas no período atual do usuário
-  Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial}) {
+  //Retorna todas as receitas de no período atual do usuário e se foram recebidas ou não
+  Stream<List<IncomeModel>> getIncomeCurrent({
+    required String userUid,
+    required int dayInitial,
+    required bool received,
+  }) {
     return _firebaseFirestore
         .doc(userUid)
         .collection('income')
-        .where('incReceived', isEqualTo: true)
+        .where('incReceived', isEqualTo: received)
         .orderBy('incDate')
         .where(
           'incDate',

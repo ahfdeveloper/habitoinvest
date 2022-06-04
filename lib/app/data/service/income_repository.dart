@@ -8,8 +8,8 @@ class IncomeRepository {
     return _incomeProvider.getAllIncome(userUid: userUid);
   }
 
-  Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial}) {
-    return _incomeProvider.getIncomeCurrent(userUid: userUid, dayInitial: dayInitial);
+  Stream<List<IncomeModel>> getIncomeCurrent({required String userUid, required int dayInitial, required bool received}) {
+    return _incomeProvider.getIncomeCurrent(userUid: userUid, dayInitial: dayInitial, received: received);
   }
 
   Stream<List<IncomeModel>> getIncomePeriodWithCategory({

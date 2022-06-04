@@ -71,6 +71,7 @@ List<DateTime> getDateProjectionExpense({required int dayInitialPeriod, required
   }
 }
 
+// Retorna a data inicial do período corrente
 DateTime getInitialCurrentPeriod({required int dayInitialPeriod}) {
   int day = DateTime.now().day;
   int month = DateTime.now().month;
@@ -82,6 +83,21 @@ DateTime getInitialCurrentPeriod({required int dayInitialPeriod}) {
     return DateTime(year - 1, month - 1, dayInitialPeriod);
   } else {
     return DateTime(year, month - 1, dayInitialPeriod);
+  }
+}
+
+// Retorna a data inicial do período corrente
+DateTime getEndCurrentPeriod({required int dayInitialPeriod}) {
+  int day = DateTime.now().day;
+  int month = DateTime.now().month;
+  int year = DateTime.now().year;
+
+  if (day >= dayInitialPeriod && day <= 31 && month == 12) {
+    return DateTime(year, month + 1, dayInitialPeriod - 1);
+  } else if (day >= dayInitialPeriod && day <= 31) {
+    return DateTime(year, month + 1, dayInitialPeriod - 1);
+  } else {
+    return DateTime(year, month, dayInitialPeriod - 1);
   }
 }
 

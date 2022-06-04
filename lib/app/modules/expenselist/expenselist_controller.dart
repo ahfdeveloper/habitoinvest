@@ -79,11 +79,6 @@ class ExpenseListController extends GetxController {
   List<ExpenseModel> get expenseMainList => this._expenseMainList.value;
   set expenseMainList(List<ExpenseModel> value) => this._expenseMainList.value = value;
 
-  // Variável que guarda a lista de despesas
-  Rx<List<ExpenseModel>> _expenseList = Rx<List<ExpenseModel>>([]);
-  List<ExpenseModel> get expenseList => this._expenseList.value;
-  set expenseList(List<ExpenseModel> value) => this._expenseList.value = value;
-
   // Variável que guarda os dados da conta
   Rx<List<AccountModel>> _accountList = Rx<List<AccountModel>>([]);
   List<AccountModel> get accountList => _accountList.value;
@@ -99,11 +94,12 @@ class ExpenseListController extends GetxController {
 
   @override
   void onInit() {
-    _expenseMainList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    //_expenseMainList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
+    allPeriodTransactions();
     _result.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _parametersList.bindStream(_parametersRepository.getAllParameters(userUid: user!.id));
-    _expenseMainList = _expenseList;
+
     super.onInit();
   }
 
@@ -136,6 +132,7 @@ class ExpenseListController extends GetxController {
               ),
             );
         Get.back();
+        allPeriodTransactions();
       },
     );
   }
@@ -152,7 +149,7 @@ class ExpenseListController extends GetxController {
   // Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;
-    expenseList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();
+    expenseMainList = result.where((income) => income.description!.toLowerCase().contains(enteredKeyworld.toLowerCase())).toList();
   }
 
   // Calcula horas de trabalho equivalentes para a despesa selecionada
@@ -165,6 +162,7 @@ class ExpenseListController extends GetxController {
     }
   }
 
+  // Carrega a lista com todas as despesas cadastradas
   void allPeriodTransactions() async {
     buttonTextColorAllPeriod = AppColors.expenseColor;
     buttonBackgroundColorallPeriod = AppColors.white;
@@ -175,8 +173,8 @@ class ExpenseListController extends GetxController {
     _expenseMainList.bindStream(_expenseRepository.getAllExpense(userUid: user!.id));
   }
 
+  // Carrega a lista com as despesas do período corrente
   void currentPeriodTransactions() async {
-    DateTime _now = DateTime.now();
     buttonTextColorAllPeriod = AppColors.white;
     buttonBackgroundColorallPeriod = AppColors.expenseColor;
     buttonTextColorCurrentPeriod = AppColors.expenseColor;
@@ -187,11 +185,14 @@ class ExpenseListController extends GetxController {
       _expenseRepository.getAllExpensePeriod(
         userUid: user!.id,
         initialDate: getInitialCurrentPeriod(dayInitialPeriod: parametersList.first.dayInitialPeriod!),
-        endDate: _now,
+        endDate: getEndCurrentPeriod(dayInitialPeriod: parametersList.first.dayInitialPeriod!),
       ),
     );
+    print(getInitialCurrentPeriod(dayInitialPeriod: parametersList.first.dayInitialPeriod!));
+    print(getEndCurrentPeriod(dayInitialPeriod: parametersList.first.dayInitialPeriod!));
   }
 
+  // Carrega a lista de despesas dos períodos futuros
   void futurePeriodTransactions() async {
     buttonTextColorAllPeriod = AppColors.white;
     buttonBackgroundColorallPeriod = AppColors.expenseColor;
@@ -199,5 +200,12 @@ class ExpenseListController extends GetxController {
     buttonBackgroundColorCurrentPeriod = AppColors.expenseColor;
     buttonTextColorFuturePeriod = AppColors.expenseColor;
     buttonBackgroundColorFuturePeriod = AppColors.white;
+    _expenseMainList.bindStream(
+      _expenseRepository.getFuturePeriodExpense(
+        userUid: user!.id,
+        initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!)[1],
+      ),
+    );
+    print(getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!)[1]);
   }
 }

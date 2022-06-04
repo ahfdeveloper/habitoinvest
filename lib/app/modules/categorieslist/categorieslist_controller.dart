@@ -132,6 +132,15 @@ class CategoriesListController extends GetxController {
     );
   }
 
+  // Cor do widget que identifica se a categoria é despesa ou receita
+  Color? colorType(String type) {
+    if (type == 'Despesa') {
+      return AppColors.expenseColor;
+    } else {
+      return AppColors.incomeColor;
+    }
+  }
+
   // Filtra os dados de acordo com a descrição digitada pelo usuário
   void runFilter(enteredKeyworld) {
     enteredKeyworld = searchFormFieldController.text;

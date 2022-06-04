@@ -89,7 +89,11 @@ class ProjectionController extends GetxController {
   // Calcula o equivalente das despesas não essenciais em horas de trabalho
   double loadWorkedHours(int addMonthCurrent) {
     double monthHours = parametersList.first.workedHours! * 4.5;
-    return notEssencialExpenses.elementAt(addMonthCurrent - 1) / (parametersList.first.salary! / monthHours);
+    if (monthHours == 0) {
+      return 0;
+    } else {
+      return notEssencialExpenses.elementAt(addMonthCurrent - 1) / (parametersList.first.salary! / monthHours);
+    }
   }
 
   List<DateTime> getPeriod(addMonthCurrent) {

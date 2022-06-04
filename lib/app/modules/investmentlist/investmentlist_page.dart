@@ -103,7 +103,7 @@ class InvestmentList extends GetView<InvestmentListController> {
             : Center(
                 child: Text(
                   'Não há investimentos cadastrados',
-                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                  style: AppTextStyles.messageEmptyList,
                 ),
               ),
         floatingActionButton: FloatingActionButton(

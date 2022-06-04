@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:habito_invest_app/app/modules/about/about_page.dart';
 import 'package:habito_invest_app/app/modules/transactionsreport/transactionsreport_binding.dart';
 import 'package:habito_invest_app/app/modules/transactionsreport/transactionsreport_page.dart';
 import 'package:habito_invest_app/app/modules/transactionsreportlist/transactionsreportlist_binding.dart';
@@ -156,6 +157,10 @@ class Pages {
       name: Routes.REPORTLIST,
       page: () => TransactionsReportListPage(),
       binding: TransactionsReportListBinding(),
+    ),
+    GetPage(
+      name: Routes.ABOUT,
+      page: () => AboutPage(),
     )
   ];
 }

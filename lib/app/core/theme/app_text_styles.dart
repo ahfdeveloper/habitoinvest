@@ -52,6 +52,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
   );
 
+  static final TextStyle messageEmptyList = GoogleFonts.notoSans(
+    fontSize: 17.0,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey[700],
+  );
+
   // Estilo padrão nos cards de projeção de despesas
   static final TextStyle textCardProjection = GoogleFonts.notoSans(
     color: AppColors.bodyTextPagesColor,

@@ -34,7 +34,7 @@ class HomePage extends GetView<HomeController> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Olá ${controller.user!.name}', style: AppTextStyles.appBarTextLight),
+                Text('Olá ${controller.user!.name.substring(0, controller.user!.name.indexOf(' ')).trim()}', style: AppTextStyles.appBarTextLight),
               ],
             ),
             actions: [
@@ -46,6 +46,7 @@ class HomePage extends GetView<HomeController> {
                     'salaryTextFormController': controller.parametersList.first.salary!.toStringAsFixed(2),
                     'workedHoursFormController': TextEditingController(text: controller.parametersList.first.workedHours.toString()),
                   });
+                  controller.loadNotEssencialExpensesCurrent();
                 },
                 icon: Icon(Icons.settings),
               ),
@@ -57,11 +58,7 @@ class HomePage extends GetView<HomeController> {
                   controller.parametersList.isEmpty ||
                   controller.parametersList == [] ||
                   controller.accountList.isEmpty ||
-                  controller.accountList == [] ||
-                  controller.expenseLastYearList.isEmpty ||
-                  controller.expenseLastYearList == [] ||
-                  controller.investimentLastYearList.isEmpty ||
-                  controller.investimentLastYearList == []
+                  controller.accountList == []
               ? Center(child: CircularProgressIndicator())
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
