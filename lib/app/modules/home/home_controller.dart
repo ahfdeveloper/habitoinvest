@@ -96,40 +96,18 @@ class HomeController extends GetxController {
     _accountList.bindStream(_accountRepository.getAccount(userUid: user!.id));
     _expenseLastYearList.bindStream(_expenseRepository.getNotEssentialsExpenseLastYear(userUid: user!.id));
     _investimentLastYearList.bindStream(_investmentRepository.getAllInvestmentLastYear(userUid: user!.id));
-
-    Future.delayed(Duration(seconds: 2), () {
-      _expenseNotEssencialList.bindStream(
-        _expenseRepository.getExpensePeriodWithQualityPay(
-          userUid: user!.id,
-          expenseQuality: 'Não essencial',
-          initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
-          endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
-          pay: true,
-        ),
-      );
-
-      _investimentPeriodList.bindStream(
-        _investmentRepository.getInvestmentPeriodReceived(
-            userUid: user!.id,
-            initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
-            endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
-            madeEffective: true),
-      );
-
-      _incomeCurrentList.bindStream(
-        _incomeRepository.getIncomeCurrent(
-          userUid: user!.id,
-          dayInitial: parametersList.first.dayInitialPeriod!,
-          received: true,
-        ),
-      );
-    });
-
     super.onInit();
   }
 
   // Retorna a meta de Gastos não essenciais
   double loadGoalExpenses() {
+    _incomeCurrentList.bindStream(
+      _incomeRepository.getIncomeCurrent(
+        userUid: user!.id,
+        dayInitial: parametersList.first.dayInitialPeriod!,
+        received: true,
+      ),
+    );
     if (goalsList.first.valueNotEssentialExpenses != 0.0) {
       goalNotEssentialExpenses = goalsList.first.valueNotEssentialExpenses!;
     } else {
@@ -158,6 +136,15 @@ class HomeController extends GetxController {
 
   // Retorna os gastos não essenciais do período atual do usuário
   double loadNotEssencialExpensesCurrent() {
+    _expenseNotEssencialList.bindStream(
+      _expenseRepository.getExpensePeriodWithQualityPay(
+        userUid: user!.id,
+        expenseQuality: 'Não essencial',
+        initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
+        endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
+        pay: true,
+      ),
+    );
     totalNotEssencialExpenses = 0.0;
     expenseNotEssencialList.forEach((element) {
       totalNotEssencialExpenses = totalNotEssencialExpenses + element.value!.toDouble();
@@ -167,6 +154,13 @@ class HomeController extends GetxController {
 
   // Retorna os investimentos no período atual do usuário
   double loadInvestmentCurrent() {
+    _investimentPeriodList.bindStream(
+      _investmentRepository.getInvestmentPeriodReceived(
+          userUid: user!.id,
+          initialDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).first,
+          endDate: getInitialDateQuery(dayInitialPeriod: parametersList.first.dayInitialPeriod!).last,
+          madeEffective: true),
+    );
     totalInvestments = 0.0;
     investimentPeriodList.forEach((element) {
       totalInvestments = totalInvestments + element.value!.toDouble();

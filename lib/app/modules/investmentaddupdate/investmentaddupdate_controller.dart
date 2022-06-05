@@ -156,11 +156,11 @@ class InvestmentAddUpdateController extends GetxController {
           });
         if (addEditFlag == 'NEWAFTERINCOME') {
           FocusManager.instance.primaryFocus?.unfocus();
-          Get.offAndToNamed(Routes.INCOME_LIST, arguments: user);
+          Get.offAndToNamed(Routes.INCOME_LIST, arguments: {'user': user});
         } else if (addEditFlag == 'NEW') {
           FocusManager.instance.primaryFocus?.unfocus();
           addEditFlag = 'NEWAFTERINCOME';
-          Get.back();
+          Get.offAndToNamed(Routes.HOME, arguments: {'user': user});
         }
       }
     } else if (addEditFlag == 'UPDATE') {
@@ -236,7 +236,7 @@ class InvestmentAddUpdateController extends GetxController {
   void cancel() {
     if (addEditFlag == 'NEWAFTERINCOME') {
       clearEditingControllers();
-      Get.offAndToNamed(Routes.INCOME_LIST, arguments: user);
+      Get.offAndToNamed(Routes.INCOME_LIST, arguments: {'user': user});
     } else {
       clearEditingControllers();
       Get.back();

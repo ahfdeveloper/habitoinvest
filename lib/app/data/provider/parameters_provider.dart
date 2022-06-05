@@ -22,8 +22,8 @@ class ParametersProvider {
 
   Future<void> verifyParameterInBD({required String userUid}) async {
     try {
-      _firebaseFirestore.doc(userUid).collection('parameter').doc().get().then((value) {
-        if (!value.exists) {
+      _firebaseFirestore.doc(userUid).collection('parameter').get().then((value) {
+        if (value.docs.isEmpty) {
           addParameter(userUid: userUid);
         }
       });

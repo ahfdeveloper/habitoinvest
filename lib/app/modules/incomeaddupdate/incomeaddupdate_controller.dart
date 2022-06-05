@@ -15,9 +15,6 @@ import '../../data/service/income_repository.dart';
 import '../../global_widgets/app_snackbar.dart';
 import '../../routes/routes.dart';
 
-////// PASSAR TUDO EM FORMA DE ARGUMENTOS, TROCAR STATELESS POR GETVIEW E ELIMINAR INSTANCIAÇÕES DE CONTROLLERS DESNECESSÁRIOS.
-//// RESOLVER PAU DO DROPDOWN
-
 class IncomeAddUpdateController extends GetxController {
   final UserModel? user = Get.arguments['user'];
   GlobalKey<FormState> formkey = GlobalKey<FormState>();

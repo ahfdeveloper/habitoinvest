@@ -35,7 +35,7 @@ class RegisterController extends GetxController {
       _loginRepository.addUserFirestore(
         userUid: user.id,
         name: nameTextController.text,
-        email: emailTextController.text,
+        email: emailTextController.text + ' ',
       );
 
       // Cria uma conta no Firestore para esse usuário para controlar seu saldo

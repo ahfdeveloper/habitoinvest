@@ -91,6 +91,8 @@ class ParametersPage extends GetView<ParametersController> {
                           flex: 1,
                           child: TextFormField(
                             controller: controller.salaryTextFormController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                             validator: (value) => validator(value),
                             decoration: textFormFieldFormsWithUnderline(fieldIcon: Icons.monetization_on_rounded, hint: null),
                             style: TextStyle(

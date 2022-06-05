@@ -34,7 +34,10 @@ class HomePage extends GetView<HomeController> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Olá ${controller.user!.name.substring(0, controller.user!.name.indexOf(' ')).trim()}', style: AppTextStyles.appBarTextLight),
+                Text(
+                  'Olá ${controller.user!.name.substring(0, controller.user!.name.indexOf(' ')).trim()}',
+                  style: AppTextStyles.appBarTextLight,
+                ),
               ],
             ),
             actions: [
